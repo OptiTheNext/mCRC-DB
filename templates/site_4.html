@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block Unterschrift %}
+  <p>Charite zu Berlin, 2010-2021</p>
+{%endblock%}
+
+
+
+{% block MainContent %}
+<h3>Datenanalyse</h3>
+<form>
+<div class="container overflow-hidden" style="margin-left: 0">
+  <div class="row gy-3">
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Quantitative Eingabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Quantitative Ausgabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Qualitative Eingabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Qualitative Ausgabe</div>
+    </div>
+  </div>
+</div>
+<hr>
+<label for="sapidimport">Daten analysiere</label>
+  <button class="btn btn-secondary" name = "analysebutton">Analysieren</button>
+</form>
+
+  {%endblock%}
+
+  
+
+
+
+

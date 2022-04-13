@@ -1,0 +1,196 @@
+{% extends "base.html" %} {% block Unterschrift %}
+<p>Charite zu Berlin, 2010-2021</p>
+{%endblock%} {% block MainContent %}
+<h3> Dateneingabe</h3>
+<form action="" method="post" autocomplete="off">
+  <div class="container" style="margin-left: 0">
+    <div class="row row-cols-1 row-cols-lg-3">
+      <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+          <h3>Stammdaten</h3>
+          <hr>
+          <div class="form-group">
+            <label>SAP ID</label>
+            <input class="form-control" type="int" name="sapid" value="{%if success%}{{""}}{%elif import_var%}{{import_var.sapid}}{%else%}{{ request.form.sapid }}{%endif%}">
+          </div>
+          <br>
+          <div class="form-group">
+            <label>Geburtsdatum</label>
+            <input class="form-control" type="text" name="geburt" value="{%if success%}{{""}}{%elif import_var%}{{import_var.geburt}} {%else%}{{ request.form.geburt }}{%endif%}">
+          </div>
+          <br>
+          <div class="form-group">
+            <label>Geschlecht</label>
+            <select class="form-control form-select" name="geschlecht" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="Männlich">Männlich</option>
+              <option value="Weiblich">Weiblich</option>
+              <option value="Divers">Divers</option>
+            </select>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+          <h3>Diagnose</h3>
+          <hr>
+          <p> <div class="form-group">
+            <label for="formGroupExampleInput">Datum Erstdiagnose</label>
+            <input type="text" class="form-control" id="DiagnoseDatum" placeholder="Datum">
+          </div>
+          <div class="form-group">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>Primärlokalisation</label>
+            <select class="form-control form-select" name="primärlocus" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="Rektum">Rektum</option>
+              <option value="Sigma">Sigma</option>
+              <option value="Descendens">Descendens</option>
+              <option value="Transversum">Transversum</option>
+              <option value="Ascendens">Ascendens</option>
+              <option value="Zäkum">Zäkum</option>
+              <option value="Rektosigmoid">Rektosigmoid</option>
+            </select>
+          </div>
+            <hiv> Synchron/Metachron</hiv>
+            <hiv>Bilobulär
+            Multimodal
+            Two Staged</hiv>
+            <div class="form-group">
+              <!--Hier noch import_var ändern, immer noch geschlecht -->
+              <label>BRAF</label>
+              <select class="form-control form-select" name="BRAF" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+                <option value="BRAFEmpty">Nicht bestimmt</option>
+                <option value="BRAFmut">mutiert</option>
+                <option value="BRAFwt">wildtyp</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <!--Hier noch import_var ändern, immer noch geschlecht -->
+              <label>RAS</label>
+              <select class="form-control form-select" name="RAS" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+                <option value="RASEmpty">Nicht bestimmt</option>
+                <option value="RASmut">mutiert</option>
+                <option value="RASwt">wildtyp</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <!--Hier noch import_var ändern, immer noch geschlecht -->
+              <label>Mikrosatelliten</label>
+              <select class="form-control form-select" name="Mikrosatelliten" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+                <option value="MSSEmpty">Nicht bestimmt</option>
+                <option value="MSS">MSS</option>
+                <option value="MSI">MSI</option>
+              </select>
+            </div>
+           </p>
+        </div>
+      </div>
+      <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+          <h3>TNM-Klassifikation</h3>
+          <hr>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Example label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Another label</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <input class="btn btn-secondary" type="submit" value="Schreiben" name ="Schreiben" onclick = "input()">
+  <input class="btn btn-secondary" type="reset">
+</form>
+{% if error %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Fehler:</strong> {{ error }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%if overwrite %}
+<input type="submit" value="ueberschreiben">
+{% endif %}
+{% endif %}
+{% if success %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Erfolg:</strong> {{success}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+<form class="form-inline" method="post">
+  <label for="sapidimport">Patientendaten importieren:</label>
+  <input type="text" id="sapidimport" name="sapidimport" placeholder="SAP ID" name="SAPID importieren">
+  <button class="btn btn-secondary" type="submit" value ="Import" onclick = "GetData" name = "Import">Importieren</button>
+</form>
+{%endblock%}

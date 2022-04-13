@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block Unterschrift %}
+  <p>Charite zu Berlin, 2010-2021</p>
+{%endblock%}
+
+
+
+{% block MainContent %}
+<h3>Nutzerverwaltung</h3>
+
+  <form action="" method="post" autocomplete="off">
+    <div class="container" style="margin-left: 0">
+      <div class="row row-cols-1 row-cols-lg-3">
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Nutzer erstellen</h3>
+            <hr>
+            <div class="form-group">
+              <label>Name</label>
+              <input class="form-control" type="string" name="username" value="{%if success%}{{""}}{%elif import_var%}{{import_var.username}}{%else%}{{ request.form.username }}{%endif%}">
+            </div>
+            <br>
+            <div class="form-group">
+              <label>Nutzertyp</label>
+              <select class="form-control form-select" name="admin_select" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.admin}} {%else%}{{ request.form.admin }}{%endif%}">
+                <option value="Admin">Administrator</option>
+                <option value="Normal">Normaler Nutzer</option>
+              </select>
+            </div>
+            <br>
+            <input class="btn btn-secondary" type="submit" value="Nutzer erstellen" name = "create_user">
+            <br>
+          </div>
+          
+        </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Verwalten</h3>
+            <hr>
+            {%if Nutzertext%}
+            {{Nutzertext}}
+            {%endif%}
+          </div>
+        </div>
+</form>
+
+  {%endblock%}
+
+  
+
+
+
+
