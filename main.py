@@ -570,12 +570,12 @@ def page_5():
 
         if flask.request.method == 'POST':
             # Getting Name and If Admin
-            Name = flask.request.form['username']
-            Admin = flask.request.form['admin_select']
-            if(Admin =="Admin"):
-                Admin = "1"
+            name = flask.request.form['username']
+            admin = flask.request.form['admin_select']
+            if(admin == "Admin"):
+                admin = "1"
             else:
-                Admin = "0"
+                admin = "0"
             # Generating Password
             lower = string.ascii_lowercase
             upper = string.ascii_uppercase
@@ -584,9 +584,9 @@ def page_5():
 
             temp = random.sample(all, random.randint(8, 12))
             password = "".join(temp)
-            val = (Name,password,Admin)
+            val = (name,password,admin)
             cursor = mydb.cursor()
-            cursor.execute('INSERT INTO Users(LoginID, Password, Admin) VALUES ("' + Name + '","'+ password +'","'+ Admin+'")')
+            cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
             mydb.commit()
             htmltext = Usertext()
             return flask.render_template('site_5.html',
