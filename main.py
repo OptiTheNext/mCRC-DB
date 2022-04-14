@@ -27,10 +27,10 @@ app.secret_key = "x5xSsB$JDwGe%iEMLp6R4p9D&zv2$Xi2m7tCvNgn3PUmaqPH&EqbZvrx#v8YEH
 
 
 global mydb
-mydb = mysql.connector.connect(host="fogg.sglorch.de",
-                                           user="hannes",
-                                           password="",
-                                           database="hannes")
+mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
+                                           user=os.environ.get('KRK_DB_USER'),
+                                           password=os.environ.get('KRK_DB_PASS'),
+                                           database=os.environ.get('KRK_DB_DATABASE'))
 
 
 
