@@ -3,8 +3,10 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - command: python main.py
+  - before: pip install -r requirements.txt
+    command: python main.py
 vscode:
   extensions:
+    - SonarSource.sonarlint-vscode
     - ms-python.python
 
