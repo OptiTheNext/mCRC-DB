@@ -607,4 +607,4 @@ def page_5():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5050, debug=True)
+  app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)
