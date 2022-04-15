@@ -32,6 +32,17 @@
             <br>
           </div>
           
+          
+        </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Nutzer entfernen</h3>
+            <hr>
+            <label>Name</label>
+            <input class="form-control" type="string" name="delete_username" value="{%if success%}{{""}}{%elif import_var%}{{import_var.username}}{%else%}{{ request.form.username }}{%endif%}">
+            <br>
+            <input class="btn btn-secondary" type="submit" value="Nutzer entfernen" name = "delete_user">
+          </div>
         </div>
         <div class="col-6" style="border: 1px solid ,padding = 10p;">
           <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
@@ -42,6 +53,7 @@
             {%endif%}
           </div>
         </div>
+        
 </form>
 
   {%endblock%}

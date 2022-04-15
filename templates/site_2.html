@@ -34,7 +34,23 @@
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
           <h3>Diagnose</h3>
           <hr>
-          <p> <div class="form-group">
+          <p> 
+            <div class="form-group">
+              <label for="formGroupExampleInput">Diagnose Code</label>
+              <input type="text" class="form-control" id="Diagnose_code1" placeholder="code">
+            </div>
+          <br>
+          <div class="form-group">
+              <label>Diagnose Code 2</label>
+              <input class="form-check-input" type="checkbox" id="diagnose2_check" name="diagnose_code2" value="1" onchange="showInputField('diagnose2_check','diagnose2_field')">
+              <br>
+              <span id="diagnose2_field" class='hidden-on-default' style="display:none;">
+                <label class="form-labels">Code</label>
+                <input class="form-control" type="text" name="von_geburt" placeholder = "Code" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              </span>
+            </div>
+            <br>
+          <div class="form-group">
             <label for="formGroupExampleInput">Datum Erstdiagnose</label>
             <input type="text" class="form-control" id="DiagnoseDatum" placeholder="Datum">
           </div>
@@ -50,120 +66,169 @@
               <option value="Zäkum">Zäkum</option>
               <option value="Rektosigmoid">Rektosigmoid</option>
             </select>
+            <br>
           </div>
-            <hiv> Synchron/Metachron</hiv>
-            <hiv>Bilobulär
-            Multimodal
-            Two Staged</hiv>
-            <div class="form-group">
-              <!--Hier noch import_var ändern, immer noch geschlecht -->
-              <label>BRAF</label>
-              <select class="form-control form-select" name="BRAF" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
-                <option value="BRAFEmpty">Nicht bestimmt</option>
-                <option value="BRAFmut">mutiert</option>
-                <option value="BRAFwt">wildtyp</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <!--Hier noch import_var ändern, immer noch geschlecht -->
-              <label>RAS</label>
-              <select class="form-control form-select" name="RAS" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
-                <option value="RASEmpty">Nicht bestimmt</option>
-                <option value="RASmut">mutiert</option>
-                <option value="RASwt">wildtyp</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <!--Hier noch import_var ändern, immer noch geschlecht -->
-              <label>Mikrosatelliten</label>
-              <select class="form-control form-select" name="Mikrosatelliten" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
-                <option value="MSSEmpty">Nicht bestimmt</option>
-                <option value="MSS">MSS</option>
-                <option value="MSI">MSI</option>
-              </select>
-            </div>
+            
+            <hiv> 
+               <!--Hier noch import_var ändern, immer noch geschlecht --> 
+              <select class="form-control form-select" name="primärlocus" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="Synchron">Synchron</option>
+              <option value="Metachron">Metachron</option>
+            </select>
+            <br>
+          </hiv>
+          
+            <hiv>
+            Bilobulär <input class="form-check-input" type="checkbox" id="Bilobulär_check" name="Bilobulär" value="1">
+            <br>
+            Multimodal <input class="form-check-input" type="checkbox" id="Mutlimodal_check" name="Multimodal" value="1">
+            <br>
+            Two Staged <input class="form-check-input" type="checkbox" id="TwoStaged_check" name="TwoStaged" value="1">
+            <br>
+            </hiv>
            </p>
         </div>
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>TNM-Klassifikation</h3>
+          <h3>Histologie</h3>
           <hr>
           <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>BRAF</label>
+            <select class="form-control form-select" name="BRAF" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="BRAFEmpty">Nicht bestimmt</option>
+              <option value="BRAFmut">mutiert</option>
+              <option value="BRAFwt">wildtyp</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>RAS</label>
+            <select class="form-control form-select" name="RAS" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="RASEmpty">Nicht bestimmt</option>
+              <option value="RASmut">mutiert</option>
+              <option value="RASwt">wildtyp</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>Mikrosatelliten</label>
+            <select class="form-control form-select" name="Mikrosatelliten" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="MSSEmpty">Nicht bestimmt</option>
+              <option value="MSS">MSS</option>
+              <option value="MSI">MSI</option>
+            </select>
+          <h5>TNM-Klassifikation</h5>
+          </div>
+          
+         </div> 
+      </div>
+      <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+          <h3>Allgemeiner Zustand</h3>
+          <hr>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Patient zuletzt behandelt</label>
+            <input type="text" class="form-control" id="date_fu" placeholder="Datum">
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>Verstorben</label>
+            <select class="form-control form-select" name="Killed" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="dead">Ja</option>
+              <option value="alive">Nein</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label>Rezidiv</label>
+            <input class="form-check-input" type="checkbox" id="rezidiv_check" name="rezidiv" value="1" onchange="showInputField('rezidiv_check','rezidiv_field')">
+            <br>
+            <span id="rezidiv_field" class='hidden-on-default' style="display:none;">
+              <label class="form-labels">Rezidiv Diagnostiziert?</label>
+              <input class="form-control" type="text" name="rezidiv_date" placeholder ="Datum" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              <label class="form-labels">Organ?</label>
+              <select class="form-control form-select" name="Rezidiv_Organ" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+                <option value="liver">Leber</option>
+                <option value="Lung">Lunge</option>
+                <option value="local">Lokal</option>
+                <option value="Peritoneum">Peritoneum</option>
+                <option value="Cerebral">Cerebral</option>
+                <option value="Other">Other</option>
+              </select>
+            </span>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+             <!--Hier noch import_var ändern, immer noch geschlecht -->
+            <label for="formGroupExampleInput2">ASA</label>
+            <select class="form-control form-select" name="ASA_Score" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="ASA0">Nicht bestimmt</option>
+              <option value="ASA1">I</option>
+              <option value="ASA2">II</option>
+              <option value="ASA3">III</option>
+              <option value="ASA4">IV</option>
+              <option value="ASA5">V</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+            <label for="formGroupExampleInput2">BMI</label>
+            <input type="text" class="form-control" id="BMI" placeholder="BMI">
+          </div>
+
+          <hiv>
+            <input class="form-check-input" type="checkbox" id="Alc_check" name="Alc" value="1">Alkohol 
+            <br>
+            Raucher <input class="form-check-input" type="checkbox" id="Smoker_check" name="Smoker" value="1">
+            <br>
+            Diabetiker <input class="form-check-input" type="checkbox" id="Diabetes_check" name="Diabetes" value="1">
+            <br>
+            Zirrose <input class="form-check-input" type="checkbox" id="Cirrosis_check" name="Cirrose" value="1">
+            <br>
+            Fibrose<input class="form-check-input" type="checkbox" id="Fibrose_check" name="Fibrose" value="1">
+            <br>
+         
+          <br>
+        </div>
+      </div>
+      <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+          <h3>Vorgeschichte</h3>
+          <hr>
+          <div class="form-group">
+            <label>Vorhergegangene OPs</label>
+            <input class="form-check-input" type="checkbox" id="OPcheck" name="PreviousOPs" value="1" onchange="showInputField('OPcheck','OPfield')">
+            <br>
+            <span id="OPfield" class='hidden-on-default' style="display:none;">
+              <label class="form-labels">OP Code</label>
+              <input class="form-control" type="text" name="PreviousOPs_code" placeholder = "DIMDI OP Code" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              <label class="form-labels">OP Datum</label>
+              <input class="form-control" type="text" name="PreviousOPs_date" placeholder = "Datum" value="{%if success%}{{""}} {%else%}{{ request.form.geburt }}{%endif%}">
+              <label class="form-labels">OP Beschreibung</label>
+              <input class="form-control" type="text" name="PreviousOPs_which" placeholder = "Freitext" value="{%if success%}{{""}} {%else%}{{ request.form.geburt }}{%endif%}">
+            </span>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+            <label> Chemotherapie</label>
+            <input class="form-check-input" type="checkbox" id="Chemo_check" name="Chemo" value="1" onchange="showInputField('Chemo_check','Chemo_field')">
+            <br>
+            <span id="Chemo_field" class='hidden-on-default' style="display:none;">
+              <label class="form-labels">Anzahl Zyklen</label>
+              <input class="form-control" type="text" name="previous_chemotherapy_cycles" placeholder = "Zahl" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              <label class="form-labels">Medikament</label>
+              <input class="form-control" type="text" name="PreviousChemo_which" placeholder = "Freitext" value="{%if success%}{{""}} {%else%}{{ request.form.geburt }}{%endif%}">
+              
+            </span>
           </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
+         </div>
+
         </div>
       </div>
     </div>
+
+    
+    
+
   </div>
   <hr>
   <input class="btn btn-secondary" type="submit" value="Schreiben" name ="Schreiben" onclick = "input()">

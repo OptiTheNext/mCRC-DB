@@ -147,7 +147,8 @@ def dateneingabe():
                 return flask.render_template('site_2.html',
                                              Topnav=True,
                                              startseite=False,
-                                             error="SAP ID nicht gefunden")
+                                             error="SAP ID nicht gefunden",
+                                             Admin = flask.session.get("Admin"))
 
             print(myresult)
             import_var = {
@@ -194,13 +195,15 @@ def dateneingabe():
                     return flask.render_template('site_2.html',
                                                  Topnav=True,
                                                  startseite=False,
-                                                 error="Datum überprüfen")
+                                                 error="Datum überprüfen",
+                                                 Admin = flask.session.get("Admin"))
             except:
                 #NotAllowed("Datum überprüfen", False,False)
                 return flask.render_template('site_2.html',
                                              Topnav=True,
                                              startseite=False,
-                                             error="Datumsformat falsch")
+                                             error="Datumsformat falsch",
+                                             Admin = flask.session.get("Admin"))
 
             sex = flask.request.form['geschlecht']
             SAPID = SAPID = flask.request.form['sapid']
@@ -213,14 +216,16 @@ def dateneingabe():
                 return flask.render_template('site_2.html',
                                              Topnav=True,
                                              startseite=False,
-                                             error="SAP ID ist keine Zahl")
+                                             error="SAP ID ist keine Zahl",
+                                             Admin = flask.session.get("Admin"))
 
             if (sex == "" or SAPID == "" or Age == ""):
                 #NotAllowed("Eingabe inkomplett",False,False)
                 return flask.render_template('site_2.html',
                                              Topnav=True,
                                              startseite=False,
-                                             error="Eingabe einkomplett")
+                                             error="Eingabe einkomplett",
+                                             Admin = flask.session.get("Admin"))
                 #Check if SAPID already in system
 
             cursor = mydb.cursor()
@@ -263,7 +268,8 @@ def dateneingabe():
                 return flask.render_template('site_2.html',
                                              Topnav=True,
                                              startseite=False,
-                                             success="Eingabe erfolgreich")
+                                             success="Eingabe erfolgreich",
+                                             Admin = flask.session.get("Admin"))
 
             except Exception as e:
                 print(e)
@@ -277,10 +283,11 @@ def dateneingabe():
 
         return flask.render_template('site_2.html',
                                      Topnav=True,
-                                     startseite=False)
+                                     startseite=False,
+                                     Admin = flask.session.get("Admin"))
 
     #end of test for buttons
-    return flask.render_template('site_2.html', Topnav=True, startseite=False)
+    return flask.render_template('site_2.html', Topnav=True, startseite=False,Admin = flask.session.get("Admin"))
 
 
 @app.route("/export")
@@ -494,7 +501,8 @@ def page_3():
             return flask.render_template('site_3.html',
                                          Topnav=True,
                                          startseite=False,
-                                         htmltext=htmltext)
+                                         htmltext=htmltext,
+                                         Admin = flask.session.get("Admin"))
 
             #def export():
             # datapath1 = Config.SaveFile(fenster)
@@ -511,7 +519,8 @@ def page_3():
 
         return flask.render_template('site_3.html',
                                      Topnav=True,
-                                     startseite=False)
+                                     startseite=False,
+                                     Admin = flask.session.get("Admin"))
     else:
         return flask.redirect(flask.url_for('login'))
 
@@ -521,13 +530,14 @@ def page_4():
     if ("username" in flask.session):
         return flask.render_template('site_4.html',
                                      Topnav=True,
-                                     startseite=False)
+                                     startseite=False,
+                                     Admin = flask.session.get("Admin"))
     else:
         return flask.redirect(flask.url_for('login'))
 
 @app.route("/users", methods=['POST', 'GET'])
 def page_5():
-    if ("username" in flask.session):
+    if ("username" in flask.session and flask.session.get("Admin")):
         def Usertext():
             cursor = mydb.cursor()
             cursor.execute("SELECT * FROM Users")
@@ -570,40 +580,52 @@ def page_5():
 
         if flask.request.method == 'POST':
             # Getting Name and If Admin
-            name = flask.request.form['username']
-            admin = flask.request.form['admin_select']
-            if(admin == "Admin"):
-                admin = "1"
-            else:
-                admin = "0"
-            # Generating Password
-            lower = string.ascii_lowercase
-            upper = string.ascii_uppercase
-            num = string.digits
-            all = lower + upper + num
+            if "create_user" in flask.request.form:
+                name = flask.request.form['username']
+                admin = flask.request.form['admin_select']
+                if(admin == "Admin"):
+                    admin = "1"
+                else:
+                    admin = "0"
+                # Generating Password
+                lower = string.ascii_lowercase
+                upper = string.ascii_uppercase
+                num = string.digits
+                alll = lower + upper + num
 
-            temp = random.sample(all, random.randint(8, 12))
-            password = "".join(temp)
-            val = (name,password,admin)
-            cursor = mydb.cursor()
-            cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
-            mydb.commit()
-            htmltext = Usertext()
-            return flask.render_template('site_5.html',
-                                     Topnav=True,
-                                     startseite=False,
-                                     Nutzertext = htmltext)
+                temp = random.sample(alll, random.randint(8, 12))
+                password = "".join(temp)
+                val = (name,password,admin)
+                try:
+                    cursor = mydb.cursor()
+                    cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
+                    mydb.commit()
+                except Exception as e:
+                    print(e)
+                    
+                    
 
 
-
+            if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get("username"):
+                #deletuser
+                print("trying to delete user")
+                try:
+                    cursor = mydb.cursor()
+                    cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
+                except Exception as e:
+                    print(e)
+               
 
         htmltext = Usertext()
         return flask.render_template('site_5.html',
-                                     Topnav=True,
-                                     startseite=False,
-                                     Nutzertext = htmltext)
+                                        Topnav=True,
+                                        startseite=False,
+                                        Nutzertext = htmltext,
+                                        Admin = flask.session.get("Admin"))
+        
+
     else:
-        return flask.redirect(flask.url_for('login'))
+        return flask.redirect(flask.url_for('page_1'))
 
 
 if __name__ == '__main__':
