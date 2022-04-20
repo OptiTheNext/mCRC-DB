@@ -4,7 +4,8 @@
 <h3> Dateneingabe</h3>
 <form action="" method="post" autocomplete="off">
   <div class="container" style="margin-left: 0">
-    <div class="row row-cols-1 row-cols-lg-3">
+    <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3">
+      
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
           <h3>Stammdaten</h3>
@@ -41,8 +42,8 @@
             </div>
           <br>
           <div class="form-group">
-              <label>Diagnose Code 2</label>
               <input class="form-check-input" type="checkbox" id="diagnose2_check" name="diagnose_code2" value="1" onchange="showInputField('diagnose2_check','diagnose2_field')">
+              <label>Diagnose Code 2</label>
               <br>
               <span id="diagnose2_field" class='hidden-on-default' style="display:none;">
                 <label class="form-labels">Code</label>
@@ -79,11 +80,11 @@
           </hiv>
           
             <hiv>
-            Bilobulär <input class="form-check-input" type="checkbox" id="Bilobulär_check" name="Bilobulär" value="1">
+            <input class="form-check-input" type="checkbox" id="Bilobulär_check" name="Bilobulär" value="1">Bilobulär 
             <br>
-            Multimodal <input class="form-check-input" type="checkbox" id="Mutlimodal_check" name="Multimodal" value="1">
+            <input class="form-check-input" type="checkbox" id="Mutlimodal_check" name="Multimodal" value="1">Multimodal
             <br>
-            Two Staged <input class="form-check-input" type="checkbox" id="TwoStaged_check" name="TwoStaged" value="1">
+            <input class="form-check-input" type="checkbox" id="TwoStaged_check" name="TwoStaged" value="1">Two Staged
             <br>
             </hiv>
            </p>
@@ -120,8 +121,41 @@
               <option value="MSI">MSI</option>
             </select>
           <h5>TNM-Klassifikation</h5>
+          <div class="form-group">
+            <label for="formGroupExampleInput">T</label>
+            <input type="text" class="form-control" id="TNM_T" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">N</label>
+            <input type="text" class="form-control" id="TNM_N" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">M</label>
+            <input type="text" class="form-control" id="TNM_M" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Infizierte Lymphknoten</label>
+            <input type="text" class="form-control" id="TNM_LK" placeholder="Bruch">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">L</label>
+            <input type="text" class="form-control" id="TNM_L" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">V</label>
+            <input type="text" class="form-control" id="TNM_V" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">R</label>
+            <input type="text" class="form-control" id="TNM_R" placeholder="Code">
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">G</label>
+            <input type="text" class="form-control" id="TNM_G" placeholder="Code">
           </div>
           
+          </div>
+
          </div> 
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
@@ -142,8 +176,8 @@
           </div>
           <div class="form-group">
             <!--Hier noch import_var ändern, immer noch geschlecht -->
-            <label>Rezidiv</label>
             <input class="form-check-input" type="checkbox" id="rezidiv_check" name="rezidiv" value="1" onchange="showInputField('rezidiv_check','rezidiv_field')">
+            <label>Rezidiv</label>
             <br>
             <span id="rezidiv_field" class='hidden-on-default' style="display:none;">
               <label class="form-labels">Rezidiv Diagnostiziert?</label>
@@ -177,15 +211,15 @@
           </div>
 
           <hiv>
-            <input class="form-check-input" type="checkbox" id="Alc_check" name="Alc" value="1">Alkohol 
+            <input class="form-check-input" type="checkbox" id="Alc_check" name="Alc" value="1"> Alkohol 
             <br>
-            Raucher <input class="form-check-input" type="checkbox" id="Smoker_check" name="Smoker" value="1">
+            <input class="form-check-input" type="checkbox" id="Smoker_check" name="Smoker" value="1"> Raucher
             <br>
-            Diabetiker <input class="form-check-input" type="checkbox" id="Diabetes_check" name="Diabetes" value="1">
+            <input class="form-check-input" type="checkbox" id="Diabetes_check" name="Diabetes" value="1"> Diabetiker
             <br>
-            Zirrose <input class="form-check-input" type="checkbox" id="Cirrosis_check" name="Cirrose" value="1">
+            <input class="form-check-input" type="checkbox" id="Cirrosis_check" name="Cirrose" value="1"> Zirrose
             <br>
-            Fibrose<input class="form-check-input" type="checkbox" id="Fibrose_check" name="Fibrose" value="1">
+            <input class="form-check-input" type="checkbox" id="Fibrose_check" name="Fibrose" value="1"> Fibrose
             <br>
          
           <br>
@@ -196,8 +230,9 @@
           <h3>Vorgeschichte</h3>
           <hr>
           <div class="form-group">
-            <label>Vorhergegangene OPs</label>
+            
             <input class="form-check-input" type="checkbox" id="OPcheck" name="PreviousOPs" value="1" onchange="showInputField('OPcheck','OPfield')">
+            <label>Vorhergegangene OPs</label>
             <br>
             <span id="OPfield" class='hidden-on-default' style="display:none;">
               <label class="form-labels">OP Code</label>
@@ -209,8 +244,9 @@
             </span>
           </div>
           <div class="form-group">
-            <label> Chemotherapie</label>
+            
             <input class="form-check-input" type="checkbox" id="Chemo_check" name="Chemo" value="1" onchange="showInputField('Chemo_check','Chemo_field')">
+            <label> Chemotherapie</label>
             <br>
             <span id="Chemo_field" class='hidden-on-default' style="display:none;">
               <label class="form-labels">Anzahl Zyklen</label>
@@ -221,8 +257,262 @@
             </span>
           </div>
          </div>
-
+         
         </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Allgemeine OP Daten</h3>
+            <div class="form-group">
+              
+              <input class="form-check-input" type="checkbox" id="PVECheck" name="PreviousOPs" value="1" onchange="showInputField('PVECheck','PVEField')">
+              <label>Pfordader-Embolisation</label>
+              <br>
+              <span id="PVEField" class='hidden-on-default' style="display:none;">
+                <label class="form-labels">Datum</label>
+                <input class="form-control" type="text" name="PVE_date" placeholder = "Datum" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              </span>
+            </div>
+          <br>
+          <div class="form-group">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+           <label for="formGroupExampleInput2">Anzahl OPs</label>
+           <select class="form-control form-select" name="op_count" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+            <option value="1">1</option> 
+            <option value="2">2</option>
+             <option value="3">3</option>
+           </select>
+         </div>
+          <br> 
+          <div class="form-group">
+            <label for="formGroupExampleInput">Geplantes Prozedere</label>
+            <input type="text" class="form-control" id="planed" placeholder="Freitext">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Umgesetzte Prozedur</label>
+            <input type="text" class="form-control" id="planed" placeholder="Freitext">
+          </div>
+          <br>
+          <div class="form-group">
+            <!--Hier noch import_var ändern, immer noch geschlecht -->
+           <label for="formGroupExampleInput2">LIMAX</label>
+           <select class="form-control form-select" name="LIMAX Count" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+            <option value="1">1</option> 
+            <option value="2">2</option>
+             <option value="3">3</option>
+           </select>
+         </div>
+
+          </div>
+          </div>
+          <div class="col-6" style="border: 1px solid ,padding = 10p;">
+            <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Erste OP</h3>
+            <div class="form-group">
+              <label for="formGroupExampleInput">OP Datum</label>
+              <input type="text" class="form-control" id="op1_opdate" placeholder="Datum">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">OP Code</label>
+              <input type="text" class="form-control" id="op1_opcode" placeholder="DIMDI OP Code">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">OP Diagnose</label>
+              <input type="text" class="form-control" id="op1_opdiagnose" placeholder="Code">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">OP Type</label>
+              <input type="text" class="form-control" id="op1_opwhich" placeholder="Freitext">
+            </div>
+            <br>
+            <div class="form-group">
+              <!--Hier noch import_var ändern, immer noch geschlecht -->
+             <label for="formGroupExampleInput2">OP Methode</label>
+             <select class="form-control form-select" name="op1_methode" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="Offen">Offen</option> 
+              <option value="laparoskopisch">Laparoskopisch</option>
+               <option value="robotisch">Robotisch</option>
+             </select>
+           </div>
+            <br>
+            <input class="form-check-input" type="checkbox" id="conversion_check" name="Smoker" value="1"> Konversion
+            <br>
+            <input class="form-check-input" type="checkbox" id="ablation_check" name="Smoker" value="1"> Ablation
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">OP Länge</label>
+              <input type="text" class="form-control" id="op1_length" placeholder="In Minuten">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Intensivzeit</label>
+              <input type="text" class="form-control" id="op1_icu" placeholder="Tage">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Aufenthaltsdauert</label>
+              <input type="text" class="form-control" id="op1_los" placeholder="Tage">
+            </div>
+            <br>
+            <div class="form-group">
+              <!--Hier noch import_var ändern, immer noch geschlecht -->
+             <label for="formGroupExampleInput2">DINDO Komplikations-Score</label>
+             <select class="form-control form-select" name="op1_dindo" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+              <option value="No Comp">No Complications</option> 
+              <option value="1">I</option>
+               <option value="2">II</option>
+               <option value="3a">IIIa</option>
+               <option value="3b">IIIb</option>
+               <option value="4a">IVa</option>
+               <option value="4b">IVb</option>
+               <option value="5">V</option>
+             </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Art der Komplikation</label>
+              <input type="text" class="form-control" id="op1_complicationswhich" placeholder="Freitext">
+            </div>
+            </div>
+          </div>
+          <div class="col-6" style="border: 1px solid ,padding = 10p;">
+            <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Erste OP Labordaten</h3>
+              <div class="accordion accordion-flush" id="op1_accordion_lab">
+                <div class="accordion-item">
+                  <h2 class="accordion-header " id="flush-headingOne">
+                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                      Gesamt Bilirubin im Serum
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <div class="form-group">
+                        <label for="formGroupExampleInput2">POD1</label>
+                        <input type="text" class="form-control" id="op1_bili_pod1" placeholder="Wert">
+                      </div>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput2">POD3</label>
+                        <input type="text" class="form-control" id="op1_bili_pod3" placeholder="Wert">
+                      </div>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput2">POD5</label>
+                        <input type="text" class="form-control" id="op1_bili_pod5" placeholder="Wert">
+                      </div>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
+                        <input type="text" class="form-control" id="op1_bili_last" placeholder="Wert">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                      Gesamt Bilirubin im Punktat
+                    </button>
+                  </h2>
+                  <div id="flush-collapseTwo" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><div class="form-group">
+                      <label for="formGroupExampleInput2">POD1</label>
+                      <input type="text" class="form-control" id="op1_dbili_pod1" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD3</label>
+                      <input type="text" class="form-control" id="op1_dbili_pod3" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD5</label>
+                      <input type="text" class="form-control" id="op1_dbili_pod5" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
+                      <input type="text" class="form-control" id="op1_dbili_last" placeholder="Wert">
+                    </div></div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                      AST
+                    </button>
+                  </h2>
+                  <div id="flush-collapseThree" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><div class="form-group">
+                      <label for="formGroupExampleInput2">POD1</label>
+                      <input type="text" class="form-control" id="op1_AST_pod1" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD3</label>
+                      <input type="text" class="form-control" id="op1_AST_pod3" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD5</label>
+                      <input type="text" class="form-control" id="op1_AST_pod5" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
+                      <input type="text" class="form-control" id="op1_AST_last" placeholder="Wert">
+                    </div></div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                      ALT
+                    </button>
+                  </h2>
+                  <div id="flush-collapseFour" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body bg-light"><div class="form-group">
+                      <label for="formGroupExampleInput2">POD1</label>
+                      <input type="text" class="form-control" id="op1_ALT_pod1" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD3</label>
+                      <input type="text" class="form-control" id="op1_ALT_pod3" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD5</label>
+                      <input type="text" class="form-control" id="op1_ALT_pod5" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
+                      <input type="text" class="form-control" id="op1_ALT_last" placeholder="Wert">
+                    </div></div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                      INR
+                    </button>
+                  </h2>
+                  <div id="flush-collapseFive" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body bg-light"><div class="form-group">
+                      <label for="formGroupExampleInput2">POD1</label>
+                      <input type="text" class="form-control" id="op1_INR_pod1" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD3</label>
+                      <input type="text" class="form-control" id="op1_INR_pod3" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">POD5</label>
+                      <input type="text" class="form-control" id="op1_INR_pod5" placeholder="Wert">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
+                      <input type="text" class="form-control" id="op1_INR_last" placeholder="Wert">
+                    </div></div>
+                  </div>
+                </div>
+       
+            </div>
+          </div>
+            
       </div>
     </div>
 
