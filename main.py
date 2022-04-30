@@ -170,62 +170,75 @@ def dateneingabe():
             return flask.redirect(flask.url_for('login'))
 
         if flask.request.method == 'POST':
-            #def reset(delete):
-            # if(delete == True):
-            #  if(Age != "" and SAPID != "" and sex != ""):
-            #   return flask.render_template('site_1.html',Topnav = True, startseite= True)
-            #  print("reset complete")
-            #def NotAllowed(texts, overwrite, resetpls):
-            # def ueberschreiben():
-            #  dt_string = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-            # val = (int(SAPID),sex,Age,dt_string,int(SAPID))
-            #mydb.cursor.execute(Columns.sql_update,val)
-            #mydb.commit()
-            #flask.render_template('site_2.html',Topnav = True, startseite= True)
+            
+            params = flask.request.form.to_dict(flat=True)
+            print(params)
+            p_columns = []
+            p_values = []  
+            
+            for item in params.items():
+                if(item[1] == ""):
+                    continue
+                if(item[0] == "Schreiben"):
+                    continue
+            
+                
+                p_columns.append(item[0])
+                p_values.append("'"+item[1]+"'")
+                
+            if(params["op_date_Surgery1"] != "" and params["op_date_Surgery2"] != ""):
+                p_columns.append("datediff_op1_op2")
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
+                b = datetime.datetime.strptime(params["op_date_Surgery2"], "%Y-%m-%d")
+                p_values.append("'"+ (a-b).days + "'")
+            if(params["op_date_Surgery1"] != "" and params["dob"] != ""):
+                p_columns.append("age")
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
+                b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
+                p_values.append("'"+ (a-b).days + "'")
+            
+            print(p_columns)
+            print( p_values)
+                    
 
-            #if(overwrite == True):
-            # reset(resetpls)
-            #Wie leeren wir jetzt das Form? Maybe einfach über einen reset-Knopf. Dann nur anzeigen, dass erfolgreich eingetragen wurde. dann drückt man halt den Reset Knopf. Der Knopf ist auch schon da.
-            # Wo ist der knopf? gerade kann ich die seite nicht anzeigen
+            #Age = flask.request.form['geburt']
+            #try:
+             #   Age = datetime.datetime.strptime(Age, "%d.%m.%Y")
+              #  if (Age > datetime.datetime.now()):
+               #     return flask.render_template('site_2.html',
+                #                                 Topnav=True,
+                 #                                startseite=False,
+                  #                               error="Datum überprüfen",
+                   #                              Admin = flask.session.get("Admin"))
+            #except:
+             #   #NotAllowed("Datum überprüfen", False,False)
+              #  return flask.render_template('site_2.html',
+               #                              Topnav=True,
+                #                             startseite=False,
+                 #                            error="Datumsformat falsch",
+                  #                           Admin = flask.session.get("Admin"))
 
-            Age = flask.request.form['geburt']
-            try:
-                Age = datetime.datetime.strptime(Age, "%d.%m.%Y")
-                if (Age > datetime.datetime.now()):
-                    return flask.render_template('site_2.html',
-                                                 Topnav=True,
-                                                 startseite=False,
-                                                 error="Datum überprüfen",
-                                                 Admin = flask.session.get("Admin"))
-            except:
-                #NotAllowed("Datum überprüfen", False,False)
-                return flask.render_template('site_2.html',
-                                             Topnav=True,
-                                             startseite=False,
-                                             error="Datumsformat falsch",
-                                             Admin = flask.session.get("Admin"))
+            #sex = flask.request.form['geschlecht']
+            #SAPID = flask.request.form['sapid']
 
-            sex = flask.request.form['geschlecht']
-            SAPID = SAPID = flask.request.form['sapid']
-
-            if (SAPID.isnumeric()):
-                numbers = [int(SAPID)]
-            else:
+            #if (SAPID.isnumeric()):
+             #   numbers = [int(SAPID)]
+            #else:
                 #NotAllowed("SAPID falsch",False,False)
 
-                return flask.render_template('site_2.html',
-                                             Topnav=True,
-                                             startseite=False,
-                                             error="SAP ID ist keine Zahl",
-                                             Admin = flask.session.get("Admin"))
-
-            if (sex == "" or SAPID == "" or Age == ""):
+             #   return flask.render_template('site_2.html',
+              #                               Topnav=True,
+               #                              startseite=False,
+                #                             error="SAP ID ist keine Zahl",
+                 #                            Admin = flask.session.get("Admin"))
+#
+ #           if (sex == "" or SAPID == "" or Age == ""):
                 #NotAllowed("Eingabe inkomplett",False,False)
-                return flask.render_template('site_2.html',
-                                             Topnav=True,
-                                             startseite=False,
-                                             error="Eingabe einkomplett",
-                                             Admin = flask.session.get("Admin"))
+    #            return flask.render_template('site_2.html',
+   #                                          Topnav=True,
+     #                                        startseite=False,
+      #                                       error="Eingabe einkomplett",
+       #                                      Admin = flask.session.get("Admin"))
                 #Check if SAPID already in system
 
             cursor = mydb.cursor()
@@ -233,36 +246,42 @@ def dateneingabe():
             sid = cursor.fetchall()
             print(sid)
 
-            for ids in sid:
-                print(ids)
-                if ids == (int(SAPID), ):
-                    try:
-                        dt_string = datetime.datetime.now().strftime(
-                            "%Y/%m/%d %H:%M:%S")
-                        val = (int(SAPID), sex, Age, dt_string, int(SAPID))
-                        cursor.execute(Columns.sql_update, val)
-                        mydb.commit()
-                        return flask.render_template(
-                            'site_2.html',
-                            Topnav=True,
-                            startseite=False,
-                            success="Daten überschrieben")
-                    except:
-                        return flask.render_template(
-                            'site_2.html',
-                            Topnav=True,
-                            startseite=False,
-                            error="Konnte nicht in Datenbank geschrieben werden"
-                        )
+        
+
+            #for ids in sid:
+             #   print(ids)
+              #  #ID Bereits vorhanden
+               # if ids == (int(SAPID), ):
+                #    try:
+                 #       dt_string = datetime.datetime.now().strftime(
+                  #          "%Y/%m/%d %H:%M:%S")
+                   #     val = (int(SAPID), sex, Age, dt_string, int(SAPID))
+                    #    cursor.execute(Columns.sql_update, val)
+                     #   mydb.commit()
+                      #  return flask.render_template(
+                       #     'site_2.html',
+                        #    Topnav=True,
+                         #   startseite=False,
+                          #  success="Daten überschrieben")
+                    #except:
+                     #   return flask.render_template(
+                      #      'site_2.html',
+                       #     Topnav=True,
+                        #    startseite=False,
+                         #   error="Konnte nicht in Datenbank geschrieben werden"
+                        #)
 
             #Insert the new data into the SQL Database
             try:
-                dt_string = datetime.datetime.now().strftime(
-                    "%Y/%m/%d %H:%M:%S")
-                print(dt_string)
-                val = (int(SAPID), sex, Age, dt_string)
+                # dt_string = datetime.datetime.now().strftime(
+                #     "%Y/%m/%d %H:%M:%S")
+                # print(dt_string)
+                # # val = (int(SAPID), sex, Age, dt_string)
                 cursor = mydb.cursor()
-                cursor.execute(Columns.sql, val)
+                p_columns.append("Kuerzel")
+                p_values.append(f"'{flask.session.get('username')}'")
+                print(Columns.sql % (",".join(p_columns) , ",".join(p_values)))
+                cursor.execute(Columns.sql, ",".join(p_columns),",".join(p_values))
                 mydb.commit()
 
                 return flask.render_template('site_2.html',
