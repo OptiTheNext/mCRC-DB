@@ -72,7 +72,7 @@
             </div>
             <hiv>
                <!--Hier noch import_var ändern, immer noch geschlecht --> 
-               <select class="form-control form-select" name="clrm_met_syn" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.primaerlocus}} {%else%}{{ request.form.primaerlocus }}{%endif%}">
+               <select class="form-control form-select" name="crlm_met_syn" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.primaerlocus}} {%else%}{{ request.form.primaerlocus }}{%endif%}">
                   <option value=""></option>
                   <option value="Synchron">Synchron</option>
                <option value="Metachron">Metachron</option>
@@ -100,8 +100,8 @@
                <select class="form-control form-select" name="BRAF" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                   
                   <option value="">Nicht bestimmt</option>
-               <option value="BRAFmut">mutiert</option>
-               <option value="BRAFwt">wildtyp</option>
+               <option value="mut">mutiert</option>
+               <option value="wt">wildtyp</option>
                </select>
             </div>
             <div class="form-group">
@@ -109,8 +109,8 @@
                <label>RAS</label>
                <select class="form-control form-select" name="RAS" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                <option value="">Nicht bestimmt</option>
-               <option value="RASmut">mutiert</option>
-               <option value="RASwt">wildtyp</option>
+               <option value="mut">mutiert</option>
+               <option value="wt">wildtyp</option>
                </select>
             </div>
             <div class="form-group">
@@ -118,8 +118,8 @@
                <label>Mikrosatelliten</label>
                <select class="form-control form-select" name="MSS" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                <option value="">Nicht bestimmt</option>
-               <option value="MSS">MSS</option>
-               <option value="MSI">MSI</option>
+               <option value="mss">MSS</option>
+               <option value="msi">MSI</option>
                </select>
                <h5>TNM-Klassifikation</h5>
                <div class="form-group">
@@ -249,7 +249,7 @@
                <label class="form-labels">Anzahl Zyklen</label>
                <input class="form-control" type="number" name="previous_chemotherapy_cycles" placeholder = "Zahl" value="{%if success%}{{""}}{%else%}{{ request.form.previous_chemotherapy_cycles }}{%endif%}">
                <label class="form-labels">Medikament</label>
-               <input class="form-control" type="text" name="PreviousChemo_which" placeholder = "Freitext" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousChemo_which }}{%endif%}">
+               <input class="form-control" type="text" name="previous_antibody" placeholder = "Freitext" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousChemo_which }}{%endif%}">
                </span>
             </div>
          </div>
@@ -274,12 +274,12 @@
             <label>3. OP</label>
             <div class="form-group">
                <label for="formGroupExampleInput">Geplantes Prozedere</label>
-               <input type="text" class="form-control" id="planed" name="procedure_planed" placeholder="Freitext">
+               <input type="text" class="form-control" id="planned" name="crlm_procedure_planned" placeholder="Freitext">
             </div>
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Umgesetzte Prozedur</label>
-               <input type="text" class="form-control" id="relized" name="clrm_procedure_realize" placeholder="Freitext">
+               <input type="text" class="form-control" id="realize" name="crlm_procedure_realize" placeholder="Freitext">
             </div>
             <br>
             <div class="form-group">
@@ -334,7 +334,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Länge</label>
-               <input type="number" min="0" max="10000" class="form-control" id="first_surgery_lenght" name="first_surgery_lenght" placeholder="In Minuten">
+               <input type="number" min="0" max="10000" class="form-control" id="first_surgery_length" name="first_surgery_length" placeholder="In Minuten">
             </div>
             <br>
             <div class="form-group">
@@ -365,7 +365,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="op1_complicationswhich" name="fs_complications_which" placeholder="Freitext">
+               <input type="text" class="form-control" id="op1_complicationwhich" name="fs_complication_which" placeholder="Freitext">
             </div>
          </div>
       </div>

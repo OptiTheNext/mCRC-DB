@@ -55,7 +55,7 @@ d = ["Kuerzel",
   
 ]
 
-sql = "INSERT INTO mcrc_tabelle (%s) VALUES (%s)"# ON DUPLICATE KEY UPDATE"
+sql = "REPLACE INTO mcrc_tabelle ({}) VALUES " # ON DUPLICATE KEY UPDATE"
 
 
 sql_update = "UPDATE mcrc_tabelle SET SAPID  = %s, Geschlecht = %s, Geburtsdatum = %s, LastChanged = %s WHERE SAPID = %s"

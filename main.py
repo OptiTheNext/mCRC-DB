@@ -187,21 +187,24 @@ def dateneingabe():
                     continue
                 if(item[0] == "Chemo"):
                     continue
-            
+                if(item[0] == "LIMAX Count"):
+                    continue
+                if(item[0] == "diagnose2_check"):
+                    continue
                 
                 p_columns.append(item[0])
-                p_values.append("'"+item[1]+"'")
+                p_values.append(item[1])
                 
             if(params["op_date_Surgery1"] != "" and params["op_date_Surgery2"] != ""):
                 p_columns.append("datediff_op1_op2")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["op_date_Surgery2"], "%Y-%m-%d")
-                p_values.append("'"+ str((a-b).days) + "'")
+                p_values.append(str((a-b).days))
             if(params["op_date_Surgery1"] != "" and params["dob"] != ""):
                 p_columns.append("age")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
-                p_values.append("'"+ str((a-b).days) + "'")
+                p_values.append(str((a-b).days))
             
             print(p_columns)
             print( p_values)
@@ -285,15 +288,23 @@ def dateneingabe():
                 # # val = (int(SAPID), sex, Age, dt_string)
                 cursor = mydb.cursor()
                 p_columns.append("Kuerzel")
-                p_values.append(f"'{flask.session.get('username')}'")
-                print(Columns.sql % (",".join(p_columns) , ",".join(p_values)))
-                string = ",".join(p_columns),",".join(p_values)
-                cursor.execute(Columns.sql, string)
-                #mydb.commit()
-                #cursor.fetchall()
+                p_values.append(f"{flask.session.get('username')}")
+                #print(Columns.sql % (",".join(p_columns) , ",".join(p_values)))
+                print("------------------")
+                print((",".join(p_columns), ",".join(p_values)))
+                statement = Columns.sql + "("
+                for i in range(len(p_values)):
+                    if i != 0:
+                        statement += ","
+                    statement += "%s"
+                statement += ")"
+                #cursor.execute(Columns.sql.format(",".join(p_columns)), (",".join(p_values),))
+                cursor.execute(statement.format(",".join(p_columns)), p_values)
+                print(cursor.statement)
                 #cursor.execute("REPLACE INTO mcrc_tabelle (pat_id,dob,sex,diagnosis1,primary_location,status_fu,Kuerzel) VALUES ('12','2022-04-25','f','12','Zäkum','0','HFreitag')")
                 mydb.commit()
-                print(cursor.rowcount)
+                print(cursor._executed)
+                print(cursor.statement)
                 print(cursor.rowcount, "record inserted.")
 
                 return flask.render_template('site_2.html',
@@ -563,7 +574,7 @@ def page_4():
                                      Topnav=True,
                                      startseite=False,
                                      Admin = flask.session.get("Admin"))
-    else:
+#    else:
         return flask.redirect(flask.url_for('login'))
 
 @app.route("/users", methods=['POST', 'GET'])
