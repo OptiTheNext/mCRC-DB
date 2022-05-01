@@ -289,6 +289,9 @@ def dateneingabe():
                 print(Columns.sql % (",".join(p_columns) , ",".join(p_values)))
                 cursor.execute(Columns.sql, ",".join(p_columns),",".join(p_values))
                 mydb.commit()
+                cursor.fetchall()
+                print(cursor.rowcount)
+                print(cursor.rowcount, "record inserted.")
 
                 return flask.render_template('site_2.html',
                                              Topnav=True,
