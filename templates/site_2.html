@@ -11,7 +11,7 @@
             <hr>
             <div class="form-group">
                <label>SAP ID</label>
-               <input class="form-control" required type="number" name="pad_id" value="{%if success%}{{""}}{%elif import_var%}{{import_var.sapid}}{%else%}{{ request.form.sapid }}{%endif%}">
+               <input class="form-control" required type="number" name="pat_id" value="{%if success%}{{""}}{%elif import_var%}{{import_var.sapid}}{%else%}{{ request.form.sapid }}{%endif%}">
             </div>
             <br>
             <div class="form-group">
@@ -23,9 +23,9 @@
                <label>Geschlecht</label>
                <select class="form-control form-select" required name="sex" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                <option value=""></option>
-               <option value="Männlich">Männlich</option>
-               <option value="Weiblich">Weiblich</option>
-               <option value="Divers">Divers</option>
+               <option value="m">Männlich</option>
+               <option value="f">Weiblich</option>
+               <option value="d">Divers</option>
                </select>
             </div>
             <br>
@@ -38,7 +38,7 @@
             <p> 
             <div class="form-group">
                <label for="formGroupExampleInput">Diagnose Code</label>
-               <input type="text" required class="form-control" id="diagnosis1" name="diagnose_code1" placeholder="code" value="{%if success%}{{""}}{%elif import_var%}{{import_var.Diagnose_code1}}{%else%}{{ request.form.Diagnose_code1 }}{%endif%}">
+               <input type="text" required class="form-control" id="diagnosis1" name="diagnosis1" placeholder="code" value="{%if success%}{{""}}{%elif import_var%}{{import_var.Diagnose_code1}}{%else%}{{ request.form.Diagnose_code1 }}{%endif%}">
             </div>
             <br>
             <div class="form-group">
@@ -236,9 +236,9 @@
                <label class="form-labels">OP Code</label>
                <input class="form-control" type="text" pattern ="[0-9]-[0-9]{1,3}.[0-9a-z]" name="previous_surgery" placeholder = "DIMDI OP Code" value="{%if success%}{{""}}{%else%}{{ request.form.PreviousOPs_code }}{%endif%}">
                <label class="form-labels">OP Datum</label>
-               <input class="form-control" type="date" name="PreviousOPs_date" placeholder = "previous_surgery_date" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousOPs_date }}{%endif%}">
+               <input class="form-control" type="date" name="previous_surgery_date" placeholder = "previous_surgery_date" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousOPs_date }}{%endif%}">
                <label class="form-labels">OP Beschreibung</label>
-               <input class="form-control" type="text" name="PreviousOPs_which" placeholder = "previous_surgery_which" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousOPs_which }}{%endif%}">
+               <input class="form-control" type="text" name="previous_surgery_which" placeholder = "previous_surgery_which" value="{%if success%}{{""}} {%else%}{{ request.form.PreviousOPs_which }}{%endif%}">
                </span>
             </div>
             <div class="form-group">

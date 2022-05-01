@@ -21,7 +21,7 @@ sexbefore = False
 
 load_dotenv()
 
-querySAPID = "SELECT SAPID FROM KRK_Tabelle"
+querySAPID = "SELECT pat_id FROM mcrc_tabelle"
 app = flask.Flask(__name__,
                   template_folder="templates",
                   static_folder="static")
@@ -141,7 +141,7 @@ def dateneingabe():
         IDToFind = flask.request.form["sapidimport"]
         if IDToFind.isnumeric():
             cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM KRK_Tabelle WHERE SAPID = %(sapid)s",
+            cursor.execute("SELECT * FROM mcrc_tabelle WHERE SAPID = %(pat_id)s",
                            {'sapid': IDToFind})
             myresult = cursor.fetchone()
             if myresult is None:
@@ -183,6 +183,10 @@ def dateneingabe():
                     continue
                 if(item[0] == "Schreiben"):
                     continue
+                if(item[0] == "PreviousOPs"):
+                    continue
+                if(item[0] == "Chemo"):
+                    continue
             
                 
                 p_columns.append(item[0])
@@ -192,12 +196,12 @@ def dateneingabe():
                 p_columns.append("datediff_op1_op2")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["op_date_Surgery2"], "%Y-%m-%d")
-                p_values.append("'"+ (a-b).days + "'")
+                p_values.append("'"+ str((a-b).days) + "'")
             if(params["op_date_Surgery1"] != "" and params["dob"] != ""):
                 p_columns.append("age")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
-                p_values.append("'"+ (a-b).days + "'")
+                p_values.append("'"+ str((a-b).days) + "'")
             
             print(p_columns)
             print( p_values)
@@ -338,7 +342,7 @@ def page_3():
             def Analyse() -> pandas.DataFrame:
 
                 global sql
-                sql = "SELECT * FROM KRK_Tabelle "
+                sql = "SELECT * FROM mcrc_tabelle "
                 global firstsql
                 firstsql = False
                 global sexbefore
@@ -466,11 +470,11 @@ def page_3():
                 print(sql)
                 cursor.execute(sql)
                 myresult = cursor.fetchall()
-                df = pandas.DataFrame(myresult, columns=dfcolumns)
-                df = df.drop(columns=["LastChanged"])
-                print(df.dtypes)
-                df["Geburtsdatum"] = pandas.to_datetime(df["Geburtsdatum"])
-                df['Geburtsdatum'] = df['Geburtsdatum'].dt.strftime('%d.%m.%Y')
+                df = pandas.DataFrame(myresult)
+                #df = df.drop(columns=["LastChanged"])
+                #print(df.dtypes)
+                #df["Geburtsdatum"] = pandas.to_datetime(df["Geburtsdatum"])
+                #df['Geburtsdatum'] = df['Geburtsdatum'].dt.strftime('%d.%m.%Y')
                 dfjson = df.to_json(date_format="%d.%m.%Y")
                 print("df_to_json: " + dfjson)
                 flask.session['df'] = dfjson
