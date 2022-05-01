@@ -4,6 +4,7 @@ import mysql.connector
 import datetime
 import Columns
 import os
+from dotenv import load_dotenv
 import pandas
 import numpy
 import matplotlib
@@ -18,6 +19,7 @@ import sys
 global sexbefore
 sexbefore = False
 
+load_dotenv()
 
 querySAPID = "SELECT SAPID FROM KRK_Tabelle"
 app = flask.Flask(__name__,
