@@ -1,19 +1,13 @@
-# A Python Flask template on Gitpod
+# Datenbank zum Kolorektalem Karzinom
 
-This is a [Python Flask](https://flask.palletsprojects.com/en/2.0.x) template configured for ephemeral development environments on [Gitpod](https://www.gitpod.io/).
+## benötigte Umgebungsvariablen:
 
-## Next Steps
+| Umgebungsvariable | Bedeutung                                                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `KRK_DB_HOST`     | IP/Host des MySQL-Datenbankservers                                                                                   |
+| `KRK_DB_USER`     | Datenbankserver-Benutzername                                                                                         |
+| `KRK_DB_PASS`     | Datenbankserver-Password                                                                                             |
+| `KRK_DB_DATABASE` | Zu nutzende Datenbank                                                                                                |
+| `KRK_APP_HOST`    | IP-Adresse, auf welcher die Applikation verfügbar sein soll                                                          |
+| `KRK_APP_PORT`    | Port, auf welchem die Applikation lauscht (Ports unterhalb von 1024 unter Linux i.d.R. nur mit root-Rechten nutzbar) |
 
-Click the button below to start a new development environment:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/gitpod-io/template-python-flask)
-
-## Get Started With Your Own Project
-
-### A new project
-
-Click the above "Open in Gitpod" button to start a new workspace. Once you're ready to push your first code changes, Gitpod will guide you to fork this project so you own it.
-
-### An existing project
-
-To get started with Python Flask on Gitpod, add a [`.gitpod.yml`](./.gitpod.yml) file which contains the configuration to improve the developer experience on Gitpod. To learn more, please see the [Getting Started](https://www.gitpod.io/docs/getting-started) documentation.
