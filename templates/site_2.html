@@ -10,7 +10,7 @@
             <h3>Stammdaten</h3>
             <hr>
             <div class="form-group">
-               <label>SAP ID</label>
+               <label>Patienten ID</label>
                <input class="form-control" required type="number" id="pat_id" name="pat_id" value="{%if success%}{{""}}{%elif import_var%}{{import_var.sapid}}{%else%}{{ request.form.sapid }}{%endif%}">
             </div>
             <br>
@@ -70,23 +70,23 @@
                </select>
                <br>
             </div>
-            <hiv>
+            <div>
                <!--Hier noch import_var ändern, immer noch geschlecht --> 
                <select class="form-control form-select" name="crlm_met_syn" id="crlm_met_syn" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.primaerlocus}} {%else%}{{ request.form.primaerlocus }}{%endif%}">
                   <option value=""></option>
-                  <option value="Synchron">Synchron</option>
-               <option value="Metachron">Metachron</option>
+                  <option value="synchron">Synchron</option>
+               <option value="metachron">Metachron</option>
                </select>
                <br>
-            </hiv>
-            <hiv>
+            </div>
+            <div>
                <input class="form-check-input" type="checkbox" id="crlm_bilobular" name="crlm_bilobular" value="1">Bilobulär 
                <br>
                <input class="form-check-input" type="checkbox" id="multimodal" name="multimodal" value="1">Multimodal
                <br>
                <input class="form-check-input" type="checkbox" id="two_staged" name="two_staged" value="1">Two Staged
                <br>
-            </hiv>
+            </div>
             </p>
          </div>
       </div>
@@ -210,18 +210,19 @@
                <label for="formGroupExampleInput2">BMI</label>
                <input type="number" min="0" max="60" class="form-control" id="BMI" name="BMI" placeholder="BMI">
             </div>
-            <hiv>
-            <input class="form-check-input" type="checkbox" id="alcohol" name="alcohol" value="1"> Alkohol 
-            <br>
-            <input class="form-check-input" type="checkbox" id="smoking" name="smoking" value="1"> Raucher
-            <br>
-            <input class="form-check-input" type="checkbox" id="diabetes" name="diabetes" value="1"> Diabetiker
-            <br>
-            <input class="form-check-input" type="checkbox" id="cirrhosis" name="cirrhosis" value="1"> Zirrose
-            <br>
-            <input class="form-check-input" type="checkbox" id="fibrosis" name="fibrosis" value="1"> Fibrose
-            <br>
-            <br>
+            <div>
+               <input class="form-check-input" type="checkbox" id="alcohol" name="alcohol" value="1"> Alkohol 
+               <br>
+               <input class="form-check-input" type="checkbox" id="smoking" name="smoking" value="1"> Raucher
+               <br>
+               <input class="form-check-input" type="checkbox" id="diabetes" name="diabetes" value="1"> Diabetiker
+               <br>
+               <input class="form-check-input" type="checkbox" id="cirrhosis" name="cirrhosis" value="1"> Zirrose
+               <br>
+               <input class="form-check-input" type="checkbox" id="fibrosis" name="fibrosis" value="1"> Fibrose
+               <br>
+               <br>
+            </div>
          </div>
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
@@ -229,7 +230,7 @@
             <h3>Vorgeschichte</h3>
             <hr>
             <div class="form-group">
-               <input class="form-check-input" type="checkbox" id="PreviousOPs" value="1" onchange="showInputField('OPcheck','OPfield')">
+               <input class="form-check-input" type="checkbox" id="PreviousOPs" value="1" onchange="showInputField('PreviousOPs','OPfield')">
                <label>Vorhergegangene OPs</label>
                <br>
                <span id="OPfield" class='hidden-on-default' style="display:none;">
@@ -242,7 +243,7 @@
                </span>
             </div>
             <div class="form-group">
-               <input class="form-check-input" type="checkbox" id="Chemo" value="1" onchange="showInputField('Chemo_check','Chemo_field')">
+               <input class="form-check-input" type="checkbox" name="previous_chemotherapy" id="previous_chemotherapy" value="1" onchange="showInputField('previous_chemotherapy','Chemo_field')">
                <label> Chemotherapie</label>
                <br>
                <span id="Chemo_field" class='hidden-on-default' style="display:none;">
@@ -969,9 +970,9 @@
    </button>
 </div>
 {%endif%}
-<form class="form-inline" method="post">
-   <label for="sapidimport">Patientendaten importieren:</label>
-   <input type="text" id="sapidimport" name="sapidimport" placeholder="SAP ID" name="SAPID importieren">
-   <button class="btn btn-secondary" type="submit" value ="Import" onclick = "GetData" name = "Import">Importieren</button>
-</form>
+<!-- <form class="form-inline" method="post"> -->
+   <label for="pat_id_import">Patientendaten importieren:</label>
+   <input type="text" id="pat_id_import" name="pat_id_import" placeholder="Patienden ID" name="Patienten ID importieren">
+   <button class="btn btn-secondary" type="button" value ="Import" onclick ="importData()" name="Import">Importieren</button>
+<!-- </form> -->
 {%endblock%}
