@@ -10,7 +10,7 @@ import numpy
 import matplotlib
 import requests
 import string
-
+import json
 
 #Debugging
 import traceback
@@ -136,34 +136,34 @@ def dateneingabe():
         return flask.redirect(flask.url_for('login'))
 
     #Import von Daten
-    if "Import" in flask.request.form:
-        print("In Import")
-        IDToFind = flask.request.form["sapidimport"]
-        if IDToFind.isnumeric():
-            cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM mcrc_tabelle WHERE SAPID = %(pat_id)s",
-                           {'sapid': IDToFind})
-            myresult = cursor.fetchone()
-            if myresult is None:
-                # Wenn SAP ID nicht in Datenbnak
-                return flask.render_template('site_2.html',
-                                             Topnav=True,
-                                             startseite=False,
-                                             error="SAP ID nicht gefunden",
-                                             Admin = flask.session.get("Admin"))
+    # if "Import" in flask.request.form:
+    #     print("In Import")
+    #     IDToFind = flask.request.form["sapidimport"]
+    #     if IDToFind.isnumeric():
+    #         cursor = mydb.cursor()
+    #         cursor.execute("SELECT * FROM mcrc_tabelle WHERE SAPID = %(pat_id)s",
+    #                        {'sapid': IDToFind})
+    #         myresult = cursor.fetchone()
+    #         if myresult is None:
+    #             # Wenn SAP ID nicht in Datenbnak
+    #             return flask.render_template('site_2.html',
+    #                                          Topnav=True,
+    #                                          startseite=False,
+    #                                          error="SAP ID nicht gefunden",
+    #                                          Admin = flask.session.get("Admin"))
 
-            print(myresult)
-            import_var = {
-                'sapid': myresult[0],
-                'geschlecht': myresult[1],
-                'geburt': datetime.datetime.strftime(myresult[2], "%d.%m.%Y")
-            }
-            print(import_var)
-            return flask.render_template('site_2.html',
-                                         Topnav=True,
-                                         startseite=False,
-                                         Admin = flask.session["Admin"],
-                                         import_var=import_var)
+    #         print(myresult)
+    #         import_var = {
+    #             'sapid': myresult[0],
+    #             'geschlecht': myresult[1],
+    #             'geburt': datetime.datetime.strftime(myresult[2], "%d.%m.%Y")
+    #         }
+    #         print(import_var)
+    #         return flask.render_template('site_2.html',
+    #                                      Topnav=True,
+    #                                      startseite=False,
+    #                                      Admin = flask.session["Admin"],
+    #                                      import_var=import_var)
 
     #Schreiben von daten
     if "Schreiben" in flask.request.form:
@@ -669,6 +669,17 @@ def page_5():
     else:
         return flask.redirect(flask.url_for('page_1'))
 
+@app.route("/api/getDataForID", methods=['GET'])
+def getDataForID():
+    if flask.request.args["pat_id_import"]:
+        cursor = mydb.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
+        if cursor.rowcount == 0:
+            return "Requested ID not found in database"
+        for row in cursor:
+            return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
+    else:
+        return "Request error"
 
 if __name__ == '__main__':
   app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)
