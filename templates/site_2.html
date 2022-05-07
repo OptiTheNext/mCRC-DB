@@ -53,7 +53,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Datum Erstdiagnose</label>
-               <input type="date" class="form-control" id="diagnose_date" name="diagnose_date" placeholder="Datum" value="{%if success%}{{""}}{%elif import_var%}{{import_var.DiagnoseDatum}}{%else%}{{ request.form.DiagnoseDatum}}{%endif%}">
+               <input type="date" class="form-control" id="diagnosis_date" name="diagnosis_date" placeholder="Datum" value="{%if success%}{{""}}{%elif import_var%}{{import_var.DiagnoseDatum}}{%else%}{{ request.form.DiagnoseDatum}}{%endif%}">
             </div>
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
@@ -384,19 +384,19 @@
                      <div class="accordion-body">
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD1</label>
-                           <input type="number" class="form-control" name="fs_Serum_Bili_POD1" id="fs_Serum_Bili_POD1" placeholder="Wert">
+                           <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD1" id="fs_Serum_Bili_POD1" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD3</label>
-                           <input type="number" class="form-control" id="fs_Serum_Bili_POD3" name="fs_Serum_Bili_POD3"placeholder="Wert">
+                           <input type="number" class="form-control" min="0" max="3" id="fs_Serum_Bili_POD3" name="fs_Serum_Bili_POD3"placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD5</label>
-                           <input type="number" class="form-control" id="fs_Serum_Bili_POD5" name="fs_Serum_Bili_POD5" placeholder="Wert">
+                           <input type="number" class="form-control" min="0" max="3" id="fs_Serum_Bili_POD5" name="fs_Serum_Bili_POD5" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" class="form-control" id="fs_Serum_Bili_Last" name="fs_Serum_Bili_Last" placeholder="Wert">
+                           <input type="number" class="form-control" min="0" max="3" id="fs_Serum_Bili_Last" name="fs_Serum_Bili_Last" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -538,7 +538,7 @@
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
                <label for="formGroupExampleInput2">OP Methode</label>
-               <select class="form-control form-select" name="op_surgery_minimal_invasive" id="op_surgery_minimal_invasive" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+               <select class="form-control form-select" name="first_surgery_minimal_invasive" id="first_surgery_minimal_invasive" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                   <option value=""></option>
                   <option value="Offen">Offen</option>
                <option value="laparoskopisch">Laparoskopisch</option>
@@ -583,7 +583,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="ss_complications_which" name="ss_complications_which" placeholder="Freitext">
+               <input type="text" class="form-control" id="ss_complication_which" name="ss_complication_which" placeholder="Freitext">
             </div>
          </div>
       </span>
@@ -601,19 +601,19 @@
                      <div class="accordion-body">
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD1</label>
-                           <input type="number" min ="0" class="form-control" id="ss_Serum_Bili_POD1" name="ss_Serum_Bili_POD1" placeholder="Wert">
+                           <input type="number" min ="0" max="3" class="form-control" id="ss_Serum_Bili_POD1" name="ss_Serum_Bili_POD1" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD3</label>
-                           <input type="number" min ="0" class="form-control" id="ss_Serum_Bili_POD3" name="ss_Serum_Bili_POD3" placeholder="Wert">
+                           <input type="number" min ="0" max="3"class="form-control" id="ss_Serum_Bili_POD3" name="ss_Serum_Bili_POD3" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD5</label>
-                           <input type="number" min ="0" class="form-control" id="ss_Serum_Bili_POD5" name="ss_Serum_Bili_POD5" placeholder="Wert">
+                           <input type="number" min ="0" max="3" class="form-control" id="ss_Serum_Bili_POD5" name="ss_Serum_Bili_POD5" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" min ="0" class="form-control" id="ss_Serum_Bili_Last" name="ss_Serum_Bili_Last"placeholder="Wert">
+                           <input type="number" min ="0" max="3" class="form-control" id="ss_Serum_Bili_Last" name="ss_Serum_Bili_Last"placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -755,7 +755,7 @@
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
                <label for="formGroupExampleInput2">OP Methode</label>
-               <select class="form-control form-select" name="third_surgery_minimal_invasive" id="third_surgery_minimal_invasive" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
+               <select class="form-control form-select" name="third_surgery_minimal_invasiv" id="third_surgery_minimal_invasiv" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.geschlecht}} {%else%}{{ request.form.geschlecht }}{%endif%}">
                   <option value=""></option>
                   <option value="Offen">Offen</option>
                <option value="laparoskopisch">Laparoskopisch</option>
@@ -779,7 +779,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Aufenthaltsdauert</label>
-               <input type="number" min="0" max="1000" class="form-control" id="ts_los" name="ts_los" placeholder="Tage">
+               <input type="number" min="0" max="1000" class="form-control" id="th_los" name="th_los" placeholder="Tage">
             </div>
             <br>
             <div class="form-group">
@@ -800,7 +800,7 @@
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="ts_complications" name="ts_complications" placeholder="Freitext">
+               <input type="text" class="form-control" id="ts_complication_which" name="ts_complication_which" placeholder="Freitext">
             </div>
          </div>
       </span>
@@ -818,19 +818,19 @@
                      <div class="accordion-body">
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD1</label>
-                           <input type="number" min="0" class="form-control" id="ts_Serum_Bili_POD1" name="ts_Serum_Bili_POD1" placeholder="Wert">
+                           <input type="number" min="0" max="3" class="form-control" id="ts_Serum_Bili_POD1" name="ts_Serum_Bili_POD1" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD3</label>
-                           <input type="number" min="0" class="form-control" id="ts_Serum_Bili_POD3" name="ts_Serum_Bili_POD3" placeholder="Wert">
+                           <input type="number" min="0" max="3" class="form-control" id="ts_Serum_Bili_POD3" name="ts_Serum_Bili_POD3" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD5</label>
-                           <input type="number" min="0" class="form-control" id="ts_Serum_Bili_POD5" name="ts_Serum_Bili_POD5" placeholder="Wert">
+                           <input type="number" min="0" max="3" class="form-control" id="ts_Serum_Bili_POD5" name="ts_Serum_Bili_POD5" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" min="0" class="form-control" id="ts_Serum_Bili_Last" name="ts_Serum_Bili_Last" placeholder="Wert">
+                           <input type="number" min="0" max="3"class="form-control" id="ts_Serum_Bili_Last" name="ts_Serum_Bili_Last" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -930,7 +930,7 @@
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD3</label>
-                           <input type="number" min="0" class="form-control" id="op3_INR_pod3" name="op3_INR_pod3" placeholder="Wert">
+                           <input type="number" min="0" class="form-control" id="ts_INR_POD3" name="ts_INR_POD3" placeholder="Wert">
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">POD5</label>
