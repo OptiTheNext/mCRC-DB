@@ -3,7 +3,11 @@
 {% extends "base.html" %} {% block Unterschrift %}
 <p>Charite zu Berlin, 2010-2021</p>
 {%endblock%} {% block MainContent %}
+<div class = "container">
+</div class ="box"> 
 <h3>Datenausgabe</h3>
+
+ 
 <form action="" method="post" autocomplete="off">
   <div class="container" style="margin-left: 0">
     <div class="row row-cols-1 row-cols-lg-3 overflow-auto border" style="height:400px;">
@@ -14,7 +18,7 @@
             <label>SAP ID</label>
             <input class="form-check-input" type="checkbox" id="sapcheck" name="sapcheck" value="1" onchange="showInputField('sapcheck','sapfield')">
             <span id="sapfield" class='hidden-on-default' style="display:none;">
-              <input class="form-control" type="int" name="sapid" value="{%if success%}{{""}}{{ request.form.sapid }}{%endif%}">
+              <input class="form-control" type="int" name="sapid">
             </span>
           </div>
           <br>
@@ -24,9 +28,9 @@
             <br>
             <span id="geburtfield" class='hidden-on-default' style="display:none;">
               <label class="form-labels">Von</label>
-              <input class="form-control" type="text" name="von_geburt" value="{%if success%}{{""}}{%else%}{{ request.form.geburt }}{%endif%}">
+              <input class="form-control" type="text" name="von_geburt">
               <label class="form-labels">Bis</label>
-              <input class="form-control" type="text" name="bis_geburt" value="{%if success%}{{""}} {%else%}{{ request.form.geburt }}{%endif%}">
+              <input class="form-control" type="text" name="bis_geburt">
             </span>
           </div>
           <br>
@@ -242,9 +246,9 @@
   </div>
 </form>
 </div>
-{% if error %}
+{% if RenderParameters["error"] %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Fehler:</strong> {{ error }}
+  <strong>Fehler:</strong> {{ RenderParameters["error"] }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span> 
   </button>
@@ -253,9 +257,9 @@
 <input class="btn btn-secondary" type="submit" value="ueberschreiben">
 {% endif %}
 {% endif %}
-{% if success %}
+{% if RenderParameters["success"] %}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Erfolg:</strong> {{success}}
+  <strong>Erfolg:</strong> {{RenderParameters["success"]}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

@@ -27,6 +27,8 @@ app = flask.Flask(__name__,
                   static_folder="static")
 app.secret_key = "x5xSsB$JDwGe%iEMLp6R4p9D&zv2$Xi2m7tCvNgn3PUmaqPH&EqbZvrx#v8YEH69wXxbmYoEQ68nE!7qs*aUqgd6Qsr6BRfSPJ45fztH4K*dHVhBR9UgFJniygvQS6hq"
 
+global RenderParameters
+RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
 global mydb
 mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
@@ -34,6 +36,7 @@ mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
                                            password=os.environ.get('KRK_DB_PASS'),
                                            database=os.environ.get('KRK_DB_DATABASE'))
 
+global next_patient
 
 
 #Workaround für ältere Browser
@@ -88,8 +91,12 @@ def favicon_webmanifest():
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    LocalRenderParameters = RenderParameters.copy()
+    LocalRenderParameters["Topnav"] = False
+    LocalRenderParameters["startseite"] = False
+    LocalRenderParameters["Admin"] = False
     dbcursor=mydb.cursor()
-    error = ''
+    RenderParameters["error"] = ''
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         pwd = flask.request.form['password']
@@ -104,27 +111,30 @@ def login():
                 flask.session["username"] = username
                 if (x[0,2] == "1"):
                     flask.session["Admin"] = True
+                    RenderParameters["Admin"] = True
                 else:
                     flask.session["Admin"] = False
+                    RenderParameters["Admin"] = False
 
+                
                 return flask.redirect(flask.url_for('page_1'))
             else:
-                error = 'Invalid Credentials. Please try again.'
+                LocalRenderParameters["error"] = 'Invalid Credentials. Please try again.'
         except Exception as e:
             print(e)
             #Exeption into Log Data
-            error = 'Something went wrong, Contact a Server Administrator'
-    return flask.render_template("login.html", error=error)
-
+            LocalRenderParameters["error"] = 'Something went wrong, Contact a Server Administrator'
+    
+    return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
 
 @app.route("/startseite")
 def page_1():
     print(flask.session.get("Admin"))
     if ("username" in flask.session):
+        LocalRenderParameters = RenderParameters.copy()
+        LocalRenderParameters["startseite"] = False
         return flask.render_template('site_1.html',
-                                     Topnav=True,
-                                     startseite=True,
-                                     Admin = flask.session.get("Admin"))
+                                     RenderParameters = LocalRenderParameters)
         
     else:
         return flask.redirect(flask.url_for('login'))
@@ -132,8 +142,18 @@ def page_1():
 
 @app.route("/dateneingabe", methods=["POST", "GET"])
 def dateneingabe():
-    if not "username" in flask.session:
+    if "username" not in flask.session:
         return flask.redirect(flask.url_for('login'))
+    
+    cursor= mydb.cursor()
+
+    cursor.execute("SELECT pat_id FROM mcrc_tabelle WHERE Kuerzel is NULL LIMIT 1")
+    next_patient=cursor.fetchall()
+    print(next_patient)
+    next_patient = next_patient[0][0]
+    print(next_patient)
+    RenderParameters["next_patient"] = next_patient
+
 
     #Import von Daten
     # if "Import" in flask.request.form:
@@ -166,6 +186,7 @@ def dateneingabe():
     #                                      import_var=import_var)
 
     #Schreiben von daten
+
     if "Schreiben" in flask.request.form:
         print("In Input")
         if ("username" not in flask.session):
@@ -254,9 +275,6 @@ def dateneingabe():
             cursor.execute(querySAPID)
             sid = cursor.fetchall()
             print(sid)
-
-        
-
             #for ids in sid:
              #   print(ids)
               #  #ID Bereits vorhanden
@@ -306,30 +324,26 @@ def dateneingabe():
                 print(cursor._executed)
                 print(cursor.statement)
                 print(cursor.rowcount, "record inserted.")
-
+                RenderParameters["success"] = "Eingabe erfolgreich"
                 return flask.render_template('site_2.html',
-                                             Topnav=True,
-                                             startseite=False,
-                                             success="Eingabe erfolgreich",
-                                             Admin = flask.session.get("Admin"))
+                                            RenderParameters = RenderParameters
+                                             )
 
             except Exception as e:
                 print(e)
+                RenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
                 #NotAllowed("Fehler", False)
                 return flask.render_template(
                     'site_2.html',
-                    Topnav=True,
-                    startseite=False,
-                    error="Konnte nicht in Datenbank geschrieben werden")
+                     RenderParameters = RenderParameters)
             #Merging both dataframes
 
         return flask.render_template('site_2.html',
-                                     Topnav=True,
-                                     startseite=False,
-                                     Admin = flask.session.get("Admin"))
+                                      RenderParameters = RenderParameters)
 
+    
     #end of test for buttons
-    return flask.render_template('site_2.html', Topnav=True, startseite=False,Admin = flask.session.get("Admin"))
+    return flask.render_template('site_2.html', RenderParameters = RenderParameters)
 
 
 @app.route("/export")
@@ -538,13 +552,10 @@ def page_3():
                     },
                 ],
                                           overwrite=False).to_html())
-            
+            RenderParameters["htmltext"] = htmltext
 
             return flask.render_template('site_3.html',
-                                         Topnav=True,
-                                         startseite=False,
-                                         htmltext=htmltext,
-                                         Admin = flask.session.get("Admin"))
+                                          RenderParameters = RenderParameters)
 
             #def export():
             # datapath1 = Config.SaveFile(fenster)
@@ -560,9 +571,7 @@ def page_3():
                 return flask.redirect(flask.url_for('page_4'))
 
         return flask.render_template('site_3.html',
-                                     Topnav=True,
-                                     startseite=False,
-                                     Admin = flask.session.get("Admin"))
+                                      RenderParameters = RenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
 
@@ -571,10 +580,8 @@ def page_3():
 def page_4():
     if ("username" in flask.session):
         return flask.render_template('site_4.html',
-                                     Topnav=True,
-                                     startseite=False,
-                                     Admin = flask.session.get("Admin"))
-#    else:
+                                      RenderParameters = RenderParameters)
+    else:
         return flask.redirect(flask.url_for('login'))
 
 @app.route("/users", methods=['POST', 'GET'])
@@ -658,12 +665,9 @@ def page_5():
                     print(e)
                
 
-        htmltext = Usertext()
+        RenderParameters["htmltext"] = Usertext()
         return flask.render_template('site_5.html',
-                                        Topnav=True,
-                                        startseite=False,
-                                        Nutzertext = htmltext,
-                                        Admin = flask.session.get("Admin"))
+                                         RenderParameters = RenderParameters)
         
 
     else:

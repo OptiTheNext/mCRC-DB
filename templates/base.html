@@ -31,20 +31,20 @@
         {%block Unterschrift %}{%endblock %}
       </div>
       <div class="topnav">
-        {%if Topnav %}
+        {%if RenderParameters["Topnav"] %}
         <a href="/dateneingabe">Dateneingabe</a>
         <a href="/datenausgabe">Datenausgabe</a>
         <a href="/datenanalyse">Datenanalyse</a>
         
         {%endif%}
 
-        {%if Admin %}
+        {%if RenderParameters["Admin"] %}
         <a href="/users">Nutzerverwaltung</a>
         {%endif%}
         
       
 
-        {%if startseite == False %}
+        {%if RenderParameters["startseite"] == True %}
         <a href="/startseite" style="float:right">Startseite</a>
         {%endif%}
       </div>
@@ -58,7 +58,7 @@
     <footer>
       <div class="footer">
         <h6>©Hannes Freitag, ©Charité</h6>
-        <h8> Version Alpha 2</h8>
+        <h8>Version Alpha 3</h8>
       </div>
     </footer>
   </body>

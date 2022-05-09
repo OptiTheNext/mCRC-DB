@@ -27,9 +27,9 @@
     </div>
   </form>
 </div>
-{% if error %}
+{% if RenderParameters["error"] %}
 <div class="alert alert-danger" role="alert">
-  <strong>Fehler:</strong> {{ error }}
+  <strong>Fehler:</strong> {{ RenderParameters["error"] }}
 </div>
 {% endif %}
 {%endblock%}

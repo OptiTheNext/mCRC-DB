@@ -17,12 +17,12 @@
             <hr>
             <div class="form-group">
               <label>Name</label>
-              <input class="form-control" type="string" name="username" value="{%if success%}{{""}}{%elif import_var%}{{import_var.username}}{%else%}{{ request.form.username }}{%endif%}">
+              <input class="form-control" type="string" name="username">
             </div>
             <br>
             <div class="form-group">
               <label>Nutzertyp</label>
-              <select class="form-control form-select" name="admin_select" selected="{%if success%}{{""}}{%elif import_var%}{{import_var.admin}} {%else%}{{ request.form.admin }}{%endif%}">
+              <select class="form-control form-select" name="admin_select" >
                 <option value="Admin">Administrator</option>
                 <option value="Normal">Normaler Nutzer</option>
               </select>
@@ -39,7 +39,7 @@
             <h3>Nutzer entfernen</h3>
             <hr>
             <label>Name</label>
-            <input class="form-control" type="string" name="delete_username" value="{%if success%}{{""}}{%elif import_var%}{{import_var.username}}{%else%}{{ request.form.username }}{%endif%}">
+            <input class="form-control" type="string" name="delete_username">
             <br>
             <input class="btn btn-secondary" type="submit" value="Nutzer entfernen" name = "delete_user">
           </div>
@@ -48,8 +48,8 @@
           <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
             <h3>Verwalten</h3>
             <hr>
-            {%if Nutzertext%}
-            {{Nutzertext}}
+            {%if RenderParameters["Nutzertext"]%}
+            {{RenderParameters["Nutzertext"]}}
             {%endif%}
           </div>
         </div>
