@@ -290,16 +290,68 @@ Nächster Patient:
                <input type="text" class="form-control" id="realize" name="crlm_procedure_realize" placeholder="Freitext">
             </div>
             <br>
-            <div class="form-group">
-               <!--Hier noch import_var ändern, immer noch geschlecht -->
-               <label for="formGroupExampleInput2">LIMAX</label>
-               <select class="form-control form-select" id="Limax_Count">
-                  <option value=""></option>
-                  <option value="1">1</option>
-               <option value="2">2</option>
-               <option value="3">3</option>
-               </select>
-            </div>
+            LIMAX
+            <div class="accordion accordion-flush" id="op2_accordion_lab">
+               <div class="accordion-item">
+                  <h2 class="accordion-header " id="flush-headingOne-limaxinitial">
+                     <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-limaxinitial" aria-expanded="false" aria-controls="flush-collapseOne">
+                     LIMAX 1. Datum
+                     </button>
+                  </h2>
+                  <div id="flush-collapseOne-limaxinitial" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne-limaxinitial" data-bs-parent="#accordionFlushExample">
+                     <div class="accordion-body">
+                        <div class="form-group">
+                           <label for="formGroupExampleInput2">LIMAX</label>
+                           <input type="number" min="0" max="1000" class="form-control" id="limax_initial" name="limax_initial" placeholder="Wert">
+                        </div>
+                        <div class="form-group">
+                           <label for="formGroupExampleInput2">Datum</label>
+                           <input type="date" class="form-control" id="limax_initial_date" name="limax_initial_date" placeholder="Datum">
+                        </div>
+   
+                     </div>
+                  </div>
+               </div>
+               <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingTwo-limax2">
+                     <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo-limax2" aria-expanded="false" aria-controls="flush-collapseTwo">
+                     LIMAX 2. Datum
+                     </button>
+                  </h2>
+                  <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo-limax2" data-bs-parent="#accordionFlushExample">
+                     <div class="accordion-body">
+                        <div class="form-group">
+                           <label for="op2_dbili_pod1">LIMAX</label>
+                           <input type="number" min="0" max="1000" class="form-control" name="limax_second" id="limax_second" placeholder="Wert">
+                        </div>
+                        <div class="form-group">
+                           <label for="op2_dbili_pod3">Datum</label>
+                           <input type="date" class="form-control" name="limax_second_date" id="limax_second_date" placeholder="Datum">
+                        </div>
+               
+                     </div>
+                  </div>
+               </div>
+               <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingthree-limax3">
+                     <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsethree-limax3" aria-expanded="false" aria-controls="flush-collapsethree-limax3">
+                     LIMAX 3. Datum
+                     </button>
+                  </h2>
+                  <div id="flush-collapsethree-limax3" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingthree-limax3" data-bs-parent="#accordionFlushExample">
+                     <div class="accordion-body">
+                        <div class="form-group">
+                           <label for="op2_dbili_pod1">LIMAX</label>
+                           <input type="number" min="0" max="1000" class="form-control" name="limax_third" id="limax_third" placeholder="Wert">
+                        </div>
+                        <div class="form-group">
+                           <label for="op2_dbili_pod3">LIMAX</label>
+                           <input type="Date"  class="form-control" name="limax_third_date" id="limax_third_date" placeholder="Datum">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               </div>
          </div>
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">

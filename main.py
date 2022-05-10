@@ -147,11 +147,33 @@ def dateneingabe():
     
     cursor= mydb.cursor()
 
-    cursor.execute("SELECT pat_id FROM mcrc_tabelle WHERE Kuerzel is NULL LIMIT 1")
+    cursor.execute("SELECT pat_id FROM mcrc_tabelle WHERE Kuerzel is NULL")
     next_patient=cursor.fetchall()
     print(next_patient)
-    next_patient = next_patient[0][0]
+    #next_patient = next_patient[0][1]
+    print("Next_Patient als liste: ")
     print(next_patient)
+    cursor.execute("SELECT * FROM currently_active")
+    currently_active_patient = cursor.fetchall()
+    
+    for patient in next_patient:
+        print("Hier patient: ")
+        print(patient)
+        for curid in currently_active_patient:
+            print("Hier Currently Active ID: ")
+            print (curid)
+            if(curid[0] == patient[0]):
+                if(curid[1] < datetime.datetime.now()):
+                    next_patient = patient[0]
+                    break
+            else:
+                continue
+        next_patient=patient[0]
+        break
+    
+    print(next_patient)
+    
+
     RenderParameters["next_patient"] = next_patient
 
 
@@ -592,6 +614,10 @@ def page_5():
             cursor.execute("SELECT * FROM Users")
             myresult = cursor.fetchall()
             df = pandas.DataFrame(myresult)
+           
+            df.columns= ['User', 'Password', 'Admin']
+            df.Admin = df.Admin.replace({1: "yes", 0: "no"})
+            print(df)
             cell_hover = {  # for row hover use <tr> instead of <td>
                     'selector': 'td:hover',
                     'props': [('background-color', '#ffffb3')]
@@ -681,6 +707,9 @@ def getDataForID():
         if cursor.rowcount == 0:
             return "Requested ID not found in database"
         for row in cursor:
+            cursor.execute("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row, datetime.datetime.now())
+            mydb.commit()
+            print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
         return "Request error"
