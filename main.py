@@ -146,36 +146,14 @@ def dateneingabe():
         return flask.redirect(flask.url_for('login'))
     
     cursor= mydb.cursor()
-
-    cursor.execute("SELECT pat_id FROM mcrc_tabelle WHERE Kuerzel is NULL")
-    next_patient=cursor.fetchall()
-    print(next_patient)
-    #next_patient = next_patient[0][1]
-    print("Next_Patient als liste: ")
-    print(next_patient)
-    cursor.execute("SELECT * FROM currently_active")
-    currently_active_patient = cursor.fetchall()
-    
-    for patient in next_patient:
-        print("Hier patient: ")
-        print(patient)
-        for curid in currently_active_patient:
-            print("Hier Currently Active ID: ")
-            print (curid)
-            if(curid[0] == patient[0]):
-                if(curid[1] < datetime.datetime.now()):
-                    next_patient = patient[0]
-                    break
-            else:
-                continue
-        next_patient=patient[0]
-        break
-    
-    print(next_patient)
-    
-
-    RenderParameters["next_patient"] = next_patient
-
+    try:
+        cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel is NULL AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
+        next_patient=cursor.fetchall()[0][0]
+        print(next_patient)
+        RenderParameters["next_patient"] = next_patient
+    except Exception as e: 
+        print("hat halt net geklappt")
+        next_patient = None
 
     #Import von Daten
     # if "Import" in flask.request.form:
@@ -233,6 +211,8 @@ def dateneingabe():
                 if(item[0] == "LIMAX Count"):
                     continue
                 if(item[0] == "diagnose2_check"):
+                    continue
+                if(item[0]== "pat_id_import"):
                     continue
                 
                 p_columns.append(item[0])
@@ -350,7 +330,8 @@ def dateneingabe():
 
                 #trying to delete from currently acitve
                 try: 
-                    cursor.execute("DELETE pat_id FROM currently_active WHERE patid = %s", statement.get("pat_id"))
+                    cursor.execute("DELETE pat_id FROM currently_active WHERE patid = %s", (statement.get("pat_id"),))
+                    mydb.commit()
                 except Exception as e:
                     print("nothing to delete") 
 
@@ -714,10 +695,10 @@ def getDataForID():
         if cursor.rowcount == 0:
             return "Requested ID not found in database"
         for row in cursor:
-            now = datetime.datetime.now()
-            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row.get("pat_id"), now)
-            cursor.execute("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row.get("pat_id"), now)
+            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"), ))
+            cursor.execute("INSERT INTO currently_active (pat_id) VALUES (%s)",(row.get("pat_id"),))
             mydb.commit()
+            print(cursor.statement)
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
