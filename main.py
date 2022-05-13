@@ -347,6 +347,13 @@ def dateneingabe():
                 print(cursor.statement)
                 print(cursor.rowcount, "record inserted.")
                 RenderParameters["success"] = "Eingabe erfolgreich"
+
+                #trying to delete from currently acitve
+                try: 
+                    cursor.execute("DELETE pat_id FROM currently_active WHERE patid = %s", statement.get("pat_id"))
+                except Exception as e:
+                    print("nothing to delete") 
+
                 return flask.render_template('site_2.html',
                                             RenderParameters = RenderParameters
                                              )
@@ -707,7 +714,9 @@ def getDataForID():
         if cursor.rowcount == 0:
             return "Requested ID not found in database"
         for row in cursor:
-            cursor.execute("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row, datetime.datetime.now())
+            now = datetime.datetime.now()
+            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row.get("pat_id"), now)
+            cursor.execute("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)",row.get("pat_id"), now)
             mydb.commit()
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
