@@ -75,11 +75,58 @@
             <br>
             <span id="diagnosis_date_field" class='hidden-on-default' style="display:none;">
               <label class="form-labels">Von</label>
-              <input class="form-control" type="text" name="von_diagnosis_date">
+              <input class="form-control" type="date" name="von_diagnosis_date">
               <label class="form-labels">Bis</label>
-              <input class="form-control" type="text" name="bis_diagnosis_date">
+              <input class="form-control" type="date" name="bis_diagnosis_date">
             </span>
           </div>
+          <div class="form-group">
+            <input class="form-check-input" type="checkbox" id="primary_location_check" name="primary_location_check" value="1" onchange="showInputField('primary_location_check','primary_location_field')">
+            <label class="form-check-label">Primärlokalisation</label>
+            <br>
+            <span id="primary_location_field" class='hidden-on-default, border' style="display:none">
+              <input class="form-check-input" type="checkbox" value ="Rektum" name = "Rektum_check" id="Rektum_check">
+              <label for="Rektum_check">Rektum</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Sigma" name = "Sigma_check" id="Sigma_check">
+              <label for="Sigma_check">Sigma</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Descendens" name = "Descendens_check" id="Descendens_check">
+              <label for="Descendens_check">Descendens</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Transversum" name = "Transversum_check" id="Transversum_check">
+              <label for="Transversum_check">Transversum</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Ascendens" name = "Ascendens_check" id="Ascendens_check">
+              <label for="Ascendens_check">Ascendens</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Zäkum" name = "Zäkum_check" id="Zäkum_check">
+              <label for="Zäkum_check">Zäkum</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Rektosigmoid" name = "Rektosigmoid_check" id="Rektosigmoid_check">
+              <label for="Rektosigmoid_check">Rektosigmoid</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <input class="form-check-input" type="checkbox" id="crlm_met_syn_check" name="crlm_met_syn_check" value="1" onchange="showInputField('crlm_met_syn_check','crlm_met_syn_field')">
+            <label class="form-check-label">Synchron/Metachron</label>
+            <br>
+            <span id="crlm_met_syn_field" class='hidden-on-default, border' style="display:none">
+              <input class="form-check-input" type="checkbox" value ="Synchron" name = "Synchron_check" id="Synchron_check">
+              <label for="Synchron_check">Synchron</label>
+              <br>
+              <input class="form-check-input" type="checkbox" value ="Metachron" name = "Metachron_check" id="Metachron_check">
+              <label for="Metachron_check">Metachron</label>
+            </span>
+          </div>
+          <input class="form-check-input" type="checkbox" value ="Bilobulär" name = "Bilobulär_check" id="Bilobulär_check">
+          <label for="Bilobulär_check">Bilobulär</label>
+          <br>
+          <input class="form-check-input" type="checkbox" value ="Multimodal" name = "Multimodal_check" id="Multimodal_check">
+          <label for="Multimodal_check">Multimodal</label>
+          <br>
+          <input class="form-check-input" type="checkbox" value ="Two_staged" name = "Two_staged_check" id="Two_staged_check">
+          <label for="Two_staged_check">Two Staged</label>
         </div>
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
