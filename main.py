@@ -12,6 +12,9 @@ import requests
 import string
 import json
 
+#Own Scripts
+import datenausgabe
+
 #Debugging
 import traceback
 import sys
@@ -199,6 +202,8 @@ def dateneingabe():
             p_columns = []
             p_values = []  
             
+            opgesamt = 0
+
             for item in params.items():
                 if(item[1] == ""):
                     continue
@@ -228,6 +233,23 @@ def dateneingabe():
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
                 p_values.append(str((a-b).days))
+            if(params["pve_date"] != ""):
+                p_columns.append("pve_year")
+                a = datetime.datetime.strptime(params["pve_date"], "%Y")
+                p_values.append(a)
+            if(params["op_date_Surgery1"] != ""):
+                p_columns.append("op1year")
+                a= datetime.datetime.strptime(params["op_date_Surgery1"],"%Y")
+                p_values.append(a)
+            
+            if(params["op_date-Surgery1"]):
+                opsgesamt = opgesamt + 1 
+            if(params["op_date-Surgery2"]):
+                opsgesamt = opgesamt + 1 
+            if(params["op_date-Surgery3"]):
+                opsgesamt = opgesamt + 1 
+            p_columns.append("surgeries")
+            p_values.append(opgesamt)
             
             print(p_columns)
             print( p_values)
@@ -377,155 +399,155 @@ def page_3():
         if "datenausgabe" in flask.request.form:
             print("hi")
 
-            cursor = mydb.cursor()
-            dfcolumns = Columns.d
+            # cursor = mydb.cursor()
+            # dfcolumns = Columns.d
 
-            def Analyse() -> pandas.DataFrame:
+            # def Analyse() -> pandas.DataFrame:
 
-                global sql
-                sql = "SELECT * FROM mcrc_tabelle "
-                global firstsql
-                firstsql = False
-                global sexbefore
+            #     global sql
+            #     sql = "SELECT * FROM mcrc_tabelle "
+            #     global firstsql
+            #     firstsql = False
+            #     global sexbefore
 
-                #SAP ID Finden
-                def CheckSQL(sex):
-                    global firstsql
-                    global sql
-                    global sexbefore
+            #     #SAP ID Finden
+            #     def CheckSQL(sex):
+            #         global firstsql
+            #         global sql
+            #         global sexbefore
 
-                    if firstsql == False:
-                        sql += "WHERE "
-                        firstsql = True
-                        return
-                    if firstsql == True:
-                        if sex:
-                            if sexbefore == False:
-                                print("in sexbefore == true")
-                                sql += "("
-                                sexbefore = True
-                            else:
-                                sql += "OR "
-                        else:
-                            sql += "AND "
-                            return
+            #         if firstsql == False:
+            #             sql += "WHERE "
+            #             firstsql = True
+            #             return
+            #         if firstsql == True:
+            #             if sex:
+            #                 if sexbefore == False:
+            #                     print("in sexbefore == true")
+            #                     sql += "("
+            #                     sexbefore = True
+            #                 else:
+            #                     sql += "OR "
+            #             else:
+            #                 sql += "AND "
+            #                 return
 
-                try:
-                    sapid = flask.request.form["sapcheck"]
-                except:
-                    sapid = ""
-                if sapid:
-                    try:
-                        IDin = flask.request.form["sapid"]
-                    except:
-                        IDin = ""
-                    if IDin != "":
-                        if IDin.isnumeric():
-                            CheckSQL(False)
-                            sql += "SAPID = " + str(IDin) + " "
+            #     try:
+            #         sapid = flask.request.form["sapcheck"]
+            #     except:
+            #         sapid = ""
+            #     if sapid:
+            #         try:
+            #             IDin = flask.request.form["sapid"]
+            #         except:
+            #             IDin = ""
+            #         if IDin != "":
+            #             if IDin.isnumeric():
+            #                 CheckSQL(False)
+            #                 sql += "SAPID = " + str(IDin) + " "
 
-                # Geschlecht finden
-                try:
-                    sexcheck = flask.request.form["sexcheck"]
-                except:
-                    sexcheck = ""
+            #     # Geschlecht finden
+            #     try:
+            #         sexcheck = flask.request.form["sexcheck"]
+            #     except:
+            #         sexcheck = ""
 
-                if sexcheck:
-                    CheckSQL(True)
-                    try:
-                        mann = flask.request.form["männlichcheck"]
-                    except:
-                        mann = ""
-                    if mann:
-                        CheckSQL(True)
-                        sql += "Geschlecht = 'Männlich' "
+            #     if sexcheck:
+            #         CheckSQL(True)
+            #         try:
+            #             mann = flask.request.form["männlichcheck"]
+            #         except:
+            #             mann = ""
+            #         if mann:
+            #             CheckSQL(True)
+            #             sql += "Geschlecht = 'Männlich' "
                         
-                    try:
-                        frau = flask.request.form["weiblichcheck"]
-                    except:
-                        frau = ""
-                    if frau:
+            #         try:
+            #             frau = flask.request.form["weiblichcheck"]
+            #         except:
+            #             frau = ""
+            #         if frau:
                         
-                        CheckSQL(True)
-                        sql += "Geschlecht = 'Weiblich' "
+            #             CheckSQL(True)
+            #             sql += "Geschlecht = 'Weiblich' "
                         
-                    try:
-                        divers = flask.request.form["diverscheck"]
-                    except:
-                        divers = ""
-                    if divers:
+            #         try:
+            #             divers = flask.request.form["diverscheck"]
+            #         except:
+            #             divers = ""
+            #         if divers:
                         
-                        CheckSQL(True)
-                        sql += "Geschlecht = 'Divers' "
-                    sql += ")"
-                    if sexbefore == True:
-                        sexbefore = False
-                    # alter Finden
-                try:
-                    datum = flask.request.form["geburtcheck"]
-                except:
-                    datum = ""
-                if datum:
-                    print("In Alt schleife")
-                    try:
-                        von = flask.request.form["von_geburt"]
-                    except:
-                        von = ""
-                    try:
-                        date = datetime.datetime.strptime(von,'%d.%m.%Y')
-                        date = datetime.datetime.strftime(date, "%Y-%m-%d")
-                        print(date)
-                        isadate = True
-                    except Exception as e:
-                        print(e)
-                        isadate = False
-                    if isadate == False:
-                        von = "1900 - 1 - 1"
-                    else:
-                        von = date
-                    CheckSQL(False)
-                    sql += "Geburtsdatum > '" + str(von) + "' "
-                    try:
-                        bis = flask.request.form["bis_geburt"]
-                        print(bis + " bis hierher und nicht weiter")
-                    except:
-                        bis == ""
-                        print(bis + " bis hierher")
-                    try:
-                        date2 = datetime.datetime.strptime(bis,'%d.%m.%Y')
-                        date2 = datetime.datetime.strftime(date2, "%Y-%m-%d")
-                        print(bis)
-                        isadate2 = True
-                    except Exception as e:
-                        print("fehler bei date2")
-                        print(e)
-                        isadate2 = False
-                    if isadate2 == False:
-                        bis = datetime.date.today().strftime("%Y-%m-%d")
-                    else:
-                        bis = date2
-                    CheckSQL(False)
-                    sql += "Geburtsdatum < '" + bis + "' "
+            #             CheckSQL(True)
+            #             sql += "Geschlecht = 'Divers' "
+            #         sql += ")"
+            #         if sexbefore == True:
+            #             sexbefore = False
+            #         # alter Finden
+            #     try:
+            #         datum = flask.request.form["geburtcheck"]
+            #     except:
+            #         datum = ""
+            #     if datum:
+            #         print("In Alt schleife")
+            #         try:
+            #             von = flask.request.form["von_geburt"]
+            #         except:
+            #             von = ""
+            #         try:
+            #             date = datetime.datetime.strptime(von,'%d.%m.%Y')
+            #             date = datetime.datetime.strftime(date, "%Y-%m-%d")
+            #             print(date)
+            #             isadate = True
+            #         except Exception as e:
+            #             print(e)
+            #             isadate = False
+            #         if isadate == False:
+            #             von = "1900 - 1 - 1"
+            #         else:
+            #             von = date
+            #         CheckSQL(False)
+            #         sql += "Geburtsdatum > '" + str(von) + "' "
+            #         try:
+            #             bis = flask.request.form["bis_geburt"]
+            #             print(bis + " bis hierher und nicht weiter")
+            #         except:
+            #             bis == ""
+            #             print(bis + " bis hierher")
+            #         try:
+            #             date2 = datetime.datetime.strptime(bis,'%d.%m.%Y')
+            #             date2 = datetime.datetime.strftime(date2, "%Y-%m-%d")
+            #             print(bis)
+            #             isadate2 = True
+            #         except Exception as e:
+            #             print("fehler bei date2")
+            #             print(e)
+            #             isadate2 = False
+            #         if isadate2 == False:
+            #             bis = datetime.date.today().strftime("%Y-%m-%d")
+            #         else:
+            #             bis = date2
+            #         CheckSQL(False)
+            #         sql += "Geburtsdatum < '" + bis + "' "
 
 
-                print(sql)
-                cursor.execute(sql)
-                myresult = cursor.fetchall()
-                df = pandas.DataFrame(myresult)
+            #     print(sql)
+            #     cursor.execute(sql)
+            #     myresult = cursor.fetchall()
+            #     df = pandas.DataFrame(myresult)
                 #df = df.drop(columns=["LastChanged"])
                 #print(df.dtypes)
                 #df["Geburtsdatum"] = pandas.to_datetime(df["Geburtsdatum"])
                 #df['Geburtsdatum'] = df['Geburtsdatum'].dt.strftime('%d.%m.%Y')
-                dfjson = df.to_json(date_format="%d.%m.%Y")
-                print("df_to_json: " + dfjson)
-                flask.session['df'] = dfjson
-                print("from session: ")
-                print(flask.session.get("df"))
-                return df
+                # dfjson = df.to_json(date_format="%d.%m.%Y")
+                # print("df_to_json: " + dfjson)
+                # flask.session['df'] = dfjson
+                # print("from session: ")
+                # print(flask.session.get("df"))
+                # return df
 
             #Process output
 
-            df = Analyse()
+            df = datenausgabe.Analyse(flask.request.form)
             #Darstellung der Tabelle
             print(df)
 
@@ -562,9 +584,10 @@ def page_3():
                     },
                 ],
                                           overwrite=False).to_html())
+            
             RenderParameters["htmltext"] = htmltext
 
-            return flask.render_template('site_3.html',
+            return flask.render_template('site_3.html', htmltext= htmltext, 
                                           RenderParameters = RenderParameters)
 
             #def export():

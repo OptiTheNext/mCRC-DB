@@ -15,28 +15,30 @@
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
           <h3>Stammdaten</h3>
           <div class="form-group">
-            <label>SAP ID</label>
-            <input class="form-check-input" type="checkbox" id="sapcheck" name="sapcheck" value="1" onchange="showInputField('sapcheck','sapfield')">
-            <span id="sapfield" class='hidden-on-default' style="display:none;">
-              <input class="form-control" type="int" name="sapid">
+            <input class="form-check-input" type="checkbox" id="pat_id_check" name="pat_id_check" value="1" onchange="showInputField('pat_id_check','pat_id_field')">
+            <label>Patienten ID</label>
+            <span id="pat_id_field" class='hidden-on-default' style="display:none;">
+              <input class="form-control" type="int" name="pat_id" id="pat_id">
             </span>
           </div>
           <br>
           <div class="form-group">
-            <label>Geburtsdatum</label>
+           
             <input class="form-check-input" type="checkbox" id="geburtcheck" name="geburtcheck" value="1" onchange="showInputField('geburtcheck','geburtfield')">
+            <label>Geburtsdatum</label>
             <br>
             <span id="geburtfield" class='hidden-on-default' style="display:none;">
               <label class="form-labels">Von</label>
-              <input class="form-control" type="text" name="von_geburt">
+              <input class="form-control" type="date" name="von_geburt" id="von_geburt">
               <label class="form-labels">Bis</label>
-              <input class="form-control" type="text" name="bis_geburt">
+              <input class="form-control" type="date" id="bis_geburt" name="bis_geburt">
             </span>
           </div>
           <br>
           <div class="form-group">
-            <label class="form-check-label">Geschlecht</label>
+            
             <input class="form-check-input" type="checkbox" id="sexcheck" name="sexcheck" value="1" onchange="showInputField('sexcheck','sexfield')">
+            <label class="form-check-label">Geschlecht</label>
             <br>
             <span id="sexfield" class='hidden-on-default' style="display:none;">
               <input class="form-check-input" type="checkbox" value ="Männlich" name = "männlichcheck" id="checkMale">
@@ -52,9 +54,32 @@
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>OP Daten</h3>
+          <h3>Diagnose</h3>
           <hr>
-          <p>Lorem Ipsum.</p>
+          <div class="form-group">
+            
+            <input class="form-check-input" type="checkbox" id="diagnose_code_check" name="diagnose_code_check" value="1" onchange="showInputField('diagnose_code_check','diagnose_code_field')">
+            <label>Diagnose Codes</label>
+            <br>
+            <span id="diagnose_code_field" class='hidden-on-default' style="display:none;">
+              <label class="form-labels">Code</label>
+              <input class="form-control" type="text" name="diagnosis1" id="diagnosis1">
+              <label class="form-labels">Code</label>
+              <input class="form-control" type="text" name="diagnosis2" id="diagnosis2">
+            </span>
+          </div>
+          <div class="form-group">
+            
+            <input class="form-check-input" type="checkbox" id="diagnosis_date_check" name="diagnosis_date_check" value="1" onchange="showInputField('diagnosis_date_check','diagnosis_date_field')">
+            <label>Datum Erstdiagnose</label>
+            <br>
+            <span id="diagnosis_date_field" class='hidden-on-default' style="display:none;">
+              <label class="form-labels">Von</label>
+              <input class="form-control" type="text" name="von_diagnosis_date">
+              <label class="form-labels">Bis</label>
+              <input class="form-control" type="text" name="bis_diagnosis_date">
+            </span>
+          </div>
         </div>
       </div>
       <div class="col-6" style="border: 1px solid ,padding = 10p;">

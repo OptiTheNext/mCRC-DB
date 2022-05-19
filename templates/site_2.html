@@ -250,14 +250,36 @@ Nächster Patient:
                </span>
             </div>
             <div class="form-group">
-               <input class="form-check-input" type="checkbox" name="previous_chemotherapy" id="previous_chemotherapy" value="1" onchange="showInputField('previous_chemotherapy','Chemo_field')">
-               <label> Chemotherapie</label>
+               <input class="form-check-input" type="checkbox" name="fs_previous_chemotherapy" id="fs_previous_chemotherapy" value="1" onchange="showInputField('fs_previous_chemotherapy','fs_Chemo_field')">
+               <label> Chemotherapie 1.OP</label>
                <br>
-               <span id="Chemo_field" class='hidden-on-default' style="display:none;">
+               <span id="fs_Chemo_field" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Anzahl Zyklen</label>
-               <input class="form-control" type="number" name="previous_chemotherapy_cycles" id="previous_chemotherapy_cycles" placeholder = "Zahl">
+               <input class="form-control" type="number" name="fs_previous_chemotherapy_cycles" id="fs_previous_chemotherapy_cycles" placeholder = "Zahl">
                <label class="form-labels">Medikament</label>
-               <input class="form-control" type="text" name="previous_antibody" id="previous_antibody" placeholder = "Freitext">
+               <input class="form-control" type="text" name="fs_previous_antibody" id="fs_previous_antibody" placeholder = "Freitext">
+               </span>
+            </div>
+            <div class="form-group">
+               <input class="form-check-input" type="checkbox" name="ss_previous_chemotherapy" id="ss_previous_chemotherapy" value="1" onchange="showInputField('ss_previous_chemotherapy','ss_Chemo_field')">
+               <label> Chemotherapie 2.OP</label>
+               <br>
+               <span id="ss_Chemo_field" class='hidden-on-default' style="display:none;">
+               <label class="form-labels">Anzahl Zyklen</label>
+               <input class="form-control" type="number" name="ss_previous_chemotherapy_cycles" id="ss_previous_chemotherapy_cycles" placeholder = "Zahl">
+               <label class="form-labels">Medikament</label>
+               <input class="form-control" type="text" name="ss_previous_antibody" id="ss_previous_antibody" placeholder = "Freitext">
+               </span>
+            </div>
+            <div class="form-group">
+               <input class="form-check-input" type="checkbox" name="th_previous_chemotherapy" id="th_previous_chemotherapy" value="1" onchange="showInputField('th_previous_chemotherapy','th_Chemo_field')">
+               <label> Chemotherapie 3.OP</label>
+               <br>
+               <span id="th_Chemo_field" class='hidden-on-default' style="display:none;">
+               <label class="form-labels">Anzahl Zyklen</label>
+               <input class="form-control" type="number" name="th_previous_chemotherapy_cycles" id="th_previous_chemotherapy_cycles" placeholder = "Zahl">
+               <label class="form-labels">Medikament</label>
+               <input class="form-control" type="text" name="th_previous_antibody" id="th_previous_antibody" placeholder = "Freitext">
                </span>
             </div>
          </div>
