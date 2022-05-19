@@ -11,6 +11,7 @@ import matplotlib
 import requests
 import string
 import json
+import flask.ext.session
 
 #Own Scripts
 import datenausgabe
@@ -538,9 +539,7 @@ def page_3():
                 #print(df.dtypes)
                 #df["Geburtsdatum"] = pandas.to_datetime(df["Geburtsdatum"])
                 #df['Geburtsdatum'] = df['Geburtsdatum'].dt.strftime('%d.%m.%Y')
-                # dfjson = df.to_json(date_format="%d.%m.%Y")
-                # print("df_to_json: " + dfjson)
-                # flask.session['df'] = dfjson
+                
                 # print("from session: ")
                 # print(flask.session.get("df"))
                 # return df
@@ -548,6 +547,9 @@ def page_3():
             #Process output
 
             df = datenausgabe.Analyse(flask.request.form)
+            dfjson = df.to_json(date_format="%d.%m.%Y")
+            print("df_to_json: " + dfjson)
+            flask.session['df'] = dfjson
             #Darstellung der Tabelle
             print(df)
 
@@ -590,8 +592,9 @@ def page_3():
             return flask.render_template('site_3.html', htmltext= htmltext, 
                                           RenderParameters = RenderParameters)
 
+            #
             #def export():
-            # datapath1 = Config.SaveFile(fenster)
+            #datapath1 = Config.SaveFile(fenster)
             #print(datapath1)
             #df = Analyse()
             #print("dataframe for export: ")

@@ -4,3 +4,4 @@ mysql-connector==2.2.9
 numpy==1.22.1
 pandas==1.4.0
 python-dotenv
+Flask-Session
