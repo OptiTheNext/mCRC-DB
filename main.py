@@ -11,7 +11,7 @@ import matplotlib
 import requests
 import string
 import json
-import flask.ext.session
+
 
 #Own Scripts
 import datenausgabe

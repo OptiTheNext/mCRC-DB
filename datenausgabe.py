@@ -120,7 +120,157 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for twostaged
     if(parameters.get('Two_staged_check',None)):
         df.query("two_staged == 1", inplace=True) 
-       
+    
+    ##Check for BRAF
+    if(parameters.get('braf_check',None)):
+        braf = []
+        if(parameters.get('braf_mutiert_check', None)): braf.append('mut')
+        if(parameters.get('braf_wildtyp_check', None)): braf.append('wt')
+        df.query("BRAF in @braf", inplace=True)
+    
+    ##Check for RAS
+    if(parameters.get('ras_check',None)):
+        ras = []
+        if(parameters.get('ras_mutiert_check', None)): ras.append('mut')
+        if(parameters.get('ras_wildtyp_check', None)): ras.append('wt')
+        df.query("RAS in @ras", inplace=True)
+    
+    ##Check for MSS
+    if(parameters.get('mss_check',None)):
+        mss = []
+        if(parameters.get('mss', None)): mss.append('mut')
+        if(parameters.get('msi', None)): mss.append('wt')
+        df.query("MSS in @mss", inplace=True)
+
+    ##Check for T
+    if(parameters.get('t_check', None)):
+        if(parameters["T"]):
+            para = parameters['T']
+            df.query("T == @para", inplace= True)
+    
+    ##Check for N
+    if(parameters.get('n_check', None)):
+        if(parameters["N"]):
+            para = parameters['N']
+            df.query("N == @para", inplace= True)
+    
+    #Check for M
+    if(parameters.get('m_check', None)):
+        if(parameters["M"]):
+            para = parameters['M']
+            df.query("M == @para", inplace= True)
+
+    ##Check for LK
+    if(parameters.get('lk_check', None)):
+        if(parameters["LK"]):
+            para = int(parameters['LK'])
+            df.query("LK == @para", inplace= True)
+    
+    ##Check for L
+    if(parameters.get('l_check', None)):
+        if(parameters["L"]):
+            para = int(parameters['L'])
+            df.query("L == @para", inplace= True)
+    
+    ##Check for V
+    if(parameters.get('v_check', None)):
+        if(parameters["V"]):
+            para = int(parameters['V'])
+            df.query("V == @para", inplace= True)
+    
+    ##Check for R
+    if(parameters.get('r_check', None)):
+        if(parameters["R"]):
+            para = int(parameters['R'])
+            df.query("R == @para", inplace= True)
+
+    ##Check for G
+    if(parameters.get('g_check', None)):
+        if(parameters["G"]):
+            para = int(parameters['G'])
+            df.query("G == @para", inplace= True)
+
+    ##Check for Last Seen Date
+    if(parameters.get("last_seen_check",None)):
+        if(parameters['date_fu_von']):
+            date_fu_von = datetime.datetime.strptime(parameters['date_fu_von'], '%Y-%m-%d')
+            date_fu_von = datetime.date(date_fu_von.year,date_fu_von.month,date_fu_von.day)
+            df.query("date_fu >= @date_fu_von",inplace=True)
+        if(parameters["date_fu_bis"]):
+            date_fu_bis = datetime.datetime.strptime(parameters['date_fu_bis'], '%Y-%m-%d')
+            date_fu_bis = datetime.date(date_fu_bis.year,date_fu_bis.month,date_fu_bis.day)
+            df.query("date_fu <= @date_fu_bis",inplace=True)
+
+    ##Check for Alive or Not
+    if(parameters.get("died_check",None)):
+        if(parameters.get("died_no_check",None)):
+             df.query("status_fu == 0",inplace=True)
+        if(parameters.get("died_yes_check",None)):
+             df.query("status_fu == 1",inplace=True)
+    
+    ##Check for Rezidiv
+    if(parameters.get("rezidiv_check",None)):
+        if(parameters.get("rezidiv_check_no",None)):
+             df.query("recurrence_status == 0",inplace=True)
+        if(parameters.get("rezidiv_check_yes",None)):
+             df.query("recurrence_status == 1",inplace=True)
+
+    ##Check for ASA
+    if(parameters.get("asa_check",None)):
+        if(parameters.get("asa_check_not_found",None)):
+             df.query("ASA == 0",inplace=True)
+        if(parameters.get("asa_check_1",None)):
+             df.query("ASA == 1",inplace=True)
+        if(parameters.get("asa_check_2",None)):
+             df.query("ASA == 2",inplace=True)
+        if(parameters.get("asa_check_3",None)):
+             df.query("ASA == 3",inplace=True)
+        if(parameters.get("asa_check_4",None)):
+             df.query("ASA == 4",inplace=True)
+        if(parameters.get("asa_check_5",None)):
+             df.query("ASA == 5",inplace=True)
+    
+    ##Check for BMI
+    if(parameters.get("bmi_check",None)):
+        if(parameters["von_bmi_input"]):
+            df.query("bmi == @parameters['von_bmi_input']", inpacte=True)
+        if(parameters["bis_bmi_input"]):
+            df.query("bmi == @parameters['bis_bmi_input']", inplace=True)
+    
+    ##Check for alc
+    if(parameters.get("alc_check",None)):
+        if(parameters.get("yes_alcohol_check",None)):
+             df.query("alcohol == 0",inplace=True)
+        if(parameters.get("no_alcohol_check",None)):
+             df.query("alcohol == 1",inplace=True)
+
+    ##Check for Raucher
+    if(parameters.get("smoking_check",None)):
+        if(parameters.get("smoking_check_yes",None)):
+             df.query("smoking  == 0",inplace=True)
+        if(parameters.get("smoking_check_no",None)):
+             df.query("smoking  == 1",inplace=True)
+
+    ##Check for Diabetiker
+    if(parameters.get("diabetes_check",None)):
+        if(parameters.get("diabetes_check_yes",None)):
+             df.query("diabetes  == 0",inplace=True)
+        if(parameters.get("diabetes_check_no",None)):
+             df.query("diabetes  == 1",inplace=True)
+
+    ##Check for Zirrose
+    if(parameters.get("zirrose_check",None)):
+        if(parameters.get("zirrose_check_yes",None)):
+             df.query("cirrhosis   == 0",inplace=True)
+        if(parameters.get("zirrose_check_no",None)):
+             df.query("cirrhosis   == 1",inplace=True)
+
+    ##Check for Fibrose
+    if(parameters.get("fibrose_check",None)):
+        if(parameters.get("fibrose_check_yes",None)):
+             df.query("fibrosis == 0",inplace=True)
+        if(parameters.get("fibrose_check_no",None)):
+             df.query("fibrosis == 1",inplace=True)
     
 
     df.fillna("",inplace=True)

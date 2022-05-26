@@ -1,344 +1,318 @@
-
-
-{% extends "base.html" %} {% block Unterschrift %}
-<p>Charite zu Berlin, 2010-2021</p>
-{%endblock%} {% block MainContent %}
-<div class = "container">
-</div class ="box"> 
-<h3>Datenausgabe</h3>
-
- 
-<form action="" method="post" autocomplete="off">
-  <div class="container" style="margin-left: 0">
-    <div class="row row-cols-1 row-cols-lg-3 overflow-auto border" style="height:400px;">
-      <div class="col-6 " style="border: 1px solid ,padding = 10px;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>Stammdaten</h3>
-          <div class="form-group">
-            <input class="form-check-input" type="checkbox" id="pat_id_check" name="pat_id_check" value="1" onchange="showInputField('pat_id_check','pat_id_field')">
-            <label>Patienten ID</label>
-            <span id="pat_id_field" class='hidden-on-default' style="display:none;">
-              <input class="form-control" type="int" name="pat_id" id="pat_id">
-            </span>
-          </div>
-          <br>
-          <div class="form-group">
-           
-            <input class="form-check-input" type="checkbox" id="geburtcheck" name="geburtcheck" value="1" onchange="showInputField('geburtcheck','geburtfield')">
-            <label>Geburtsdatum</label>
-            <br>
-            <span id="geburtfield" class='hidden-on-default' style="display:none;">
-              <label class="form-labels">Von</label>
-              <input class="form-control" type="date" name="von_geburt" id="von_geburt">
-              <label class="form-labels">Bis</label>
-              <input class="form-control" type="date" id="bis_geburt" name="bis_geburt">
-            </span>
-          </div>
-          <br>
-          <div class="form-group">
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% extends "base.html" %} {% block Unterschrift %}
+	<p>Charite zu Berlin, 2010-2021</p>{%endblock%} {% block MainContent %}
+	<div class="container"></div>
+	<h3>Datenausgabe</h3>
+	<form action="" autocomplete="off" method="post">
+		<div class="container" style="margin-left: 0">
+			<div class="row row-cols-1 row-cols-lg-3 overflow-auto border" style="height:400px;">
+				<div class="col-6" style="border: 1px solid ,padding = 10px;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>Stammdaten</h3>
+						<hr>
+						<div class="form-group">
+							<input class="form-check-input" id="pat_id_check" name="pat_id_check" onchange="showInputField('pat_id_check','pat_id_field')" type="checkbox" value="1"> <label>Patienten ID</label> <span class='hidden-on-default' id="pat_id_field" style="display:none;"><input class="form-control" id="pat_id" name="pat_id" type="int"></span>
+						</div><br>
+						<div class="form-group">
+							<input class="form-check-input" id="geburtcheck" name="geburtcheck" onchange="showInputField('geburtcheck','geburtfield')" type="checkbox" value="1"> <label>Geburtsdatum</label><br>
+							<span class='hidden-on-default' id="geburtfield" style="display:none;"><label class="form-labels">Von</label> <input class="form-control" id="von_geburt" name="von_geburt" type="date"> <label class="form-labels">Bis</label> <input class="form-control" id="bis_geburt" name="bis_geburt" type="date"></span>
+						</div><br>
+						<div class="form-group">
+							<input class="form-check-input" id="sexcheck" name="sexcheck" onchange="showInputField('sexcheck','sexfield')" type="checkbox" value="1"> <label class="form-check-label">Geschlecht</label><br>
+							<span class='hidden-on-default' id="sexfield" style="display:none;"><input class="form-check-input" id="checkMale" name="männlichcheck" type="checkbox" value="Männlich"> <label for="checkMale">Männlich</label> <input class="form-check-input" id="checkFemale" name="weiblichcheck" type="checkbox" value="Weiblich"> <label for="checkFemale">Weiblich</label> <input class="form-check-input" id="checkDiv" name="diverscheck" type="checkbox" value="Divers"> <label for="checkDiv">Divers</label></span>
+						</div><br>
+					</div>
+				</div>
+				<div class="col-6" style="border: 1px solid ,padding = 10p;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>Diagnose</h3>
+						<hr>
+						<div class="form-group">
+							<input class="form-check-input" id="diagnose_code_check" name="diagnose_code_check" onchange="showInputField('diagnose_code_check','diagnose_code_field')" type="checkbox" value="1"> <label>Diagnose Codes</label><br>
+							<span class='hidden-on-default' id="diagnose_code_field" style="display:none;"><label class="form-labels">Code</label> <input class="form-control" id="diagnosis1" name="diagnosis1" type="text"> <label class="form-labels">Code</label> <input class="form-control" id="diagnosis2" name="diagnosis2" type="text"></span>
+						</div>
+						<div class="form-group">
+							<input class="form-check-input" id="diagnosis_date_check" name="diagnosis_date_check" onchange="showInputField('diagnosis_date_check','diagnosis_date_field')" type="checkbox" value="1"> <label>Datum Erstdiagnose</label><br>
+							<span class='hidden-on-default' id="diagnosis_date_field" style="display:none;"><label class="form-labels">Von</label> <input class="form-control" name="von_diagnosis_date" type="date"> <label class="form-labels">Bis</label> <input class="form-control" name="bis_diagnosis_date" type="date"></span>
+						</div>
+						<div class="form-group">
+							<input class="form-check-input" id="primary_location_check" name="primary_location_check" onchange="showInputField('primary_location_check','primary_location_field')" type="checkbox" value="1"> <label class="form-check-label">Primärlokalisation</label><br>
+							<span class='hidden-on-default, border' id="primary_location_field" style="display:none"><input class="form-check-input" id="Rektum_check" name="Rektum_check" type="checkbox" value="Rektum"> <label for="Rektum_check">Rektum</label><br>
+							<input class="form-check-input" id="Sigma_check" name="Sigma_check" type="checkbox" value="Sigma"> <label for="Sigma_check">Sigma</label><br>
+							<input class="form-check-input" id="Descendens_check" name="Descendens_check" type="checkbox" value="Descendens"> <label for="Descendens_check">Descendens</label><br>
+							<input class="form-check-input" id="Transversum_check" name="Transversum_check" type="checkbox" value="Transversum"> <label for="Transversum_check">Transversum</label><br>
+							<input class="form-check-input" id="Ascendens_check" name="Ascendens_check" type="checkbox" value="Ascendens"> <label for="Ascendens_check">Ascendens</label><br>
+							<input class="form-check-input" id="Zäkum_check" name="Zäkum_check" type="checkbox" value="Zäkum"> <label for="Zäkum_check">Zäkum</label><br>
+							<input class="form-check-input" id="Rektosigmoid_check" name="Rektosigmoid_check" type="checkbox" value="Rektosigmoid"> <label for="Rektosigmoid_check">Rektosigmoid</label></span>
+						</div>
+						<div class="form-group">
+							<input class="form-check-input" id="crlm_met_syn_check" name="crlm_met_syn_check" onchange="showInputField('crlm_met_syn_check','crlm_met_syn_field')" type="checkbox" value="1"> <label class="form-check-label">Synchron/Metachron</label><br>
+							<span class='hidden-on-default, border' id="crlm_met_syn_field" style="display:none"><input class="form-check-input" id="Synchron_check" name="Synchron_check" type="checkbox" value="Synchron"> <label for="Synchron_check">Synchron</label><br>
+							<input class="form-check-input" id="Metachron_check" name="Metachron_check" type="checkbox" value="Metachron"> <label for="Metachron_check">Metachron</label></span>
+						</div><input class="form-check-input" id="Bilobulär_check" name="Bilobulär_check" type="checkbox" value="Bilobulär"> <label for="Bilobulär_check">Bilobulär</label><br>
+						<input class="form-check-input" id="Multimodal_check" name="Multimodal_check" type="checkbox" value="Multimodal"> <label for="Multimodal_check">Multimodal</label><br>
+						<input class="form-check-input" id="Two_staged_check" name="Two_staged_check" type="checkbox" value="Two_staged"> <label for="Two_staged_check">Two Staged</label>
+					</div>
+				</div>
+				<div class="col-6" style="border: 1px solid ,padding = 10p;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>TNM-Klassifikation</h3>
+						<hr>
+						<div class="form-group">
+							<input class="form-check-input" id="braf_check" name="braf_check" onchange="showInputField('braf_check','braf_field')" type="checkbox" value="1"> <label class="form-check-label">BRAF</label><br>
+							<span class='hidden-on-default, border' id="braf_field" style="display:none"><input class="form-check-input" id="braf_mutiert_check" name="braf_mutiert_check" type="checkbox" value="braf_mutiert"> <label for="braf_mutiert_check">mutiert</label><br>
+							<input class="form-check-input" id="braf_wildtyp_check" name="braf_wildtyp_check" type="checkbox" value="braf_wildtyp"> <label for="braf_wildtyp_check">wildtyp</label><br></span>
+						</div>
+						<div class="form-group">
+							<input class="form-check-input" id="ras_check" name="ras_check" onchange="showInputField('ras_check','ras_field')" type="checkbox" value="1"> <label class="form-check-label">RAS</label><br>
+							<span class='hidden-on-default, border' id="ras_field" style="display:none"><input class="form-check-input" id="ras_mutiert_check" name="ras_mutiert_check" type="checkbox" value="ras_mutiert"> <label for="ras_mutiert_check">mutiert</label><br>
+							<input class="form-check-input" id="ras_wildtyp_check" name="ras_wildtyp_check" type="checkbox" value="ras_wildtyp"> <label for="ras_wildtyp_check">wildtyp</label><br></span>
+						</div>
+						<div class="form-group">
+							<input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1"> <label class="form-check-label">Mikrosatelliten</label><br>
+							<span class='hidden-on-default, border' id="mss_field" style="display:none"><input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss"> <label for="mss_check">Stabil</label><br>
+							<input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi"> <label for="msi_check">Instabil</label><br></span>
+							<div class="form-group">
+								<input class="form-check-input" id="t_check" name="t_check" onchange="showInputField('t_check','t_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">T</label> <span class='hidden-on-default, border' id="t_field" style="display:none"><input class="form-control" id="T" max="4" min="0" name="T" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="n_check" name="n_check" onchange="showInputField('n_check','n_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">N</label> <span class='hidden-on-default, border' id="n_field" style="display:none"><input class="form-control" id="N" max="3" min="0" name="N" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="m_check" name="m_check" onchange="showInputField('m_check','m_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">M</label> <span class='hidden-on-default, border' id="m_field" style="display:none"><input class="form-control" id="M" max="1" min="0" name="M" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="lk_check" name="lk_check" onchange="showInputField('lk_check','lk_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">Infizierte Lymphknoten</label> <span class='hidden-on-default, border' id="lk_field" style="display:none"><input class="form-control" id="LK" name="LK" pattern="[1-9][0-9]*/[1-9][0-9]*" placeholder="Code" type="text"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="l_check" name="l_check" onchange="showInputField('l_check','l_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">L</label> <span class='hidden-on-default, border' id="l_field" style="display:none"><input class="form-control" id="L" max="3" min="0" name="L" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="v_check" name="v_check" onchange="showInputField('v_check','v_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">V</label> <span class='hidden-on-default, border' id="v_field" style="display:none"><input class="form-control" id="V" max="3" min="0" name="V" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="r_check" name="r_check" onchange="showInputField('r_check','r_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">R</label> <span class='hidden-on-default, border' id="r_field" style="display:none"><input class="form-control" id="R" max="3" min="0" name="R" placeholder="Code" type="number"></span>
+							</div>
+							<div class="form-group">
+								<input class="form-check-input" id="g_check" name="g_check" onchange="showInputField('g_check','g_field')" type="checkbox" value="1"> <label for="formGroupExampleInput">G</label> <span class='hidden-on-default, border' id="g_field" style="display:none"><input class="form-control" id="G" max="4" min="1" name="G" placeholder="Code" type="number"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="w-100 gy-4"></div>
+				<div class="col-6" style="border: 1px solid ,padding = 10p;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>Allgemeiner Zustand</h3>
+            <hr>
+            <div class="form-group">
+              <input class="form-check-input" id="last_seen_check" name="last_seen_check" onchange="showInputField('last_seen_check','last_seen_field')" type="checkbox" value="1">
+               <label for="formGroupExampleInput">Patient zuletzt behandelt</label>
+               <span class='hidden-on-default, border' id="last_seen_field" style="display:none">
+                <label>Von</label>
+               <input type="date" class="form-control" id="date_fu_von" name="date_fu_von" placeholder="Datum">
+               <label>Bis</label>
+               <input type="date" class="form-control" id="date_fu_bis" name="date_fu_bis" placeholder="Datum">
+               </span>
+            </div>
+            <div class="form-group">
+				<input class="form-check-input" id="died_check" name="died_check" onchange="showInputField('died_check','died_field')" type="checkbox" value="1">
+               <label>Verstorben</label>
+			   <span class='hidden-on-default, border' id="died_field" style="display:none">
+				<input class="form-check-input" id="died_no_check" name="died_no_check" type="checkbox" value="Alive">
+				<label>Nein</label>
+				<input class="form-check-input" id="died_yes_check" name="died_yes_check" type="checkbox" value="Dead">
+				<label>Ja</label>
+			   </span>
+               
+            </div>
+			<div class="form-group">
+				<input class="form-check-input" id="rezidiv_check" name="rezidiv_check" onchange="showInputField('rezidiv_check','rezidiv_field')" type="checkbox" value="1">
+               <label>Rezidiv</label>
+			   <span class='hidden-on-default, border' id="rezidiv_field" style="display:none">
+				<input class="form-check-input" id="rezidiv_check_no" name="rezidiv_check_no" type="checkbox" value="Rezidiv">
+				<label>Nein</label>
+				<input class="form-check-input" id="rezidiv_check_yes" name="rezidiv_check_yes" type="checkbox" value="Gesund">
+				<label>Ja</label>
+			   </span>
+               
+            </div>
+            <div class="form-group">
+			<input class="form-check-input" id="asa_check" name="asa_check" onchange="showInputField('asa_check','asa_field')" type="checkbox" value="1">
+               <label for="formGroupExampleInput2">ASA</label>
+               <span class='hidden-on-default, border' id="asa_field" style="display:none">
+				<input class="form-check-input" id="asa_check_not_found" name="asa_check_not_found" type="checkbox" value="Nicht bestimmt">
+				<label>Nicht bestimmt</label>
+				<br>
+				<input class="form-check-input" id="asa_check_1" name="asa_check_1" type="checkbox" value="ASA1">
+				<label>I</label>
+				<br>
+				<input class="form-check-input" id="asa_check_2" name="asa_check_2" type="checkbox" value="ASA2">
+				<label>II</label>
+				<br>
+				<input class="form-check-input" id="asa_check_3" name="asa_check_3" type="checkbox" value="ASA3">
+				<label>III</label>
+				<br>
+				<input class="form-check-input" id="asa_check_4" name="asa_check_4" type="checkbox" value="ASA4">
+				<label>IV</label>
+				<br>
+				<input class="form-check-input" id="asa_check_5" name="asa_check_5" type="checkbox" value="ASA5">
+				<label>V</label>
+				<br>
+			   </span>
+            </div>
+            <div class="form-group">
+				<input class="form-check-input" id="bmi_check" name="bmi_check" onchange="showInputField('bmi_check','bmi_field')" type="checkbox" value="1">
+               <label for="formGroupExampleInput2">BMI</label>
+			   <span class='hidden-on-default, border' id="bmi_field" style="display:none">
+				<label for="formGroupExampleInput2">Von</label>
+               <input type="number" min="0" max="60" class="form-control" id="von_bmi_input" name="von_bmi_input" placeholder="BMI">
+			   <label for="formGroupExampleInput2">Bis</label>
+			   <input type="number" min="0" max="60" class="form-control" id="bis_bmi_input" name="bis_bmi_input" placeholder="BMI">
+			   </span>
+            </div>
+            <div class="form-group">
+				<input class="form-check-input" id="alc_check" name="alc_check" onchange="showInputField('alc_check','alc_field')" type="checkbox" value="1">
+				<label> Alkohol</label>
+				<span class='hidden-on-default, border' id="alc_field" style="display:none">
+               <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1"> Alkohol 
+               <br>
+			   <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1"> Kein Alkohol 	
+				</span>
+			</div>
+			<div class="form-group">
+				<input class="form-check-input" id="smoking_check" name="smoking_check" onchange="showInputField('smoking_check','smoking_field')" type="checkbox" value="1">
+				<label> Rauchen</label>
+				<span class='hidden-on-default, border' id="smoking_field" style="display:none">
+               <input class="form-check-input" type="checkbox" id="smoking_check_yes" name="smoking_check_yes" value="1"> Rauchen 
+               <br>
+			   <input class="form-check-input" type="checkbox" id="smoking_check_no" name="smoking_check_no" value="1"> Nicht Rauchen 	
+				</span>
+			</div>
+			<div class="form-group">
+				<input class="form-check-input" id="zirrose_check" name="zirrose_check" onchange="showInputField('zirrose_check','zirrose_field')" type="checkbox" value="1">
+				<label> Zirrose</label>
+				<span class='hidden-on-default, border' id="zirrose_field" style="display:none">
+               <input class="form-check-input" type="checkbox" id="zirrose_check_yes" name="zirrose_check_yes" value="1"> Zirrose 
+               <br>
+			   <input class="form-check-input" type="checkbox" id="zirrose_check_no" name="zirrose_check_no" value="1"> Keine Zirrose 	
+				</span>
+			</div>
+			<div class="form-group">
+				<input class="form-check-input" id="diabetes_check" name="diabetes_check" onchange="showInputField('diabetes_check','diabetes_field')" type="checkbox" value="1">
+				<label> Diabetes</label>
+				<span class='hidden-on-default, border' id="diabetes_field" style="display:none">
+               <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1"> Diabetes 
+               <br>
+			   <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1"> Kein Diabetes 	
+				</span>
+			</div>
+			<div class="form-group">
+				<input class="form-check-input" id="fibrose_check" name="fibrose_check" onchange="showInputField('fibrose_check','fibrose_field')" type="checkbox" value="1">
+				<label> Fibrose</label>
+				<span class='hidden-on-default, border' id="fibrose_field" style="display:none">
+               <input class="form-check-input" type="checkbox" id="fibrose_check_yes" name="fibrose_check_yes" value="1"> Fibrose 
+               <br>
+			   <input class="form-check-input" type="checkbox" id="fibrose_check_no" name="fibrose_check_no" value="1"> Keine Fibrose 	
+				</span>
+			</div>
             
-            <input class="form-check-input" type="checkbox" id="sexcheck" name="sexcheck" value="1" onchange="showInputField('sexcheck','sexfield')">
-            <label class="form-check-label">Geschlecht</label>
-            <br>
-            <span id="sexfield" class='hidden-on-default' style="display:none;">
-              <input class="form-check-input" type="checkbox" value ="Männlich" name = "männlichcheck" id="checkMale">
-              <label for="checkMale">Männlich</label>
-              <input class="form-check-input" type="checkbox" value="Weiblich" name ="weiblichcheck" id="checkFemale">
-              <label for="checkFemale">Weiblich</label>
-              <input class="form-check-input" type="checkbox" value="Divers" name="diverscheck" id="checkDiv">
-              <label for="checkDiv">Divers</label>
-            </span>
-          </div>
-          <br>
-        </div>
-      </div>
-      <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>Diagnose</h3>
-          <hr>
-          <div class="form-group">
-            
-            <input class="form-check-input" type="checkbox" id="diagnose_code_check" name="diagnose_code_check" value="1" onchange="showInputField('diagnose_code_check','diagnose_code_field')">
-            <label>Diagnose Codes</label>
-            <br>
-            <span id="diagnose_code_field" class='hidden-on-default' style="display:none;">
-              <label class="form-labels">Code</label>
-              <input class="form-control" type="text" name="diagnosis1" id="diagnosis1">
-              <label class="form-labels">Code</label>
-              <input class="form-control" type="text" name="diagnosis2" id="diagnosis2">
-            </span>
-          </div>
-          <div class="form-group">
-            
-            <input class="form-check-input" type="checkbox" id="diagnosis_date_check" name="diagnosis_date_check" value="1" onchange="showInputField('diagnosis_date_check','diagnosis_date_field')">
-            <label>Datum Erstdiagnose</label>
-            <br>
-            <span id="diagnosis_date_field" class='hidden-on-default' style="display:none;">
-              <label class="form-labels">Von</label>
-              <input class="form-control" type="date" name="von_diagnosis_date">
-              <label class="form-labels">Bis</label>
-              <input class="form-control" type="date" name="bis_diagnosis_date">
-            </span>
-          </div>
-          <div class="form-group">
-            <input class="form-check-input" type="checkbox" id="primary_location_check" name="primary_location_check" value="1" onchange="showInputField('primary_location_check','primary_location_field')">
-            <label class="form-check-label">Primärlokalisation</label>
-            <br>
-            <span id="primary_location_field" class='hidden-on-default, border' style="display:none">
-              <input class="form-check-input" type="checkbox" value ="Rektum" name = "Rektum_check" id="Rektum_check">
-              <label for="Rektum_check">Rektum</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Sigma" name = "Sigma_check" id="Sigma_check">
-              <label for="Sigma_check">Sigma</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Descendens" name = "Descendens_check" id="Descendens_check">
-              <label for="Descendens_check">Descendens</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Transversum" name = "Transversum_check" id="Transversum_check">
-              <label for="Transversum_check">Transversum</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Ascendens" name = "Ascendens_check" id="Ascendens_check">
-              <label for="Ascendens_check">Ascendens</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Zäkum" name = "Zäkum_check" id="Zäkum_check">
-              <label for="Zäkum_check">Zäkum</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Rektosigmoid" name = "Rektosigmoid_check" id="Rektosigmoid_check">
-              <label for="Rektosigmoid_check">Rektosigmoid</label>
-            </span>
-          </div>
-          <div class="form-group">
-            <input class="form-check-input" type="checkbox" id="crlm_met_syn_check" name="crlm_met_syn_check" value="1" onchange="showInputField('crlm_met_syn_check','crlm_met_syn_field')">
-            <label class="form-check-label">Synchron/Metachron</label>
-            <br>
-            <span id="crlm_met_syn_field" class='hidden-on-default, border' style="display:none">
-              <input class="form-check-input" type="checkbox" value ="Synchron" name = "Synchron_check" id="Synchron_check">
-              <label for="Synchron_check">Synchron</label>
-              <br>
-              <input class="form-check-input" type="checkbox" value ="Metachron" name = "Metachron_check" id="Metachron_check">
-              <label for="Metachron_check">Metachron</label>
-            </span>
-          </div>
-          <input class="form-check-input" type="checkbox" value ="Bilobulär" name = "Bilobulär_check" id="Bilobulär_check">
-          <label for="Bilobulär_check">Bilobulär</label>
-          <br>
-          <input class="form-check-input" type="checkbox" value ="Multimodal" name = "Multimodal_check" id="Multimodal_check">
-          <label for="Multimodal_check">Multimodal</label>
-          <br>
-          <input class="form-check-input" type="checkbox" value ="Two_staged" name = "Two_staged_check" id="Two_staged_check">
-          <label for="Two_staged_check">Two Staged</label>
-        </div>
-      </div>
-      <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>TNM-Klassifikation</h3>
-          <hr>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-        </div>
-      </div>
-      <div class="w-100 gy-4"></div>
-      <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>Irgendwas anderes</h3>
-          <hr>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-        </div>
-      </div>
-      <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>Irgendwas anderes 2</h3>
-          <hr>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-        </div>
-      </div>
-      <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-          <h3>Irgendwas anderes 3</h3>
-          <hr>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Example label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="col-6" style="width:100%;">
-      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-        <h3>Datenausgabe</h3>
-        {%if htmltext%}{{htmltext}}
-        {%endif%}
-      </div>
-    </div>
-    <hr>
-    <input class="btn btn-secondary" type="submit" value="Daten ausgeben" name = "datenausgabe">
-    <input class="btn btn-secondary" type="reset">
-    {%if htmltext%}
-    <div class="form-group">
-      <input class="btn btn-primary" value="Exportieren" name="export" onclick="location.href='{{url_for('export_to_csv')}}';">
-    </div>
-    {%endif%}
-  </div>
-</form>
-</div>
-{% if RenderParameters["error"] %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Fehler:</strong> {{ RenderParameters["error"] }}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span> 
-  </button>
-</div>
-{%if overwrite %}
-<input class="btn btn-secondary" type="submit" value="ueberschreiben">
-{% endif %}
-{% endif %}
-{% if RenderParameters["success"] %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Erfolg:</strong> {{RenderParameters["success"]}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{%endif%}
-<form class="form-inline" method="post">
-  <label for="sapidimport">Daten analysiere</label>
-  <button class="btn btn-secondary" type="submit" name = "analysebutton">Analysieren</button>
-</form>
-{%endblock%}
+					</div>
+				</div>
+				<div class="col-6" style="border: 1px solid ,padding = 10p;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>Irgendwas anderes 2</h3>
+						<hr>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput2">Another label</label> <input class="form-control" id="formGroupExampleInput2" placeholder="Another input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col-6" style="border: 1px solid ,padding = 10p;">
+					<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+						<h3>Irgendwas anderes 3</h3>
+						<hr>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput2">Another label</label> <input class="form-control" id="formGroupExampleInput2" placeholder="Another input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text">
+						</div>
+					</div>
+				</div>
+			</div><br>
+			<div class="col-6" style="width:100%;">
+				<div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+					<h3>Datenausgabe</h3>{%if htmltext%}{{htmltext}} {%endif%}
+				</div>
+			</div>
+			<hr>
+			<input class="btn btn-secondary" name="datenausgabe" type="submit" value="Daten ausgeben"> <input class="btn btn-secondary" type="reset"> {%if htmltext%}
+			<div class="form-group">
+				<input class="btn btn-primary" name="export" onclick="location.href='{{url_for('export_to_csv')}}';" value="Exportieren">
+			</div>{%endif%}
+		</div>
+	</form>{% if RenderParameters["error"] %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		<strong>Fehler:</strong> {{ RenderParameters["error"] }} <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&times;</span></button>
+	</div>{%if overwrite %}
+	<form>
+		<input class="btn btn-secondary" type="submit" value="ueberschreiben"> {% endif %} {% endif %} {% if RenderParameters["success"] %}
+	</form>
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong>Erfolg:</strong> {{RenderParameters["success"]}} <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&times;</span></button>
+	</div>{%endif%}
+	<form class="form-inline" method="post">
+		<label for="sapidimport">Daten analysiere</label> <button class="btn btn-secondary" name="analysebutton" type="submit">Analysieren</button>
+	</form>{%endblock%}
+</body>
+</html>
