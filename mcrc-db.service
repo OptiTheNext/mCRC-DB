@@ -7,7 +7,7 @@ Wants=network-online.target
 Restart=always
 Type=simple
 ExecStart=/usr/bin/python3 /path/to/main.py
-User=
+User= 
 Group=
 
 [Install]

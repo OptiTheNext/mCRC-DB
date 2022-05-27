@@ -110,16 +110,27 @@ def Analyse(parameters) -> pandas.DataFrame:
 
     ##check for Bilobulär#
     if(parameters.get('Bilobulär_check',None)):
-        df.query("crlm_bilobular == 1", inplace=True) 
+        if(parameters.get('bilobulär_check_yes',None)):
+            df.query("crlm_bilobular == 1", inplace = True)
+        if(parameters.get('bilobulär_check_no',None)):
+            df.query("crlm_bilobular == 0", inplace = True)
         print("inside bilobulär")
     
     ##Check for Multimodal
-    if(parameters.get('Multimodal_check',None)):
-        df.query("multimodal == 1", inplace=True) 
+
+    if(parameters.get('multimodal_check',None)):
+        if(parameters.get('multimodal_check_yes',None)):
+            df.query("multimodal == 1", inplace = True)
+        if(parameters.get('multimodal_check_no',None)):
+            df.query("multimodal == 0", inplace = True)
+        
     
     ##Check for twostaged
-    if(parameters.get('Two_staged_check',None)):
-        df.query("two_staged == 1", inplace=True) 
+    if(parameters.get('twostaged_check',None)):
+        if(parameters.get('twostaged_check_yes',None)):
+            df.query("two_staged == 1", inplace = True)
+        if(parameters.get('twostaged_check_no',None)):
+            df.query("two_staged == 0", inplace = True)
     
     ##Check for BRAF
     if(parameters.get('braf_check',None)):
@@ -272,6 +283,65 @@ def Analyse(parameters) -> pandas.DataFrame:
         if(parameters.get("fibrose_check_no",None)):
              df.query("fibrosis == 1",inplace=True)
     
+    ##Check for Previous OPs
+    if(parameters.get("PreviousOPs",None)):
+        if(parameters["previous_surgery_code"]):
+            df.query("previous_surgery == @parameters('previous_surgery_code')",inplace=True)
+        if(parameters['previous_surgery_date_von']):
+            von_date = datetime.datetime.strptime(parameters['previous_surgery_date_von'], '%Y-%m-%d')
+            von_date = datetime.date(von_date.year,von_date.month,von_date.day)
+            df.query("previous_surgery >= @von_date",inplace=True)
+        if(parameters['previous_surgery_date_bis']):
+            bis_date = datetime.datetime.strptime(parameters['previous_surgery_date_bis'], '%Y-%m-%d')
+            bis_date = datetime.date(bis_date.year,bis_date.month,bis_date.day)
+            df.query("previous_surgery <= @bis_date",inplace=True)
+    
+    ##Check for FS_Chemo
+    if(parameters.get("fs_previous_chemotherapy",None)):
+        if(parameters.get("fs_chemo_check_no",None)):
+            df.query("fs_previous_chemotherapy == 0", inplace=True)
+            
+        if(parameters["fs_previous_chemotherapy_cycles_von"]):
+            para = int(parameters['fs_previous_chemotherapy_cycles_von'])
+            df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["fs_previous_chemotherapy_cycles_bis"]):
+            para = int(parameters['fs_previous_chemotherapy_cycles_bis'])
+            df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["fs_previous_chemotherapy_type"]):
+            df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
+        if(parameters["fs_previous_antibody"]):
+            df.query("fs_previous_antibody = @parameters['fs_previous_antibody']",inplace=True)
+    
+    ##Check for SS_Chemo
+    if(parameters.get("ss_previous_chemotherapy",None)):
+        if(parameters.get("ss_chemo_check_no",None)):
+            df.query("ss_previous_chemotherapy == 0", inplace=True)
+        if(parameters["ss_previous_chemotherapy_cycles_von"]):
+            para = int(parameters['ss_previous_chemotherapy_cycles_von'])
+            df.query("ss_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["ss_previous_chemotherapy_cycles_bis"]):
+            para = int(parameters['ss_previous_chemotherapy_cycles_bis'])
+            df.query("ss_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["ss_previous_chemotherapy_type"]):
+            df.query("ss_previous_chemotherapy_type = @parameters['ss_previous_chemotherapy_typ']",inplace=True)
+        if(parameters["ss_previous_antibody"]):
+            df.query("ss_previous_antibody = @parameters['ss_previous_antibody']",inplace=True)
+
+    ##Check for TH_Chemo
+    if(parameters.get("th_previous_chemotherapy",None)):
+        if(parameters.get("th_chemo_check_no",None)):
+            df.query("th_previous_chemotherapy == 0", inplace=True)
+        if(parameters["th_previous_chemotherapy_cycles_von"]):
+            para = int(parameters['th_previous_chemotherapy_cycles_von'])
+            df.query("th_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["th_previous_chemotherapy_cycles_bis"]):
+            para = int(parameters['th_previous_chemotherapy_cycles_bis'])
+            df.query("th_previous_chemotherapy_cycles == @para", inplace= True)
+        if(parameters["th_previous_chemotherapy_type"]):
+            df.query("th_previous_chemotherapy_type = @parameters['th_previous_chemotherapy_typ']",inplace=True)
+        if(parameters["th_previous_antibody"]):
+            df.query("th_previous_antibody = @parameters['th_previous_antibody']",inplace=True)
+            
 
     df.fillna("",inplace=True)
     return df
