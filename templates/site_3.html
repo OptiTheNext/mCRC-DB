@@ -25,7 +25,7 @@
                             </div>
                             <br />
                             <div class="form-group">
-                                <input class="form-check-input" id="geburtcheck" name="geburtcheck" onchange="showInputField('geburtcheck','geburtfield')" type="checkbox" value="1" /> <label>Geburtsdatum</label><br />
+                                <input class="form-check-input" id="geburtcheck" name="geburtcheck" onchange="showInputField('geburtcheck','geburtfield')" type="checkbox" value="1" /> <label for="geburtcheck">Geburtsdatum</label><br />
                                 <span class="hidden-on-default" id="geburtfield" style="display: none;">
                                     <label class="form-labels">Von</label> <input class="form-control" id="von_geburt" name="von_geburt" type="date" /> <label class="form-labels">Bis</label>
                                     <input class="form-control" id="bis_geburt" name="bis_geburt" type="date" />
@@ -33,7 +33,7 @@
                             </div>
                             <br />
                             <div class="form-group">
-                                <input class="form-check-input" id="sexcheck" name="sexcheck" onchange="showInputField('sexcheck','sexfield')" type="checkbox" value="1" /> <label class="form-check-label">Geschlecht</label><br />
+                                <input class="form-check-input" id="sexcheck" name="sexcheck" onchange="showInputField('sexcheck','sexfield')" type="checkbox" value="1" /> <label for="sexcheck" class="form-check-label">Geschlecht</label><br />
                                 <span class="hidden-on-default" id="sexfield" style="display: none;">
                                     <input class="form-check-input" id="checkMale" name="männlichcheck" type="checkbox" value="Männlich" /> <label for="checkMale">Männlich</label>
                                     <input class="form-check-input" id="checkFemale" name="weiblichcheck" type="checkbox" value="Weiblich" /> <label for="checkFemale">Weiblich</label>
@@ -49,7 +49,7 @@
                             <hr />
                             <div class="form-group">
                                 <input class="form-check-input" id="diagnose_code_check" name="diagnose_code_check" onchange="showInputField('diagnose_code_check','diagnose_code_field')" type="checkbox" value="1" />
-                                <label>Diagnose Codes</label><br />
+                                <label for="diagnose_code_check" >Diagnose Codes</label><br />
                                 <span class="hidden-on-default" id="diagnose_code_field" style="display: none;">
                                     <label class="form-labels">Code</label> <input class="form-control" id="diagnosis1" name="diagnosis1" type="text" /> <label class="form-labels">Code</label>
                                     <input class="form-control" id="diagnosis2" name="diagnosis2" type="text" />
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="diagnosis_date_check" name="diagnosis_date_check" onchange="showInputField('diagnosis_date_check','diagnosis_date_field')" type="checkbox" value="1" />
-                                <label>Datum Erstdiagnose</label><br />
+                                <label for="diagnosis_date_check">Datum Erstdiagnose</label>
                                 <span class="hidden-on-default" id="diagnosis_date_field" style="display: none;">
                                     <label class="form-labels">Von</label> <input class="form-control" name="von_diagnosis_date" type="date" /> <label class="form-labels">Bis</label>
                                     <input class="form-control" name="bis_diagnosis_date" type="date" />
@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="primary_location_check" name="primary_location_check" onchange="showInputField('primary_location_check','primary_location_field')" type="checkbox" value="1" />
-                                <label class="form-check-label">Primärlokalisation</label><br />
+                                <label for="primary_location_check" class="form-check-label">Primärlokalisation</label><br />
                                 <span class="hidden-on-default, border" id="primary_location_field" style="display: none;">
                                     <input class="form-check-input" id="Rektum_check" name="Rektum_check" type="checkbox" value="Rektum" /> <label for="Rektum_check">Rektum</label><br />
                                     <input class="form-check-input" id="Sigma_check" name="Sigma_check" type="checkbox" value="Sigma" /> <label for="Sigma_check">Sigma</label><br />
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="crlm_met_syn_check" name="crlm_met_syn_check" onchange="showInputField('crlm_met_syn_check','crlm_met_syn_field')" type="checkbox" value="1" />
-                                <label class="form-check-label">Synchron/Metachron</label><br />
+                                <label for="crlm_met_syn_check"class="form-check-label">Synchron/Metachron</label><br />
                                 <span class="hidden-on-default, border" id="crlm_met_syn_field" style="display: none;">
                                     <input class="form-check-input" id="Synchron_check" name="Synchron_check" type="checkbox" value="Synchron" /> <label for="Synchron_check">Synchron</label><br />
                                     <input class="form-check-input" id="Metachron_check" name="Metachron_check" type="checkbox" value="Metachron" /> <label for="Metachron_check">Metachron</label>
@@ -86,32 +86,32 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="bilobulär_check" name="bilobulär_check" onchange="showInputField('bilobulär_check','bilobulär_field')" type="checkbox" value="1" />
-                                <label class="form-check-label">Bilobulär</label><br />
+                                <label for="bilobulär_check" class="form-check-label">Bilobulär</label><br />
                                 <span class="hidden-on-default, border" id="bilobulär_field" style="display: none;">
                                     <input class="form-check-input" id="bilobulär_check_yes" name="bilobulär_check_yes" type="checkbox" value="Bilobulär" />
-                                    <label for="Synchron_check">Bilobulär</label><br />
+                                    <label for="bilobulär_check_yes">Bilobulär</label><br />
                                     <input class="form-check-input" id="bilobulär_check_no" name="bilobulär_check_no" type="checkbox" value="Monolobulär" />
-                                    <label for="Metachron_check">Monolobulär</label>
+                                    <label for="bilobulär_check_no">Monolobulär</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="multimodal_check" name="bilobulär_check" onchange="showInputField('multimodal_check','multimodal_field')" type="checkbox" value="1" />
-                                <label class="form-check-label">Mutimodal</label><br />
+                                <label for="multimodal_check" class="form-check-label">Mutimodal</label><br />
                                 <span class="hidden-on-default, border" id="multimodal_field" style="display: none;">
                                     <input class="form-check-input" id="multimodal_check_yes" name="multimodal_check_yes" type="checkbox" value="multimodal" />
-                                    <label for="Synchron_check">Mutlimodal</label><br />
+                                    <label for="multimodal_check_yes">Mutlimodal</label><br />
                                     <input class="form-check-input" id="multimodal_check_no" name="multimodal_check_no" type="checkbox" value="monomodal" />
-                                    <label for="Metachron_check">Monomodal</label>
+                                    <label for="multimodal_check_no">Monomodal</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="twostaged_check" name="twostaged_check" onchange="showInputField('twostaged_check','twostaged_field')" type="checkbox" value="1" />
-                                <label class="form-check-label">Two Staged</label><br />
+                                <label for="twostaged_check" class="form-check-label">Two Staged</label><br />
                                 <span class="hidden-on-default, border" id="twostaged_field" style="display: none;">
                                     <input class="form-check-input" id="twostaged_check_yes" name="twostaged_check_yes" type="checkbox" value="two_staged" />
-                                    <label for="Synchron_check">Two Staged</label><br />
+                                    <label for="twostaged_check_yes">Two Staged</label><br />
                                     <input class="form-check-input" id="twostaged_check_no" name="twostaged_check_no" type="checkbox" value="singe_staged" />
-                                    <label for="Metachron_check">Single Stage</label>
+                                    <label for="twostaged_check_no">Single Stage</label>
                                 </span>
                             </div>
                         </div>
