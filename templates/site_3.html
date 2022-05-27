@@ -23,24 +23,24 @@
                                     <input class="form-control" id="pat_id" name="pat_id" type="int" />
                                 </span>
                             </div>
-                            <br />
+                            
                             <div class="form-group">
-                                <input class="form-check-input" id="geburtcheck" name="geburtcheck" onchange="showInputField('geburtcheck','geburtfield')" type="checkbox" value="1" /> <label for="geburtcheck">Geburtsdatum</label><br />
+                                <input class="form-check-input" id="geburtcheck" name="geburtcheck" onchange="showInputField('geburtcheck','geburtfield')" type="checkbox" value="1" /> <label for="geburtcheck">Geburtsdatum</label>
                                 <span class="hidden-on-default" id="geburtfield" style="display: none;">
                                     <label class="form-labels">Von</label> <input class="form-control" id="von_geburt" name="von_geburt" type="date" /> <label class="form-labels">Bis</label>
                                     <input class="form-control" id="bis_geburt" name="bis_geburt" type="date" />
                                 </span>
                             </div>
-                            <br />
+                            
                             <div class="form-group">
-                                <input class="form-check-input" id="sexcheck" name="sexcheck" onchange="showInputField('sexcheck','sexfield')" type="checkbox" value="1" /> <label for="sexcheck" class="form-check-label">Geschlecht</label><br />
+                                <input class="form-check-input" id="sexcheck" name="sexcheck" onchange="showInputField('sexcheck','sexfield')" type="checkbox" value="1" /> <label for="sexcheck" class="form-check-label">Geschlecht</label>
                                 <span class="hidden-on-default" id="sexfield" style="display: none;">
                                     <input class="form-check-input" id="checkMale" name="männlichcheck" type="checkbox" value="Männlich" /> <label for="checkMale">Männlich</label>
                                     <input class="form-check-input" id="checkFemale" name="weiblichcheck" type="checkbox" value="Weiblich" /> <label for="checkFemale">Weiblich</label>
                                     <input class="form-check-input" id="checkDiv" name="diverscheck" type="checkbox" value="Divers" /> <label for="checkDiv">Divers</label>
                                 </span>
                             </div>
-                            <br />
+                            
                         </div>
                     </div>
                     <div class="col-6" style="border: 1px solid, padding = 10p;">
@@ -49,7 +49,7 @@
                             <hr />
                             <div class="form-group">
                                 <input class="form-check-input" id="diagnose_code_check" name="diagnose_code_check" onchange="showInputField('diagnose_code_check','diagnose_code_field')" type="checkbox" value="1" />
-                                <label for="diagnose_code_check" >Diagnose Codes</label><br />
+                                <label for="diagnose_code_check" >Diagnose Codes</label>
                                 <span class="hidden-on-default" id="diagnose_code_field" style="display: none;">
                                     <label class="form-labels">Code</label> <input class="form-control" id="diagnosis1" name="diagnosis1" type="text" /> <label class="form-labels">Code</label>
                                     <input class="form-control" id="diagnosis2" name="diagnosis2" type="text" />
@@ -65,51 +65,51 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="primary_location_check" name="primary_location_check" onchange="showInputField('primary_location_check','primary_location_field')" type="checkbox" value="1" />
-                                <label for="primary_location_check" class="form-check-label">Primärlokalisation</label><br />
+                                <label for="primary_location_check" class="form-check-label">Primärlokalisation</label>
                                 <span class="hidden-on-default, border" id="primary_location_field" style="display: none;">
-                                    <input class="form-check-input" id="Rektum_check" name="Rektum_check" type="checkbox" value="Rektum" /> <label for="Rektum_check">Rektum</label><br />
-                                    <input class="form-check-input" id="Sigma_check" name="Sigma_check" type="checkbox" value="Sigma" /> <label for="Sigma_check">Sigma</label><br />
-                                    <input class="form-check-input" id="Descendens_check" name="Descendens_check" type="checkbox" value="Descendens" /> <label for="Descendens_check">Descendens</label><br />
-                                    <input class="form-check-input" id="Transversum_check" name="Transversum_check" type="checkbox" value="Transversum" /> <label for="Transversum_check">Transversum</label><br />
-                                    <input class="form-check-input" id="Ascendens_check" name="Ascendens_check" type="checkbox" value="Ascendens" /> <label for="Ascendens_check">Ascendens</label><br />
-                                    <input class="form-check-input" id="Zäkum_check" name="Zäkum_check" type="checkbox" value="Zäkum" /> <label for="Zäkum_check">Zäkum</label><br />
+                                    <input class="form-check-input" id="Rektum_check" name="Rektum_check" type="checkbox" value="Rektum" /> <label for="Rektum_check">Rektum</label>
+                                    <input class="form-check-input" id="Sigma_check" name="Sigma_check" type="checkbox" value="Sigma" /> <label for="Sigma_check">Sigma</label>
+                                    <input class="form-check-input" id="Descendens_check" name="Descendens_check" type="checkbox" value="Descendens" /> <label for="Descendens_check">Descendens</label>
+                                    <input class="form-check-input" id="Transversum_check" name="Transversum_check" type="checkbox" value="Transversum" /> <label for="Transversum_check">Transversum</label>
+                                    <input class="form-check-input" id="Ascendens_check" name="Ascendens_check" type="checkbox" value="Ascendens" /> <label for="Ascendens_check">Ascendens</label>
+                                    <input class="form-check-input" id="Zäkum_check" name="Zäkum_check" type="checkbox" value="Zäkum" /> <label for="Zäkum_check">Zäkum</label>
                                     <input class="form-check-input" id="Rektosigmoid_check" name="Rektosigmoid_check" type="checkbox" value="Rektosigmoid" /> <label for="Rektosigmoid_check">Rektosigmoid</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="crlm_met_syn_check" name="crlm_met_syn_check" onchange="showInputField('crlm_met_syn_check','crlm_met_syn_field')" type="checkbox" value="1" />
-                                <label for="crlm_met_syn_check"class="form-check-label">Synchron/Metachron</label><br />
+                                <label for="crlm_met_syn_check"class="form-check-label">Synchron/Metachron</label>
                                 <span class="hidden-on-default, border" id="crlm_met_syn_field" style="display: none;">
-                                    <input class="form-check-input" id="Synchron_check" name="Synchron_check" type="checkbox" value="Synchron" /> <label for="Synchron_check">Synchron</label><br />
+                                    <input class="form-check-input" id="Synchron_check" name="Synchron_check" type="checkbox" value="Synchron" /> <label for="Synchron_check">Synchron</label>
                                     <input class="form-check-input" id="Metachron_check" name="Metachron_check" type="checkbox" value="Metachron" /> <label for="Metachron_check">Metachron</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="bilobulär_check" name="bilobulär_check" onchange="showInputField('bilobulär_check','bilobulär_field')" type="checkbox" value="1" />
-                                <label for="bilobulär_check" class="form-check-label">Bilobulär</label><br />
+                                <label for="bilobulär_check" class="form-check-label">Bilobulär</label>
                                 <span class="hidden-on-default, border" id="bilobulär_field" style="display: none;">
                                     <input class="form-check-input" id="bilobulär_check_yes" name="bilobulär_check_yes" type="checkbox" value="Bilobulär" />
-                                    <label for="bilobulär_check_yes">Bilobulär</label><br />
+                                    <label for="bilobulär_check_yes">Bilobulär</label>
                                     <input class="form-check-input" id="bilobulär_check_no" name="bilobulär_check_no" type="checkbox" value="Monolobulär" />
                                     <label for="bilobulär_check_no">Monolobulär</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="multimodal_check" name="bilobulär_check" onchange="showInputField('multimodal_check','multimodal_field')" type="checkbox" value="1" />
-                                <label for="multimodal_check" class="form-check-label">Mutimodal</label><br />
+                                <label for="multimodal_check" class="form-check-label">Mutimodal</label>
                                 <span class="hidden-on-default, border" id="multimodal_field" style="display: none;">
                                     <input class="form-check-input" id="multimodal_check_yes" name="multimodal_check_yes" type="checkbox" value="multimodal" />
-                                    <label for="multimodal_check_yes">Mutlimodal</label><br />
+                                    <label for="multimodal_check_yes">Mutlimodal</label>
                                     <input class="form-check-input" id="multimodal_check_no" name="multimodal_check_no" type="checkbox" value="monomodal" />
                                     <label for="multimodal_check_no">Monomodal</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="twostaged_check" name="twostaged_check" onchange="showInputField('twostaged_check','twostaged_field')" type="checkbox" value="1" />
-                                <label for="twostaged_check" class="form-check-label">Two Staged</label><br />
+                                <label for="twostaged_check" class="form-check-label">Two Staged</label>
                                 <span class="hidden-on-default, border" id="twostaged_field" style="display: none;">
                                     <input class="form-check-input" id="twostaged_check_yes" name="twostaged_check_yes" type="checkbox" value="two_staged" />
-                                    <label for="twostaged_check_yes">Two Staged</label><br />
+                                    <label for="twostaged_check_yes">Two Staged</label>
                                     <input class="form-check-input" id="twostaged_check_no" name="twostaged_check_no" type="checkbox" value="singe_staged" />
                                     <label for="twostaged_check_no">Single Stage</label>
                                 </span>
@@ -121,24 +121,24 @@
                             <h3>TNM-Klassifikation</h3>
                             <hr />
                             <div class="form-group">
-                                <input class="form-check-input" id="braf_check" name="braf_check" onchange="showInputField('braf_check','braf_field')" type="checkbox" value="1" /> <label class="form-check-label">BRAF</label><br />
+                                <input class="form-check-input" id="braf_check" name="braf_check" onchange="showInputField('braf_check','braf_field')" type="checkbox" value="1" /> <label class="form-check-label">BRAF</label>
                                 <span class="hidden-on-default, border" id="braf_field" style="display: none;">
-                                    <input class="form-check-input" id="braf_mutiert_check" name="braf_mutiert_check" type="checkbox" value="braf_mutiert" /> <label for="braf_mutiert_check">mutiert</label><br />
-                                    <input class="form-check-input" id="braf_wildtyp_check" name="braf_wildtyp_check" type="checkbox" value="braf_wildtyp" /> <label for="braf_wildtyp_check">wildtyp</label><br />
+                                    <input class="form-check-input" id="braf_mutiert_check" name="braf_mutiert_check" type="checkbox" value="braf_mutiert" /> <label for="braf_mutiert_check">mutiert</label>
+                                    <input class="form-check-input" id="braf_wildtyp_check" name="braf_wildtyp_check" type="checkbox" value="braf_wildtyp" /> <label for="braf_wildtyp_check">wildtyp</label>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input class="form-check-input" id="ras_check" name="ras_check" onchange="showInputField('ras_check','ras_field')" type="checkbox" value="1" /> <label class="form-check-label">RAS</label><br />
+                                <input class="form-check-input" id="ras_check" name="ras_check" onchange="showInputField('ras_check','ras_field')" type="checkbox" value="1" /> <label class="form-check-label">RAS</label>
                                 <span class="hidden-on-default, border" id="ras_field" style="display: none;">
-                                    <input class="form-check-input" id="ras_mutiert_check" name="ras_mutiert_check" type="checkbox" value="ras_mutiert" /> <label for="ras_mutiert_check">mutiert</label><br />
-                                    <input class="form-check-input" id="ras_wildtyp_check" name="ras_wildtyp_check" type="checkbox" value="ras_wildtyp" /> <label for="ras_wildtyp_check">wildtyp</label><br />
+                                    <input class="form-check-input" id="ras_mutiert_check" name="ras_mutiert_check" type="checkbox" value="ras_mutiert" /> <label for="ras_mutiert_check">mutiert</label>
+                                    <input class="form-check-input" id="ras_wildtyp_check" name="ras_wildtyp_check" type="checkbox" value="ras_wildtyp" /> <label for="ras_wildtyp_check">wildtyp</label>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1" /> <label class="form-check-label">Mikrosatelliten</label><br />
+                                <input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1" /> <label class="form-check-label">Mikrosatelliten</label>
                                 <span class="hidden-on-default, border" id="mss_field" style="display: none;">
-                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss_check">Stabil</label><br />
-                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi_check">Instabil</label><br />
+                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss_check">Stabil</label>
+                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi_check">Instabil</label>
                                 </span>
 
                                 <div class="form-group">
@@ -218,22 +218,22 @@
                                 <span class="hidden-on-default, border" id="asa_field" style="display: none;">
                                     <input class="form-check-input" id="asa_check_not_found" name="asa_check_not_found" type="checkbox" value="Nicht bestimmt" />
                                     <label>Nicht bestimmt</label>
-                                    <br />
+                                    
                                     <input class="form-check-input" id="asa_check_1" name="asa_check_1" type="checkbox" value="ASA1" />
                                     <label>I</label>
-                                    <br />
+                                    
                                     <input class="form-check-input" id="asa_check_2" name="asa_check_2" type="checkbox" value="ASA2" />
                                     <label>II</label>
-                                    <br />
+                                    
                                     <input class="form-check-input" id="asa_check_3" name="asa_check_3" type="checkbox" value="ASA3" />
                                     <label>III</label>
-                                    <br />
+                                    
                                     <input class="form-check-input" id="asa_check_4" name="asa_check_4" type="checkbox" value="ASA4" />
                                     <label>IV</label>
-                                    <br />
+                                    
                                     <input class="form-check-input" id="asa_check_5" name="asa_check_5" type="checkbox" value="ASA5" />
                                     <label>V</label>
-                                    <br />
+                                    
                                 </span>
                             </div>
                             <div class="form-group">
@@ -251,7 +251,7 @@
                                 <label> Alkohol</label>
                                 <span class="hidden-on-default, border" id="alc_field" style="display: none;">
                                     <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1" /> Alkohol
-                                    <br />
+                                    
                                     <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1" /> Kein Alkohol
                                 </span>
                             </div>
@@ -260,7 +260,7 @@
                                 <label> Rauchen</label>
                                 <span class="hidden-on-default, border" id="smoking_field" style="display: none;">
                                     <input class="form-check-input" type="checkbox" id="smoking_check_yes" name="smoking_check_yes" value="1" /> Rauchen
-                                    <br />
+                                    
                                     <input class="form-check-input" type="checkbox" id="smoking_check_no" name="smoking_check_no" value="1" /> Nicht Rauchen
                                 </span>
                             </div>
@@ -269,7 +269,7 @@
                                 <label> Zirrose</label>
                                 <span class="hidden-on-default, border" id="zirrose_field" style="display: none;">
                                     <input class="form-check-input" type="checkbox" id="zirrose_check_yes" name="zirrose_check_yes" value="1" /> Zirrose
-                                    <br />
+                                    
                                     <input class="form-check-input" type="checkbox" id="zirrose_check_no" name="zirrose_check_no" value="1" /> Keine Zirrose
                                 </span>
                             </div>
@@ -278,7 +278,7 @@
                                 <label> Diabetes</label>
                                 <span class="hidden-on-default, border" id="diabetes_field" style="display: none;">
                                     <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1" /> Diabetes
-                                    <br />
+                                    
                                     <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1" /> Kein Diabetes
                                 </span>
                             </div>
@@ -287,7 +287,7 @@
                                 <label> Fibrose</label>
                                 <span class="hidden-on-default, border" id="fibrose_field" style="display: none;">
                                     <input class="form-check-input" type="checkbox" id="fibrose_check_yes" name="fibrose_check_yes" value="1" /> Fibrose
-                                    <br />
+                                    
                                     <input class="form-check-input" type="checkbox" id="fibrose_check_no" name="fibrose_check_no" value="1" /> Keine Fibrose
                                 </span>
                             </div>
@@ -300,7 +300,7 @@
 							<div class="form-group">
 								<input class="form-check-input" type="checkbox" id="PreviousOPs" value="1" onchange="showInputField('PreviousOPs','OPfield')">
 								<label>Vorhergegangene OPs</label>
-								<br>
+								
 								<span id="OPfield" class='hidden-on-default border' style="display:none;">
 								<label class="form-labels">OP Code</label>
 								<input class="form-control" type="text" pattern ="[0-9]-[0-9]{1,3}.[0-9a-z]" name="previous_surgery_code" id="previous_surgery_code" placeholder = "DIMDI OP Code">
@@ -313,9 +313,9 @@
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="fs_previous_chemotherapy" id="fs_previous_chemotherapy" value="1" onchange="showInputField('fs_previous_chemotherapy','fs_Chemo_field')">
 								<label> Chemotherapie 1.OP</label>
-								<br>
+								
 								<span id="fs_Chemo_field" class="hidden-on-default, border"  style="display:none;">
-								<input class="form-check-input" type="checkbox" id="fs_chemo_check_no" name="fs_chemo_check_no" value="1" /> Keine Chemotherapie <br>
+								<input class="form-check-input" type="checkbox" id="fs_chemo_check_no" name="fs_chemo_check_no" value="1" /> Keine Chemotherapie 
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_von" id="fs_previous_chemotherapy_cycles_von" placeholder = "Zahl">
 								<label class="form-labels">Anzahl Zyklen Bis</label>
@@ -329,10 +329,10 @@
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="ss_previous_chemotherapy" id="ss_previous_chemotherapy" value="1" onchange="showInputField('ss_previous_chemotherapy','ss_Chemo_field')">
 								<label> Chemotherapie 2.OP</label>
-								<br>
+								
 								<span id="ss_Chemo_field" class="hidden-on-default, border"  style="display:none;">
 									<input class="form-check-input" type="checkbox" id="ss_chemo_check_no" name="ss_chemo_check_no" value="1" /> Keine Chemotherapie
-									<br>
+									
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="ss_previous_chemotherapy_cycles_von" id="ss_previous_chemotherapy_cycles_von" placeholder = "Zahl">
 								<label class="form-labels">Anzahl Zyklen Bis</label>
@@ -346,10 +346,10 @@
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="th_previous_chemotherapy" id="th_previous_chemotherapy" value="1" onchange="showInputField('th_previous_chemotherapy','th_Chemo_field')">
 								<label> Chemotherapie 3.OP</label>
-								<br>
+								
 								<span id="th_Chemo_field"class="hidden-on-default, border"  style="display:none;">
 									<input class="form-check-input" type="checkbox" id="th_chemo_check_no" name="th_chemo_check_no" value="1" /> Keine Chemotherapie
-									<br>
+									
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="th_previous_chemotherapy_cycles_von" id="ths_previous_chemotherapy_cycles_von" placeholder = "Zahl">
 								<label class="form-labels">Anzahl Zyklen Bis</label>
@@ -378,7 +378,7 @@
                         </div>
                     </div>
                 </div>
-                <br />
+                
                 <div class="col-6" style="width: 100%;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Datenausgabe</h3>
