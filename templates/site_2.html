@@ -50,7 +50,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" id="diagnose2_check"  value="1" onchange="showInputField('diagnose2_check','diagnose2_field')">
-               <label>Diagnose Code 2</label>
+               <label for="diagnose2_check">Diagnose Code 2</label>
                <br>
                <span id="diagnose2_field" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Code</label>
@@ -87,11 +87,11 @@ Nächster Patient:
                <br>
             </div>
             <div>
-               <input class="form-check-input" type="checkbox" id="crlm_bilobular" name="crlm_bilobular" value="1">Bilobulär 
+               <input class="form-check-input" type="checkbox" id="crlm_bilobular" name="crlm_bilobular" value="1"><label for="crlm_bilobular">Bilobulär </label> 
                <br>
-               <input class="form-check-input" type="checkbox" id="multimodal" name="multimodal" value="1">Multimodal
+               <input class="form-check-input" type="checkbox" id="multimodal" name="multimodal" value="1"><label for="multimodal">multimodal</label>
                <br>
-               <input class="form-check-input" type="checkbox" id="two_staged" name="two_staged" value="1">Two Staged
+               <input class="form-check-input" type="checkbox" id="two_staged" name="two_staged" value="1"><label for="two_staged">two staged</label>
                <br>
             </div>
             </p>
@@ -184,7 +184,7 @@ Nächster Patient:
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
                <input class="form-check-input" type="checkbox" id="recurrence_status"  value="1" onchange="showInputField('rezidiv_check','rezidiv_field')">
-               <label>Rezidiv</label>
+               <label for="rezidiv_check">Rezidiv</label>
                <br>
                <span id="rezidiv_field" class='hidden-on-default' style="display:none;">
                   <label class="form-labels">Rezidiv Diagnostiziert?</label>
@@ -218,15 +218,15 @@ Nächster Patient:
                <input type="number" min="0" max="60" class="form-control" id="BMI" name="BMI" placeholder="BMI">
             </div>
             <div>
-               <input class="form-check-input" type="checkbox" id="alcohol" name="alcohol" value="1"> Alkohol 
+               <input class="form-check-input" type="checkbox" id="alcohol" name="alcohol" value="1"> <label for="alcohol">alcohol</label> 
                <br>
-               <input class="form-check-input" type="checkbox" id="smoking" name="smoking" value="1"> Raucher
+               <input class="form-check-input" type="checkbox" id="smoking" name="smoking" value="1"> <label for="smoking">smoking</label>
                <br>
-               <input class="form-check-input" type="checkbox" id="diabetes" name="diabetes" value="1"> Diabetiker
+               <input class="form-check-input" type="checkbox" id="diabetes" name="diabetes" value="1"> <label for="diabetes">diabetes</label>
                <br>
-               <input class="form-check-input" type="checkbox" id="cirrhosis" name="cirrhosis" value="1"> Zirrose
+               <input class="form-check-input" type="checkbox" id="cirrhosis" name="cirrhosis" value="1"> <label for="cirrhosis">cirrhosis</label>
                <br>
-               <input class="form-check-input" type="checkbox" id="fibrosis" name="fibrosis" value="1"> Fibrose
+               <input class="form-check-input" type="checkbox" id="fibrosis" name="fibrosis" value="1"> <label for="fibrosis">fibrosis</label>
                <br>
                <br>
             </div>
@@ -238,7 +238,7 @@ Nächster Patient:
             <hr>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" id="PreviousOPs" value="1" onchange="showInputField('PreviousOPs','OPfield')">
-               <label>Vorhergegangene OPs</label>
+               <label for="PreviousOPs">Vorhergegangene OPs</label>
                <br>
                <span id="OPfield" class='hidden-on-default' style="display:none;">
                <label class="form-labels">OP Code</label>
@@ -251,7 +251,7 @@ Nächster Patient:
             </div>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" name="fs_previous_chemotherapy" id="fs_previous_chemotherapy" value="1" onchange="showInputField('fs_previous_chemotherapy','fs_Chemo_field')">
-               <label> Chemotherapie 1.OP</label>
+               <label for="fs_previous_chemotherapy"> Chemotherapie 1.OP</label>
                <br>
                <span id="fs_Chemo_field" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Anzahl Zyklen</label>
@@ -264,7 +264,7 @@ Nächster Patient:
             </div>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" name="ss_previous_chemotherapy" id="ss_previous_chemotherapy" value="1" onchange="showInputField('ss_previous_chemotherapy','ss_Chemo_field')">
-               <label> Chemotherapie 2.OP</label>
+               <label for="ss_previous_chemotherapy"> Chemotherapie 2.OP</label>
                <br>
                <span id="ss_Chemo_field" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Anzahl Zyklen</label>
@@ -277,7 +277,7 @@ Nächster Patient:
             </div>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" name="th_previous_chemotherapy" id="th_previous_chemotherapy" value="1" onchange="showInputField('th_previous_chemotherapy','th_Chemo_field')">
-               <label> Chemotherapie 3.OP</label>
+               <label for="th_previous_chemotherapy"> Chemotherapie 3.OP</label>
                <br>
                <span id="th_Chemo_field" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Anzahl Zyklen</label>
@@ -295,7 +295,7 @@ Nächster Patient:
             <h3>Allgemeine OP Daten</h3>
             <div class="form-group">
                <input class="form-check-input" type="checkbox" id="PVECheck" value="1" onchange="showInputField('PVECheck','PVEField')">
-               <label>Pfordader-Embolisation</label>
+               <label for="PVECheck">Pfordader-Embolisation</label>
                <br>
                <span id="PVEField" class='hidden-on-default' style="display:none;">
                <label class="form-labels">Datum</label>
@@ -304,10 +304,10 @@ Nächster Patient:
             </div>
             <br>
             <input class="form-check-input" type="checkbox" id="secondOP_Check" value="1" onchange="showOPField('secondOP_Check','SecondOP_Field','SecondLabor_Field')">
-            <label>2. OP</label>
+            <label for="secondOP_Check">2. OP</label>
             <br> 
             <input class="form-check-input" type="checkbox" id="thirdOP_Check" value="1" onchange="showOPField('thirdOP_Check','thirdOP_Field','thirdLabor_Field')">
-            <label>3. OP</label>
+            <label for="thirdOP_Check">3. OP</label>
             <div class="form-group">
                <label for="formGroupExampleInput">Geplantes Prozedere</label>
                <input type="text" class="form-control" id="planned" name="crlm_procedure_planned" placeholder="Freitext">
@@ -416,9 +416,9 @@ Nächster Patient:
                </select>
             </div>
             <br>
-            <input class="form-check-input" type="checkbox" id="op1_conversion_check" name="first_surgery_conversion" value="1"> Konversion
+            <input class="form-check-input" type="checkbox" id="op1_conversion_check" name="first_surgery_conversion" value="1"><label for ="op1_conversion_check"> Konversion</label>
             <br>
-            <input class="form-check-input" type="checkbox" id="op1_ablation_check" name="first_surgery_ablation" value="1"> Ablation
+            <input class="form-check-input" type="checkbox" id="op1_ablation_check" name="first_surgery_ablation" value="1"> <label for="op1_ablation_check">Ablation</label>
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Länge</label>
@@ -633,9 +633,9 @@ Nächster Patient:
                </select>
             </div>
             <br>
-            <input class="form-check-input" type="checkbox" id="second_surgery_conversion" name="second_surgery_conversion" value="1"> Konversion
+            <input class="form-check-input" type="checkbox" id="second_surgery_conversion" name="second_surgery_conversion" value="1"><label for="second_surgery_conversion">Konversion</label> 
             <br>
-            <input class="form-check-input" type="checkbox" id="second_surgery_ablation" name="second_surgery_ablation" value="1"> Ablation
+            <input class="form-check-input" type="checkbox" id="second_surgery_ablation" name="second_surgery_ablation" value="1"><label for="second_surgery_ablation">Ablation</label>
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Länge</label>
@@ -850,9 +850,9 @@ Nächster Patient:
                </select>
             </div>
             <br>
-            <input class="form-check-input" type="checkbox" id="third_surgery_conversion" name="third_surgery_conversion" value="1"> Konversion
+            <input class="form-check-input" type="checkbox" id="third_surgery_conversion" name="third_surgery_conversion" value="1"> <label for ="third_surgery_conversion">Konversion</label>
             <br>
-            <input class="form-check-input" type="checkbox" id="third_surgery_ablation" name="third_surgery_ablation" value="1"> Ablation
+            <input class="form-check-input" type="checkbox" id="third_surgery_ablation" name="third_surgery_ablation" value="1"> <label for="third_surgery_ablation">Ablation</label>
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Länge</label>

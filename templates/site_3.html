@@ -121,57 +121,57 @@
                             <h3>TNM-Klassifikation</h3>
                             <hr />
                             <div class="form-group">
-                                <input class="form-check-input" id="braf_check" name="braf_check" onchange="showInputField('braf_check','braf_field')" type="checkbox" value="1" /> <label class="form-check-label">BRAF</label><br />
+                                <input class="form-check-input" id="braf_check" name="braf_check" onchange="showInputField('braf_check','braf_field')" type="checkbox" value="1" /> <label for="braf_check" class="form-check-label">BRAF</label><br />
                                 <span class="hidden-on-default, border" id="braf_field" style="display: none;">
                                     <input class="form-check-input" id="braf_mutiert_check" name="braf_mutiert_check" type="checkbox" value="braf_mutiert" /> <label for="braf_mutiert_check">mutiert</label><br />
                                     <input class="form-check-input" id="braf_wildtyp_check" name="braf_wildtyp_check" type="checkbox" value="braf_wildtyp" /> <label for="braf_wildtyp_check">wildtyp</label><br />
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input class="form-check-input" id="ras_check" name="ras_check" onchange="showInputField('ras_check','ras_field')" type="checkbox" value="1" /> <label class="form-check-label">RAS</label><br />
+                                <input class="form-check-input" id="ras_check" name="ras_check" onchange="showInputField('ras_check','ras_field')" type="checkbox" value="1" /> <label for="ras_check" class="form-check-label">RAS</label><br />
                                 <span class="hidden-on-default, border" id="ras_field" style="display: none;">
                                     <input class="form-check-input" id="ras_mutiert_check" name="ras_mutiert_check" type="checkbox" value="ras_mutiert" /> <label for="ras_mutiert_check">mutiert</label><br />
                                     <input class="form-check-input" id="ras_wildtyp_check" name="ras_wildtyp_check" type="checkbox" value="ras_wildtyp" /> <label for="ras_wildtyp_check">wildtyp</label><br />
                                 </span>
                             </div>
                             <div class="form-group">
-                                <input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1" /> <label class="form-check-label">Mikrosatelliten</label><br />
+                                <input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1" /> <label for="mss_check" class="form-check-label">Mikrosatelliten</label><br />
                                 <span class="hidden-on-default, border" id="mss_field" style="display: none;">
-                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss_check">Stabil</label><br />
-                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi_check">Instabil</label><br />
+                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss">Stabil</label><br />
+                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi">Instabil</label><br />
                                 </span>
 
                                 <div class="form-group">
-                                    <input class="form-check-input" id="t_check" name="t_check" onchange="showInputField('t_check','t_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">T</label>
+                                    <input class="form-check-input" id="t_check" name="t_check" onchange="showInputField('t_check','t_field')" type="checkbox" value="1" /> <label for="t_check">T</label>
                                     <span class="hidden-on-default, border" id="t_field" style="display: none;"><input class="form-control" id="T" max="4" min="0" name="T" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="n_check" name="n_check" onchange="showInputField('n_check','n_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">N</label>
+                                    <input class="form-check-input" id="n_check" name="n_check" onchange="showInputField('n_check','n_field')" type="checkbox" value="1" /> <label for="n_check">N</label>
                                     <span class="hidden-on-default, border" id="n_field" style="display: none;"><input class="form-control" id="N" max="3" min="0" name="N" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="m_check" name="m_check" onchange="showInputField('m_check','m_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">M</label>
+                                    <input class="form-check-input" id="m_check" name="m_check" onchange="showInputField('m_check','m_field')" type="checkbox" value="1" /> <label for="m_check">M</label>
                                     <span class="hidden-on-default, border" id="m_field" style="display: none;"><input class="form-control" id="M" max="1" min="0" name="M" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-check-input" id="lk_check" name="lk_check" onchange="showInputField('lk_check','lk_field')" type="checkbox" value="1" />
-                                    <label for="formGroupExampleInput">Infizierte Lymphknoten</label>
+                                    <label for="lk_check">Infizierte Lymphknoten</label>
                                     <span class="hidden-on-default, border" id="lk_field" style="display: none;"><input class="form-control" id="LK" name="LK" pattern="[1-9][0-9]*/[1-9][0-9]*" placeholder="Code" type="text" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="l_check" name="l_check" onchange="showInputField('l_check','l_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">L</label>
+                                    <input class="form-check-input" id="l_check" name="l_check" onchange="showInputField('l_check','l_field')" type="checkbox" value="1" /> <label for="l_check">L</label>
                                     <span class="hidden-on-default, border" id="l_field" style="display: none;"><input class="form-control" id="L" max="3" min="0" name="L" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="v_check" name="v_check" onchange="showInputField('v_check','v_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">V</label>
+                                    <input class="form-check-input" id="v_check" name="v_check" onchange="showInputField('v_check','v_field')" type="checkbox" value="1" /> <label for="v_check">V</label>
                                     <span class="hidden-on-default, border" id="v_field" style="display: none;"><input class="form-control" id="V" max="3" min="0" name="V" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="r_check" name="r_check" onchange="showInputField('r_check','r_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">R</label>
+                                    <input class="form-check-input" id="r_check" name="r_check" onchange="showInputField('r_check','r_field')" type="checkbox" value="1" /> <label for="r_check">R</label>
                                     <span class="hidden-on-default, border" id="r_field" style="display: none;"><input class="form-control" id="R" max="3" min="0" name="R" placeholder="Code" type="number" /></span>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-check-input" id="g_check" name="g_check" onchange="showInputField('g_check','g_field')" type="checkbox" value="1" /> <label for="formGroupExampleInput">G</label>
+                                    <input class="form-check-input" id="g_check" name="g_check" onchange="showInputField('g_check','g_field')" type="checkbox" value="1" /> <label for="g_check">G</label>
                                     <span class="hidden-on-default, border" id="g_field" style="display: none;"><input class="form-control" id="G" max="4" min="1" name="G" placeholder="Code" type="number" /></span>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                             <hr />
                             <div class="form-group">
                                 <input class="form-check-input" id="last_seen_check" name="last_seen_check" onchange="showInputField('last_seen_check','last_seen_field')" type="checkbox" value="1" />
-                                <label for="formGroupExampleInput">Patient zuletzt behandelt</label>
+                                <label for="last_seen_check">Patient zuletzt behandelt</label>
                                 <span class="hidden-on-default, border" id="last_seen_field" style="display: none;">
                                     <label>Von</label>
                                     <input type="date" class="form-control" id="date_fu_von" name="date_fu_von" placeholder="Datum" />
@@ -194,51 +194,51 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="died_check" name="died_check" onchange="showInputField('died_check','died_field')" type="checkbox" value="1" />
-                                <label>Verstorben</label>
+                                <label for="died_check">Verstorben</label>
                                 <span class="hidden-on-default, border" id="died_field" style="display: none;">
                                     <input class="form-check-input" id="died_no_check" name="died_no_check" type="checkbox" value="Alive" />
-                                    <label>Nein</label>
+                                    <label for="died_no_check" >Nein</label>
                                     <input class="form-check-input" id="died_yes_check" name="died_yes_check" type="checkbox" value="Dead" />
-                                    <label>Ja</label>
+                                    <label for="died_yes_check">Ja</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="rezidiv_check" name="rezidiv_check" onchange="showInputField('rezidiv_check','rezidiv_field')" type="checkbox" value="1" />
-                                <label>Rezidiv</label>
+                                <label for="rezidiv_check">Rezidiv</label>
                                 <span class="hidden-on-default, border" id="rezidiv_field" style="display: none;">
                                     <input class="form-check-input" id="rezidiv_check_no" name="rezidiv_check_no" type="checkbox" value="Rezidiv" />
-                                    <label>Nein</label>
+                                    <label for="rezidiv_check_no">Nein</label>
                                     <input class="form-check-input" id="rezidiv_check_yes" name="rezidiv_check_yes" type="checkbox" value="Gesund" />
-                                    <label>Ja</label>
+                                    <label for="rezidiv_check_yes">Ja</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="asa_check" name="asa_check" onchange="showInputField('asa_check','asa_field')" type="checkbox" value="1" />
-                                <label for="formGroupExampleInput2">ASA</label>
+                                <label for="asa_check">ASA</label>
                                 <span class="hidden-on-default, border" id="asa_field" style="display: none;">
                                     <input class="form-check-input" id="asa_check_not_found" name="asa_check_not_found" type="checkbox" value="Nicht bestimmt" />
-                                    <label>Nicht bestimmt</label>
+                                    <label for="asa_check_not_found">Nicht bestimmt</label>
                                     <br />
                                     <input class="form-check-input" id="asa_check_1" name="asa_check_1" type="checkbox" value="ASA1" />
-                                    <label>I</label>
+                                    <label for="asa_check_1">I</label>
                                     <br />
                                     <input class="form-check-input" id="asa_check_2" name="asa_check_2" type="checkbox" value="ASA2" />
-                                    <label>II</label>
+                                    <label for="asa_check_2">II</label>
                                     <br />
                                     <input class="form-check-input" id="asa_check_3" name="asa_check_3" type="checkbox" value="ASA3" />
-                                    <label>III</label>
+                                    <label for="asa_check_3">III</label>
                                     <br />
                                     <input class="form-check-input" id="asa_check_4" name="asa_check_4" type="checkbox" value="ASA4" />
-                                    <label>IV</label>
+                                    <label for="asa_check_4">IV</label>
                                     <br />
                                     <input class="form-check-input" id="asa_check_5" name="asa_check_5" type="checkbox" value="ASA5" />
-                                    <label>V</label>
+                                    <label for="asa_check_5">V</label>
                                     <br />
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="bmi_check" name="bmi_check" onchange="showInputField('bmi_check','bmi_field')" type="checkbox" value="1" />
-                                <label for="formGroupExampleInput2">BMI</label>
+                                <label for="bmi_check">BMI</label>
                                 <span class="hidden-on-default, border" id="bmi_field" style="display: none;">
                                     <label for="formGroupExampleInput2">Von</label>
                                     <input type="number" min="0" max="60" class="form-control" id="von_bmi_input" name="von_bmi_input" placeholder="BMI" />
@@ -248,47 +248,47 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="alc_check" name="alc_check" onchange="showInputField('alc_check','alc_field')" type="checkbox" value="1" />
-                                <label> Alkohol</label>
+                                <label for="alc_check"> Alkohol</label>
                                 <span class="hidden-on-default, border" id="alc_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1" /> Alkohol
+                                    <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1" /> <label for="yes_alcohol_check"> Alkohol</label>
                                     <br />
-                                    <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1" /> Kein Alkohol
+                                    <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1" /> <label for="no_alcohol_check">Kein Alkohol</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="smoking_check" name="smoking_check" onchange="showInputField('smoking_check','smoking_field')" type="checkbox" value="1" />
-                                <label> Rauchen</label>
+                                <label for="smoking_check"> Rauchen</label>
                                 <span class="hidden-on-default, border" id="smoking_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="smoking_check_yes" name="smoking_check_yes" value="1" /> Rauchen
+                                    <input class="form-check-input" type="checkbox" id="smoking_check_yes" name="smoking_check_yes" value="1" /> <label for="smoking_check_yes">Rauchen</label>
                                     <br />
-                                    <input class="form-check-input" type="checkbox" id="smoking_check_no" name="smoking_check_no" value="1" /> Nicht Rauchen
+                                    <input class="form-check-input" type="checkbox" id="smoking_check_no" name="smoking_check_no" value="1" /> <label for="smoking_check_no">Nicht Rauchen</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="zirrose_check" name="zirrose_check" onchange="showInputField('zirrose_check','zirrose_field')" type="checkbox" value="1" />
-                                <label> Zirrose</label>
+                                <label for="zirrose_check"> Zirrose</label>
                                 <span class="hidden-on-default, border" id="zirrose_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="zirrose_check_yes" name="zirrose_check_yes" value="1" /> Zirrose
+                                    <input class="form-check-input" type="checkbox" id="zirrose_check_yes" name="zirrose_check_yes" value="1" /> <label for="zirrose_check_yes">Zirrose</label>
                                     <br />
-                                    <input class="form-check-input" type="checkbox" id="zirrose_check_no" name="zirrose_check_no" value="1" /> Keine Zirrose
+                                    <input class="form-check-input" type="checkbox" id="zirrose_check_no" name="zirrose_check_no" value="1" /> <label for="zirrose_check_no">Keine Zirrose</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="diabetes_check" name="diabetes_check" onchange="showInputField('diabetes_check','diabetes_field')" type="checkbox" value="1" />
-                                <label> Diabetes</label>
+                                <label for="diabetes_check"> Diabetes</label>
                                 <span class="hidden-on-default, border" id="diabetes_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1" /> Diabetes
+                                    <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1" />  <label for="diabetes_check_yes">Diabetes</label>
                                     <br />
-                                    <input class="form-check-input" type="checkbox" id="diabetes_check_yes" name="diabetes_check_yes" value="1" /> Kein Diabetes
+                                    <input class="form-check-input" type="checkbox" id="diabetes_check_no" name="diabetes_check_no" value="1" /> <label for="diabetes_check_no">Kein Diabetes</label>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <input class="form-check-input" id="fibrose_check" name="fibrose_check" onchange="showInputField('fibrose_check','fibrose_field')" type="checkbox" value="1" />
-                                <label> Fibrose</label>
+                                <label for="fibrose_check"> Fibrose</label>
                                 <span class="hidden-on-default, border" id="fibrose_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="fibrose_check_yes" name="fibrose_check_yes" value="1" /> Fibrose
+                                    <input class="form-check-input" type="checkbox" id="fibrose_check_yes" name="fibrose_check_yes" value="1" /> <label for="fibrose_check_yes">Fibrose</label>
                                     <br />
-                                    <input class="form-check-input" type="checkbox" id="fibrose_check_no" name="fibrose_check_no" value="1" /> Keine Fibrose
+                                    <input class="form-check-input" type="checkbox" id="fibrose_check_no" name="fibrose_check_no" value="1" /><label for="fibrose_check_no">Keine Fibrose</label>
                                 </span>
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                             <hr />
 							<div class="form-group">
 								<input class="form-check-input" type="checkbox" id="PreviousOPs" value="1" onchange="showInputField('PreviousOPs','OPfield')">
-								<label>Vorhergegangene OPs</label>
+								<label for="PreviousOPs">Vorhergegangene OPs</label>
 								<br>
 								<span id="OPfield" class='hidden-on-default border' style="display:none;">
 								<label class="form-labels">OP Code</label>
@@ -312,10 +312,10 @@
 							 </div>
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="fs_previous_chemotherapy" id="fs_previous_chemotherapy" value="1" onchange="showInputField('fs_previous_chemotherapy','fs_Chemo_field')">
-								<label> Chemotherapie 1.OP</label>
+								<label for="fs_previous_chemotherapy"> Chemotherapie 1.OP</label>
 								<br>
 								<span id="fs_Chemo_field" class="hidden-on-default, border"  style="display:none;">
-								<input class="form-check-input" type="checkbox" id="fs_chemo_check_no" name="fs_chemo_check_no" value="1" /> Keine Chemotherapie <br>
+									<input class="form-check-input" type="checkbox" id="fs_chemo_check_no" name="fs_chemo_check_no" value="1" /> <label for="fs_chemo_check_no">Keine Chemotherapie</label> 
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_von" id="fs_previous_chemotherapy_cycles_von" placeholder = "Zahl">
 								<label class="form-labels">Anzahl Zyklen Bis</label>
@@ -328,10 +328,10 @@
 							 </div>
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="ss_previous_chemotherapy" id="ss_previous_chemotherapy" value="1" onchange="showInputField('ss_previous_chemotherapy','ss_Chemo_field')">
-								<label> Chemotherapie 2.OP</label>
+								<label for="ss_previous_chemotherapy"> Chemotherapie 2.OP</label>
 								<br>
 								<span id="ss_Chemo_field" class="hidden-on-default, border"  style="display:none;">
-									<input class="form-check-input" type="checkbox" id="ss_chemo_check_no" name="ss_chemo_check_no" value="1" /> Keine Chemotherapie
+									<input class="form-check-input" type="checkbox" id="ss_chemo_check_no" name="ss_chemo_check_no" value="1" /> <label for="ss_chemo_check_no">Keine Chemotherapie</label> 
 									<br>
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="ss_previous_chemotherapy_cycles_von" id="ss_previous_chemotherapy_cycles_von" placeholder = "Zahl">
@@ -345,10 +345,10 @@
 							 </div>
 							 <div class="form-group">
 								<input class="form-check-input" type="checkbox" name="th_previous_chemotherapy" id="th_previous_chemotherapy" value="1" onchange="showInputField('th_previous_chemotherapy','th_Chemo_field')">
-								<label> Chemotherapie 3.OP</label>
+								<label for="th_previous_chemotherapy"> Chemotherapie 3.OP</label>
 								<br>
 								<span id="th_Chemo_field"class="hidden-on-default, border"  style="display:none;">
-									<input class="form-check-input" type="checkbox" id="th_chemo_check_no" name="th_chemo_check_no" value="1" /> Keine Chemotherapie
+									<input class="form-check-input" type="checkbox" id="th_chemo_check_no" name="th_chemo_check_no" value="1" /> <label for="th_chemo_check_no">Keine Chemotherapie</label> 
 									<br>
 								<label class="form-labels">Anzahl Zyklen Von</label>
 								<input class="form-control" type="number" name="th_previous_chemotherapy_cycles_von" id="ths_previous_chemotherapy_cycles_von" placeholder = "Zahl">
