@@ -15,7 +15,11 @@
 
 SystemD service file:
 
-**How to install**
+**Vor der Installation**
+Pfad der main.py in `ExecStart` und Werte von `User` und `Group` entsprechend anpassen
+
+
+**Installation**
 ```
 sudo cp -v mcrc-db.service /etc/systemd/system #copy service file
 sudo systemctl enable mcrc-db.service          #enable service
@@ -23,7 +27,7 @@ sudo systemctl start mcrc-db.service           #start service
 sudo systemctl status mcrc-db.service          #check if the service started
 sudo journalctl -f -u mcrc-db.service          #inspect the logs
 ```
-**How to Remove**
+**Deinstallation**
 ```
 sudo systemctl stop mcrc-db.service
 sudo systemctl disable mcrc-db.service
