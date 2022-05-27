@@ -17,8 +17,11 @@
                             <h3>Stammdaten</h3>
                             <hr />
                             <div class="form-group">
-                                <input class="form-check-input" id="pat_id_check" name="pat_id_check" onchange="showInputField('pat_id_check','pat_id_field')" type="checkbox" value="1" /> <label>Patienten ID</label>
-                                <span class="hidden-on-default" id="pat_id_field" style="display: none;"><input class="form-control" id="pat_id" name="pat_id" type="int" /></span>
+                                <input class="form-check-input" id="pat_id_check" name="pat_id_check" onchange="showInputField('pat_id_check','pat_id_field')" type="checkbox" value="1" />
+                                <label for="pat_id_check">Patienten ID</label>
+                                <span class="hidden-on-default" id="pat_id_field" style="display: none;">
+                                    <input class="form-control" id="pat_id" name="pat_id" type="int" />
+                                </span>
                             </div>
                             <br />
                             <div class="form-group">
