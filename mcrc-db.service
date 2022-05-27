@@ -1,0 +1,14 @@
+[Unit]
+Description=This unit will start the mcrc python application after MariaDB
+After=mariadb.service
+Wants=network-online.target
+
+[Service]
+Restart=always
+Type=simple
+ExecStart=/usr/bin/python3 /path/to/main.py
+User=
+Group=
+
+[Install]
+WantedBy=multi-user.target

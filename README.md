@@ -11,3 +11,21 @@
 | `KRK_APP_HOST`    | IP-Adresse, auf welcher die Applikation verfügbar sein soll                                                          |
 | `KRK_APP_PORT`    | Port, auf welchem die Applikation lauscht (Ports unterhalb von 1024 unter Linux i.d.R. nur mit root-Rechten nutzbar) |
 
+---
+
+SystemD service file:
+
+**How to install**
+```
+sudo cp -v mcrc-db.service /etc/systemd/system #copy service file
+sudo systemctl enable mcrc-db.service          #enable service
+sudo systemctl start mcrc-db.service           #start service
+sudo systemctl status mcrc-db.service          #check if the service started
+sudo journalctl -f -u mcrc-db.service          #inspect the logs
+```
+**How to Remove**
+```
+sudo systemctl stop mcrc-db.service
+sudo systemctl disable mcrc-db.service
+sudo systemctl daemon-reload
+```
