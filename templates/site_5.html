@@ -7,7 +7,7 @@
 
 {% block MainContent %}
 <h3>Nutzerverwaltung</h3>
-
+{%if RenderParameters["Admin"] %}
   <form action="" method="post" autocomplete="off">
     <div class="container" style="margin-left: 0">
       <div class="row row-cols-1 row-cols-lg-3">
@@ -53,8 +53,24 @@
             {%endif%}
           </div>
         </div>
+      </form>
+        {%endif%}
+        <form action="" method="post" autocomplete="off">
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Password ändern</h3>
+            <hr>
+            <label>Momentanes Passwort</label>
+            <input class="form-control" type="string" name="current_password">
+            <br>
+            <label>Neues Passwort</label>
+            <input class="form-control" type="string" name="new_password">
+            <br>
+            <input class="btn btn-secondary" type="submit" value="Passwort ändern" name = "change_pwd">
+          </div>
+        </div>
         
-</form>
+      </form>
 
   {%endblock%}
 

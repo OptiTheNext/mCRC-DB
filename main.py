@@ -383,7 +383,7 @@ def dateneingabe():
 def export_to_csv():
     if flask.session["df"]:
         df = pandas.read_json(flask.session.get('df'))
-        print(df)
+        
         output = flask.make_response(df.to_csv(date_format="%d.%m.%Y"))
         output.headers[
             "Content-Disposition"] = "attachment; filename=export.csv"
@@ -548,10 +548,10 @@ def page_3():
 
             df = datenausgabe.Analyse(flask.request.form)
             dfjson = df.to_json(date_format="%d.%m.%Y")
-            print("df_to_json: " + dfjson)
-            flask.session['df'] = dfjson
+            
+            # flask.session['df'] = dfjson
             #Darstellung der Tabelle
-            print(df)
+            
 
             cell_hover = {  # for row hover use <tr> instead of <td>
                 'selector': 'td:hover',
@@ -631,7 +631,8 @@ def page_5():
            
             df.columns= ['User', 'Password', 'Admin']
             df.Admin = df.Admin.replace({1: "yes", 0: "no"})
-            print(df)
+            df = df.drop(['Password'], axis=1)
+         
             cell_hover = {  # for row hover use <tr> instead of <td>
                     'selector': 'td:hover',
                     'props': [('background-color', '#ffffb3')]
@@ -703,12 +704,35 @@ def page_5():
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                 except Exception as e:
                     print(e)
+
+           
                
 
         RenderParameters["htmltext"] = Usertext()
         return flask.render_template('site_5.html',
                                          RenderParameters = RenderParameters)
         
+    if("username" in flask.session):
+        print("in username")
+        if flask.request.method == 'POST':
+            if "change_pwd" in flask.request.form:
+                currentpw= flask.request.form["current_password"]
+                newpwd= flask.request.form["new_password"]
+                try:
+                    cursor= mydb.cursor()
+                    cursor.execute("SELECT * FROM Users WHERE LoginID = %s",(flask.session["username"],))
+                    pwd = cursor.fetchone()[1]
+                    print(pwd)
+                    if (pwd == currentpw):
+                        cursor.execute("UPDATE Users SET Password = %s WHERE LoginID = %s",(newpwd,flask.session["username"]))
+                    return flask.render_template('site_5.html',
+                                         RenderParameters = RenderParameters)
+                except Exception() as e:
+                     return flask.render_template('site_5.html',
+                                        RenderParameters = RenderParameters)
+        else:
+            return flask.render_template('site_5.html',
+                                         RenderParameters = RenderParameters) 
 
     else:
         return flask.redirect(flask.url_for('page_1'))

@@ -138,8 +138,8 @@
                             <div class="form-group">
                                 <input class="form-check-input" id="mss_check" name="mss_check" onchange="showInputField('mss_check','mss_field')" type="checkbox" value="1" /> <label for="mss_check" class="form-check-label">Mikrosatelliten</label>
                                 <span class="hidden-on-default, border_box" id="mss_field" style="display: none;">
-                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss">Stabil</label><br />
-                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi">Instabil</label><br />
+                                    <input class="form-check-input" id="mss" name="mss" type="checkbox" value="mss" /> <label for="mss">Stabil</label>
+                                    <input class="form-check-input" id="msi" name="msi" type="checkbox" value="msi" /> <label for="msi">Instabil</label>
                                 </span>
 
                                 <div class="form-group">
@@ -365,20 +365,1206 @@
                     </div>
                     <div class="col-6" style="border: 1px solid, padding = 10p;">
                         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
-                            <h3>Irgendwas anderes 3</h3>
-                            <hr />
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput2">Another label</label> <input class="form-control" id="formGroupExampleInput2" placeholder="Another input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
-                            <div class="form-group"><label for="formGroupExampleInput">Example label</label> <input class="form-control" id="formGroupExampleInput" placeholder="Example input" type="text" /></div>
+                            <h3>Allgemeine OP Daten</h3>
+                            <div class="form-group">
+                               <input class="form-check-input" type="checkbox" name="PVECheck" id="PVECheck" value="1" onchange="showInputField('PVECheck','PVEField')">
+                               <label for="PVECheck">Pfordader-Embolisation</label>
+                               <span id="PVEField" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="PVE_check_yes" name="PVE_check_yes" type="checkbox" value="PVE_check_yes" /> <label for ="PVE_check_yes">Ja</label>
+                                <input class="form-check-input" id="PVE_check_no" name="PVE_check_no" type="checkbox" value="PVE_check_no" /> <label for ="PVE_check_no">Nein</label>
+                               </span>
+                            </div>
+                            <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="FirstOP_Check" name="FirstOP_Check" value="1">
+                            <label for="FirstOP_Check">1. OP</label>
+                          
+                            <input class="form-check-input" type="checkbox" id="secondOP_Check" name="secondOP_Check" value="1">
+                            <label for="secondOP_Check">2. OP</label>
+                        
+                            <input class="form-check-input" type="checkbox" id="thirdOP_Check" name="thirdOP_Check" value="1">
+                            <label for="thirdOP_Check">3. OP</label>
+                            </div>
+           
+                            LIMAX
+                            <div class="accordion accordion-flush" id="op2_accordion_lab">
+                                <div class="accordion-item">
+                                   <h2 class="accordion-header " id="flush-headingOne-limaxinitial">
+                                      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-limaxinitial" aria-expanded="false" aria-controls="flush-collapseOne">
+                                      LIMAX 1. Datum
+                                      </button>
+                                   </h2>
+                                   <div id="flush-collapseOne-limaxinitial" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne-limaxinitial" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body">
+                                         <div class="form-group">
+                                            <label for="formGroupExampleInput2">LIMAX Von</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_initial_von" name="limax_initial_von" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">LIMAX Bis</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_initial_bis" name="limax_initial_bis" placeholder="Wert">
+                                            
+                                         </div>
+                                         <div class="form-group">
+                                            <label for="formGroupExampleInput2">Datum Von</label>
+                                            <input type="date" class="form-control" id="limax_initial_date_von" name="limax_initial_date_von" placeholder="Datum">
+                                            <label for="formGroupExampleInput2">Datum Bis</label>
+                                            <input type="date" class="form-control" id="limax_initial_date_bis" name="limax_initial_date_bis" placeholder="Datum">
+                                         </div>
+                    
+                                      </div>
+                                   </div>
+                                </div>
+                                <div class="accordion-item">
+                                   <h2 class="accordion-header" id="flush-headingTwo-limax2">
+                                      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo-limax2" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                      LIMAX 2. Datum
+                                      </button>
+                                   </h2>
+                                   <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo-limax2" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body">
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput2">LIMAX Von</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_second_von" name="limax_second_von" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">LIMAX Bis</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_second_bis" name="limax_second_bis" placeholder="Wert">
+                                            
+                                         </div>
+                                         <div class="form-group">
+                                            <label for="formGroupExampleInput2">Datum Von</label>
+                                            <input type="date" class="form-control" id="limax_second_date_von" name="limax_second_date_von" placeholder="Datum">
+                                            <label for="formGroupExampleInput2">Datum Bis</label>
+                                            <input type="date" class="form-control" id="limax_second_date_bis" name="limax_second_date_bis" placeholder="Datum">
+                                         </div>
+                                
+                                      </div>
+                                   </div>
+                                </div>
+                                <div class="accordion-item">
+                                   <h2 class="accordion-header" id="flush-headingthree-limax3">
+                                      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsethree-limax3" aria-expanded="false" aria-controls="flush-collapsethree-limax3">
+                                      LIMAX 3. Datum
+                                      </button>
+                                   </h2>
+                                   <div id="flush-collapsethree-limax3" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingthree-limax3" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body">
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput2">LIMAX Von</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_third_von" name="limax_third_von" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">LIMAX Bis</label>
+                                            <input type="number" min="0" max="1000" class="form-control" id="limax_third_bis" name="limax_third_bis" placeholder="Wert">
+                                            
+                                         </div>
+                                         <div class="form-group">
+                                            <label for="formGroupExampleInput2">Datum Von</label>
+                                            <input type="date" class="form-control" id="limax_third_date_von" name="limax_third_date_von" placeholder="Datum">
+                                            <label for="formGroupExampleInput2">Datum Bis</label>
+                                            <input type="date" class="form-control" id="limax_third_date_bis" name="limax_third_date_bis" placeholder="Datum">
+                                         </div>
+                                      </div>
+                                   </div>
+                                </div>
+                                </div>
+                            
                         </div>
                     </div>
+                    <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Erste OP</h3>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="Fs_op_date" value="1" onchange="showInputField('Fs_op_date','Fs_op_date_field')">
+                            <label for="Fs_op_date">OP Datum</label>
+                        
+                            <span id="Fs_op_date_field" class='hidden-on-default border_box' style="display:none;">
+                            <label class="form-labels">OP Datum Von</label>
+                            <input class="form-control" type="date" name="op_date_Surgery1_von" placeholder = "op_date_Surgery1_von" id="op_date_Surgery1_von" >
+                            <label class="form-labels">OP Datum Bis</label>
+                            <input class="form-control" type="date" name="op_date_Surgery1_bis" placeholder = "op_date_Surgery1_bis" id="op_date_Surgery1_bis" >
+                            </span>
+                         </div>
+                           
+                           
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" id="op_code_Surgery1_checkbox" value="1" onchange="showInputField('op_code_Surgery1_checkbox','op_code_Surgery1_field')">
+                                <label for="op_code_Surgery1_checkbox">OP Code</label>
+                            
+                            <span id="op_code_Surgery1_field" class='hidden-on-default border_box' style="display:none;">
+                                
+                              <label for="formGroupExampleInput">OP Code</label> 
+                              <input type="text" pattern="[0-9]-[0-9]{1,3}.[0-9a-z]" class="form-control" name="op_code_Surgery1" id="op1_opcode" placeholder="DIMDI OP Code">
+                            </span>
+                            </div>
+                           
+                           <div class="form-group">
+                             <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery1_checkbox" value="1" onchange="showInputField('op_diagnosis_Surgery1_checkbox','op_diagnosis_Surgery1_field')">
+                              <label for="op_diagnosis_Surgery1_checkbox">OP Diagnose</label>
+                              <span id="op_diagnosis_Surgery1_field" class='hidden-on-default border_box' style="display:none;">
+                              <input type="text" class="form-control" id="op_diagnosis_Surgery1" name="op_diagnosis_Surgery1" placeholder="Code">
+                              </span>
+                           </div>
+                    
+                           <div class="form-group">
+                              <!--Hier noch import_var ändern, immer noch geschlecht -->
+                              <input class="form-check-input" type="checkbox" id="op_method_checkbox" value="1" onchange="showInputField('op_method_checkbox','op_method_field')">
+                              <label for="op_method_checkbox">OP Methode</label>
+                              <span id="op_method_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="checkoffen" name="checkoffen" type="checkbox" value="offen" /> <label for="checkoffen">offen</label>
+                                <input class="form-check-input" id="checklaparoskopisch" name="checklaparoskopisch" type="checkbox" value="checklaparoskopisch" /> <label for="checklaparoskopisch">Laparoskopisch</label>
+                                <input class="form-check-input" id="checkrobo" name="checkrobo" type="checkbox" value="checkrobo" /> <label for="checkrobo">Robotisch</label>
+                              </select>
+                           </div>
+                           
+                           <input class="form-check-input" type="checkbox" id="op_occurence_checkbox" value="1" onchange="showInputField('op_occurence_checkbox','op_occurence_field')">
+                            <label for="op_occurence_checkbox">OP Begebenheiten</label>
+                            <span id="op_occurence_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op1_conversion_check" name="op1_conversion_check" value="1"><label for ="op1_conversion_check"> Konversion</label>
+                           <input class="form-check-input" type="checkbox" id="op1_ablation_check" name="op1_ablation_check" value="1"> <label for="op1_ablation_check">Ablation</label>
+                          </span>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="op_length_checkbox" value="1" onchange="showInputField('op_length_checkbox','op_length_field')">
+                            <label for="op_length_checkbox">Länge</label>
+                            <span id="op_length_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Länge von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="first_surgery_length" name="first_surgery_length_von" placeholder="In Minuten">
+                                <label for="formGroupExampleInput">Länge bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="first_surgery_length" name="first_surgery_length_bis" placeholder="In Minuten">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="icu_checkbox" value="1" onchange="showInputField('icu_checkbox','icu_field')">
+                            <label for="icu_checkbox">Intensivzeit</label>
+                            <span id="icu_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Intensivzeit von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="icu_von" name="icu_von" placeholder="In Tagen">
+                                <label for="formGroupExampleInput">Intensivzeit bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="icu_bis" name="icu_bis" placeholder="In Tagen">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="fs_los_checkbox" value="1" onchange="showInputField('fs_los_checkbox','fs_los_field')">
+                              <label for="fs_los_checkbox">Aufenthaltsdauert</label>
+                              <span id="fs_los_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="fs_los_von">Aufenthaltsdauert von</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="fs_los_von" name="fs_los_von" placeholder="Tage">
+                                <label for="fs_los_von">Aufenthaltsdauert bis</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="fs_los_bis" name="fs_los_bis" placeholder="Tage">
+                              </span>
+                           </div>
+                           
+                           <div class="form-group">
+                              
+                              <input class="form-check-input" type="checkbox" id="fs_dindo_checkbox" name="fs_dindo_checkbox" value="fs_check_dindo_1" onchange="showInputField('fs_dindo_checkbox','fs_dindo_field')">
+                              <label for="fs_dindo_checkbox">DINDO Komplikations-Score</label>
+                              <span id="fs_dindo_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="fs_check_dindo_0" name="fs_check_dindo_0" type="checkbox" value="fs_check_dindo_0"> <label for="fs_check_dindo_0">No Complications</label>
+                                <input class="form-check-input" id="fs_check_dindo_1" name="fs_check_dindo_1" type="checkbox" value="fs_check_dindo_1"> <label for="fs_check_dindo_1">I</label>
+                                <input class="form-check-input" id="fs_check_dindo_2" name="fs_check_dindo_2" type="checkbox" value="fs_check_dindo_2"> <label for="fs_check_dindo_2">II</label>
+                                <input class="form-check-input" id="fs_check_dindo_3a" name="fs_check_dindo_3a" type="checkbox" value="fs_check_dindo_3a"> <label for="fs_check_dindo_3a">IIIa</label>
+                                <input class="form-check-input" id="fs_check_dindo_3b" name="fs_check_dindo_3b" type="checkbox" value="fs_check_dindo_3b"> <label for="fs_check_dindo_3b">IIIb</label>
+                                <input class="form-check-input" id="fs_check_dindo_4a" name="fs_check_dindo_4a" type="checkbox" value="fs_check_dindo_4a"> <label for="fs_check_dindo_4a">IVa</label>
+                                <input class="form-check-input" id="fs_check_dindo_4b" name="fs_check_dindo_4b" type="checkbox" value="fs_check_dindo_4b"> <label for="fs_check_dindo_4b">IVb</label>
+                                <input class="form-check-input" id="fs_check_dindo_5" name="fs_check_dindo_5" type="checkbox" value="fs_check_dindo_5"> <label for="fs_check_dindo_5">V</label>
+                            </span>
+                           </div>
+                        
+                        </div>
+                     </div>
+
+                     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Erste OP Labordaten</h3>
+                           <div class="accordion accordion-flush" id="op1_accordion_lab">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header " id="flush-headingOne">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Gesamt Bilirubin im Serum
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseOne" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                       <div class="form-group">
+                                          <input class="form-check-input" type="checkbox" id="fs_serum_bili_pod1_checkbox" name="fs_serum_bili_pod1_checkbox" value="fs_serum_bili_pod1_checkbox" onchange="showInputField('fs_serum_bili_pod1_checkbox','fs_serum_bili_field')">
+                                          <label for="fs_serum_bili_pod1_checkbox">POD 1</label>
+                                          <span id="fs_serum_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                          <label for="formGroupExampleInput2">POD1 Von</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD1_von" id="fs_Serum_Bili_POD1" placeholder="Wert">
+                                          <label for="formGroupExampleInput2">POD1 Bis</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD1_bis" id="fs_Serum_Bili_POD1" placeholder="Wert">
+                                        </span>
+                                       </div>
+                                       <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="fs_serum_bili_pod3_checkbox" name="fs_serum_bili_pod3_checkbox" value="fs_serum_bili_pod3_checkbox" onchange="showInputField('fs_serum_bili_pod3_checkbox','fs_serum_bili_pod3_field')">
+                                        <label for="fs_serum_bili_pod3_checkbox">POD 3</label>
+                                        <span id="fs_serum_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD3 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD3_von" id="fs_Serum_Bili_POD3" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD3 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD3_bis" id="fs_Serum_Bili_POD3" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="fs_serum_bili_pod5_checkbox" name="fs_serum_bili_pod5_checkbox" value="fs_serum_bili_pod5_checkbox" onchange="showInputField('fs_serum_bili_pod5_checkbox','fs_serum_bili_pod5_field')">
+                                        <label for="fs_serum_bili_pod5_checkbox">POD 5</label>
+                                        <span id="fs_serum_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD5 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD5_von" id="fs_Serum_Bili_POD5" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD5 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_POD5_bis" id="fs_Serum_Bili_POD5" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="fs_serum_bili_last_checkbox" name="fs_serum_bili_last_checkbox" value="fs_serum_bili_last_checkbox" onchange="showInputField('fs_serum_bili_last_checkbox','fs_serum_bili_last_field')">
+                                        <label for="fs_serum_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                        <span id="fs_serum_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">Wert Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_last_von" id="fs_Serum_Bili_last_von" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">Wert Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="fs_Serum_Bili_last_bis" id="fs_Serum_Bili_last_bis" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    Gesamt Bilirubin im Punktat
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseTwo" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_drain_bili_pod1_checkbox" name="fs_drain_bili_pod1_checkbox" value="fs_drain_bili_pod1_checkbox" onchange="showInputField('fs_drain_bili_pod1_checkbox','fs_drain_bili_field')">
+                                            <label for="fs_drain_bili_pod1_checkbox">POD 1</label>
+                                            <span id="fs_drain_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_POD1_von" id="fs_drain_Bili_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_POD1_bis" id="fs_drain_Bili_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_drain_bili_pod3_checkbox" name="fs_drain_bili_pod3_checkbox" value="fs_drain_bili_pod3_checkbox" onchange="showInputField('fs_drain_bili_pod3_checkbox','fs_drain_bili_pod3_field')">
+                                            <label for="fs_drain_bili_pod3_checkbox">POD 3</label>
+                                            <span id="fs_drain_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_pod3_von" id="fs_drain_Bili_pod3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_pod3_bis" id="fs_drain_Bili_pod3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_drain_bili_pod5_checkbox" name="fs_drain_bili_pod5_checkbox" value="fs_drain_bili_pod5_checkbox" onchange="showInputField('fs_drain_bili_pod5_checkbox','fs_drain_bili_pod5_field')">
+                                            <label for="fs_drain_bili_pod5_checkbox">POD 5</label>
+                                            <span id="fs_drain_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_pod5_von" id="fs_drain_Bili_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_pod5_bis" id="fs_drain_Bili_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_drain_bili_last_checkbox" name="fs_drain_bili_last_checkbox" value="fs_drain_bili_last_checkbox" onchange="showInputField('fs_drain_bili_last_checkbox','fs_drain_bili_last_field')">
+                                            <label for="fs_drain_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="fs_drain_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_last_von" id="fs_drain_Bili_last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_drain_Bili_last_bis" id="fs_drain_Bili_last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    AST
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseThree" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_AST_POD1_checkbox" name="fs_AST_POD1_checkbox" value="fs_AST_POD1_checkbox" onchange="showInputField('fs_AST_POD1_checkbox','fs_AST_field')">
+                                            <label for="fs_AST_POD1_checkbox">POD 1</label>
+                                            <span id="fs_AST_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_POD1_von" id="fs_AST_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_POD1_bis" id="fs_AST_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_AST_POD3_checkbox" name="fs_AST_POD3_checkbox" value="fs_AST_POD3_checkbox" onchange="showInputField('fs_AST_POD3_checkbox','fs_AST_POD3_field')">
+                                            <label for="fs_AST_POD3_checkbox">POD 3</label>
+                                            <span id="fs_AST_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_POD3_von" id="fs_AST_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_POD3_bis" id="fs_AST_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_AST_pod5_checkbox" name="fs_AST_pod5_checkbox" value="fs_AST_pod5_checkbox" onchange="showInputField('fs_AST_pod5_checkbox','fs_AST_pod5_field')">
+                                            <label for="fs_AST_pod5_checkbox">POD 5</label>
+                                            <span id="fs_AST_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_pod5_von" id="fs_AST_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_pod5_bis" id="fs_AST_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_AST_Last_checkbox" name="fs_AST_Last_checkbox" value="fs_AST_Last_checkbox" onchange="showInputField('fs_AST_Last_checkbox','fs_AST_Last_field')">
+                                            <label for="fs_AST_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="fs_AST_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_Last_von" id="fs_AST_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_AST_Last_bis" id="fs_AST_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    ALT
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFour" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_ALT_POD1_checkbox" name="fs_ALT_POD1_checkbox" value="fs_ALT_POD1_checkbox" onchange="showInputField('fs_ALT_POD1_checkbox','fs_ALT_field')">
+                                            <label for="fs_ALT_POD1_checkbox">POD 1</label>
+                                            <span id="fs_ALT_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_POD1_von" id="fs_ALT_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_POD1_bis" id="fs_ALT_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_ALT_POD3_checkbox" name="fs_ALT_POD3_checkbox" value="fs_ALT_POD3_checkbox" onchange="showInputField('fs_ALT_POD3_checkbox','fs_ALT_POD3_field')">
+                                            <label for="fs_ALT_POD3_checkbox">POD 3</label>
+                                            <span id="fs_ALT_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_POD3_von" id="fs_ALT_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_POD3_bis" id="fs_ALT_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_ALT_pod5_checkbox" name="fs_ALT_pod5_checkbox" value="fs_ALT_pod5_checkbox" onchange="showInputField('fs_ALT_pod5_checkbox','fs_ALT_pod5_field')">
+                                            <label for="fs_ALT_pod5_checkbox">POD 5</label>
+                                            <span id="fs_ALT_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_pod5_von" id="fs_ALT_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_pod5_bis" id="fs_ALT_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_ALT_Last_checkbox" name="fs_ALT_Last_checkbox" value="fs_ALT_Last_checkbox" onchange="showInputField('fs_ALT_Last_checkbox','fs_ALT_Last_field')">
+                                            <label for="fs_ALT_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="fs_ALT_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_Last_von" id="fs_ALT_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_ALT_Last_bis" id="fs_ALT_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFive">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                    INR
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFive" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_INR_POD1_checkbox" name="fs_INR_POD1_checkbox" value="fs_INR_POD1_checkbox" onchange="showInputField('fs_INR_POD1_checkbox','fs_INR_field')">
+                                            <label for="fs_INR_POD1_checkbox">POD 1</label>
+                                            <span id="fs_INR_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_POD1_von" id="fs_INR_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_POD1_bis" id="fs_INR_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_INR_POD3_checkbox" name="fs_INR_POD3_checkbox" value="fs_INR_POD3_checkbox" onchange="showInputField('fs_INR_POD3_checkbox','fs_INR_POD3_field')">
+                                            <label for="fs_INR_POD3_checkbox">POD 3</label>
+                                            <span id="fs_INR_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_POD3_von" id="fs_INR_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_POD3_bis" id="fs_INR_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_INR_pod5_checkbox" name="fs_INR_pod5_checkbox" value="fs_INR_pod5_checkbox" onchange="showInputField('fs_INR_pod5_checkbox','fs_INR_pod5_field')">
+                                            <label for="fs_INR_pod5_checkbox">POD 5</label>
+                                            <span id="fs_INR_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_pod5_Surgery1von" id="fs_INR_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_pod5_bis" id="fs_INR_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="fs_INR_Last_checkbox" name="fs_INR_Last_checkbox" value="fs_INR_Last_checkbox" onchange="showInputField('fs_INR_Last_checkbox','fs_INR_Last_field')">
+                                            <label for="fs_INR_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="fs_INR_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_Last_von" id="fs_INR_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="fs_INR_Last_bis" id="fs_INR_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Zweite OP</h3>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ss_op_date" value="1" onchange="showInputField('ss_op_date','ss_op_date_field')">
+                            <label for="ss_op_date">OP Datum</label>
+                        
+                            <span id="ss_op_date_field" class='hidden-on-default border_box' style="display:none;">
+                            <label class="form-labels">OP Datum Von</label>
+                            <input class="form-control" type="date" name="op_date_Surgery2_von" placeholder = "op_date_Surgery2_von" id="op_date_Surgery2_von" >
+                            <label class="form-labels">OP Datum Bis</label>
+                            <input class="form-control" type="date" name="op_date_Surgery2_bis" placeholder = "op_date_Surgery2_bis" id="op_date_Surgery2_bis" >
+                            </span>
+                         </div>
+                           
+                           
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" id="op_code_Surgery2_checkbox" value="1" onchange="showInputField('op_code_Surgery2_checkbox','op_code_Surgery2_field')">
+                                <label for="op_code_Surgery2_checkbox">OP Code</label>
+                            
+                            <span id="op_code_Surgery2_field" class='hidden-on-default border_box' style="display:none;">
+                                
+                              <label for="formGroupExampleInput">OP Code</label> 
+                              <input type="text" pattern="[0-9]-[0-9]{1,3}.[0-9a-z]" class="form-control" name="op_code_Surgery2" id="op2_opcode" placeholder="DIMDI OP Code">
+                            </span>
+                            </div>
+                           
+                           <div class="form-group">
+                             <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery2_checkbox" value="1" onchange="showInputField('op_diagnosis_Surgery2_checkbox','op_diagnosis_Surgery2_field')">
+                              <label for="op_diagnosis_Surgery2_checkbox">OP Diagnose</label>
+                              <span id="op_diagnosis_Surgery2_field" class='hidden-on-default border_box' style="display:none;">
+                              <input type="text" class="form-control" id="op_diagnosis_Surgery2" name="op_diagnosis_Surgery2" placeholder="Code">
+                              </span>
+                           </div>
+                    
+                           <div class="form-group">
+                              <!--Hier noch import_var ändern, immer noch geschlecht -->
+                              <input class="form-check-input" type="checkbox" id="ss_op_method_checkbox" value="1" onchange="showInputField('ss_op_method_checkbox','ss_op_method_field')">
+                              <label for="ss_op_method_checkbox">OP Methode</label>
+                              <span id="ss_op_method_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="ss_checkoffen" name="ss_checkoffen" type="checkbox" value="ss_offen" /> <label for="ss_checkoffen">offen</label>
+                                <input class="form-check-input" id="ss_checklaparoskopisch" name="ss_checklaparoskopisch" type="checkbox" value="ss_checklaparoskopisch" /> <label for="ss_checklaparoskopisch">Laparoskopisch</label>
+                                <input class="form-check-input" id="ss_checkrobo" name="ss_checkrobo" type="checkbox" value="checkrobo" /> <label for="ss_checkrobo">Robotisch</label>
+                              </select>
+                           </div>
+                           
+                           <input class="form-check-input" type="checkbox" id="ss_op_occurence_checkbox" value="1" onchange="showInputField('ss_op_occurence_checkbox','ss_op_occurence_field')">
+                            <label for="ss_op_occurence_checkbox">OP Begebenheiten</label>
+                            <span id="ss_op_occurence_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op2_conversion_check" name="op2_conversion_check" value="1"><label for ="op2_conversion_check"> Konversion</label>
+                           <input class="form-check-input" type="checkbox" id="op2_ablation_check" name="op2_ablation_check" value="1"> <label for="op2_ablation_check">Ablation</label>
+                          </span>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ss_op_length_checkbox" value="1" onchange="showInputField('ss_op_length_checkbox','ss_op_length_field')">
+                            <label for="ss_op_length_checkbox">Länge</label>
+                            <span id="ss_op_length_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Länge von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="second_surgery_length" name="second_surgery_length_von" placeholder="In Minuten">
+                                <label for="formGroupExampleInput">Länge bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="second_surgery_length" name="second_surgery_length_bis" placeholder="In Minuten">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ss_icu_checkbox" value="1" onchange="showInputField('ss_icu_checkbox','ss_icu_field')">
+                            <label for="icu_checkbox">Intensivzeit</label>
+                            <span id="ss_icu_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Intensivzeit von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="ss_icu_von" name="ss_icu_von" placeholder="In Tagen">
+                                <label for="formGroupExampleInput">Intensivzeit bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="ss_icu_bis" name="ss_icu_bis" placeholder="In Tagen">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ss_los_checkbox" value="1" onchange="showInputField('ss_los_checkbox','ss_los_field')">
+                              <label for="ss_los_checkbox">Aufenthaltsdauert</label>
+                              <span id="ss_los_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="ss_los_von">Aufenthaltsdauert von</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="ss_los_von" name="ss_los_von" placeholder="Tage">
+                                <label for="ss_los_von">Aufenthaltsdauert bis</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="ss_los_bis" name="ss_los_bis" placeholder="Tage">
+                              </span>
+                           </div>
+                           
+                           <div class="form-group">
+                              
+                              <input class="form-check-input" type="checkbox" id="ss_dindo_checkbox" name="ss_dindo_checkbox" value="ss_check_dindo_1" onchange="showInputField('ss_dindo_checkbox','ss_dindo_field')">
+                              <label for="ss_dindo_checkbox">DINDO Komplikations-Score</label>
+                              <span id="ss_dindo_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="ss_check_dindo_0" name="ss_check_dindo_0" type="checkbox" value="ss_check_dindo_0"> <label for="ss_check_dindo_0">No Complications</label>
+                                <input class="form-check-input" id="ss_check_dindo_1" name="ss_check_dindo_1" type="checkbox" value="ss_check_dindo_1"> <label for="ss_check_dindo_1">I</label>
+                                <input class="form-check-input" id="ss_check_dindo_2" name="ss_check_dindo_2" type="checkbox" value="ss_check_dindo_2"> <label for="ss_check_dindo_2">II</label>
+                                <input class="form-check-input" id="ss_check_dindo_3a" name="ss_check_dindo_3a" type="checkbox" value="ss_check_dindo_3a"> <label for="ss_check_dindo_3a">IIIa</label>
+                                <input class="form-check-input" id="ss_check_dindo_3b" name="ss_check_dindo_3b" type="checkbox" value="ss_check_dindo_3b"> <label for="ss_check_dindo_3b">IIIb</label>
+                                <input class="form-check-input" id="ss_check_dindo_4a" name="ss_check_dindo_4a" type="checkbox" value="ss_check_dindo_4a"> <label for="ss_check_dindo_4a">IVa</label>
+                                <input class="form-check-input" id="ss_check_dindo_4b" name="ss_check_dindo_4b" type="checkbox" value="ss_check_dindo_4b"> <label for="ss_check_dindo_4b">IVb</label>
+                                <input class="form-check-input" id="ss_check_dindo_5" name="ss_check_dindo_5" type="checkbox" value="ss_check_dindo_5"> <label for="ss_check_dindo_5">V</label>
+                            </span>
+                           </div>
+                        
+                        </div>
+                     </div>
+                     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Zweite OP Labordaten</h3>
+                           <div class="accordion accordion-flush" id="op2_accordion_lab">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header " id="flush-headingOne">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Gesamt Bilirubin im Serum
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseOne" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                       <div class="form-group">
+                                          <input class="form-check-input" type="checkbox" id="ss_serum_bili_pod1_checkbox" name="ss_serum_bili_pod1_checkbox" value="ss_serum_bili_pod1_checkbox" onchange="showInputField('ss_serum_bili_pod1_checkbox','ss_serum_bili_field')">
+                                          <label for="ss_serum_bili_pod1_checkbox">POD 1</label>
+                                          <span id="ss_serum_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                          <label for="formGroupExampleInput2">POD1 Von</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD1_von" id="ss_Serum_Bili_POD1" placeholder="Wert">
+                                          <label for="formGroupExampleInput2">POD1 Bis</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD1_bis" id="ss_Serum_Bili_POD1" placeholder="Wert">
+                                        </span>
+                                       </div>
+                                       <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ss_serum_bili_pod3_checkbox" name="ss_serum_bili_pod3_checkbox" value="ss_serum_bili_pod3_checkbox" onchange="showInputField('ss_serum_bili_pod3_checkbox','ss_serum_bili_pod3_field')">
+                                        <label for="ss_serum_bili_pod3_checkbox">POD 3</label>
+                                        <span id="ss_serum_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD3 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD3_von" id="ss_Serum_Bili_POD3" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD3 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD3_bis" id="ss_Serum_Bili_POD3" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ss_serum_bili_pod5_checkbox" name="ss_serum_bili_pod5_checkbox" value="ss_serum_bili_pod5_checkbox" onchange="showInputField('ss_serum_bili_pod5_checkbox','ss_serum_bili_pod5_field')">
+                                        <label for="ss_serum_bili_pod5_checkbox">POD 5</label>
+                                        <span id="ss_serum_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD5 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD5_von" id="ss_Serum_Bili_POD5" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD5 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_POD5_bis" id="ss_Serum_Bili_POD5" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ss_serum_bili_last_checkbox" name="ss_serum_bili_last_checkbox" value="ss_serum_bili_last_checkbox" onchange="showInputField('ss_serum_bili_last_checkbox','ss_serum_bili_last_field')">
+                                        <label for="ss_serum_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                        <span id="ss_serum_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">Wert Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_last_von" id="ss_Serum_Bili_last_von" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">Wert Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ss_Serum_Bili_last_bis" id="ss_Serum_Bili_last_bis" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    Gesamt Bilirubin im Punktat
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseTwo" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_drain_bili_pod1_checkbox" name="ss_drain_bili_pod1_checkbox" value="ss_drain_bili_pod1_checkbox" onchange="showInputField('ss_drain_bili_pod1_checkbox','ss_drain_bili_field')">
+                                            <label for="ss_drain_bili_pod1_checkbox">POD 1</label>
+                                            <span id="ss_drain_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_POD1_von" id="ss_drain_Bili_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_POD1_bis" id="ss_drain_Bili_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_drain_bili_pod3_checkbox" name="ss_drain_bili_pod3_checkbox" value="ss_drain_bili_pod3_checkbox" onchange="showInputField('ss_drain_bili_pod3_checkbox','ss_drain_bili_pod3_field')">
+                                            <label for="ss_drain_bili_pod3_checkbox">POD 3</label>
+                                            <span id="ss_drain_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_pod3_von" id="ss_drain_Bili_pod3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_pod3_bis" id="ss_drain_Bili_pod3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_drain_bili_pod5_checkbox" name="ss_drain_bili_pod5_checkbox" value="ss_drain_bili_pod5_checkbox" onchange="showInputField('ss_drain_bili_pod5_checkbox','ss_drain_bili_pod5_field')">
+                                            <label for="ss_drain_bili_pod5_checkbox">POD 5</label>
+                                            <span id="ss_drain_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_pod5_von" id="ss_drain_Bili_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_pod5_bis" id="ss_drain_Bili_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_drain_bili_last_checkbox" name="ss_drain_bili_last_checkbox" value="ss_drain_bili_last_checkbox" onchange="showInputField('ss_drain_bili_last_checkbox','ss_drain_bili_last_field')">
+                                            <label for="ss_drain_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ss_drain_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_last_von" id="ss_drain_Bili_last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_drain_Bili_last_bis" id="ss_drain_Bili_last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    AST
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseThree" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_AST_POD1_checkbox" name="ss_AST_POD1_checkbox" value="ss_AST_POD1_checkbox" onchange="showInputField('ss_AST_POD1_checkbox','ss_AST_field')">
+                                            <label for="ss_AST_POD1_checkbox">POD 1</label>
+                                            <span id="ss_AST_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_POD1_von" id="ss_AST_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_POD1_bis" id="ss_AST_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_AST_POD3_checkbox" name="ss_AST_POD3_checkbox" value="ss_AST_POD3_checkbox" onchange="showInputField('ss_AST_POD3_checkbox','ss_AST_POD3_field')">
+                                            <label for="ss_AST_POD3_checkbox">POD 3</label>
+                                            <span id="ss_AST_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_POD3_von" id="ss_AST_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_POD3_bis" id="ss_AST_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_AST_pod5_checkbox" name="ss_AST_pod5_checkbox" value="ss_AST_pod5_checkbox" onchange="showInputField('ss_AST_pod5_checkbox','ss_AST_pod5_field')">
+                                            <label for="ss_AST_pod5_checkbox">POD 5</label>
+                                            <span id="ss_AST_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_pod5_von" id="ss_AST_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_pod5_bis" id="ss_AST_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_AST_Last_checkbox" name="ss_AST_Last_checkbox" value="ss_AST_Last_checkbox" onchange="showInputField('ss_AST_Last_checkbox','ss_AST_Last_field')">
+                                            <label for="ss_AST_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ss_AST_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_Last_von" id="ss_AST_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_AST_Last_bis" id="ss_AST_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    ALT
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFour" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_ALT_POD1_checkbox" name="ss_ALT_POD1_checkbox" value="ss_ALT_POD1_checkbox" onchange="showInputField('ss_ALT_POD1_checkbox','ss_ALT_field')">
+                                            <label for="ss_ALT_POD1_checkbox">POD 1</label>
+                                            <span id="ss_ALT_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_POD1_von" id="ss_ALT_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_POD1_bis" id="ss_ALT_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_ALT_POD3_checkbox" name="ss_ALT_POD3_checkbox" value="ss_ALT_POD3_checkbox" onchange="showInputField('ss_ALT_POD3_checkbox','ss_ALT_POD3_field')">
+                                            <label for="ss_ALT_POD3_checkbox">POD 3</label>
+                                            <span id="ss_ALT_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_POD3_von" id="ss_ALT_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_POD3_bis" id="ss_ALT_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_ALT_pod5_checkbox" name="ss_ALT_pod5_checkbox" value="ss_ALT_pod5_checkbox" onchange="showInputField('ss_ALT_pod5_checkbox','ss_ALT_pod5_field')">
+                                            <label for="ss_ALT_pod5_checkbox">POD 5</label>
+                                            <span id="ss_ALT_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_pod5_von" id="ss_ALT_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_pod5_bis" id="ss_ALT_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_ALT_Last_checkbox" name="ss_ALT_Last_checkbox" value="ss_ALT_Last_checkbox" onchange="showInputField('ss_ALT_Last_checkbox','ss_ALT_Last_field')">
+                                            <label for="ss_ALT_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ss_ALT_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_Last_von" id="ss_ALT_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_ALT_Last_bis" id="ss_ALT_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFive">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                    INR
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFive" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_INR_POD1_checkbox" name="ss_INR_POD1_checkbox" value="ss_INR_POD1_checkbox" onchange="showInputField('ss_INR_POD1_checkbox','ss_INR_field')">
+                                            <label for="ss_INR_POD1_checkbox">POD 1</label>
+                                            <span id="ss_INR_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_POD1_von" id="ss_INR_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_POD1_bis" id="ss_INR_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_INR_POD3_checkbox" name="ss_INR_POD3_checkbox" value="ss_INR_POD3_checkbox" onchange="showInputField('ss_INR_POD3_checkbox','ss_INR_POD3_field')">
+                                            <label for="ss_INR_POD3_checkbox">POD 3</label>
+                                            <span id="ss_INR_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_POD3_von" id="ss_INR_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_POD3_bis" id="ss_INR_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_INR_pod5_checkbox" name="ss_INR_pod5_checkbox" value="ss_INR_pod5_checkbox" onchange="showInputField('ss_INR_pod5_checkbox','ss_INR_pod5_field')">
+                                            <label for="ss_INR_pod5_checkbox">POD 5</label>
+                                            <span id="ss_INR_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_pod5_von" id="ss_INR_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_pod5_bis" id="ss_INR_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ss_INR_Last_checkbox" name="ss_INR_Last_checkbox" value="ss_INR_Last_checkbox" onchange="showInputField('ss_INR_Last_checkbox','ss_INR_Last_field')">
+                                            <label for="ss_INR_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ss_INR_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_Last_von" id="ss_INR_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ss_INR_Last_bis" id="ss_INR_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Dritte OP</h3>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ts_op_date" value="1" onchange="showInputField('ts_op_date','ts_op_date_field')">
+                            <label for="ts_op_date">OP Datum</label>
+                        
+                            <span id="ts_op_date_field" class='hidden-on-default border_box' style="display:none;">
+                            <label class="form-labels">OP Datum Von</label>
+                            <input class="form-control" type="date" name="op_date_Surgery3_von" placeholder = "op_date_Surgery3_von" id="op_date_Surgery3_von" >
+                            <label class="form-labels">OP Datum Bis</label>
+                            <input class="form-control" type="date" name="op_date_Surgery3_bis" placeholder = "op_date_Surgery3_bis" id="op_date_Surgery3_bis" >
+                            </span>
+                         </div>
+                           
+                           
+                            <div class="form-group">
+                                <input class="form-check-input" type="checkbox" id="op_code_Surgery3_checkbox" value="1" onchange="showInputField('op_code_Surgery3_checkbox','op_code_Surgery3_field')">
+                                <label for="op_code_Surgery3_checkbox">OP Code</label>
+                            
+                            <span id="op_code_Surgery3_field" class='hidden-on-default border_box' style="display:none;">
+                                
+                              <label for="formGroupExampleInput">OP Code</label> 
+                              <input type="text" pattern="[0-9]-[0-9]{1,3}.[0-9a-z]" class="form-control" name="op_code_Surgery3" id="op3_opcode" placeholder="DIMDI OP Code">
+                            </span>
+                            </div>
+                           
+                           <div class="form-group">
+                             <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery3_checkbox" value="1" onchange="showInputField('op_diagnosis_Surgery3_checkbox','op_diagnosis_Surgery3_field')">
+                              <label for="op_diagnosis_Surgery3_checkbox">OP Diagnose</label>
+                              <span id="op_diagnosis_Surgery3_field" class='hidden-on-default border_box' style="display:none;">
+                              <input type="text" class="form-control" id="op_diagnosis_Surgery3" name="op_diagnosis_Surgery3" placeholder="Code">
+                              </span>
+                           </div>
+                    
+                           <div class="form-group">
+                              <!--Hier noch import_var ändern, immer noch geschlecht -->
+                              <input class="form-check-input" type="checkbox" id="ts_op_method_checkbox" value="1" onchange="showInputField('ts_op_method_checkbox','ts_op_method_field')">
+                              <label for="ts_op_method_checkbox">OP Methode</label>
+                              <span id="ts_op_method_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="ts_checkoffen" name="ts_checkoffen" type="checkbox" value="ts_offen" /> <label for="ts_checkoffen">offen</label>
+                                <input class="form-check-input" id="ts_checklaparoskopisch" name="ts_checklaparoskopisch" type="checkbox" value="ts_checklaparoskopisch" /> <label for="ts_checklaparoskopisch">Laparoskopisch</label>
+                                <input class="form-check-input" id="ts_checkrobo" name="ts_checkrobo" type="checkbox" value="ts_checkrobo" /> <label for="ts_checkrobo">Robotisch</label>
+                              </select>
+                           </div>
+                           
+                           <input class="form-check-input" type="checkbox" id="ts_op_occurence_checkbox" value="1" onchange="showInputField('ts_op_occurence_checkbox','ts_op_occurence_field')">
+                            <label for="ts_op_occurence_checkbox">OP Begebenheiten</label>
+                            <span id="ts_op_occurence_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op3_conversion_check" name="op3_conversion_check" value="1"><label for ="op3_conversion_check"> Konversion</label>
+                           <input class="form-check-input" type="checkbox" id="op3_ablation_check" name="op3_ablation_check" value="1"> <label for="op3_ablation_check">Ablation</label>
+                          </span>
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ts_op_length_checkbox" value="1" onchange="showInputField('ts_op_length_checkbox','ts_op_length_field')">
+                            <label for="ts_op_length_checkbox">Länge</label>
+                            <span id="ts_op_length_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Länge von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="third_surgery_length" name="third_surgery_length_von" placeholder="In Minuten">
+                                <label for="formGroupExampleInput">Länge bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="third_surgery_length" name="third_surgery_length_bis" placeholder="In Minuten">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ts_icu_checkbox" value="1" onchange="showInputField('ts_icu_checkbox','ts_icu_field')">
+                            <label for="ts_icu_checkbox">Intensivzeit</label>
+                            <span id="ts_icu_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="formGroupExampleInput">Intensivzeit von</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="ts_icu_von" name="ts_icu_von" placeholder="In Tagen">
+                                <label for="formGroupExampleInput">Intensivzeit bis</label> 
+                                <input type="number" min="0" max="10000" class="form-control" id="ts_icu_bis" name="ts_icu_bis" placeholder="In Tagen">
+                            </span>
+                           </div>
+                           
+                           <div class="form-group">
+                            <input class="form-check-input" type="checkbox" id="ts_los_checkbox" value="1" onchange="showInputField('ts_los_checkbox','ts_los_field')">
+                              <label for="ts_los_checkbox">Aufenthaltsdauert</label>
+                              <span id="ts_los_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="ts_los_von">Aufenthaltsdauert von</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="ts_los_von" name="ts_los_von" placeholder="Tage">
+                                <label for="ts_los_von">Aufenthaltsdauert bis</label>
+                                <input type="number" min="0" max="1000" class="form-control" id="ts_los_bis" name="ts_los_bis" placeholder="Tage">
+                              </span>
+                           </div>
+                           
+                           <div class="form-group">
+                              
+                              <input class="form-check-input" type="checkbox" id="ts_dindo_checkbox" name="ts_dindo_checkbox" value="ts_check_dindo_1" onchange="showInputField('ts_dindo_checkbox','ts_dindo_field')">
+                              <label for="ts_dindo_checkbox">DINDO Komplikations-Score</label>
+                              <span id="ts_dindo_field" class='hidden-on-default border_box' style="display:none;">
+                                <input class="form-check-input" id="ts_check_dindo_0" name="ts_check_dindo_0" type="checkbox" value="ts_check_dindo_0"> <label for="ts_check_dindo_0">No Complications</label>
+                                <input class="form-check-input" id="ts_check_dindo_1" name="ts_check_dindo_1" type="checkbox" value="ts_check_dindo_1"> <label for="ts_check_dindo_1">I</label>
+                                <input class="form-check-input" id="ts_check_dindo_2" name="ts_check_dindo_2" type="checkbox" value="ts_check_dindo_2"> <label for="ts_check_dindo_2">II</label>
+                                <input class="form-check-input" id="ts_check_dindo_3a" name="ts_check_dindo_3a" type="checkbox" value="ts_check_dindo_3a"> <label for="ts_check_dindo_3a">IIIa</label>
+                                <input class="form-check-input" id="ts_check_dindo_3b" name="ts_check_dindo_3b" type="checkbox" value="ts_check_dindo_3b"> <label for="ts_check_dindo_3b">IIIb</label>
+                                <input class="form-check-input" id="ts_check_dindo_4a" name="ts_check_dindo_4a" type="checkbox" value="ts_check_dindo_4a"> <label for="ts_check_dindo_4a">IVa</label>
+                                <input class="form-check-input" id="ts_check_dindo_4b" name="ts_check_dindo_4b" type="checkbox" value="ts_check_dindo_4b"> <label for="ts_check_dindo_4b">IVb</label>
+                                <input class="form-check-input" id="ts_check_dindo_5" name="ts_check_dindo_5" type="checkbox" value="ts_check_dindo_5"> <label for="ts_check_dindo_5">V</label>
+                            </span>
+                           </div>
+                        
+                        </div>
+                     </div>
+                     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                           <h3>Dritte OP Labordaten</h3>
+                           <div class="accordion accordion-flush" id="op3_accordion_lab">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header " id="flush-headingOne">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Gesamt Bilirubin im Serum
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseOne" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                       <div class="form-group">
+                                          <input class="form-check-input" type="checkbox" id="ts_serum_bili_pod1_checkbox" name="ts_serum_bili_pod1_checkbox" value="ts_serum_bili_pod1_checkbox" onchange="showInputField('ts_serum_bili_pod1_checkbox','ts_serum_bili_field')">
+                                          <label for="ts_serum_bili_pod1_checkbox">POD 1</label>
+                                          <span id="ts_serum_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                          <label for="formGroupExampleInput2">POD1 Von</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD1_von" id="ts_Serum_Bili_POD1" placeholder="Wert">
+                                          <label for="formGroupExampleInput2">POD1 Bis</label>
+                                          <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD1_bis" id="ts_Serum_Bili_POD1" placeholder="Wert">
+                                        </span>
+                                       </div>
+                                       <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ts_serum_bili_pod3_checkbox" name="ts_serum_bili_pod3_checkbox" value="ts_serum_bili_pod3_checkbox" onchange="showInputField('ts_serum_bili_pod3_checkbox','ts_serum_bili_pod3_field')">
+                                        <label for="ts_serum_bili_pod3_checkbox">POD 3</label>
+                                        <span id="ts_serum_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD3 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD3_von" id="ts_Serum_Bili_POD3" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD3 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD3_bis" id="ts_Serum_Bili_POD3" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ts_serum_bili_pod5_checkbox" name="ts_serum_bili_pod5_checkbox" value="ts_serum_bili_pod5_checkbox" onchange="showInputField('ts_serum_bili_pod5_checkbox','ts_serum_bili_pod5_field')">
+                                        <label for="ts_serum_bili_pod5_checkbox">POD 5</label>
+                                        <span id="ts_serum_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">POD5 Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD5_von" id="ts_Serum_Bili_POD5" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">POD5 Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_POD5_bis" id="ts_Serum_Bili_POD5" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                     <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" id="ts_serum_bili_last_checkbox" name="ts_serum_bili_last_checkbox" value="ts_serum_bili_last_checkbox" onchange="showInputField('ts_serum_bili_last_checkbox','ts_serum_bili_last_field')">
+                                        <label for="ts_serum_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                        <span id="ts_serum_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                        <label for="formGroupExampleInput2">Wert Von</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_last_von" id="ts_Serum_Bili_last_von" placeholder="Wert">
+                                        <label for="formGroupExampleInput2">Wert Bis</label>
+                                        <input type="number" class="form-control" min="0" max="3" name="ts_Serum_Bili_last_bis" id="ts_Serum_Bili_last_bis" placeholder="Wert">
+                                      </span>
+                                     </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    Gesamt Bilirubin im Punktat
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseTwo" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_drain_bili_pod1_checkbox" name="ts_drain_bili_pod1_checkbox" value="ts_drain_bili_pod1_checkbox" onchange="showInputField('ts_drain_bili_pod1_checkbox','ts_drain_bili_field')">
+                                            <label for="ts_drain_bili_pod1_checkbox">POD 1</label>
+                                            <span id="ts_drain_bili_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_POD1_von" id="ts_drain_Bili_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_POD1_bis" id="ts_drain_Bili_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_drain_bili_pod3_checkbox" name="ts_drain_bili_pod3_checkbox" value="ts_drain_bili_pod3_checkbox" onchange="showInputField('ts_drain_bili_pod3_checkbox','ts_drain_bili_pod3_field')">
+                                            <label for="ts_drain_bili_pod3_checkbox">POD 3</label>
+                                            <span id="ts_drain_bili_pod3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">POD3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_pod3_von" id="ts_drain_Bili_pod3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">POD3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_pod3_bis" id="ts_drain_Bili_pod3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_drain_bili_pod5_checkbox" name="ts_drain_bili_pod5_checkbox" value="ts_drain_bili_pod5_checkbox" onchange="showInputField('ts_drain_bili_pod5_checkbox','ts_drain_bili_pod5_field')">
+                                            <label for="ts_drain_bili_pod5_checkbox">POD 5</label>
+                                            <span id="ts_drain_bili_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_pod5_von" id="ts_drain_Bili_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_pod5_bis" id="ts_drain_Bili_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_drain_bili_last_checkbox" name="ts_drain_bili_last_checkbox" value="ts_drain_bili_last_checkbox" onchange="showInputField('ts_drain_bili_last_checkbox','ts_drain_bili_last_field')">
+                                            <label for="ts_drain_bili_last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ts_drain_bili_last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_last_von" id="ts_drain_Bili_last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_drain_Bili_last_bis" id="ts_drain_Bili_last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    AST
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseThree" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_AST_POD1_checkbox" name="ts_AST_POD1_checkbox" value="ts_AST_POD1_checkbox" onchange="showInputField('ts_AST_POD1_checkbox','ts_AST_field')">
+                                            <label for="ts_AST_POD1_checkbox">POD 1</label>
+                                            <span id="ts_AST_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_POD1_von" id="ts_AST_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_POD1_bis" id="ts_AST_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_AST_POD3_checkbox" name="ts_AST_POD3_checkbox" value="ts_AST_POD3_checkbox" onchange="showInputField('ts_AST_POD3_checkbox','ts_AST_POD3_field')">
+                                            <label for="ts_AST_POD3_checkbox">POD 3</label>
+                                            <span id="ts_AST_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_POD3_von" id="ts_AST_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_POD3_bis" id="ts_AST_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_AST_pod5_checkbox" name="ts_AST_pod5_checkbox" value="ts_AST_pod5_checkbox" onchange="showInputField('ts_AST_pod5_checkbox','ts_AST_pod5_field')">
+                                            <label for="ts_AST_pod5_checkbox">POD 5</label>
+                                            <span id="ts_AST_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_pod5_von" id="ts_AST_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_pod5_bis" id="ts_AST_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_AST_Last_checkbox" name="ts_AST_Last_checkbox" value="ts_AST_Last_checkbox" onchange="showInputField('ts_AST_Last_checkbox','ts_AST_Last_field')">
+                                            <label for="ts_AST_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ts_AST_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_Last_von" id="ts_AST_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_AST_Last_bis" id="ts_AST_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    ALT
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFour" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_ALT_POD1_checkbox" name="ts_ALT_POD1_checkbox" value="ts_ALT_POD1_checkbox" onchange="showInputField('ts_ALT_POD1_checkbox','ts_ALT_field')">
+                                            <label for="ts_ALT_POD1_checkbox">POD 1</label>
+                                            <span id="ts_ALT_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_POD1_von" id="ts_ALT_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_POD1_bis" id="ts_ALT_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_ALT_POD3_checkbox" name="ts_ALT_POD3_checkbox" value="ts_ALT_POD3_checkbox" onchange="showInputField('ts_ALT_POD3_checkbox','ts_ALT_POD3_field')">
+                                            <label for="ts_ALT_POD3_checkbox">POD 3</label>
+                                            <span id="ts_ALT_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_POD3_von" id="ts_ALT_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_POD3_bis" id="ts_ALT_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_ALT_pod5_checkbox" name="ts_ALT_pod5_checkbox" value="ts_ALT_pod5_checkbox" onchange="showInputField('ts_ALT_pod5_checkbox','ts_ALT_pod5_field')">
+                                            <label for="ts_ALT_pod5_checkbox">POD 5</label>
+                                            <span id="ts_ALT_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_pod5_von" id="ts_ALT_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_pod5_bis" id="ts_ALT_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_ALT_Last_checkbox" name="ts_ALT_Last_checkbox" value="ts_ALT_Last_checkbox" onchange="showInputField('ts_ALT_Last_checkbox','ts_ALT_Last_field')">
+                                            <label for="ts_ALT_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ts_ALT_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_Last_von" id="ts_ALT_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_ALT_Last_bis" id="ts_ALT_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="flush-headingFive">
+                                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                    INR
+                                    </button>
+                                 </h2>
+                                 <div id="flush-collapseFive" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body bg-light">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_INR_POD1_checkbox" name="ts_INR_POD1_checkbox" value="ts_INR_POD1_checkbox" onchange="showInputField('ts_INR_POD1_checkbox','ts_INR_field')">
+                                            <label for="ts_INR_POD1_checkbox">POD 1</label>
+                                            <span id="ts_INR_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod1 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_POD1_von" id="ts_INR_POD1" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod1 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_POD1_bis" id="ts_INR_POD1" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_INR_POD3_checkbox" name="ts_INR_POD3_checkbox" value="ts_INR_POD3_checkbox" onchange="showInputField('ts_INR_POD3_checkbox','ts_INR_POD3_field')">
+                                            <label for="ts_INR_POD3_checkbox">POD 3</label>
+                                            <span id="ts_INR_POD3_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod3 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_POD3_von" id="ts_INR_POD3" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod3 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_POD3_bis" id="ts_INR_POD3" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_INR_pod5_checkbox" name="ts_INR_pod5_checkbox" value="ts_INR_pod5_checkbox" onchange="showInputField('ts_INR_pod5_checkbox','ts_INR_pod5_field')">
+                                            <label for="ts_INR_pod5_checkbox">POD 5</label>
+                                            <span id="ts_INR_pod5_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">pod5 Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_pod5_von" id="ts_INR_pod5" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_pod5_bis" id="ts_INR_pod5" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                         <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" id="ts_INR_Last_checkbox" name="ts_INR_Last_checkbox" value="ts_INR_Last_checkbox" onchange="showInputField('ts_INR_Last_checkbox','ts_INR_Last_field')">
+                                            <label for="ts_INR_Last_checkbox">Letzter Wert vor Entlassung</label>
+                                            <span id="ts_INR_Last_field" class='hidden-on-default border_box' style="display:none;">
+                                            <label for="formGroupExampleInput2">Wert Von</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_Last_von" id="ts_INR_Last" placeholder="Wert">
+                                            <label for="formGroupExampleInput2">Wert Bis</label>
+                                            <input type="number" class="form-control" min="0" max="3" name="ts_INR_Last_bis" id="ts_INR_Last" placeholder="Wert">
+                                          </span>
+                                         </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     
                 </div>
+                               
                 
                 <div class="col-6" style="width: 100%;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
