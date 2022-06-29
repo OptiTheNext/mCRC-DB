@@ -11,6 +11,10 @@ import matplotlib
 import requests
 import string
 import json
+from flask_session import Session
+from flask import Flask, session
+
+
 
 
 #Own Scripts
@@ -26,11 +30,15 @@ sexbefore = False
 load_dotenv()
 
 querySAPID = "SELECT pat_id FROM mcrc_tabelle"
+
+
 app = flask.Flask(__name__,
                   template_folder="templates",
                   static_folder="static")
-app.secret_key = "x5xSsB$JDwGe%iEMLp6R4p9D&zv2$Xi2m7tCvNgn3PUmaqPH&EqbZvrx#v8YEH69wXxbmYoEQ68nE!7qs*aUqgd6Qsr6BRfSPJ45fztH4K*dHVhBR9UgFJniygvQS6hq"
 
+app.secret_key = "x5xSsB$JDwGe%iEMLp6R4p9D&zv2$Xi2m7tCvNgn3PUmaqPH&EqbZvrx#v8YEH69wXxbmYoEQ68nE!7qs*aUqgd6Qsr6BRfSPJ45fztH4K*dHVhBR9UgFJniygvQS6hq"
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
@@ -41,6 +49,8 @@ mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
                                            database=os.environ.get('KRK_DB_DATABASE'))
 
 global next_patient
+
+
 
 
 #Workaround für ältere Browser
@@ -382,7 +392,9 @@ def dateneingabe():
 @app.route("/export")
 def export_to_csv():
     if flask.session["df"]:
-        df = pandas.read_json(flask.session.get('df'))
+       # df = pandas.read_json(flask.session.get('df'))
+        dict_obj = session["df"]
+        df = pandas.DataFrame(dict_obj)
         
         output = flask.make_response(df.to_csv(date_format="%d.%m.%Y"))
         output.headers[
@@ -547,9 +559,10 @@ def page_3():
             #Process output
 
             df = datenausgabe.Analyse(flask.request.form)
-            dfjson = df.to_json(date_format="%d.%m.%Y")
-            
-            # flask.session['df'] = dfjson
+           # dfjson = df.to_json(date_format="%d.%m.%Y")
+            dfdict = df.to_dict("list")
+            flask.session['df'] = dfdict
+            df.fillna("",inplace=True)
             #Darstellung der Tabelle
             
 
