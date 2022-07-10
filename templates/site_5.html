@@ -18,6 +18,8 @@
             <div class="form-group">
               <label>Name</label>
               <input class="form-control" type="string" name="username">
+              <label>Email</label>
+              <input class="form-control" type="string" name="mailadress">
             </div>
             <br>
             <div class="form-group">
@@ -61,17 +63,29 @@
             <h3>Password ändern</h3>
             <hr>
             <label>Momentanes Passwort</label>
-            <input class="form-control" type="string" name="current_password">
+            <input class="form-control" type="password" name="current_password">
             <br>
             <label>Neues Passwort</label>
-            <input class="form-control" type="string" name="new_password">
+            <input class="form-control" type="password" name="new_password">
             <br>
             <input class="btn btn-secondary" type="submit" value="Passwort ändern" name = "change_pwd">
           </div>
         </div>
         
       </form>
-
+      {% if RenderParameters["error"] %}
+      <div class="alert alert-danger" role="alert">
+        <strong>Fehler:</strong> {{ RenderParameters["error"] }}
+      </div>
+      {% endif %}
+      {% if RenderParameters["success"] %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Erfolg:</strong> {{RenderParameters["success"]}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {%endif%}
   {%endblock%}
 
   

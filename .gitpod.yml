@@ -9,4 +9,9 @@ vscode:
   extensions:
     - SonarSource.sonarlint-vscode
     - ms-python.python
+ports:
+  - name: Mail
+    description: Gmail Web server
+    port: 465
+    onOpen: notify
 
