@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block Unterschrift %}
+<p>Charite zu Berlin, 2010-2021</p>
+{%endblock%}
+{% block MainContent %}
+<title>KRK-Datenbank Password reset</title>
+<div class="container">
+  <h1 style="text-align: center;">Passwort wählen</h1>
+  <br>
+  <form action="" method="post">
+    <div class="form-row align-items-center" style="width: 50%; margin: auto; position: relative;">
+      <div class="form-group">
+        
+      </div>
+      <br>
+      <div class="form-group">
+        <label>Passwort</label>
+        <input class="form-control" type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}">
+        <br>
+      </div>
+      <div class="form-group">
+        <label>Passwort wiederholen</label>
+        <input class="form-control" type="password" placeholder="Password" name="password_again" value="{{
+          request.form.password_again }}">
+        <br>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" name="Ändern" value="Ändern">
+      </div>
+    </div>
+  </form>
+</div>
+{% if RenderParameters["error"] %}
+<div class="alert alert-danger" role="alert">
+  <strong>Fehler:</strong> {{ RenderParameters["error"] }}
+</div>
+{% endif %}
+{%endblock%}
