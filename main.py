@@ -167,12 +167,14 @@ def dateneingabe():
     
     cursor= mydb.cursor()
     try:
-        cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel is NULL AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
+        cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
         next_patient=cursor.fetchall()[0][0]
         print(next_patient)
         RenderParameters["next_patient"] = next_patient
     except Exception as e: 
         print("hat halt net geklappt")
+        print(e)
+        traceback.print_exc()
         next_patient = None
 
     #Schreiben von daten
@@ -435,15 +437,20 @@ def page_5():
         if flask.request.method == 'POST':
             # Getting Name and If Admin
             if "create_user" in flask.request.form:
+                
                 name = flask.request.form['username']
                 mail = flask.request.form['mailadress']
                 admin = flask.request.form['admin_select']
+                #if("charite.de" not in mail):
+                 #   LocalRenderParameters["error"] = 'Nutzer ist nicht Teil der Charité, Korrekte Mailadresse eingeben'
+                  #  return flask.render_template('site_5.html',
+                   #                            RenderParameters = LocalRenderParameters)
                 if(admin == "Admin"):
                     admin = "1"
                 else:
                     admin = "0"
                 # Generating Link for password
-            
+
                 lower = string.ascii_lowercase
                 upper = string.ascii_uppercase
                 num = string.digits
@@ -470,8 +477,14 @@ def page_5():
                             "Name": name
                             }
                         ],
-                        "HTMLPart": "<!DOCTYPE html> <html> <head> <title>Password Reset</title> </head><body> <div>  <h3>Dear {},</h3><p>Your password must be set, please follow this link: <a href=\'{}\'>Passwort</a></p><br> <div> Cheers!</div></div></body></html>".format(name, url),
-                        "Subject": "MCRC Passwort"
+                        #"HTMLPart": "<!DOCTYPE html> <html> <head> <title>Password Reset</title> </head><body> <div>  <h3>Dear {},</h3><p>Your password must be set, please follow this link: <a href=\'{}\'>Passwort</a></p><br> <div> Cheers!</div></div></body></html>".format(name, url),
+                        "TemplateID": 4060819,
+                        "Subject": "Passwort setzen für Kolorektale Datenbank",
+                        "Variables": {
+        
+								"name": name,
+								"url": url
+						}
                         }
                     ]
                     }
@@ -604,7 +617,7 @@ def getDataForID():
         if cursor.rowcount == 0:
             return "Requested ID not found in database"
         for row in cursor:
-            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"), ))
+            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"),datetime.datetime.now()))
             cursor.execute("INSERT INTO currently_active (pat_id) VALUES (%s)",(row.get("pat_id"),))
             mydb.commit()
             print(cursor.statement)
