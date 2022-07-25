@@ -460,9 +460,9 @@ def page_5():
                 
                 password = "".join(temp)
                 token = generate_token.generate_password_reset_token(name, password)
-                print(token)
+                print(type(token))
                 #generate token for link:
-                url = flask.request.host_url + 'reset/'+ token
+                url = flask.request.host_url + 'reset/'+ token.decode('utf-8')
                 print(url)
                 data = {
                     'Messages': [

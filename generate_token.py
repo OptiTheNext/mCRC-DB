@@ -20,4 +20,5 @@ def generate_password_reset_token(username,password):
         key,
         algorithm="HS256",
     )
+    
     return encoded_jwt 
