@@ -302,8 +302,9 @@ def export_to_csv():
     if flask.session["df"]:
         dict_obj = session["df"]
         df = pandas.DataFrame(dict_obj)
-        
-        output = flask.make_response(df.to_csv(date_format="%d.%m.%Y"))
+        df = df.replace("","None")
+        df = df.fillna("None")
+        output = flask.make_response(df.to_csv(date_format="%d.%m.%Y", sep=";"))
         output.headers[
             "Content-Disposition"] = "attachment; filename=export.csv"
         output.headers["Content-type"] = "text/csv"

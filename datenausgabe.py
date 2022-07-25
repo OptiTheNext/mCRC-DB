@@ -1245,5 +1245,5 @@ def Analyse(parameters) -> pandas.DataFrame:
             df.query("ts_INR_Last <= @para", inplace= True) 
     
     
-
+    df.fillna("None")
     return df
