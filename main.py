@@ -227,6 +227,7 @@ def dateneingabe():
                 p_columns.append("pve_year")
                 a = datetime.datetime.strptime(params["pve_date"], "%Y-%m-%d")
                 a = a.year
+                print(a)
                 p_values.append(a)
             if(params["op_date_Surgery1"] != ""):
                 p_columns.append("op1year")
@@ -256,7 +257,7 @@ def dateneingabe():
                 p_columns.append("Kuerzel")
                 p_values.append(f"{flask.session.get('username')}")
                 print("------------------")
-                print((",".join(p_columns), ",".join(p_values)))
+                #print((",".join(p_columns), ",".join(p_values)))
                 statement = Columns.sql + "("
                 for i in range(len(p_values)):
                     if i != 0:
@@ -283,8 +284,9 @@ def dateneingabe():
                                              )
 
             except Exception as e:
-                print(e)
+                print()
                 LocalRenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
+                print("Fehler beim schreiben")
                 #NotAllowed("Fehler", False)
                 return flask.render_template(
                     'site_2.html',
