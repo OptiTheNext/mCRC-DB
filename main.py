@@ -180,6 +180,7 @@ def dateneingabe():
     #Schreiben von daten
 
     if "Schreiben" in flask.request.form:
+        LocalRenderParameters = RenderParameters
         print("In Input")
         if ("username" not in flask.session):
             return flask.redirect(flask.url_for('login'))
@@ -231,11 +232,11 @@ def dateneingabe():
                 a= datetime.datetime.strptime(params["op_date_Surgery1"],"%Y")
                 p_values.append(a)
             
-            if(params["op_date-Surgery1"]):
+            if(params["op_date_Surgery1"]):
                 opsgesamt = opgesamt + 1 
-            if(params["op_date-Surgery2"]):
+            if(params["op_date_Surgery2"]):
                 opsgesamt = opgesamt + 1 
-            if(params["op_date-Surgery3"]):
+            if(params["op_date_Surgery3"]):
                 opsgesamt = opgesamt + 1 
             p_columns.append("surgeries")
             p_values.append(opgesamt)
@@ -282,11 +283,11 @@ def dateneingabe():
 
             except Exception as e:
                 print(e)
-                RenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
+                LocalRenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
                 #NotAllowed("Fehler", False)
                 return flask.render_template(
                     'site_2.html',
-                     RenderParameters = RenderParameters)
+                     RenderParameters = LocalRenderParameters)
             #Merging both dataframes
 
         return flask.render_template('site_2.html',
