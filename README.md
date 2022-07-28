@@ -16,7 +16,9 @@
 SystemD service file:
 
 **Vor der Installation**
-Pfad der main.py in `ExecStart` und Werte von `User` und `Group` entsprechend anpassen
+Pfad der main.py in `ExecStart`
+Pfad des Arbeitsverzeichnisses in `WorkingDirectory` auf Pfad der geklonten Repository ändern
+Werte von `User` und `Group` entsprechend anpassen
 
 
 **Installation**
