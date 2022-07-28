@@ -236,7 +236,8 @@ def dateneingabe():
                 p_columns.append("age")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
-                p_values.append(str((a-b).days))
+                p_values.append(str((a-b).year))
+                print(str((a-b).year))
             if(params["pve_date"] != ""):
                 p_columns.append("pve_year")
                 a = datetime.datetime.strptime(params["pve_date"], "%Y-%m-%d")
@@ -294,12 +295,13 @@ def dateneingabe():
                 except Exception as e:
                     print("nothing to delete") 
 
-                return redirect("/dateneingabe")
+                return flask.redirect("/dateneingabe")
 
             except Exception as e:
-                print()
+                print(e)
                 LocalRenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
                 print("Fehler beim schreiben")
+
                 #NotAllowed("Fehler", False)
                 return flask.render_template(
                     'site_2.html',

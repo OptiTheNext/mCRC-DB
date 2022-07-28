@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import traceback
 import sys
 
+load_dotenv()
+
 mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
                                            user=os.environ.get('KRK_DB_USER'),
                                            password=os.environ.get('KRK_DB_PASS'),
