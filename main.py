@@ -51,11 +51,19 @@ Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
-global mydb
-mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
+
+def connect_to_db():
+    LocalRenderParameters = RenderParameters
+    global mydb
+    try:
+        mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
                                            user=os.environ.get('KRK_DB_USER'),
                                            password=os.environ.get('KRK_DB_PASS'),
                                            database=os.environ.get('KRK_DB_DATABASE'))
+    except Exception as e:
+        LocalRenderParameters["error"] = "Can't connect to Database, please inform Administrator"
+        return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
+
 
 global next_patient
 
@@ -111,11 +119,17 @@ def favicon_webmanifest():
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    
     LocalRenderParameters = RenderParameters.copy()
     LocalRenderParameters["Topnav"] = False
     LocalRenderParameters["startseite"] = False
     LocalRenderParameters["Admin"] = False
-    dbcursor=mydb.cursor()
+    try:
+        dbcursor=mydb.cursor()
+    except Exception as e:
+        connect_to_db()
+        dbcursor= mydb.cursor()
+
     RenderParameters["error"] = ''
     if flask.request.method == 'POST':
         username = flask.request.form['username']
@@ -279,9 +293,7 @@ def dateneingabe():
                 except Exception as e:
                     print("nothing to delete") 
 
-                return flask.render_template('site_2.html',
-                                            RenderParameters = RenderParameters
-                                             )
+                return redirect("/dateneingabe")
 
             except Exception as e:
                 print()
