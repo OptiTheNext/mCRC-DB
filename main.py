@@ -245,7 +245,8 @@ def dateneingabe():
                 p_values.append(a)
             if(params["op_date_Surgery1"] != ""):
                 p_columns.append("op1year")
-                a= datetime.datetime.strptime(params["op_date_Surgery1"],"%Y")
+                a= datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
+                a = a.year
                 p_values.append(a)
             
             if(params["op_date_Surgery1"]):
