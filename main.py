@@ -252,14 +252,15 @@ def dateneingabe():
                 a = a.year
                 p_values.append(a)
             
+           
             if(params["op_date_Surgery1"]):
-                opsgesamt = opgesamt + 1 
+                opsgesamt = opsgesamt + 1 
             if(params["op_date_Surgery2"]):
-                opsgesamt = opgesamt + 1 
+                opsgesamt = opsgesamt + 1 
             if(params["op_date_Surgery3"]):
-                opsgesamt = opgesamt + 1 
+                opsgesamt = opsgesamt + 1 
             p_columns.append("surgeries")
-            p_values.append(opgesamt)
+            p_values.append(opsgesamt)
             
             print(p_columns)
             print( p_values)
