@@ -236,8 +236,10 @@ def dateneingabe():
                 p_columns.append("age")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
-                p_values.append(str((a-b).year))
-                print(str((a-b).year))
+                c = (a-b).days / 365
+                print("years: " + str(int(c)))
+                p_values.append(str(int(c)))
+                
             if(params["pve_date"] != ""):
                 p_columns.append("pve_year")
                 a = datetime.datetime.strptime(params["pve_date"], "%Y-%m-%d")
