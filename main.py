@@ -252,7 +252,7 @@ def dateneingabe():
                 a = a.year
                 p_values.append(a)
             
-           
+            global opsgesamt
             if(params["op_date_Surgery1"]):
                 opsgesamt = opsgesamt + 1 
             if(params["op_date_Surgery2"]):
