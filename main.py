@@ -206,7 +206,7 @@ def dateneingabe():
             p_columns = []
             p_values = []  
             
-            opgesamt = 0
+            opsgesamt = 0
 
             for item in params.items():
                 if(item[1] == ""):
@@ -252,7 +252,7 @@ def dateneingabe():
                 a = a.year
                 p_values.append(a)
             
-            global opsgesamt
+            
             if(params["op_date_Surgery1"]):
                 opsgesamt = opsgesamt + 1 
             if(params["op_date_Surgery2"]):
