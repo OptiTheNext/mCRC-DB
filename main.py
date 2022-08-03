@@ -298,7 +298,7 @@ def dateneingabe():
                 except Exception as e:
                     print("nothing to delete") 
 
-                return flask.redirect("/dateneingabe")
+                return flask.redirect(flask.url_for("site_2"))
 
             except Exception as e:
                 print(e)
