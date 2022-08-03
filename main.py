@@ -634,20 +634,35 @@ def reset(token):
 
 @app.route("/api/getDataForID", methods=['GET'])
 def getDataForID():
+    LocalRenderParameters = RenderParameters
     if flask.request.args["pat_id_import"]:
-        cursor = mydb.cursor(dictionary=True)
+        cursor = mydb.cursor(dictionary=True, buffered = True)
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
         if cursor.rowcount == 0:
-            return "Requested ID not found in database"
+            LocalRenderParameters["error"] = 'Patient not found in database' 
+            return flask.render_template('site_2.html',
+                                         RenderParameters = LocalRenderParameters) 
         for row in cursor:
-            print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"),datetime.datetime.now()))
-            cursor.execute("INSERT INTO currently_active (pat_id) VALUES (%s)",(row.get("pat_id"),))
-            mydb.commit()
+           
+            try:
+                print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"),datetime.datetime.now()))
+                cursor.execute("INSERT INTO currently_active (pat_id) VALUES (%s)",(row.get("pat_id"),))
+                mydb.commit()
+            except Exception as e:
+                print(e)
+                LocalRenderParameters["error"] = 'Already beeing worked on' 
+                return flask.render_template('site_2.html',
+                                        RenderParameters = LocalRenderParameters)
             print(cursor.statement)
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
-        return "Request error"
+            LocalRenderParameters["error"] = 'Error occured' 
+            return flask.render_template('site_2.html',
+                                        RenderParameters = LocalRenderParameters) 
+    LocalRenderParameters["error"] = 'Error occured' 
+    return flask.render_template('site_2.html',
+                                         RenderParameters = LocalRenderParameters)
 
 if __name__ == '__main__':
   app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)
