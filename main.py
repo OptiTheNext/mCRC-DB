@@ -204,13 +204,16 @@ def dateneingabe():
             pat_to_delete = flask.request.form["pat_id"]
             print(pat_to_delete + grund_to_delete)
             cursor = mydb.cursor()
-            cursor.execute("INSERT INTO deleted_patients (id,reason) VALUES (%s,%s)",(pat_to_delete,grund_to_delete))
-            mydb.commit()
-            cursor.execute("DELETE FROM mcrc_tabelle WHERE pat_id = %s", (pat_to_delete,))
-            mydb.commit()
+            try: 
+                cursor.execute("INSERT INTO deleted_patients (id,reason) VALUES (%s,%s)",(pat_to_delete,grund_to_delete))
+                mydb.commit()
+                cursor.execute("DELETE FROM mcrc_tabelle WHERE pat_id = %s", (pat_to_delete,))
+                mydb.commit()
 
-            LocalRenderParameters = RenderParameters
-            LocalRenderParameters["Success"] = "Deleted the username"
+                LocalRenderParameters = RenderParameters
+                LocalRenderParameters["Success"] = "Deleted the username"
+            except Exception as e:
+                print("something went wrong")
             
 
 
