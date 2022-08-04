@@ -9,7 +9,7 @@ Nächster Patient:
 {%endif%}
 <br>
 <h3> Dateneingabe</h3>
-<form action="" method="post" autocomplete="off">
+<form id="InputForm" action="" method="post" autocomplete="off">
    <div class="container" style="margin-left: 0">
    <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3">
       <div class="col-6" style="border: 1px solid ,padding = 10p;">
@@ -1036,6 +1036,15 @@ Nächster Patient:
    <hr>
    <input class="btn btn-secondary" type="submit" name ="Schreiben" onclick = "input()">
    <input class="btn btn-secondary" type="reset">
+   <input class="btn btn-danger" name="Löschen" value="Löschen" onclick="OnDelete()">
+   <input tyoe="hidden" id="Grund" name="Grund" value="">
+   <script>
+   function OnDelete(){
+      var grund = prompt('Grund der Löschung');
+      document.getElementById("Grund").value = grund;
+      document.getElementById("InputForm").submit();
+   }
+   </script>
 </form>
 {% if error %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">

@@ -179,6 +179,8 @@ def dateneingabe():
     if "username" not in flask.session:
         return flask.redirect(flask.url_for('login'))
     
+    
+
     cursor= mydb.cursor()
     try:
         cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
@@ -192,6 +194,25 @@ def dateneingabe():
         next_patient = None
 
     #Schreiben von daten
+    print("Next is Grund")
+    if "Grund" in flask.request.form:
+        print("We are in Grund")
+        print("Soll gelöscht werden: " + flask.request.form["Grund"])
+        grund_to_delete = flask.request.form["Grund"]
+
+        if "pat_id" in flask.request.form:
+            pat_to_delete = flask.request.form["pat_id"]
+            print(pat_to_delete + grund_to_delete)
+            cursor = mydb.cursor()
+            cursor.execute("INSERT INTO deleted_patients (id,reason) VALUES (%s,%s)",(pat_to_delete,grund_to_delete))
+            mydb.commit()
+            cursor.execute("DELETE FROM mcrc_tabelle WHERE pat_id = %s", (pat_to_delete,))
+            mydb.commit()
+
+            LocalRenderParameters = RenderParameters
+            LocalRenderParameters["Success"] = "Deleted the username"
+            
+
 
     if "Schreiben" in flask.request.form:
         LocalRenderParameters = RenderParameters
@@ -200,7 +221,7 @@ def dateneingabe():
             return flask.redirect(flask.url_for('login'))
 
         if flask.request.method == 'POST':
-            
+
             params = flask.request.form.to_dict(flat=True)
             print(params)
             p_columns = []
