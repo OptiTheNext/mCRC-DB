@@ -247,6 +247,10 @@ def dateneingabe():
                     continue
                 if(item[0]== "pat_id_import"):
                     continue
+                if(item[0]== "Löschen"):
+                    continue    
+                if(item[0]== "Grund"):
+                    continue  
                 
                 p_columns.append(item[0])
                 p_values.append(item[1])
@@ -322,7 +326,7 @@ def dateneingabe():
                 except Exception as e:
                     print("nothing to delete") 
 
-                return flask.redirect(flask.url_for("site_2"))
+                return flask.redirect(flask.url_for("dateneingabe"))
 
             except Exception as e:
                 print(e)

@@ -1044,13 +1044,16 @@ Nächster Patient:
       document.getElementById("Grund").value = grund;
       document.getElementById("InputForm").submit();
    }
+   window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 10000);
    </script>
 </form>
 {% if error %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-danger" role="alert">
    <strong>Fehler:</strong> {{ RenderParameters["error"] }}
-   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-   <span aria-hidden="true">&times;</span>
    </button>
 </div>
 {%if overwrite %}
@@ -1058,12 +1061,10 @@ Nächster Patient:
 {% endif %}
 {% endif %}
 {% if RenderParameters["success"] %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+   <div class="alert alert-success" role="alert">
    <strong>Erfolg:</strong> {{RenderParameters["success"]}}
-   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-   <span aria-hidden="true">&times;</span>
    </button>
-</div>
+   </div>
 {%endif%}
 <!-- <form class="form-inline" method="post"> -->
    <label for="pat_id_import">Patientendaten importieren:</label>
