@@ -324,10 +324,12 @@ def dateneingabe():
 
                 #trying to delete from currently acitve
                 try: 
-                    cursor.execute("DELETE pat_id FROM currently_active WHERE patid = %s", (statement.get("pat_id"),))
+                    cursor.execute("DELETE FROM currently_active WHERE pat_id = %s", (flask.request.form["pat_id"],))
                     mydb.commit()
+                    print("deleted from currently active")
                 except Exception as e:
                     print("nothing to delete") 
+                    print(e)
                     
 
                 return flask.render_template('site_2.html',
