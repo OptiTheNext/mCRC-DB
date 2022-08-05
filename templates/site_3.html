@@ -1580,16 +1580,31 @@
                 {%endif%}
             </div>
         </form>
-        {% if RenderParameters["error"] %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Fehler:</strong> {{ RenderParameters["error"] }} <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&times;</span></button>
+        <script>
+        window.setTimeout(function() {
+         $(".alert").fadeTo(500, 0).slideUp(500, function(){
+             $(this).remove(); 
+         });
+            }, 30000);
+        </script>
+     </form>
+     {% if RenderParameters["error"] %}
+     <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Fehler</h4>
+        <p>{{ RenderParameters["error"] }} </p>
+        <p class="mb-0">{{RenderParameters["error-text"]}}</p>
+        </button>
+     </div>
+     {%if overwrite %}
+     <input type="submit" value="ueberschreiben">
+     {% endif %}
+     {% endif %}
+     {% if RenderParameters["success"] %}
+        <div class="alert alert-success" role="alert">
+           <h4 class="alert-heading">Erfolg</h4>
+           <p> Erfolg: {{RenderParameters["success"]}} </p>
         </div>
-        {%if overwrite %}
-        <form><input class="btn btn-secondary" type="submit" value="ueberschreiben" /> {% endif %} {% endif %} {% if RenderParameters["success"] %}</form>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Erfolg:</strong> {{RenderParameters["success"]}} <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&times;</span></button>
-        </div>
-        {%endif%}
+     {%endif%}
         <form class="form-inline" method="post"><label for="sapidimport">Daten analysiere</label> <button class="btn btn-secondary" name="analysebutton" type="submit">Analysieren</button></form>
         {%endblock%}
     </body>

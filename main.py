@@ -53,7 +53,7 @@ RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
 
 def connect_to_db():
-    LocalRenderParameters = RenderParameters
+    LocalRenderParameters = RenderParameters.copy()
     global mydb
     try:
         mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
@@ -62,6 +62,7 @@ def connect_to_db():
                                            database=os.environ.get('KRK_DB_DATABASE'))
     except Exception as e:
         LocalRenderParameters["error"] = "Can't connect to Database, please inform Administrator"
+        LocalRenderParameters["error-text"] = e
         return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
 
 
@@ -158,6 +159,7 @@ def login():
             print(e)
             #Exeption into Log Data
             LocalRenderParameters["error"] = 'Something went wrong, Contact a Server Administrator'
+            LocalRenderParameters["error-text"] = e
     
     return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
 
@@ -180,7 +182,7 @@ def dateneingabe():
         return flask.redirect(flask.url_for('login'))
     
     
-
+    LocalRenderParameters = RenderParameters.copy()
     cursor= mydb.cursor()
     try:
         cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
@@ -210,15 +212,16 @@ def dateneingabe():
                 cursor.execute("DELETE FROM mcrc_tabelle WHERE pat_id = %s", (pat_to_delete,))
                 mydb.commit()
 
-                LocalRenderParameters = RenderParameters
+                LocalRenderParameters = RenderParameters.copy()
                 LocalRenderParameters["Success"] = "Deleted the username"
             except Exception as e:
                 print("something went wrong")
+                LocalRenderParameters["Error"] = "Something went wrong"
+                LocalRenderParameters["error-text"] = e
             
 
 
     if "Schreiben" in flask.request.form:
-        LocalRenderParameters = RenderParameters
         print("In Input")
         if ("username" not in flask.session):
             return flask.redirect(flask.url_for('login'))
@@ -317,7 +320,7 @@ def dateneingabe():
                 print(cursor._executed)
                 print(cursor.statement)
                 print(cursor.rowcount, "record inserted.")
-                RenderParameters["success"] = "Eingabe erfolgreich"
+                LocalRenderParameters["success"] = "Eingabe erfolgreich"
 
                 #trying to delete from currently acitve
                 try: 
@@ -325,22 +328,23 @@ def dateneingabe():
                     mydb.commit()
                 except Exception as e:
                     print("nothing to delete") 
+                    
 
-                return flask.redirect(flask.url_for("dateneingabe"))
+                return flask.render_template('site_2.html',
+                                      RenderParameters = LocalRenderParameters)
 
             except Exception as e:
                 print(e)
                 LocalRenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
+                LocalRenderParameters["error-text"] = e
                 print("Fehler beim schreiben")
-
                 #NotAllowed("Fehler", False)
-                return flask.render_template(
-                    'site_2.html',
-                     RenderParameters = LocalRenderParameters)
+                return flask.render_template('site_2.html',
+                                      RenderParameters = LocalRenderParameters)
             #Merging both dataframes
 
         return flask.render_template('site_2.html',
-                                      RenderParameters = RenderParameters)
+                                      RenderParameters = LocalRenderParameters)
 
     
     #end of test for buttons
@@ -366,6 +370,7 @@ def export_to_csv():
 @app.route("/datenausgabe", methods=['POST', 'GET'])
 def page_3():
     if ("username" in flask.session):
+        LocalRenderParameters = RenderParameters.copy()
         # dateneingabelogik
         if "datenausgabe" in flask.request.form:
             print("hi")
@@ -410,17 +415,17 @@ def page_3():
                 ],
                                           overwrite=False).to_html())
             
-            RenderParameters["htmltext"] = htmltext
+            LocalRenderParameters["htmltext"] = htmltext
 
             return flask.render_template('site_3.html', htmltext= htmltext, 
-                                          RenderParameters = RenderParameters)
+                                          RenderParameters = LocalRenderParameters)
             #weiterleitung zum Datenanalyse
             if "analysebutton" in flask.request.form:
                 # Datenbankvariable zur analyse noch setzen
                 return flask.redirect(flask.url_for('page_4'))
 
         return flask.render_template('site_3.html',
-                                      RenderParameters = RenderParameters)
+                                      RenderParameters = LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
 
@@ -428,8 +433,9 @@ def page_3():
 @app.route("/datenanalyse", methods=['POST', 'GET'])
 def page_4():
     if ("username" in flask.session):
+        LocalRenderParameters = RenderParameters.copy()
         return flask.render_template('site_4.html',
-                                      RenderParameters = RenderParameters)
+                                      RenderParameters = LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
 
@@ -554,6 +560,8 @@ def page_5():
                                          RenderParameters = LocalRenderParameters)
                 except Exception as e:
                     print(e)
+                    LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
+                    LocalRenderParameters["error-text"] = e
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)
                     
@@ -568,6 +576,8 @@ def page_5():
                                          RenderParameters = LocalRenderParameters)
                 except Exception as e:
                     print(e)
+                    LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
+                    LocalRenderParameters["error-text"] = e
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)              
                 
@@ -595,6 +605,7 @@ def page_5():
                                          RenderParameters = LocalRenderParameters)
                 except Exception as e:
                      LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
+                     LocalRenderParameters["error-text"] = e
                      return flask.render_template('site_5.html',
                                         RenderParameters = LocalRenderParameters)
 
@@ -644,6 +655,7 @@ def reset(token):
                                          RenderParameters = LocalRenderParameters)
                     except Exception as e:
                         LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
+                        LocalRenderParameters["error-text"] = e
                         return flask.render_template('reset.html',
                                          RenderParameters = LocalRenderParameters) 
 
@@ -654,7 +666,8 @@ def reset(token):
         else:
             return flask.redirect(flask.url_for('login'))
     except Exception as e:
-        print("Upsi, fehler")
+        LocalRenderParameters["error"] = "Couldnt reach database, Contact Administrator"
+        LocalRenderParameters["error-text"] = e
         return flask.redirect(flask.url_for('login'))
     
 
@@ -662,7 +675,7 @@ def reset(token):
 
 @app.route("/api/getDataForID", methods=['GET'])
 def getDataForID():
-    LocalRenderParameters = RenderParameters
+    LocalRenderParameters = RenderParameters.copy()
     if flask.request.args["pat_id_import"]:
         cursor = mydb.cursor(dictionary=True, buffered = True)
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))

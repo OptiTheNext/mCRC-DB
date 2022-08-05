@@ -1048,12 +1048,14 @@ Nächster Patient:
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
         $(this).remove(); 
     });
-}, 10000);
+}, 30000);
    </script>
 </form>
-{% if error %}
+{% if RenderParameters["error"] %}
 <div class="alert alert-danger" role="alert">
-   <strong>Fehler:</strong> {{ RenderParameters["error"] }}
+   <h4 class="alert-heading">Fehler</h4>
+   <p>{{ RenderParameters["error"] }} </p>
+   <p class="mb-0">{{RenderParameters["error-text"]}}</p>
    </button>
 </div>
 {%if overwrite %}
@@ -1062,8 +1064,8 @@ Nächster Patient:
 {% endif %}
 {% if RenderParameters["success"] %}
    <div class="alert alert-success" role="alert">
-   <strong>Erfolg:</strong> {{RenderParameters["success"]}}
-   </button>
+      <h4 class="alert-heading">Erfolg</h4>
+      <p> Erfolg: {{RenderParameters["success"]}} </p>
    </div>
 {%endif%}
 <!-- <form class="form-inline" method="post"> -->
