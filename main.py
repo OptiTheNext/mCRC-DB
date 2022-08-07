@@ -184,17 +184,22 @@ def dateneingabe():
     
     LocalRenderParameters = RenderParameters.copy()
     cursor= mydb.cursor()
-    try:
-        cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
-        next_patient=cursor.fetchall()[0][0]
-        print(next_patient)
-        RenderParameters["next_patient"] = next_patient
-    except Exception as e: 
-        print("hat halt net geklappt")
-        print(e)
-        traceback.print_exc()
-        next_patient = None
+    def get_next_patient_id(): 
+        try:
+            cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
+            next_patient=cursor.fetchall()[0][0]
+            print("Nächster Patient: ")
+            print( next_patient)
 
+            RenderParameters["next_patient"] = next_patient
+            next_patient = None
+        except Exception as e: 
+            print("Neuer Patient konnte nicht ausgewählt werden")
+            print(e)
+            traceback.print_exc()
+            next_patient = None
+
+    get_next_patient_id()
     #Schreiben von daten
     print("Next is Grund")
     if "Grund" in flask.request.form:
@@ -331,7 +336,7 @@ def dateneingabe():
                     print("nothing to delete") 
                     print(e)
                     
-
+                get_next_patient_id()
                 return flask.render_template('site_2.html',
                                       RenderParameters = LocalRenderParameters)
 
