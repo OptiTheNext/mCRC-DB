@@ -297,6 +297,34 @@ def dateneingabe():
                 opsgesamt = opsgesamt + 1 
             p_columns.append("surgeries")
             p_values.append(opsgesamt)
+
+            #Setting defaults for checks
+            if(params.get("crlm_bilobular",None) == None):
+                p_columns.append("crlm_bilobular")
+                p_values.append("0")
+                print("in function for bilobulär")
+            if(params.get("mutlimodal",None) == None):
+                p_columns.append("multimodal")
+                p_values.append("0")
+            if(params.get("two_staged",None) == None):
+                p_columns.append("two_staged")
+                p_values.append("0")
+            if(params.get("alcohol",None) == None):
+                p_columns.append("alcohol")
+                p_values.append("0")
+            if(params.get("smoking",None) == None):
+                p_columns.append("smoking")
+                p_values.append("0")
+            if(params.get("diabetes",None) == None):
+                p_columns.append("diabetes")
+                p_values.append("0")
+            if(params.get("cirrhosis",None) == None):
+                p_columns.append("cirrhosis")
+                p_values.append("0")
+            if(params.get("fibrosis",None) == None):
+                p_columns.append("fibrosis")
+                p_values.append("0")
+
             
             print(p_columns)
             print( p_values)
