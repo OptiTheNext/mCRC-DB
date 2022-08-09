@@ -53,31 +53,31 @@ global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
 
-def send_error_mail(error, user):
-    
-    data = {
-                    'Messages': [
-                        {
-                        "From": {
-                            "Email": "mcrc.cvk@gmail.com",
-                            "Name": "Kolorektale Datenbank Charite"
-                        },
-                        "To": [
-                            {
-                            "Email": "mail@hannesfreitag.de",
-                            "Name": "Hannes"
-                            }
-                        ],
-                        "HTMLPart": "<!DOCTYPE html> <html> <head> <title>FEHLER</title> </head><body> <div>  <h3>Moin Hannes,</h3><p>Da ist gerade {} ein Fehler mit der Datenbank passiert:<br> <p>{} <div> Cheers!</div></div></body></html>".format(user, error),
-                        
-                        "Subject": "Ein Fehler ist passiert",
-    
-                        }
-                    ]
-                    }
-    result = mailjet.send.create(data=data)
-    print (result.status_code)
-    print (result.json())
+#def send_error_mail(error, user):
+ #   
+  #  data = {
+   #                 'Messages': [
+        #                {
+   #                     "From": {
+    #                        "Email": "mcrc.cvk@gmail.com",
+     #                       "Name": "Kolorektale Datenbank Charite"
+      #                  },
+       #                 "To": [
+        #                    {
+         #                   "Email": "mail@hannesfreitag.de",
+          #                  "Name": "Hannes"
+           #                 }
+            #            ],
+             #           "HTMLPart": "<!DOCTYPE html> <html> <head> <title>FEHLER</title> </head><body> <div>  <h3>Moin Hannes,</h3><p>Da ist gerade {} ein Fehler mit der Datenbank passiert:<br> <p>{} <div> Cheers!</div></div></body></html>".format(user, error),
+              #          
+               #         "Subject": "Ein Fehler ist passiert",
+    #
+     #                   }
+      #              ]
+       #             }
+   # result = mailjet.send.create(data=data)
+    #print (result.status_code)
+    #print (result.json())
 
 
 def connect_to_db():
@@ -224,7 +224,7 @@ def dateneingabe():
         except Exception as e: 
             print("Neuer Patient konnte nicht ausgewählt werden")
             print(e)
-            send_error_mail(e, flask.session["username"])
+           # send_error_mail(e, flask.session["username"])
             traceback.print_exc()
             next_patient = None
 
@@ -252,7 +252,7 @@ def dateneingabe():
                 print("something went wrong")
                 LocalRenderParameters["Error"] = "Nutzer kann nicht gelöscht werden"
                 LocalRenderParameters["error-text"] = e
-                send_error_mail(e, flask.session["username"])
+                #send_error_mail(e, flask.session["username"])
             
 
 
@@ -402,7 +402,7 @@ def dateneingabe():
                 print(e)
                 LocalRenderParameters["error"] = "Konnte nicht in die Datenbank geschrieben werden"
                 LocalRenderParameters["error-text"] = e
-                send_error_mail(e, flask.session["username"])
+                #send_error_mail(e, flask.session["username"])
                 print("Fehler beim schreiben")
                 #NotAllowed("Fehler", False)
                 return flask.render_template('site_2.html',
@@ -628,7 +628,7 @@ def page_5():
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
                     LocalRenderParameters["error-text"] = e
-                    send_error_mail(e, flask.session["username"])
+                   # send_error_mail(e, flask.session["username"])
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)
                     
@@ -645,7 +645,7 @@ def page_5():
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
-                    send_error_mail(e, flask.session["username"])
+                   # send_error_mail(e, flask.session["username"])
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)              
                 
@@ -674,7 +674,7 @@ def page_5():
                 except Exception as e:
                      LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                      LocalRenderParameters["error-text"] = e
-                     send_error_mail(e, flask.session["username"])
+                    # send_error_mail(e, flask.session["username"])
                      return flask.render_template('site_5.html',
                                         RenderParameters = LocalRenderParameters)
 
@@ -725,7 +725,7 @@ def reset(token):
                     except Exception as e:
                         LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                         LocalRenderParameters["error-text"] = e
-                        send_error_mail(e, flask.session["username"])
+                        #send_error_mail(e, flask.session["username"])
                         return flask.render_template('reset.html',
                                          RenderParameters = LocalRenderParameters) 
 
@@ -738,7 +738,7 @@ def reset(token):
     except Exception as e:
         LocalRenderParameters["error"] = "Couldnt reach database, Contact Administrator"
         LocalRenderParameters["error-text"] = e
-        send_error_mail(e, flask.session["username"])
+       # send_error_mail(e, flask.session["username"])
         return flask.redirect(flask.url_for('login'))
     
 
