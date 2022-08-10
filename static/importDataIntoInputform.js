@@ -12,11 +12,11 @@ function importData() {
             {
                 $("#PVECheck").prop('checked', Boolean(value)).trigger("change");
             }
-            if(key === "second_surgery_planned")
+            if(key === "second_surgery_planned" || key === "second_surgery_realized")
             {
                 $("#secondOP_Check").prop('checked', Boolean(value)).trigger("change");
             }
-            if(key === "third_surgery_planned")
+            if(key === "third_surgery_planned" || key === "third_surgery_realized")
             {
                 $("#thirdOP_Check").prop('checked', Boolean(value)).trigger("change");
             }
