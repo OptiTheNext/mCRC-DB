@@ -197,6 +197,19 @@ def page_1():
     if ("username" in flask.session):
         LocalRenderParameters = RenderParameters.copy()
         LocalRenderParameters["startseite"] = False
+
+        try:
+            cursor= mydb.cursor()
+            cursor.execute("SELECT COUNT(*) FROM mcrc_tabelle where Kuerzel=''")
+            pat_to_do = cursor.fetchall()
+            print(type(pat_to_do))
+            print(pat_to_do[0][0])
+            LocalRenderParameters["Pat_To_Do"] = pat_to_do[0][0]
+        except Exception as e:
+            print(e)
+            print("No more patients to work on")
+
+
         return flask.render_template('site_1.html',
                                      RenderParameters = LocalRenderParameters)
         
@@ -211,9 +224,10 @@ def dateneingabe():
     
     
     LocalRenderParameters = RenderParameters.copy()
-    cursor= mydb.cursor()
+    
     def get_next_patient_id(): 
         try:
+            cursor= mydb.cursor()
             cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
             next_patient=cursor.fetchall()[0][0]
             print("Nächster Patient: ")
@@ -297,7 +311,7 @@ def dateneingabe():
                 p_columns.append("datediff_op1_op2")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
                 b = datetime.datetime.strptime(params["op_date_Surgery2"], "%Y-%m-%d")
-                p_values.append(str((a-b).days))
+                p_values.append(str((b-a).days))
             if(params["op_date_Surgery1"] != "" and params["dob"] != ""):
                 p_columns.append("age")
                 a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
@@ -359,6 +373,12 @@ def dateneingabe():
                 p_values.append("1")
             else:
                 p_columns.append("recurrence_status")
+                p_values.append("0")
+            if(params.get("pve_date",None)):
+                p_columns.append("pve")
+                p_values.append("1")
+            else:
+                p_columns.append("pve")
                 p_values.append("0")
 
             

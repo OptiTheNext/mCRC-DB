@@ -4,6 +4,23 @@ function importData() {
         console.log(result);
         $.each(result, function(key, value) {
             // Check if specific subfields of default-hidden spans have input
+            if(key === "previous_surgery_date")
+            {
+                $("#PreviousOPs").prop('checked', Boolean(value)).trigger("change");
+            }
+            if(key === "pve_date")
+            {
+                $("#PVECheck").prop('checked', Boolean(value)).trigger("change");
+            }
+            if(key === "second_surgery_planned")
+            {
+                $("#secondOP_Check").prop('checked', Boolean(value)).trigger("change");
+            }
+            if(key === "third_surgery_planned")
+            {
+                $("#thirdOP_Check").prop('checked', Boolean(value)).trigger("change");
+            }
+
             if(key === "diagnosis2") {
                 $("#diagnose2_check").prop('checked', Boolean(value)).trigger("change");
             }

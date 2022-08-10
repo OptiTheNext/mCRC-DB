@@ -218,7 +218,7 @@ Nächster Patient:
             </div>
             <div class="form-group">
                <label for="formGroupExampleInput2">BMI</label>
-               <input type="number" min="0" max="60" step="0.01" class="form-control" id="BMI" name="BMI" placeholder="BMI">
+               <input type="number" min="0" max="60" step="0.01" class="form-control" id="bmi" name="bmi" placeholder="BMI">
             </div>
             <br>
             <div>
@@ -249,7 +249,7 @@ Nächster Patient:
                <label class="form-labels">OP Datum</label>
                <input class="form-control" type="date" name="previous_surgery_date" placeholder = "previous_surgery_date" id="previous_surgery_date" >
                <label class="form-labels">OP Beschreibung</label>
-               <input class="form-control" type="text" name="previous_surgery_which" placeholder = "previous_surgery_which" id="previous_surgery_which" >
+               <input class="form-control" type="text" name="previous_surgery_which"  placeholder = "previous_surgery_which" id="previous_surgery_which" maxlength="400" >
                </span>
             </div>
             <div class="form-group">
@@ -273,9 +273,9 @@ Nächster Patient:
                <label class="form-labels">Anzahl Zyklen</label>
                <input class="form-control" type="number" name="ss_previous_chemotherapy_cycles" id="ss_previous_chemotherapy_cycles" placeholder = "Zahl">
                <label class="form-labels">Medikament</label>
-               <input class="form-control" type="text" name="ss_previous_chemotherapy_type" id="fs_previous_chemotherapy_type" placeholder = "Freitext">
+               <input class="form-control" type="text" maxlength="400" name="ss_previous_chemotherapy_type" id="ss_previous_chemotherapy_type" placeholder = "Freitext">
                <label class="form-labels">Antikörper</label>
-               <input class="form-control" type="text" name="ss_previous_antibody" id="fs_previous_antibody" placeholder = "Freitext">
+               <input class="form-control" type="text" name="ss_previous_antibody" id="ss_previous_antibody" placeholder = "Freitext">
                </span>
             </div>
             <div class="form-group">
@@ -286,9 +286,9 @@ Nächster Patient:
                <label class="form-labels">Anzahl Zyklen</label>
                <input class="form-control" type="number" name="th_previous_chemotherapy_cycles" id="th_previous_chemotherapy_cycles" placeholder = "Zahl">
                <label class="form-labels">Medikament</label>
-               <input class="form-control" type="text" name="th_previous_chemotherapy_type" id="fs_previous_chemotherapy_type" placeholder = "Freitext">
+               <input class="form-control" type="text" name="th_previous_chemotherapy_type" id="th_previous_chemotherapy_type" placeholder = "Freitext">
                <label class="form-labels">Antikörper</label>
-               <input class="form-control" type="text" name="th_previous_antibody" id="fs_previous_antibody" placeholder = "Freitext">
+               <input class="form-control" type="text" name="th_previous_antibody" id="th_previous_antibody" placeholder = "Freitext">
                </span>
             </div>
          </div>
@@ -313,12 +313,12 @@ Nächster Patient:
             <label for="thirdOP_Check">3. OP</label>
             <div class="form-group">
                <label for="formGroupExampleInput">Geplantes Prozedere</label>
-               <input type="text" class="form-control" id="planned" name="crlm_procedure_planned" placeholder="Freitext">
+               <input type="text" class="form-control" id="crlm_procedure_planned" name="crlm_procedure_planned" maxlength = "400" placeholder="Freitext">
             </div>
            
             <div class="form-group">
                <label for="formGroupExampleInput">Umgesetzte Prozedur</label>
-               <input type="text" class="form-control" id="realize" name="crlm_procedure_realize" placeholder="Freitext">
+               <input type="text" class="form-control" id="crlm_procedure_realize" name="crlm_procedure_realize" maxlength = "400" placeholder="Freitext">
             </div>
            
             LIMAX
@@ -395,7 +395,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Code</label> 
-               <input type="text" pattern="[0-9]-[0-9]{1,3}.[0-9a-z]" class="form-control" name="op_code_Surgery1" id="op1_opcode" placeholder="DIMDI OP Code">
+               <input type="text" pattern="[0-9]-[0-9]{1,3}.[0-9a-z]" class="form-control" name="op_code_Surgery1" id="op_code_Surgery1" placeholder="DIMDI OP Code">
             </div>
             <br>
             <div class="form-group">
@@ -405,7 +405,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">OP Type</label>
-               <input type="text" class="form-control" id="op1_opwhich" name="first_surgery_type" placeholder="Freitext">
+               <input type="text" class="form-control" id="first_surgery_type"  maxlength="400" name="first_surgery_type" placeholder="Freitext">
             </div>
             <br>
             <div class="form-group">
@@ -419,9 +419,9 @@ Nächster Patient:
                </select>
             </div>
         
-            <input class="form-check-input" type="checkbox" id="op1_conversion_check" name="first_surgery_conversion" value="1"><label for ="op1_conversion_check"> Konversion</label>
+            <input class="form-check-input" type="checkbox" id="first_surgery_conversion" name="first_surgery_conversion" value="1"><label for ="first_surgery_conversion"> Konversion</label>
       
-            <input class="form-check-input" type="checkbox" id="op1_ablation_check" name="first_surgery_ablation" value="1"> <label for="op1_ablation_check">Ablation</label>
+            <input class="form-check-input" type="checkbox" id="first_surgery_ablation" name="first_surgery_ablation" value="1"> <label for="first_surgery_ablation">Ablation</label>
            
             <div class="form-group">
                <label for="formGroupExampleInput">OP Länge</label>
@@ -430,7 +430,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Intensivzeit</label>
-               <input type="number" min="0" max="1000" class="form-control" id="op1_icu" name="fs_icu" placeholder="Tage">
+               <input type="number" min="0" max="1000" class="form-control" id="fs_icu" name="fs_icu" placeholder="Tage">
             </div>
             <br>
             <div class="form-group">
@@ -456,7 +456,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="op1_complicationwhich" name="fs_complication_which" placeholder="Freitext">
+               <input type="text" class="form-control" id="fs_complication_which"  maxlength="400" name="fs_complication_which" placeholder="Freitext">
             </div>
          </div>
       </div>
@@ -594,7 +594,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" step="0.01" class="form-control" id="fs_INR_LAST" name="fs_INR_LAST" placeholder="Wert">
+                           <input type="number" step="0.01" class="form-control" id="fs_INR_Last" name="fs_INR_Last" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -630,7 +630,7 @@ Nächster Patient:
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
                <label for="formGroupExampleInput2">OP Methode</label>
-               <select class="form-control form-select" name="first_surgery_minimal_invasive" id="first_surgery_minimal_invasive">
+               <select class="form-control form-select" name="second_surgery_minimal_invasive" id="second_surgery_minimal_invasive">
                   <option value=""></option>
                   <option value="Offen">Offen</option>
                <option value="laparoskopisch">Laparoskopisch</option>
@@ -675,7 +675,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="ss_complication_which" name="ss_complication_which" placeholder="Freitext">
+               <input type="text" class="form-control" id="ss_complication_which" maxlength = "400" name="ss_complication_which" placeholder="Freitext">
             </div>
          </div>
       </span>
@@ -879,7 +879,7 @@ Nächster Patient:
             <div class="form-group">
                <!--Hier noch import_var ändern, immer noch geschlecht -->
                <label for="formGroupExampleInput2">DINDO Komplikations-Score</label>
-               <select class="form-control form-select" name="ts_DINDO">
+               <select class="form-control form-select" name="ts_DINDO" id = "ts_DINDO">
                   <option value=""></option>
                   <option value="No Comp">No Complications</option>
                <option value="1">I</option>
@@ -894,7 +894,7 @@ Nächster Patient:
             <br>
             <div class="form-group">
                <label for="formGroupExampleInput">Art der Komplikation</label>
-               <input type="text" class="form-control" id="ts_complication_which" name="ts_complication_which" placeholder="Freitext">
+               <input type="text" class="form-control" id="ts_complication_which"  maxlength = "400" name="ts_complication_which" placeholder="Freitext">
             </div>
          </div>
       </span>
@@ -924,7 +924,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number"step="0.01"  min="0" max="10"class="form-control" id="ts_Serum_Bili_Last" name="ts_Serum_Bili_Last" placeholder="Wert">
+                           <input type="number"step="0.01"  min="0" max="10"class="form-control" id="ts_Serum_Bili_LAST" name="ts_Serum_Bili_LAST" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -951,7 +951,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="op2_dbili_last">Letzter Wert vor Entlassung</label>
-                           <input type="number" step="0.01"  min="0" class="form-control" id="ts_Drain_Bili_Last" name="ts_Drain_Bili_Last" placeholder="Wert">
+                           <input type="number" step="0.01"  min="0" class="form-control" id="ts_Drain_Bili_LAST" name="ts_Drain_Bili_LAST" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -978,7 +978,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" step="0.01"  min="0" class="form-control" id="ts_AST_Last" name="ts_AST_Last" placeholder="Wert">
+                           <input type="number" step="0.01"  min="0" class="form-control" id="ts_AST_LAST" name="ts_AST_LAST" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -1005,7 +1005,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" step="0.01"   min="0" class="form-control" id="ts_ALT_Last" name="ts_ALT_Last" placeholder="Wert">
+                           <input type="number" step="0.01"   min="0" class="form-control" id="ts_ALT_LAST" name="ts_ALT_LAST" placeholder="Wert">
                         </div>
                      </div>
                   </div>
@@ -1032,7 +1032,7 @@ Nächster Patient:
                         </div>
                         <div class="form-group">
                            <label for="formGroupExampleInput2">Letzter Wert vor Entlassung</label>
-                           <input type="number" min="0" step="0.01" class="form-control" id="ts_INR_Last" name="ts_INR_Last" placeholder="Wert">
+                           <input type="number" min="0" step="0.01" class="form-control" id="ts_INR_LAST" name="ts_INR_LAST" placeholder="Wert">
                         </div>
                      </div>
                   </div>
