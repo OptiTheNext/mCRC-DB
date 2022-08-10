@@ -354,6 +354,12 @@ def dateneingabe():
             if(params.get("fibrosis",None) == None):
                 p_columns.append("fibrosis")
                 p_values.append("0")
+            if(params.get("recurrence_date",None) or params.get("recurrence_organ",None)):
+                p_columns.append("recurrence_status")
+                p_values.append("1")
+            else:
+                p_columns.append("recurrence_status")
+                p_values.append("0")
 
             
             print(p_columns)
