@@ -802,5 +802,10 @@ def getDataForID():
     return flask.render_template('site_2.html',
                                          RenderParameters = LocalRenderParameters)
 
+@app.route("/versions",methods = ["GET"])
+def versions():
+    LocalRenderParameters = RenderParameters.copy()
+    return flask.render_template("site_6.html", RenderParameters = LocalRenderParameters)
+
 if __name__ == '__main__':
   app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)
