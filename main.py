@@ -22,6 +22,7 @@ import jwt
 #Own Scripts
 import datenausgabe
 import generate_token
+import statistik
 
 #Debugging
 import traceback
@@ -60,7 +61,7 @@ RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
         #                {
    #                     "From": {
     #                        "Email": "mcrc.cvk@gmail.com",
-     #                       "Name": "Kolorektale Datenbank Charite"
+     #                       "Name":5 "Kolorektale Datenbank Charite"
       #                  },
        #                 "To": [
         #                    {
@@ -502,7 +503,7 @@ def page_3():
                     },
                     {
                         'selector': 'td',
-                        'props': 'text-align: center; font-weight: bold;'
+                        'props': 'text-align: center; font-weight: bold; border:solid'
                     },
                 ],
                                           overwrite=False).to_html())
@@ -512,8 +513,8 @@ def page_3():
             return flask.render_template('site_3.html', htmltext= htmltext, 
                                           RenderParameters = LocalRenderParameters)
             #weiterleitung zum Datenanalyse
-            if "analysebutton" in flask.request.form:
-                # Datenbankvariable zur analyse noch setzen
+
+        if "analysebutton" in flask.request.form:
                 return flask.redirect(flask.url_for('page_4'))
 
         return flask.render_template('site_3.html',
@@ -527,6 +528,26 @@ def page_4():
     if ("username" in flask.session):
         LocalRenderParameters = RenderParameters.copy()
         return flask.render_template('site_4.html',
+                                      RenderParameters = LocalRenderParameters)
+    else:
+        return flask.redirect(flask.url_for('login'))
+
+@app.route("/datenanalyse_admin", methods = ["POST","GET"])
+def page_4_admin():
+    if ("username" in flask.session and flask.session.get("Admin") == 1):
+        LocalRenderParameters = RenderParameters.copy()
+        if(flask.session.get("df")):
+            LocalRenderParameters["df"] = True
+        if flask.request.method == 'GET':
+            print(flask.request.args.to_dict(flat=False))
+            if "csv_file" in flask.request.args:
+                #Später anschauen
+                print("hi")
+            if "des_stat" in flask.request.args:
+                statistik.deskreptiv(flask.session.get("df"))
+                
+            
+        return flask.render_template('site_4_admin.html',
                                       RenderParameters = LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -611,7 +632,7 @@ def page_5():
                 token = generate_token.generate_password_reset_token(name, password)
                 print(type(token))
                 #generate token for link:
-                url = flask.request.host_url + 'reset/'+ token.decode('utf-8')
+                url = flask.request.host_url + 'reset/'+ token #.decode('utf-8')
                 print(url)
                 data = {
                     'Messages': [

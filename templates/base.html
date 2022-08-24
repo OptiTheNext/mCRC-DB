@@ -24,6 +24,14 @@
     <script src="{{ url_for('static', filename='checkboxes.js')}}"></script>
     <script src="{{ url_for('static', filename='opfield.js')}}"></script>
     <script src="{{ url_for('static', filename='importDataIntoInputform.js')}}"></script>
+    <script src="{{ url_for('static', filename='node_modules/bootstrap5-tags/tags.js')}}"></script>
+    <script src="{{ url_for('static', filename='node_modules/bootstrap5-tags/tags-standalone.css')}}"></script>
+
+   <script>
+    import Tags from url_for('static', filename='node_modules/bootstrap5-tags/tags.js');
+    Tags.init();
+   </script>
+    
 
     <header id="header">
       <div class="header">
@@ -36,6 +44,9 @@
         <a href="/datenausgabe">Datenausgabe</a>
         <a href="/datenanalyse">Datenanalyse</a>
         <a href="/users">Nutzerverwaltung</a>
+        {%endif%}
+        {%if RenderParameters["Admin"]%}
+        <a href="/datenanalyse_admin">Datenanalyse_Admin</a>
         {%endif%}
         {%if RenderParameters["startseite"] == True %}
         <a href="/startseite" style="float:right">Startseite</a>
