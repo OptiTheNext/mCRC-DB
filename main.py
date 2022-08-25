@@ -543,8 +543,14 @@ def page_4_admin():
             if "csv_file" in flask.request.args:
                 #Später anschauen
                 print("hi")
-            if "des_stat" in flask.request.args:
-                statistik.deskreptiv(flask.session.get("df"))
+        if flask.request.method == "POST":
+            if flask.request.json:
+                #statistik.deskreptiv(flask.session.get("df"),tags)
+                print("HURENSOHN")
+                print(flask.request.json)
+                tags = flask.request.json["value"]
+                print( tags)
+                statistik.deskreptiv(flask.session.get("df"),tags)
                 
             
         return flask.render_template('site_4_admin.html',

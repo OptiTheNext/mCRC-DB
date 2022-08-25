@@ -3,7 +3,7 @@
   <p>Charite zu Berlin, 2010-2021</p>
 {%endblock%}
 
-<script src="{{url_for('static', filename='script.js')}}"></script>
+
 
 {% block MainContent %}
 
@@ -16,6 +16,9 @@
   </div>
 </div>
 
+<button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="submitTags()" name="Import">STATISTIK!</button>
+
+<script src="{{url_for('static', filename='script.js')}}"></script>
   <!--
 <form>
 <div class="container overflow-hidden" style="margin-left: 0">
