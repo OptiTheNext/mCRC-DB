@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block Unterschrift %}
+  <p>Charite zu Berlin, 2010-2021</p>
+{%endblock%}
+
+<script src="{{url_for('static', filename='script.js')}}"></script>
+
+{% block MainContent %}
+
+
+<div class="wrapper">
+  <h3>Your hashtags</h3>
+  <p class="info">Type your hashtag & click enter.</p>
+  <input type="text" id="hashtags" autocomplete="off">
+  <div class="tag-container">
+  </div>
+</div>
+
+  <!--
+<form>
+<div class="container overflow-hidden" style="margin-left: 0">
+  <div class="row gy-3">
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Quantitative Eingabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Quantitative Ausgabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Qualitative Eingabe</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">Qualitative Ausgabe</div>
+    </div>
+  </div>
+</div>
+<hr>
+<label for="sapidimport">Daten analysiere</label>
+  <button class="btn btn-secondary" name = "analysebutton">Analysieren</button>
+</form>
+-->
+
+
+  {%endblock%}
+
+  
+
+
+
+
