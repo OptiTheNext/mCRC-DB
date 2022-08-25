@@ -3,7 +3,6 @@ import flask
 import random
 import mysql.connector
 import datetime
-import Columns
 import os
 from dotenv import load_dotenv
 import pandas
@@ -20,9 +19,10 @@ import jwt
 
 
 #Own Scripts
-import datenausgabe
-import generate_token
-import statistik
+from Scripts import datenausgabe
+from Scripts import generate_token
+from Scripts import statistik
+from Scripts import Columns
 
 #Debugging
 import traceback
@@ -546,11 +546,13 @@ def page_4_admin():
         if flask.request.method == "POST":
             if flask.request.json:
                 #statistik.deskreptiv(flask.session.get("df"),tags)
-                print("HURENSOHN")
+               
                 print(flask.request.json)
                 tags = flask.request.json["value"]
                 print( tags)
                 statistik.deskreptiv(flask.session.get("df"),tags)
+
+                statistik.generate_pdf()
                 
             
         return flask.render_template('site_4_admin.html',
@@ -833,6 +835,15 @@ def getDataForID():
 def versions():
     LocalRenderParameters = RenderParameters.copy()
     return flask.render_template("site_6.html", RenderParameters = LocalRenderParameters)
+
+@app.route("/api/tags", methods = ["GET"])
+def tags_list():
+    p = []
+    for c,l in zip(Columns.d, Columns.b):
+        q = {"value":c, "label":l}
+        p.append(q)
+    p = flask.jsonify(p)
+    return p
 
 if __name__ == '__main__':
   app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)

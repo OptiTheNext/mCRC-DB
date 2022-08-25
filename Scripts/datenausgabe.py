@@ -2,7 +2,7 @@ import flask
 import random
 import mysql.connector
 import datetime
-import Columns
+from Scripts import Columns
 import os
 from dotenv import load_dotenv
 import pandas

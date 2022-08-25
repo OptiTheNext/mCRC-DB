@@ -3,22 +3,66 @@
   <p>Charite zu Berlin, 2010-2021</p>
 {%endblock%}
 
-
+Lol, hier steht was was keiner lesen kann
 
 {% block MainContent %}
+<script type="module" src="{{ url_for('static', filename='tags.js')}}"></script>
+<script type="module" src="{{ url_for('static', filename='script.js')}}"></script>
+
+<label for="serverSideTags" class="form-label">Zu Untersuchende Spalten</label>
+            <select
+              class="form-select"
+              id="serverSideTags"
+              name="server_side_tags[]"
+              multiple
+              data-allow-new="false"
+              data-server="/api/tags"
+              data-clearEnd="true"
+              data-allowClear="true"
+            >
+              <option disabled hidden value="">Choose a tag...</option>
+            </select>
+<br>
 
 
-<div class="wrapper">
-  <h3>Your hashtags</h3>
-  <p class="info">Type your hashtag & click enter.</p>
-  <input type="text" id="hashtags" autocomplete="off">
-  <div class="tag-container">
-  </div>
-</div>
+<script>
+function submitTags(){
+  console.log($("#serverSideTags").val())
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/datenanalyse_admin", true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+    value: $("#serverSideTags").val()
+  }));
+}
+</script>
+<form id="InputForm" action="" method="post" autocomplete="off">
+  <div class="container" style="margin-left: 0">
+  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3">
+     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+           <h3>Auswahl Deskriptive Statistik</h3>
+           <hr>
+        </div>
+     </div>
+     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+           <h3>Auswahl Normalverteilung</h3>
+           
+     </div>
+     </div>
+     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+      <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+         <h3>Auswahl Explorative Statistik</h3>
+      </div>
+     </div>
+     </div>
+   </div>
+     
 
 <button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="submitTags()" name="Import">STATISTIK!</button>
 
-<script src="{{url_for('static', filename='script.js')}}"></script>
+
   <!--
 <form>
 <div class="container overflow-hidden" style="margin-left: 0">

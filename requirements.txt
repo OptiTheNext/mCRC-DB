@@ -9,3 +9,4 @@ flask-mail
 mailjet_rest
 pyjwt
 scipy
+reportlab

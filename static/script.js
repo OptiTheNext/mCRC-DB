@@ -1,82 +1,38 @@
-let input, hashtagArray, container, t;
-
-input = document.querySelector('#hashtags');
-container = document.querySelector('.tag-container');
-hashtagArray = [];
-
-let currentHashTag = [];
-
-input.addEventListener('keyup', () => {
-    if (event.which == 13 && input.value.length > 0) {
-      var text = document.createTextNode(input.value);
-      var p = document.createElement('p');
-      container.appendChild(p);
-      p.appendChild(text);
-      currentHashTag.push(text);
-      p.classList.add('tag');
-      input.value = '';
-      
-      let deleteTags = document.querySelectorAll('.tag');
-      
-    /*  for(let i = 0; i < deleteTags.length; i++) {
-    
-        deleteTags[i].addEventListener('click', () => {
-          currentHashTag.splice(currentHashTag.indexOf(deleteTags[i].innerText))
-          container.removeChild(deleteTags[i]);
-        });
-      }*/
-
-    for (let i of deleteTags){
-      i.addEventListener('mousedown', () => {
-        currentHashTag.splice(currentHashTag.indexOf(i.innerText))
-        container.removeChild(i);
-        
-      });
-    }
-    console.log(currentHashTag)
-    }
-    
+import Tags from "/static/tags.js";
+let server_side_tags = []
+Tags.init("select:not(.ignore-tags)", {
+  clearLabel: "Clear tag",
+  allowClear: true,
+  suggestionThresold: 0,
 });
+(function () {
+  "use strict";
 
-function submitTags(){
-  console.log(currentHashTag);
-  let tags = [];
-  for (let i of currentHashTag){
-    tags.push(i.data)
-  }
-  console.log(tags)
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/datenanalyse_admin", true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({
-    value: tags
-  }));
-  
-  currentHashTag = [];
-  container.innerHTML = "";
-}
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll(".needs-validation");
 
-var data =
-  '[{ "value": 1, "text": "Task 1", "continent": "Task" }, { "value": 2, "text": "Task 2", "continent": "Task" }, { "value": 3, "text": "Task 3", "continent": "Task" }, { "value": 4, "text": "Task 4", "continent": "Task" }, { "value": 5, "text": "Task 5", "continent": "Task" }, { "value": 6, "text": "Task 6", "continent": "Task" } ]';
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
+        // apply/remove invalid class
+        // Array.from(form.elements).forEach(el => {
+        //   console.log(el, el.checkValidity());
+        // });
 
-//get data pass to json
-var task = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace("text"),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  local: jQuery.parseJSON(data) //your can use json type
-});
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
 
-task.initialize();
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
 
-var elt = $("#hashtags");
-elt.tagsinput({
-  itemValue: "value",
-  itemText: "text",
-  typeaheadjs: {
-    name: "task",
-    displayKey: "text",
-    source: task.ttAdapter()
-  }
-});
+export{server_side_tags}
 
 
