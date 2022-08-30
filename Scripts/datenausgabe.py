@@ -35,6 +35,24 @@ def Analyse(parameters) -> pandas.DataFrame:
     df = pandas.DataFrame(myresult)
     df.columns = Columns.d 
 
+    ##Convert Booleans into Python Booleans
+    
+    df = df.apply(pandas.to_numeric,errors= "ignore")
+    df['pve'] = df['pve'].astype('bool')
+    df['crlm_bilobular'] = df['crlm_bilobular'].astype('bool')
+    df['multimodal'] = df['multimodal'].astype('bool')
+    df['two_staged'] = df['two_staged'].astype('bool')
+    df['status_fu'] = df['status_fu'].astype('bool')
+    df['recurrence_status'] = df['recurrence_status'].astype('bool')
+    df['alcohol'] = df['alcohol'].astype('bool')
+    df['smoking'] = df['smoking'].astype('bool')
+    df['cirrhosis'] = df['cirrhosis'].astype('bool')
+    df['fibrosis'] = df['fibrosis'].astype('bool')
+    df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].astype('bool')
+    df['ss_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
+    df['th_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
+    
+    
     #Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
     df.query("Kuerzel != ''", inplace=True)
     

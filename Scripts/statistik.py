@@ -22,6 +22,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
 
+from Scripts import datenausgabe
+
 app = flask.Flask(__name__,
                   template_folder="templates",
                   static_folder="static")
@@ -50,18 +52,24 @@ def deskreptiv(df,points_of_interest):
     print(points_of_interest)
     for x in points_of_interest:
         print(x)
-        result = df[x].describe()
-        print(result.axes)
+        Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
+        result = pandas.read_csv(Path,index_col=0)
+        print(result.head)
         print(type(result.axes))
         lista = [[x]]
+        print(result.values)
         for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
-            listo = [[i],[j]]
-            lista = lista + listo
+           lista = lista + [[i,j[0]]]
+        
+
         print(lista)
         table = Table(lista)
         global elements
         elements.append(table)
-    
+
+        if df[x].dtype == "object":
+            print("Hier kuchendiagramm")
+
         #for objects here Kuchendiagramm
         #here we add it into the PDF
         
@@ -78,16 +86,6 @@ def korrellation(df):
 
 
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
-
-def connect_to_db():
-    global mydb
-    try:
-        mydb = mysql.connector.connect(host=os.environ.get('KRK_DB_HOST'),
-                                           user=os.environ.get('KRK_DB_USER'),
-                                           password=os.environ.get('KRK_DB_PASS'),
-                                           database=os.environ.get('KRK_DB_DATABASE'))
-    except Exception as e:
-        print("Fehler!")
 def generate_pdf():
     styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(PATH_OUT + 'Report_File.pdf')
@@ -96,12 +94,44 @@ def generate_pdf():
     elements = []
     elements.append(Paragraph("Hurensohn Title", styles['Title']))
 
-connect_to_db()
+
+## Statistik hier nach Neustart
+
+df = datenausgabe.Analyse({})
+df.replace('', numpy.nan, inplace=True)
 
 
+#Zeilen die nicht ANALysiert werden sollen
+to_drop = ["Kuerzel",
+"pat_id",
+"case_id",
+"study_id",
+"crlm_procedure_planned",
+"crlm_procedure_realize",
+"previous_surgery_which",
+"fs_previous_chemotherapy_type",
+"ss_previous_chemotherapy_type",
+"th_previous_chemotherapy_type",
+"first_surgery_type",
+"second_surgery_type",
+"third_surgery_type",
+"fs_complication_which",
+"ss_complication_which",
+"ts_complication_which",
+"Kommentar"
+]
 
-d = {'col1': [1, 2], 'col2': [3, 4]}
-df = pandas.DataFrame(data=d)
+for x in Columns.d:
+    if x in to_drop:
+        continue
+    
+    # Deskriptive Statistik
+    current_df = df[x]
+    current_df.dropna(inplace=True)
+    print(current_df.dtype)
+    result = current_df.describe()
+    Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
+    
+    result.to_csv(Path)  
 
-##Deskriptive Statistik in Datei hier nach Neustart 
 
