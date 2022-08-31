@@ -614,7 +614,7 @@ def page_5():
 
         if flask.request.method == 'POST':
             # Getting Name and If Admin
-            if "create_user" in flask.request.form:
+            if "create_user" in flask.request.form and "username" in flask.request.form and "mailadress" in flask.request.form:
                 
                 name = flask.request.form['username']
                 mail = flask.request.form['mailadress']
@@ -640,7 +640,7 @@ def page_5():
                 token = generate_token.generate_password_reset_token(name, password)
                 print(type(token))
                 #generate token for link:
-                url = flask.request.host_url + 'reset/'+ token #.decode('utf-8')
+                url = flask.request.host_url + 'reset/'+ token #decode('utf-8')
                 print(url)
                 data = {
                     'Messages': [
