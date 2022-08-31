@@ -45,23 +45,42 @@ elements = []
 elements.append(Paragraph("Hurensohn Title", styles['Title']))
 
 
+to_drop = ["Kuerzel",
+"pat_id",
+"case_id",
+"study_id",
+"crlm_procedure_planned",
+"crlm_procedure_realize",
+"previous_surgery_which",
+"fs_previous_chemotherapy_type",
+"ss_previous_chemotherapy_type",
+"th_previous_chemotherapy_type",
+"first_surgery_type",
+"second_surgery_type",
+"third_surgery_type",
+"fs_complication_which",
+"ss_complication_which",
+"ts_complication_which",
+"Kommentar"
+]
+
+
 def deskreptiv(df,points_of_interest):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
     df = pandas.DataFrame(df)
     print(points_of_interest)
     for x in points_of_interest:
-        print(x)
-        Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
-        result = pandas.read_csv(Path,index_col=0)
-        print(result.head)
-        print(type(result.axes))
+        if x in to_drop:
+            continue
+        current_df = df[x]
+        current_df.dropna(inplace=True)
+        print(current_df.dtype)
+        result = current_df.describe()
         lista = [[x]]
         print(result.values)
         for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
            lista = lista + [[i,j[0]]]
-        
-
         print(lista)
         table = Table(lista)
         global elements
@@ -102,36 +121,15 @@ df.replace('', numpy.nan, inplace=True)
 
 
 #Zeilen die nicht ANALysiert werden sollen
-to_drop = ["Kuerzel",
-"pat_id",
-"case_id",
-"study_id",
-"crlm_procedure_planned",
-"crlm_procedure_realize",
-"previous_surgery_which",
-"fs_previous_chemotherapy_type",
-"ss_previous_chemotherapy_type",
-"th_previous_chemotherapy_type",
-"first_surgery_type",
-"second_surgery_type",
-"third_surgery_type",
-"fs_complication_which",
-"ss_complication_which",
-"ts_complication_which",
-"Kommentar"
-]
 
-for x in Columns.d:
-    if x in to_drop:
-        continue
+
+##for x in Columns.d:
+   
     
     # Deskriptive Statistik
-    current_df = df[x]
-    current_df.dropna(inplace=True)
-    print(current_df.dtype)
-    result = current_df.describe()
-    Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
     
-    result.to_csv(Path)  
+    #Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
+    
+    #result.to_csv(Path)  
 
 

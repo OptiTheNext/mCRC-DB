@@ -19,6 +19,8 @@ import sys
 
 df = pandas.DataFrame() 
 
+load_dotenv()
+
 def Analyse(parameters) -> pandas.DataFrame: 
     #Connect to Database
     global mydb
