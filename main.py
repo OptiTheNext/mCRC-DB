@@ -642,7 +642,7 @@ def page_5():
                 #generate token for link:
                 if(type(token) != str):
                     token = token.decode()
-                    
+
                 url = flask.request.host_url + 'reset/'+ token
                 print(url)
                 data = {
@@ -778,8 +778,7 @@ def reset(token):
                         val = (decoded["username"],passwort1)
                         cursor.execute('REPLACE INTO Users (LoginID, Password) VALUES (%s, %s)', val)
                         mydb.commit()
-                        return flask.render_template('reset.html',
-                                         RenderParameters = LocalRenderParameters)
+                        return flask.redirect(flask.url_for('login'))
                     except Exception as e:
                         LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                         LocalRenderParameters["error-text"] = e
