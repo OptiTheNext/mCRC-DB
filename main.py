@@ -229,7 +229,7 @@ def dateneingabe():
     def get_next_patient_id(): 
         try:
             cursor= mydb.cursor()
-            cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) LIMIT 1")
+            cursor.execute("SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = \"\" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) ORDER BY ('op_date_Surgery1') DESC LIMIT 1")
             next_patient=cursor.fetchall()[0][0]
             print("Nächster Patient: ")
             print( next_patient)
@@ -459,6 +459,14 @@ def export_to_csv():
     else:
         return flask.redirect(flask.url_for('page_3'))
 
+@app.route("/export_statistik")
+def export_statistik_as_pdf():
+    pdf = flask.session["pdf_path"]
+   #output = flask.make_response(pdf)
+    #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
+    #output.headers["Content-typ"] = "pdf"
+    return flask.send_from_directory(".", "Report_File.pdf",as_attachment= True,)
+
 
 @app.route("/datenausgabe", methods=['POST', 'GET'])
 def page_3():
@@ -551,8 +559,9 @@ def page_4_admin():
                 tags = flask.request.json["value"]
                 print( tags)
                 statistik.deskreptiv(flask.session.get("df"),tags)
-
-                statistik.generate_pdf()
+                pdf = statistik.generate_pdf()
+                flask.session["pdf_path"] = pdf
+                return flask.redirect(flask.url_for("export_statistik_as_pdf"))
                 
             
         return flask.render_template('site_4_admin.html',
@@ -750,7 +759,11 @@ def reset(token):
     LocalRenderParameters["Topnav"] = False
     LocalRenderParameters["startseite"] = False
     LocalRenderParameters["Admin"] = False
-    decoded = jwt.decode(token, os.environ.get("KRK_APP_SECRET_KEY"), algorithms=["HS256"])
+    try:
+        decoded = jwt.decode(token, os.environ.get("KRK_APP_SECRET_KEY"), algorithms=["HS256"])
+    except Exception as e:
+        LocalRenderParameters["error"] = 'Your token is invalid, Please contact an Administrator'
+        return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
     print(decoded)
 
     ##Check for timestamp

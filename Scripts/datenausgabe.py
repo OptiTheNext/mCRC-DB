@@ -500,10 +500,13 @@ def Analyse(parameters) -> pandas.DataFrame:
 
     ##Check for INtensivzeit
     if(parameters.get("icu_checkbox",None)):
+        print("in ICU")
         if(parameters["icu_von"]):
+            print("tried to filter >")
             para = int(parameters['icu_von'])
             df.query("fs_icu >= @para", inplace=True)
-        if(parameters["fs_icu_bis"]):
+        if(parameters["icu_bis"]):
+            print("tried to filter <")
             para = int(parameters['fs_icu_bis'])
             df.query("fs_icu <= @para", inplace=True)
 

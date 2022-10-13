@@ -198,9 +198,9 @@
                                 <label for="died_check">Verstorben</label>
                                 <span class="hidden-on-default, border_box" id="died_field" style="display: none;">
                                     <input class="form-check-input" id="died_no_check" name="died_no_check" type="checkbox" value="Alive" />
-                                    <label for="died_no_check" >Nein</label>
+                                    <label for="died_no_check" >Ja</label>
                                     <input class="form-check-input" id="died_yes_check" name="died_yes_check" type="checkbox" value="Dead" />
-                                    <label for="died_yes_check">Ja</label>
+                                    <label for="died_yes_check">Nein</label>
                                 </span>
                             </div>
                             <div class="form-group">
@@ -251,9 +251,9 @@
                                 <input class="form-check-input" id="alc_check" name="alc_check" onchange="showInputField('alc_check','alc_field')" type="checkbox" value="1" />
                                 <label for="alc_check"> Alkohol</label>
                                 <span class="hidden-on-default, border_box" id="alc_field" style="display: none;">
-                                    <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1" /> <label for="yes_alcohol_check"> Alkohol</label>
+                                    <input class="form-check-input" type="checkbox" id="yes_alcohol_check" name="yes_alcohol_check" value="1" /> <label for="yes_alcohol_check"> Kein Alkohol</label>
                                  
-                                    <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1" /> <label for="no_alcohol_check">Kein Alkohol</label>
+                                    <input class="form-check-input" type="checkbox" id="no_alcohol_check" name="no_alcohol_check" value="1" /> <label for="no_alcohol_check">Alkohol</label>
                                 </span>
                             </div>
                             <div class="form-group">
@@ -529,7 +529,7 @@
                            </div>
                            
                            <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="icu_checkbox" value="1" onchange="showInputField('icu_checkbox','icu_field')">
+                            <input class="form-check-input" type="checkbox" id="icu_checkbox" name = "icu_checkbox" value="1" onchange="showInputField('icu_checkbox','icu_field')">
                             <label for="icu_checkbox">Intensivzeit</label>
                             <span id="icu_field" class='hidden-on-default border_box' style="display:none;">
                                 <label for="formGroupExampleInput">Intensivzeit von</label> 
