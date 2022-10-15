@@ -42,7 +42,7 @@ Session(app)
 PATH_OUT="./"
 styles = getSampleStyleSheet()
 elements = []
-elements.append(Paragraph("Hurensohn Title", styles['Title']))
+elements.append(Paragraph("Statistische Auswertung", styles['Title']))
 
 
 to_drop = ["Kuerzel",
@@ -64,7 +64,8 @@ to_drop = ["Kuerzel",
 "Kommentar"
 ]
 
-booleans = ["alcohol",
+booleans = [
+"alcohol",
 "pve",
 "RAS",
 "BRAF",
@@ -94,7 +95,10 @@ booleans = ["alcohol",
 "third_surgery_conversion"
 ]
 
-boxplots = [
+decimals = [
+    "limax_initial",
+    "limax_second",
+    "limax_third",
     "bmi",
     "limax_initial",
     "limax_second",
@@ -175,7 +179,60 @@ boxplots = [
     "th_previous_chemotherapy_cycles",
     "third_surgery_length",
     "ts_icu",
-    "ts_los"
+    "ts_los",
+    "age",
+    "surgeries",
+    "datediff_op1_op2"
+]
+
+
+ordinals = [
+    "T",
+    "N",
+    "LK",
+    "M",
+    "G",
+    "L",
+    "V",
+    "R"
+    ]
+
+categorials = [
+    "diagnosis1",
+    "diagnosis2",
+    "op_code_Surgery1",
+    "op_code_Surgery2",
+    "op_code_Surgery3",
+    "op_diagnosis_Surgery1",
+    "op_diagnosis_Surgery2",
+    "op_diagnosis_Surgery3",
+    "sex",
+    "primary_location",
+    "RAS",
+    "BRAF",
+    "MSS",
+    "crlm_met_syn",
+    "crlm_bilobulär",
+    "recurrence_organ",
+    "asa",
+    "fs_dindo",
+    "ss_dindo",
+    "th_dindo"
+]
+
+dates = [
+    "dob",
+    "op_date_Surgery1",
+    "op_date_Surgery2",
+    "op_date_Surgery3",
+    "pve_date",
+    "diagnosis_date",
+    "date_fu",
+    "recurrence_date",
+    "limax_initial_date",
+    "limax_second_date",
+    "limax_third_date",
+    "previous_surgery_date",
 ]
 
 def make_autopct(values):
@@ -201,16 +258,21 @@ def deskreptiv(df,points_of_interest):
             df = df.replace({0:False, 1:True})
             print("replaced with False/True")
             result = current_df.describe()
-        if x in boxplots:
+        if x in decimals:
             print("trying to change formats")
             print(df)
             current_df = pandas.to_numeric(current_df)
             result = current_df.describe()
+        if x in categorials:
+            current_df = current_df.astype(str)
+            result = current_df.describe()
+            
         print(current_df.dtype)
+        print(result)
         lista = [[x]]
         print(result.values)
         for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
-           lista = lista + [[i,j[0]]]
+           lista = lista + [[i,j]]
         print("Hier lista")
         print(lista)
         table = Table(lista)
@@ -230,21 +292,32 @@ def deskreptiv(df,points_of_interest):
             save_here = PATH_OUT + x+".png"
             fig.savefig(save_here)
             
-            elements.append(Image(save_here))
+            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
             print(make_autopct((values)))
             fig.clf()
             values = None
             series2 = None
             print("Hier kuchendiagramm")
 
-        if x in boxplots:
+        if x in decimals:
             print("made an boxplot") 
             pie = current_df.plot.box(figsize=(6, 6))
             fig = pie.get_figure()
             save_here = PATH_OUT + x+".png"
             fig.savefig(save_here)  
-            elements.append(Image(save_here))
+            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
             fig.clf()
+
+        if x  in categorials:
+            print ("making a Balkendiagramm")
+            pie = current_df.plot.bar(figsize = (6,6))
+            fig = pie.get_figure()
+            save_here = PATH_OUT + x+".png"
+            fig.savefig(save_here)  
+            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+            fig.clf()
+
+        
 
         #for objects here Kuchendiagramm
         #here we add it into the PDF

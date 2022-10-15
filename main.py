@@ -2,6 +2,7 @@
 import flask
 import random
 import mysql.connector
+from mysql.connector import errorcode
 import datetime
 import os
 from dotenv import load_dotenv
@@ -254,7 +255,15 @@ def dateneingabe():
         if "pat_id" in flask.request.form:
             pat_to_delete = flask.request.form["pat_id"]
             print(pat_to_delete + grund_to_delete)
-            cursor = mydb.cursor()
+            try:
+                cursor = mydb.cursor()
+            except Exception as e:
+                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["error-text"] = e
+                return flask.render_template('site_2.html',
+                                      RenderParameters = LocalRenderParameters)
+
+
             try: 
                 cursor.execute("INSERT INTO deleted_patients (id,reason) VALUES (%s,%s)",(pat_to_delete,grund_to_delete))
                 mydb.commit()
@@ -267,6 +276,7 @@ def dateneingabe():
                 print("something went wrong")
                 LocalRenderParameters["Error"] = "Nutzer kann nicht gelöscht werden"
                 LocalRenderParameters["error-text"] = e
+                
                 #send_error_mail(e, flask.session["username"])
             
 
@@ -385,8 +395,13 @@ def dateneingabe():
             
             print(p_columns)
             print( p_values)
-                    
-            cursor = mydb.cursor()
+            try:
+                cursor = mydb.cursor()
+            except Exception as e:
+                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["error-text"] = e
+                return flask.render_template('site_2.html',
+                                      RenderParameters = LocalRenderParameters)
             cursor.execute(querySAPID)
             sid = cursor.fetchall()
             print(sid)
@@ -422,8 +437,7 @@ def dateneingabe():
                     print(e)
                     
                 get_next_patient_id()
-                return flask.render_template('site_2.html',
-                                      RenderParameters = LocalRenderParameters)
+                return flask.redirect(flask.url_for('dateneingabe'))
 
             except Exception as e:
                 print(e)
@@ -462,10 +476,10 @@ def export_to_csv():
 @app.route("/export_statistik")
 def export_statistik_as_pdf():
     pdf = flask.session["pdf_path"]
-   #output = flask.make_response(pdf)
+    #output = flask.make_response(application/pdf)
     #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
-    #output.headers["Content-typ"] = "pdf"
-    return flask.send_from_directory(".", "Report_File.pdf",as_attachment= True,)
+    #output.headers["Content-type"] = "pdf"
+    return flask.send_file(pdf,as_attachment= True,)
 
 
 @app.route("/datenausgabe", methods=['POST', 'GET'])
@@ -560,9 +574,8 @@ def page_4_admin():
                 print( tags)
                 statistik.deskreptiv(flask.session.get("df"),tags)
                 pdf = statistik.generate_pdf()
-                flask.session["pdf_path"] = pdf
-                return flask.redirect(flask.url_for("export_statistik_as_pdf"))
-                
+                #flask.session["pdf_path"] = pdf
+                return flask.send_file(pdf,as_attachment= False)
             
         return flask.render_template('site_4_admin.html',
                                       RenderParameters = LocalRenderParameters)
@@ -573,7 +586,13 @@ def page_4_admin():
 def page_5():
     LocalRenderParameters = RenderParameters.copy()
     def Usertext():
-            cursor = mydb.cursor()
+            try:
+                cursor = mydb.cursor()
+            except Exception as e:
+                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["error-text"] = e
+                return flask.render_template('site_5.html',
+                                      RenderParameters = LocalRenderParameters)
             cursor.execute("SELECT * FROM Users")
             myresult = cursor.fetchall()
             df = pandas.DataFrame(myresult)
@@ -818,21 +837,29 @@ def reset(token):
 def getDataForID():
     LocalRenderParameters = RenderParameters.copy()
     if flask.request.args["pat_id_import"]:
-        cursor = mydb.cursor(dictionary=True, buffered = True)
+        try:
+            cursor = mydb.cursor(dictionary=True, buffered = True)
+        except Exception as e:
+            return
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
         if cursor.rowcount == 0:
             LocalRenderParameters["error"] = 'Patient not found in database' 
             return flask.render_template('site_2.html',
                                          RenderParameters = LocalRenderParameters) 
         for row in cursor:
-           
             try:
                 print("INSERT INTO currently_active (pat_id, timestamp) VALUES (%s,%s)" %(row.get("pat_id"),datetime.datetime.now()))
                 cursor.execute("INSERT INTO currently_active (pat_id) VALUES (%s)",(row.get("pat_id"),))
                 mydb.commit()
+            except mysql.connector.Error as Error:
+                print(Error)
+                print("in mysql.connector.error")
+                LocalRenderParameters["error"] = 'ID is currently being worked on, try again later' 
+                return flask.render_template('site_2.html',
+                                        RenderParameters = LocalRenderParameters)
             except Exception as e:
                 print(e)
-                LocalRenderParameters["error"] = 'Already beeing worked on' 
+                LocalRenderParameters["error"] = 'Cannot connect to database, reach out to an Administrator' 
                 return flask.render_template('site_2.html',
                                         RenderParameters = LocalRenderParameters)
             print(cursor.statement)
