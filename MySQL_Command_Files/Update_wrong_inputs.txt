@@ -1,0 +1,53 @@
+UPDATE mcrc_tabelle SET fs_dindo = "5" WHERE fs_dindo = "V";
+UPDATE mcrc_tabelle SET fs_dindo = "4b" WHERE fs_dindo = "IVb";
+UPDATE mcrc_tabelle SET fs_dindo = "4a" WHERE fs_dindo = "IVa";
+UPDATE mcrc_tabelle SET fs_dindo = "3a" WHERE fs_dindo = "IIIa";
+UPDATE mcrc_tabelle SET fs_dindo = "3b" WHERE fs_dindo = "IIIb";
+UPDATE mcrc_tabelle set fs_dindo = "3a" Where fs_dindo = "III"
+UPDATE mcrc_tabelle SET fs_dindo = "2" WHERE fs_dindo = "II";
+UPDATE mcrc_tabelle set fs_dindo = "1" Where fs_dindo = "I";
+UPDATE mcrc_tabelle SET ss_dindo = "5" WHERE ss_dindo = "V";
+UPDATE mcrc_tabelle SET ss_dindo = "4b" WHERE ss_dindo = "IVb";
+UPDATE mcrc_tabelle SET ss_dindo = "4a" WHERE ss_dindo = "IVa";
+UPDATE mcrc_tabelle SET ss_dindo = "4a" WHERE ss_dindo = "IV";
+UPDATE mcrc_tabelle SET ss_dindo = "3a" WHERE ss_dindo = "IIIa";
+UPDATE mcrc_tabelle SET ss_dindo = "3b" WHERE ss_dindo = "IIIb";
+UPDATE mcrc_tabelle SET ss_dindo = "2" WHERE ss_dindo = "II";
+UPDATE mcrc_tabelle set ss_dindo = "1" Where ss_dindo = "I";
+UPDATE mcrc_tabelle SET ts_dindo = "5" WHERE ts_dindo = "V";
+UPDATE mcrc_tabelle SET ts_dindo = "4b" WHERE ts_dindo = "IVb";
+UPDATE mcrc_tabelle SET ts_dindo = "4a" WHERE ts_dindo = "IVa";
+UPDATE mcrc_tabelle SET ts_dindo = "3a" WHERE ts_dindo = "IIIa";
+UPDATE mcrc_tabelle SET ts_dindo = "3b" WHERE ts_dindo = "IIIb";
+UPDATE mcrc_tabelle SET ts_dindo = "2" WHERE ts_dindo = "II";
+UPDATE mcrc_tabelle set ts_dindo = "1" Where ts_dindo = "I";
+UPDATE mcrc_tabelle set fs_dindo = "No comp" Where fs_dindo = "no complication";
+UPDATE mcrc_tabelle set fs_dindo = "No comp" Where fs_dindo = "No complication";
+UPDATE mcrc_tabelle set fs_dindo = "No comp" Where fs_dindo = "No complications";
+UPDATE mcrc_tabelle set fs_dindo = "No comp" Where fs_dindo = "No Complications";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" where fs_dindo = "No Comp";
+UPDATE mcrc_tabelle set ss_dindo = "No comp" Where ss_dindo = "no complication";
+UPDATE mcrc_tabelle set ss_dindo = "No comp" Where ss_dindo = "No complication";
+UPDATE mcrc_tabelle set ss_dindo = "No comp" Where ss_dindo = "No complications";
+UPDATE mcrc_tabelle set ss_dindo = "No comp" Where ss_dindo = "No Complications";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" where ss_dindo = "No Comp";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" Where ts_dindo = "no complication";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" Where ts_dindo = "No complication";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" Where ts_dindo = "No complications";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" Where ts_dindo = "No Complications";
+UPDATE mcrc_tabelle set ts_dindo = "No comp" where ts_dindo = "No Comp";
+UPDATE mcrc_tabelle set primary_location = "Zäkum" where primary_location = "Zaekum";
+UPDATE mcrc_tabelle set primary_location = "Zäkum" where primary_location = "Zoekum"
+UPDATE mcrc_tabelle set primary_location = "Zäkum" where primary_location = "Appendix"
+UPDATE mcrc_tabelle set primary_location = "Sigma" where primary_location = "Sigmoid";
+UPDATE mcrc_tabelle set primary_location = "Sigma" where primary_location = "Sigma\t";
+UPDATE mcrc_tabelle set primary_location = "Ascendens" where primary_location = "Flexura coli dextra"
+UPDATE mcrc_tabelle set primary_location = "Descendens" where primary_location = "Flexura coli sinistra"
+UPDATE mcrc_tabelle set primary_location = "Descendens" where primary_location = "Flexuraq coli sinistra"
+UPDATE mcrc_tabelle set primary_location = "Transversum" where primary_location = "Flexura coli transversum"
+UPDATE mcrc_tabelle set primary_location = "Rektosigmoid" where primary_location = "RSigma"
+UPDATE mcrc_tabelle set primary_location = "Transversum" where primary_location = "Colon transversum"
+UPDATE mcrc_tabelle SET ts_dindo = "" WHERE th_los = "";
+
+
+
