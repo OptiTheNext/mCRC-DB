@@ -49,6 +49,7 @@ df.to_csv(path,date_format="%d.%m.%Y", sep=";")
 user = os.environ.get('KRK_DB_USER')
 password = os.environ.get('KRK_DB_PASS')
 
-os.system('mysqldump -u%s -p%s mcrc_db > database.sql;' %(user,password))
+path = "./backups/mcrc.table.backup_" + datetime.date.today().strftime("%b-%d-%Y") +".sql"
+os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
         
 mydb.disconnect()
