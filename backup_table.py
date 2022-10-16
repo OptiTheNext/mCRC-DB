@@ -31,7 +31,7 @@ for x in onlyfiles:
     print (date)
     dates_to_check.append(date)
 
-if len(youngest):
+if len(dates_to_check):
     youngest = max(dt for dt in dates_to_check if dt < datetime.datetime.now())
 print(youngest)
 
