@@ -31,7 +31,8 @@ for x in onlyfiles:
     print (date)
     dates_to_check.append(date)
 
-youngest = max(dt for dt in dates_to_check if dt < datetime.datetime.now())
+if len(youngest):
+    youngest = max(dt for dt in dates_to_check if dt < datetime.datetime.now())
 print(youngest)
 
 path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime("%b-%d-%Y") +".csv"
