@@ -249,17 +249,17 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for ASA
     if(parameters.get("asa_check",None)):
         if(parameters.get("asa_check_not_found",None)):
-             df.query("ASA == 0",inplace=True)
+             df.query("asa == 0",inplace=True)
         if(parameters.get("asa_check_1",None)):
-             df.query("ASA == 1",inplace=True)
+             df.query("asa == 1",inplace=True)
         if(parameters.get("asa_check_2",None)):
-             df.query("ASA == 2",inplace=True)
+             df.query("asa == 2",inplace=True)
         if(parameters.get("asa_check_3",None)):
-             df.query("ASA == 3",inplace=True)
+             df.query("asa == 3",inplace=True)
         if(parameters.get("asa_check_4",None)):
-             df.query("ASA == 4",inplace=True)
+             df.query("asa == 4",inplace=True)
         if(parameters.get("asa_check_5",None)):
-             df.query("ASA == 5",inplace=True)
+             df.query("asa == 5",inplace=True)
     
     ##Check for BMI
     if(parameters.get("bmi_check",None)):
@@ -522,7 +522,7 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for DINDO
     if(parameters.get('fs_dindo_checkbox',None)):
         paralist = []
-        if(parameters.get('fs_check_dindo_0', None)): paralist.append('No Complications'); paralist.append('No complications'); print("No Complications")
+        if(parameters.get('fs_check_dindo_0', None)): paralist.append('No comp'); paralist.append('No comp'); print("No Complications")
         if(parameters.get('fs_check_dindo_1', None)): paralist.append('I'); print("I")
         if(parameters.get('fs_check_dindo_2', None)): paralist.append('II'); print("II")
         if(parameters.get('fs_check_dindo_3a', None)): paralist.append('IIIa'); print("IIIa")
@@ -794,7 +794,7 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for DINDO
     if(parameters.get('ss_dindo_checkbox',None)):
         paralist = []
-        if(parameters.get('ss_check_dindo_0', None)): paralist.append('No Complications'); paralist.append('No complications'); print("No Complications")
+        if(parameters.get('ss_check_dindo_0', None)): paralist.append('No comp'); paralist.append('No comp'); print("No Complications")
         if(parameters.get('ss_check_dindo_1', None)): paralist.append('I'); print("I")
         if(parameters.get('ss_check_dindo_2', None)): paralist.append('II'); print("II")
         if(parameters.get('ss_check_dindo_3a', None)): paralist.append('IIIa'); print("IIIa")
@@ -1067,7 +1067,7 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for DINDO
     if(parameters.get('ts_dindo_checkbox',None)):
         paralist = []
-        if(parameters.get('ts_check_dindo_0', None)): paralist.append('No Complications'); paralist.append('No complications'); print("No Complications")
+        if(parameters.get('ts_check_dindo_0', None)): paralist.append('No comp'); paralist.append('No comp'); print("No Complications")
         if(parameters.get('ts_check_dindo_1', None)): paralist.append('I'); print("I")
         if(parameters.get('ts_check_dindo_2', None)): paralist.append('II'); print("II")
         if(parameters.get('ts_check_dindo_3a', None)): paralist.append('IIIa'); print("IIIa")

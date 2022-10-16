@@ -217,7 +217,7 @@ categorials = [
     "asa",
     "fs_dindo",
     "ss_dindo",
-    "th_dindo"
+    "ts_dindo"
 ]
 
 dates = [
@@ -265,6 +265,8 @@ def deskreptiv(df,points_of_interest):
             result = current_df.describe()
         if x in categorials:
             current_df = current_df.astype(str)
+            current_df[1] = current_df.replace("", numpy.nan, inplace=True)
+            current_df[1] = current_df.dropna(inplace = True)
             result = current_df.describe()
             
         print(current_df.dtype)
@@ -310,6 +312,9 @@ def deskreptiv(df,points_of_interest):
 
         if x  in categorials:
             print ("making a Balkendiagramm")
+            
+            current_df=current_df.value_counts()
+            print(current_df)
             pie = current_df.plot.bar(figsize = (6,6))
             fig = pie.get_figure()
             save_here = PATH_OUT + x+".png"
