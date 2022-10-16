@@ -33,10 +33,10 @@ for x in onlyfiles:
 
 if len(dates_to_check):
     youngest = max(dt for dt in dates_to_check if dt < datetime.datetime.now())
-print(youngest)
+    print(youngest)
 
-path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime("%b-%d-%Y") +".csv"
-print(path_to_newest_file)
+    path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime("%b-%d-%Y") +".csv"
+    print(path_to_newest_file)
 
 cursor = mydb.cursor()
 df = cursor.execute("SELECT * FROM mcrc_tabelle")
