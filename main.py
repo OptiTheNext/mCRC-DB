@@ -14,6 +14,11 @@ import string
 import json
 from flask_session import Session
 from flask import Flask, session
+#Mails stuff
+
+import smtplib
+from email.message import EmailMessage
+
 from mailjet_rest import Client
 import jwt
 
@@ -53,34 +58,6 @@ app.config["JWT_SECRET_KEY"]= os.environ.get("KRK_APP_SECRET_KEY")
 Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
-
-
-#def send_error_mail(error, user):
- #   
-  #  data = {
-   #                 'Messages': [
-        #                {
-   #                     "From": {
-    #                        "Email": "mcrc.cvk@gmail.com",
-     #                       "Name":5 "Kolorektale Datenbank Charite"
-      #                  },
-       #                 "To": [
-        #                    {
-         #                   "Email": "mail@hannesfreitag.de",
-          #                  "Name": "Hannes"
-           #                 }
-            #            ],
-             #           "HTMLPart": "<!DOCTYPE html> <html> <head> <title>FEHLER</title> </head><body> <div>  <h3>Moin Hannes,</h3><p>Da ist gerade {} ein Fehler mit der Datenbank passiert:<br> <p>{} <div> Cheers!</div></div></body></html>".format(user, error),
-              #          
-               #         "Subject": "Ein Fehler ist passiert",
-    #
-     #                   }
-      #              ]
-       #             }
-   # result = mailjet.send.create(data=data)
-    #print (result.status_code)
-    #print (result.json())
-
 
 def connect_to_db():
     LocalRenderParameters = RenderParameters.copy()
@@ -673,6 +650,10 @@ def page_5():
 
                 url = flask.request.host_url + 'reset/'+ token
                 print(url)
+
+                #VOn hier email senden
+                
+
                 data = {
                     'Messages': [
                         {
