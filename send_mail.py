@@ -21,7 +21,7 @@ password = input("Type your password and press enter:")
 
 context  = ssl._create_unverified_context()
 print("trying to connect")
-mailserver = smtplib.SMTP(smtp_server,port, timeout=120, context = context)
+mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
 print("connected")
 mailserver.ehlo()
 mailserver.starttls(context= context)
