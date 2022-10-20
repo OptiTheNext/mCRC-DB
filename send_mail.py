@@ -19,9 +19,9 @@ sender_email = "mcrc-db@charite.de"
 receiver_email = "hannes.freitag@charite.de" 
 password = input("Type your password and press enter:")
 
-context = ssl.create_default_context()
+context  = ssl._create_unverified_context()
 print("trying to connect")
-mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
+mailserver = smtplib.SMTP(smtp_server,port, timeout=120, context = context)
 print("connected")
 mailserver.ehlo()
 mailserver.starttls(context= context)
