@@ -1,5 +1,6 @@
 
 import smtplib
+import smtplib, ssl
 from email.message import EmailMessage
 
 #Hier noch passwort setzen
@@ -12,8 +13,17 @@ msg['From'] = "mcrc-db@charite.de"
 msg['To'] = "hannes.freitag@charite.de" 
 msg.set_content('And it actually works')
 
+port = 587  # For starttls
+smtp_server = "email.charite.de"
+sender_email = "mcrc-db@charite.de"
+receiver_email = "hannes.freitag@charite.de" 
+password = input("Type your password and press enter:")
+context = ssl.create_default_context()
 
-with smtplib.SMTP_SSL('email.charite.de', 587) as smtp:
-    #hier noch nutzername setzen
-    smtp.login("", EMAIL_PASSWORD) 
-    smtp.send_message(msg)
+context = ssl.create_default_context()
+with smtplib.SMTP(smtp_server, port) as server:
+    server.ehlo()  # Can be omitted
+    server.starttls(context=context)
+    server.ehlo()  # Can be omitted
+    server.login(sender_email, password)
+    server.send_message(msg)
