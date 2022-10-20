@@ -47,10 +47,11 @@ if len(dates_to_check):
     path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime("%b-%d-%Y") +".csv"
     print(path_to_newest_file)
 
-last_updated = cursor.execute("SELECT update_time FROM information_schema.tables WHERE table_schema = 'hannes' AND table_name = 'mcrc_tabelle';")
+last_updated = cursor.execute("SELECT update_time FROM information_schema.tables WHERE table_schema = 'mcrc_db' AND table_name = 'mcrc_tabelle';")
 last_updated = cursor.fetchall()
 #last_updated = last_updated[0][0].strftime("%b-%d-%Y")
 
+print("Hier das datum")
 print(last_updated)
 print(youngest)
 
