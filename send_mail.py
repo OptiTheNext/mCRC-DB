@@ -32,6 +32,6 @@ print("trying to connect")
 
 with smtplib.SMTP(smtp_server, port) as server:
     server.starttls(context= context)
-    server.ehlo()
     server.login(sender_email, password)
+    server.ehlo()
     server.sendmail(sender_email, receiver_email, message.as_string())
