@@ -51,10 +51,6 @@ last_updated = cursor.execute("SELECT update_time FROM information_schema.tables
 last_updated = cursor.fetchall()
 #last_updated = last_updated[0][0].strftime("%b-%d-%Y")
 
-
-print(last_updated[0][0])
-print(youngest)
-
 if(youngest == None or youngest < last_updated[0][0]):
     print("its true")
 
