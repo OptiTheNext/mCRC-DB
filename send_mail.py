@@ -21,11 +21,15 @@ password = input("Type your password and press enter:")
 
 context  = ssl._create_unverified_context()
 print("trying to connect")
-mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
-print("connected")
-mailserver.ehlo()
-mailserver.starttls(context= context)
-mailserver.login(sender_email, password)
+#mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
+#print("connected")
+#mailserver.ehlo()
+#mailserver.starttls(context= context)
+#mailserver.login(sender_email, password)
 #Adding a newline before the body text fixes the missing message body
-mailserver.send_mail(sender_email,receiver_email,'\npython email')
-mailserver.quit()
+#mailserver.send_mail(sender_email,receiver_email,'\npython email')
+#mailserver.quit()
+
+with smtplib.SMTP_SSL("domain.tld", 465, context=context) as server:
+    server.login(user, password)
+    server.sendmail(sender_email, receiver_email, message.as_string())
