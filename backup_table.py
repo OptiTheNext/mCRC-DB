@@ -51,14 +51,17 @@ last_updated = cursor.execute("SELECT update_time FROM information_schema.tables
 last_updated = cursor.fetchall()
 #last_updated = last_updated[0][0].strftime("%b-%d-%Y")
 
-if(youngest == None or youngest < last_updated[0][0]):
+print(last_updated)
+print(youngest)
+
+if( youngest == None or youngest < last_updated[0][0]):
     print("its true")
 
     user = os.environ.get('KRK_DB_USER')
     password = os.environ.get('KRK_DB_PASS')
 
     path = "./backups/mcrc.table.backup_" + datetime.date.today().strftime("%b-%d-%Y") +".sql"
-    os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
+    #os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
     print("we did it")
 
        
