@@ -19,12 +19,12 @@ sender_email = "mcrc-db@charite.de"
 receiver_email = "hannes.freitag@charite.de" 
 password = input("Type your password and press enter:")
 
-#context = ssl.create_default_context()
+context = ssl.create_default_context()
 print("trying to connect")
-mailserver = smtplib.SMTP_SSL(smtp_server,port, timeout=120)
+mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
 print("connected")
 mailserver.ehlo()
-#mailserver.starttls(context= context)
+mailserver.starttls(context= context)
 mailserver.login(sender_email, password)
 #Adding a newline before the body text fixes the missing message body
 mailserver.send_mail(sender_email,receiver_email,'\npython email')
