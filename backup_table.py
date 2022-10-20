@@ -62,7 +62,7 @@ if( youngest == None or youngest < last_updated[0][0]):
     password = os.environ.get('KRK_DB_PASS')
 
     path = "./backups/mcrc.table.backup_" + datetime.date.today().strftime("%b-%d-%Y") +".sql"
-    #os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
+    os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
     print("we did it")
 
        
