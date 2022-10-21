@@ -381,14 +381,19 @@ def Analyse(parameters) -> pandas.DataFrame:
     
     if(parameters.get("FirstOP_Check", None)):
         df = df[df['op_date_Surgery1'].notnull()]
+        df.query("op_date_Surgery1 != ''", inplace=True)
+        df.query("op_date_Surgery2 == ''", inplace=True)
+        df.query("op_date_Surgery3 == ''", inplace=True)
         print("in OP1")
     ##Check for Second Ops
     if(parameters.get("secondOP_Check", None)):
         df = df[df['op_date_Surgery2'].notnull()]
+        df.query("op_date_Surgery2 != ''", inplace=True)
         print("in OP2")
     ##Check for First Ops
     if(parameters.get("thirdOP_Check", None)):
         df = df[df['op_date_Surgery3'].notnull()]
+        df.query("op_date_Surgery3 != ''", inplace=True)
 
     ##Check for Limax Initial + Date
     if(parameters.get("limax_initial_von",None)):

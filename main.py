@@ -706,6 +706,7 @@ def page_5():
                 try:
                     cursor = mydb.cursor()
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
+                    LocalRenderParameters["success"] ="Patient wurde aus der Datenbank entfernt"
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)
                 except Exception as e:

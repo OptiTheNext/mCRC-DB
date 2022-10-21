@@ -30,7 +30,7 @@ print("trying to connect")
 #mailserver.send_mail(sender_email,receiver_email,'\npython email')
 #mailserver.quit()
 
-with smtplib.SMTP(smtp_server, port) as server:
+with smtplib.SMTP(smtp_server, port,timeout= 30) as server:
     server.starttls(context= context)
     server.login(sender_email, password)
     server.ehlo()
