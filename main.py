@@ -14,15 +14,11 @@ import string
 import json
 from flask_session import Session
 from flask import Flask, session
+
 #Mails stuff
-
-import smtplib
-from email.message import EmailMessage
-
-from mailjet_rest import Client
-import jwt
-
-
+from exchangelib import DELEGATE, Account, Credentials, Configuration
+import exchangelib
+import jinja2
 
 #Own Scripts
 from Scripts import datenausgabe
@@ -39,26 +35,50 @@ sexbefore = False
 
 load_dotenv()
 
+
 querySAPID = "SELECT pat_id FROM mcrc_tabelle"
-
-
+#Create an Flask app for the site to work on
 app = flask.Flask(__name__,
                   template_folder="templates",
                   static_folder="static")
 
-api_key = os.environ.get("KRK_DB_API_KEY")
-print(api_key)
+#For mail
+mail_server = os.environ.get("KRK_DB_MAIL_SERVER")
+sender_mail = os.environ.get("KRK_DB_SENDER")
+mail_user = os.environ.get("KRK_DB_MAIL_USER")
+mail_password = os.environ.get("KRK_DB_MAIL_PASSWORD")
+#Connect to Mail Service
+print(mail_user)
+creds = Credentials(
+    username=mail_user, 
+    password=mail_password
+)
 
-api_secret = os.environ.get("KRK_DB_SECRET_KEY")
-mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+config = Configuration(server=mail_server, credentials=creds)
 
+account = Account(
+    primary_smtp_address=sender_mail,
+    autodiscover=False, 
+    config=config,
+    access_type=DELEGATE
+)
+
+# Open HTML Template
+with open('template.html', 'r') as f: 
+        htmltext = f.read()
+template = jinja2.Template(htmltext)
+
+#For Token
 app.secret_key = os.environ.get("KRK_APP_SECRET_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config["JWT_SECRET_KEY"]= os.environ.get("KRK_APP_SECRET_KEY")
+#Create an App Session
 Session(app)
+#Create globe Renderparameters to copy from in the individual Sites
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
+#Connecting to ghe database in case of restart or lost connections
 def connect_to_db():
     LocalRenderParameters = RenderParameters.copy()
     global mydb
@@ -125,6 +145,7 @@ def favicon_webmanifest():
                                      'site.webmanifest')
 
 
+#Login Page
 @app.route('/', methods=['POST', 'GET'])
 def login():
     
@@ -651,39 +672,17 @@ def page_5():
                 url = flask.request.host_url + 'reset/'+ token
                 print(url)
 
-                #VOn hier email senden
-                
+                #Von hier email senden
+                m = exchangelib.Message(
+                    account=account,
+                    folder=account.sent,
+                    subject='Vergeben Sie ein Passwort: mCRC',
+                    body= exchangelib.HTMLBody(template.render({'name': name,"url":url})),
+                    to_recipients=[exchangelib.Mailbox(email_address=mail)]
+                )
+                m.send_and_save()
 
-                data = {
-                    'Messages': [
-                        {
-                        "From": {
-                            "Email": "mcrc.cvk@gmail.com",
-                            "Name": "Kolorektale Datenbank Charite"
-                        },
-                        "To": [
-                            {
-                            "Email": mail,
-                            "Name": name
-                            }
-                        ],
-                        #"HTMLPart": "<!DOCTYPE html> <html> <head> <title>Password Reset</title> </head><body> <div>  <h3>Dear {},</h3><p>Your password must be set, please follow this link: <a href=\'{}\'>Passwort</a></p><br> <div> Cheers!</div></div></body></html>".format(name, url),
-                        "TemplateID": 4060819,
-                        "Subject": "Passwort setzen für Kolorektale Datenbank",
-                        "Variables": {
-        
-								"name": name,
-								"url": url
-						}
-                        }
-                    ]
-                    }
-                result = mailjet.send.create(data=data)
-                print (result.status_code)
-                print (result.json())
 
-                
-                
                 val = (name,password,admin)
                 try:
                     cursor = mydb.cursor()
