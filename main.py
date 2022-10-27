@@ -1,30 +1,33 @@
 #Update with Git has worked
+#Flask
 import flask
 import random
+import json
+from flask_session import Session
+from flask import Flask, session
+#Mysql
 import mysql.connector
 from mysql.connector import errorcode
 import datetime
 import os
 from dotenv import load_dotenv
+#Math
 import pandas
 import numpy
 import matplotlib
 import requests
 import string
-import json
-from flask_session import Session
-from flask import Flask, session
-
 #Mails stuff
 from exchangelib import DELEGATE, Account, Credentials, Configuration
 import exchangelib
 import jinja2
-
 #Own Scripts
 from Scripts import datenausgabe
 from Scripts import generate_token
 from Scripts import statistik
 from Scripts import Columns
+#Token
+import jwt
 
 #Debugging
 import traceback
@@ -766,6 +769,7 @@ def reset(token):
         decoded = jwt.decode(token, os.environ.get("KRK_APP_SECRET_KEY"), algorithms=["HS256"])
     except Exception as e:
         LocalRenderParameters["error"] = 'Your token is invalid, Please contact an Administrator'
+        print(e)
         return flask.render_template("login.html", RenderParameters = LocalRenderParameters)
     print(decoded)
 
