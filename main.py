@@ -49,6 +49,9 @@ mail_user = os.environ.get("KRK_DB_MAIL_USER")
 mail_password = os.environ.get("KRK_DB_MAIL_PASSWORD")
 #Connect to Mail Service
 print(mail_user)
+print(mail_server)
+print(mail_password)
+print(sender_mail)
 creds = Credentials(
     username=mail_user, 
     password=mail_password
