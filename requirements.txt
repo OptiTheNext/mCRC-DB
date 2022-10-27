@@ -10,3 +10,5 @@ mailjet_rest
 pyjwt
 scipy
 reportlab
+exchangelib
+jinja2
