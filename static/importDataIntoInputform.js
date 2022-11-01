@@ -15,6 +15,8 @@ function importData() {
             if(key === "second_surgery_planned" || key === "second_surgery_realized")
             {
                 $("#secondOP_Check").prop('checked', Boolean(value)).trigger("change");
+                console.log(key)
+                console.log(Boolean(value))
             }
             if(key === "third_surgery_planned" || key === "third_surgery_realized")
             {
@@ -27,15 +29,18 @@ function importData() {
             if(key === "pve_date") {
                 $("#pve_check").prop('checked', Boolean(value)).trigger("change");
             }
-            if(key === "op_date_Surgery2") {
-                $("#secondOP_check").prop('checked', Boolean(value)).trigger("change");
+            if(key === "op_date_Surgery2" || key === "op_code_Surgery2") {
+                $("#secondOP_Check").prop('checked', Boolean(value)).trigger("change");
+                console.log(key)
+                console.log(Boolean(value))
             }
             if(key === "op_date_Surgery3") {
-                $("#thirdOP_check").prop('checked', Boolean(value)).trigger("change");
+                $("#thirdOP_Check").prop('checked', Boolean(value)).trigger("change");
             }
 
             if($('#'+key).prop("type") == "checkbox") {
-                $('#'+key).prop('checked', Boolean(value)).trigger("change");
+                $('#'+key).prop('checked', Boolean(+value)).trigger("change");
+                
             } else {
                 $('#'+key).val(value);
             }

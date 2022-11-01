@@ -319,6 +319,10 @@ def dateneingabe():
                     continue    
                 if(item[0]== "Grund"):
                     continue  
+                if(item[0] == "secondOP_Check"):
+                    continue
+                if(item[0]=="thirdOP_Check"):
+                    continue
                 
                 p_columns.append(item[0])
                 p_values.append(item[1])
@@ -384,6 +388,45 @@ def dateneingabe():
             if(params.get("fibrosis",None) == None):
                 p_columns.append("fibrosis")
                 p_values.append("0")
+            if(params.get("first_surgery_conversion", None) == None):
+                p_columns.append("first_surgery_conversion")
+                p_values.append("0")
+            if(params.get("first_surgery_ablation", None) == None):
+                p_columns.append("first_surgery_ablation")
+                p_values.append("0")
+
+            if(params["op_date_Surgery2"] and params.get("second_surgery_planned",None) == None):
+                p_columns.append("second_surgery_planned")
+                p_values.append("0")
+            if(params["op_date_Surgery2"] and params.get("second_surgery_realized",None) == None):
+                p_columns.append("second_surgery_realized")
+                p_values.append("0")
+            if(params.get("ss_previous_chemotherapy",None)==None and params["op_date_Surgery2"]):
+                p_columns.append("ss_previous_chemotherapy")
+                p_values.append("0")
+            if(params.get("second_surgery_conversion", None) == None and params["op_date_Surgery2"]):
+                p_columns.append("second_surgery_conversion")
+                p_values.append("0")
+            if(params.get("second_surgery_ablation", None) == None and params["op_date_Surgery2"]):
+                p_columns.append("second_surgery_ablation")
+                p_values.append("0")
+
+            if(params["op_date_Surgery3"] and params.get("third_surgery_planned",None) == None):
+                p_columns.append("third_surgery_planned")
+                p_values.append("0")
+            if(params["op_date_Surgery3"] and params.get("third_surgery_realized",None) == None):
+                p_columns.append("third_surgery_realized")
+                p_values.append("0")
+            if(params.get("th_previous_chemotherapy",None)==None and params["op_date_Surgery3"]):
+                p_columns.append("th_previous_chemotherapy")
+                p_values.append("0")
+            if(params.get("third_surgery_conversion", None) == None and params["op_date_Surgery3"]):
+                p_columns.append("third_surgery_conversion")
+                p_values.append("0")
+            if(params.get("third_surgery_ablation", None) == None and params["op_date_Surgery3"]):
+                p_columns.append("third_surgery_ablation")
+                p_values.append("0")
+
             if(params.get("recurrence_date",None) or params.get("recurrence_organ",None)):
                 p_columns.append("recurrence_status")
                 p_values.append("1")
