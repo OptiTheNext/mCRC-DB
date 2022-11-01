@@ -47,6 +47,7 @@ app = flask.Flask(__name__,
 
 #For mail
 mail_server = os.environ.get("KRK_DB_MAIL_SERVER")
+mail_server = "https://" + mail_server
 sender_mail = os.environ.get("KRK_DB_SENDER")
 mail_user = os.environ.get("KRK_DB_MAIL_USER")
 mail_password = os.environ.get("KRK_DB_MAIL_PASSWORD")
@@ -60,7 +61,7 @@ creds = Credentials(
     password=mail_password
 )
 
-config = Configuration(server=mail_server, credentials=creds)
+config = Configuration(service_endpoint=mail_server, credentials=creds)
 
 account = Account(
     primary_smtp_address=sender_mail,

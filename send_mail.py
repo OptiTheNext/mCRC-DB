@@ -16,19 +16,13 @@ username = "Hannes"
 link = "google.com"
 
 
-msg = EmailMessage()
-msg['Subject'] = 'This is my first Python email'
-msg['From'] = "mcrc-db@charite.de" 
-msg['To'] = "hannes.freitag@charite.de" 
-msg.set_content('And it actually works')
-
 port = 587  # For starttls
 smtp_server = "email.charite.de"
 sender_email = "mcrc-db@charite.de"
 receiver_email = "hannes.freitag@charite.de" 
 password = input("Type your password and press enter:")
 
-context  = ssl._create_unverified_context()
+
 print("trying to connect")
 #mailserver = smtplib.SMTP(smtp_server,port, timeout=120)
 #print("connected")
@@ -52,7 +46,7 @@ creds = Credentials(
     password=password
 )
 
-config = Configuration(server=smtp_server, credentials=creds)
+config = Configuration(service_endpoint="Hier Platzhalter einsetzen", credentials=creds)
 
 account = Account(
     primary_smtp_address="mcrc-db@charite.de",
