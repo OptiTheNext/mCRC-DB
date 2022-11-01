@@ -39,7 +39,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config["JWT_SECRET_KEY"]= os.environ.get("KRK_APP_SECRET_KEY")
 Session(app)
 
-PATH_OUT="./"
+PATH_OUT="./Calculated_Statistic/"
 styles = getSampleStyleSheet()
 elements = []
 elements.append(Paragraph("Statistische Auswertung", styles['Title']))
@@ -61,7 +61,7 @@ to_drop = ["Kuerzel",
 "fs_complication_which",
 "ss_complication_which",
 "ts_complication_which",
-"Kommentar"
+"Kommentar",
 ]
 
 booleans = [

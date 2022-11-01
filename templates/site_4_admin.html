@@ -36,6 +36,11 @@ function submitTags(){
   }));
 }
 </script>
+{% if RenderParameters["df"] %}
+   <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Daten übernommen</h4>
+   </div>
+{%endif%}
 <form id="InputForm" action="" method="post" autocomplete="off">
   <div class="container" style="margin-left: 0">
   <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3">

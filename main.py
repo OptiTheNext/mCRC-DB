@@ -607,7 +607,19 @@ def page_4_admin():
     if ("username" in flask.session and flask.session.get("Admin") == 1):
         LocalRenderParameters = RenderParameters.copy()
         if(flask.session.get("df")):
+            localDF = flask.session.get("df")
             LocalRenderParameters["df"] = True
+        else: 
+            try:
+                cursor= mydb.cursor()
+                cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel")
+                localDF= cursor.fetchall()
+            except Exception as e:
+                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["error-text"] = e
+                return flask.render_template('site_5.html',
+                                      RenderParameters = LocalRenderParameters)
+                
         if flask.request.method == 'GET':
             print(flask.request.args.to_dict(flat=False))
             if "csv_file" in flask.request.args:
@@ -620,7 +632,7 @@ def page_4_admin():
                 print(flask.request.json)
                 tags = flask.request.json["value"]
                 print( tags)
-                statistik.deskreptiv(flask.session.get("df"),tags)
+                statistik.deskreptiv(localDF,tags)
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
                 return flask.send_file(pdf,as_attachment= False)
