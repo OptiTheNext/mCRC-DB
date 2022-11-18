@@ -27,13 +27,24 @@ Lol, hier steht was was keiner lesen kann
 
 <script>
 function submitTags(){
-  console.log($("#serverSideTags").val())
+
+  const form = document.getElementById('InputForm');
+  const name = form.elements['table_one'];
+  const grafik = form.elements['grafik_deskriptiv'];
+
+  // getting the element's value
+  let table_one = name.value;
+  let grafik_deskriptiv = grafik.value;
+  console.log($("#serverSideTags").val());
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/datenanalyse_admin", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
-    value: $("#serverSideTags").val()
+    value: $("#serverSideTags").val(),"table_one": table_one,
+    "grafik_deskriptiv": grafik_deskriptiv
   }));
+  
+ 
 }
 </script>
 {% if RenderParameters["df"] %}
@@ -42,32 +53,79 @@ function submitTags(){
    </div>
 {%endif%}
 <form id="InputForm" action="" method="post" autocomplete="off">
+  
   <div class="container" style="margin-left: 0">
-  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3">
-     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+  <div class="row">
+     <div class="col" style="border: 1px solid ,padding = 10p;">
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-           <h3>Auswahl Deskriptive Statistik</h3>
+           <h3>Statistik</h3>
            <hr>
+           <div class="accordion accordion-flush" id="op2_accordion_lab">
+            <div class="accordion-item">
+               <h2 class="accordion-header " id="flush-headingOne-limaxinitial">
+                  <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-limaxinitial" aria-expanded="false" aria-controls="flush-collapseOne">
+                  Deskriptiv
+                  </button>
+               </h2>
+               <div id="flush-collapseOne-limaxinitial" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingOne-limaxinitial" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                     
+                        <input class="form-check-input" type="checkbox" id="table_one" name="table_one" value="0"><label for="table_one">Table One </label> 
+                        <input class="form-check-input" type="checkbox" id="grafik_deskriptiv" name="grafik_deskriptiv" value="0"><label for="grafik_deskriptiv">Grafik </label> 
+                    
+                  </div>
+               </div>
+            </div>
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingTwo-limax2">
+                  <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo-limax2" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  Normalverteilung
+                  </button>
+               </h2>
+               <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo-limax2" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                     <div class="form-group">
+                       Optionen für Normalverteilung
+                     </div>
+                     
+            
+                  </div>
+               </div>
+            </div>
+            <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingthree-limax3">
+                  <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsethree-limax3" aria-expanded="false" aria-controls="flush-collapsethree-limax3">
+                  Explorativ
+                  </button>
+               </h2>
+               <div id="flush-collapsethree-limax3" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingthree-limax3" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                     <div class="form-group">
+                       Optionen Explorativ
+                     </div>
+                  
+                  </div>
+               </div>
+            </div>
+            </div>
+      </div>
+           
         </div>
      </div>
-     <div class="col-6" style="border: 1px solid ,padding = 10p;">
-        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-           <h3>Auswahl Normalverteilung</h3>
-           
-     </div>
-     </div>
-     <div class="col-6" style="border: 1px solid ,padding = 10p;">
+     
+     <div class="col" style="border: 1px solid ,padding = 10p;">
       <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
-         <h3>Auswahl Explorative Statistik</h3>
+         <h3>Anzeige</h3>
+         <hr>
       </div>
      </div>
      </div>
    </div>
      
 
-<button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="submitTags()" name="Import">STATISTIK!</button>
+<button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="submitTags()"  name="Import">STATISTIK!</button>
 
-
+</form>
   <!--
 <form>
 <div class="container overflow-hidden" style="margin-left: 0">

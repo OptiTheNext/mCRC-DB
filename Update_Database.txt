@@ -73,3 +73,6 @@ UPDATE mcrc_tabelle set second_surgery_realized = "0" where second_surgery_reali
 UPDATE mcrc_tabelle set second_surgery_realized = "1" where second_surgery_realized = "yes";
 UPDATE mcrc_tabelle set third_surgery_realized = "0" where third_surgery_realized = "no";
 UPDATE mcrc_tabelle set third_surgery_realized = "1" where third_surgery_realized = "yes";
+
+UPDATE mcrc_tabelle set MSS = "mss" where MSS = "wt";
+UDPATE mcrc_tabelle set MSS = "msi" where MSS = "mut";

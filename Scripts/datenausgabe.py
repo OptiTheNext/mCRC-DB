@@ -169,8 +169,8 @@ def Analyse(parameters) -> pandas.DataFrame:
     ##Check for MSS
     if(parameters.get('mss_check',None)):
         mss = []
-        if(parameters.get('mss', None)): mss.append('mut')
-        if(parameters.get('msi', None)): mss.append('wt')
+        if(parameters.get('mss', None)): mss.append('mss')
+        if(parameters.get('msi', None)): mss.append('msi')
         df.query("MSS in @mss", inplace=True)
 
     ##Check for T

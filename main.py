@@ -627,15 +627,21 @@ def page_4_admin():
                 print("hi")
         if flask.request.method == "POST":
             if flask.request.json:
+                grafik = False
                 #statistik.deskreptiv(flask.session.get("df"),tags)
-               
                 print(flask.request.json)
                 tags = flask.request.json["value"]
                 print( tags)
-                statistik.deskreptiv(localDF,tags)
+                print(flask.request.form.get('table_one'))
+                if("table_one" in flask.request.json):
+                    print("in table one")
+                    if("grafik_deskriptiv" in flask.request.json):
+                        grafik = True
+                    statistik.deskreptiv(localDF,tags,grafik)
+                    grafik = False
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
-                return flask.send_file(pdf,as_attachment= False)
+                return flask.send_file("./Calculated_Statistic/Report_File.pdf",as_attachment= True, download_name="Statistik.pdf")
             
         return flask.render_template('site_4_admin.html',
                                       RenderParameters = LocalRenderParameters)

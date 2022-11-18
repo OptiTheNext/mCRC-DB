@@ -242,7 +242,7 @@ def make_autopct(values):
         return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
     return my_autopct
 
-def deskreptiv(df,points_of_interest):
+def deskreptiv(df,points_of_interest,grafik):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
     df = pandas.DataFrame(df)
@@ -280,47 +280,47 @@ def deskreptiv(df,points_of_interest):
         table = Table(lista)
         global elements
         elements.append(table)
+        if(grafik):
+            if x in booleans:
+                values = current_df.value_counts()
+                print(values)
+                val = ['False:', 'True:']
+                values = [values[0], values[1]]
+                series2 = pandas.Series(values, 
+                    index=val, 
+                    name=current_name +"("+ str(sum(values))+")")
+                pie = series2.plot.pie(figsize=(6, 6),autopct=make_autopct(values))
+                fig = pie.get_figure()
+                save_here = PATH_OUT + x+".png"
+                fig.savefig(save_here)
+                
+                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                print(make_autopct((values)))
+                fig.clf()
+                values = None
+                series2 = None
+                print("Hier kuchendiagramm")
 
-        if x in booleans:
-            values = current_df.value_counts()
-            print(values)
-            val = ['False:', 'True:']
-            values = [values[0], values[1]]
-            series2 = pandas.Series(values, 
-                   index=val, 
-                   name=current_name +"("+ str(sum(values))+")")
-            pie = series2.plot.pie(figsize=(6, 6),autopct=make_autopct(values))
-            fig = pie.get_figure()
-            save_here = PATH_OUT + x+".png"
-            fig.savefig(save_here)
-            
-            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
-            print(make_autopct((values)))
-            fig.clf()
-            values = None
-            series2 = None
-            print("Hier kuchendiagramm")
+            if x in decimals:
+                print("made an boxplot") 
+                pie = current_df.plot.box(figsize=(6, 6))
+                fig = pie.get_figure()
+                save_here = PATH_OUT + x+".png"
+                fig.savefig(save_here)  
+                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                fig.clf()
 
-        if x in decimals:
-            print("made an boxplot") 
-            pie = current_df.plot.box(figsize=(6, 6))
-            fig = pie.get_figure()
-            save_here = PATH_OUT + x+".png"
-            fig.savefig(save_here)  
-            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
-            fig.clf()
-
-        if x  in categorials:
-            print ("making a Balkendiagramm")
-            
-            current_df=current_df.value_counts()
-            print(current_df)
-            pie = current_df.plot.bar(figsize = (6,6))
-            fig = pie.get_figure()
-            save_here = PATH_OUT + x+".png"
-            fig.savefig(save_here)  
-            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
-            fig.clf()
+            if x  in categorials:
+                print ("making a Balkendiagramm")
+                
+                current_df=current_df.value_counts()
+                print(current_df)
+                pie = current_df.plot.bar(figsize = (6,6))
+                fig = pie.get_figure()
+                save_here = PATH_OUT + x+".png"
+                fig.savefig(save_here)  
+                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                fig.clf()
 
         
 
