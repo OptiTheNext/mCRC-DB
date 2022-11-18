@@ -27,16 +27,11 @@ Lol, hier steht was was keiner lesen kann
 
 <script>
 function submitTags(){
-
-  const form = document.getElementById('InputForm');
-  const name = form.elements['table_one'];
-  const grafik = form.elements['grafik_deskriptiv'];
-
   // getting the element's value
-  let table_one = name.value;
-  let grafik_deskriptiv = grafik.value;
+  let table_one = $("#table_one").is(':checked');
+  let grafik_deskriptiv = $("#grafik_deskriptiv").is(':checked');
   console.log($("#serverSideTags").val());
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open("POST", "/datenanalyse_admin", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
@@ -44,14 +39,13 @@ function submitTags(){
     "grafik_deskriptiv": grafik_deskriptiv
   }));
   xhr.onreadystatechange = function(){
-    if (xhr.readyState != 4) return;
-    if (xhr.status != 200 && xhr.status != 304) {
+    if (xhr.readyState !== 4) return;
+    if (xhr.status !== 200 && xhr.status !== 304) {
         alert('HTTP error ' + req.status);
-        return;
     }}
     console.log(xhr.responseText);//this is your response
     window.sessionStorage['response'] = xhr.responseText;
-    window.open('export_statistik');//The data is accessible through sessionStorage. 
+    window.open('export_statistik');//The data is accessible through sessionStorage.
 }
 </script>
 {% if RenderParameters["df"] %}
