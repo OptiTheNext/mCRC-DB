@@ -242,7 +242,7 @@ def make_autopct(values):
         return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
     return my_autopct
 
-def deskreptiv(df,points_of_interest,grafik):
+def deskreptiv(df,points_of_interest,grafik,table_one):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
     df = pandas.DataFrame(df)
@@ -271,15 +271,16 @@ def deskreptiv(df,points_of_interest,grafik):
             
         print(current_df.dtype)
         print(result)
-        lista = [[x]]
-        print(result.values)
-        for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
-           lista = lista + [[i,j]]
-        print("Hier lista")
-        print(lista)
-        table = Table(lista)
-        global elements
-        elements.append(table)
+        if(table_one):
+            lista = [[x]]
+            print(result.values)
+            for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
+                lista = lista + [[i,j]]
+            print("Hier lista")
+            print(lista)
+            table = Table(lista)
+            global elements
+            elements.append(table)
         if(grafik):
             if x in booleans:
                 values = current_df.value_counts()
@@ -342,7 +343,7 @@ def korrellation(df):
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
     styles = getSampleStyleSheet()
-    path = PATH_OUT + 'Statistik.pdf'
+    path = PATH_OUT + 'Statistik-' + flask.session["username"] + ".pdf"
     doc = SimpleDocTemplate(path)
     global elements
     doc.build(elements)

@@ -631,17 +631,36 @@ def page_4_admin():
         if flask.request.method == "POST":
             if flask.request.json:
                 grafik = False
+                table_one= False
                 #statistik.deskreptiv(flask.session.get("df"),tags)
                 print(flask.request.json)
                 tags = flask.request.json["value"]
                 print( tags)
                 print(flask.request.form.get('table_one'))
+                print("in table one")
                 if("table_one" in flask.request.json):
-                    print("in table one")
-                    if("grafik_deskriptiv" in flask.request.json):
+                    table_one = flask.request.json["table_one"]
+                    print(flask.request.json)
+                    if (table_one == True):
+                        print("in table one = true")
+                        table_one = True
+                    if (table_one == "0"):
+                        print("in table one = false")
+                        table_one = False
+                    print("hier table one")
+                    print(table_one)
+
+                if("grafik_deskriptiv" in flask.request.json):
+                    grafik = flask.request.json["grafik_deskriptiv"]
+                    print(grafik)
+                    if (grafik == True):
                         grafik = True
-                    statistik.deskreptiv(localDF,tags,grafik)
-                    grafik = False
+                    if (grafik == "0"):
+                        grafik = False
+                    print(grafik)
+                statistik.deskreptiv(localDF,tags,grafik,table_one)
+                grafik = False
+                table_one= False
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
                 print(pdf)
