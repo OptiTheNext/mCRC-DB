@@ -342,7 +342,7 @@ def korrellation(df):
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
     styles = getSampleStyleSheet()
-    path = PATH_OUT + 'Report_File.pdf'
+    path = PATH_OUT + 'Statistik.pdf'
     doc = SimpleDocTemplate(path)
     global elements
     doc.build(elements)

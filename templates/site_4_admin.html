@@ -43,8 +43,15 @@ function submitTags(){
     value: $("#serverSideTags").val(),"table_one": table_one,
     "grafik_deskriptiv": grafik_deskriptiv
   }));
-  
- 
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState != 4) return;
+    if (xhr.status != 200 && xhr.status != 304) {
+        alert('HTTP error ' + req.status);
+        return;
+    }}
+    console.log(xhr.responseText);//this is your response
+    window.sessionStorage['response'] = xhr.responseText;
+    window.open('export_statistik');//The data is accessible through sessionStorage. 
 }
 </script>
 {% if RenderParameters["df"] %}

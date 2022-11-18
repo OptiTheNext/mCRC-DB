@@ -524,10 +524,13 @@ def export_to_csv():
 @app.route("/export_statistik")
 def export_statistik_as_pdf():
     pdf = flask.session["pdf_path"]
-    #output = flask.make_response(application/pdf)
+    
+    #output = flask.make_response(pdf)
     #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
-    #output.headers["Content-type"] = "pdf"
-    return flask.send_file(pdf,as_attachment= True,)
+    #output.headers["Content-type"] = "application/pdf"
+    #return output
+    return flask.send_file(pdf, attachment_filename = "Statistik.pdf")
+  
 
 
 @app.route("/datenausgabe", methods=['POST', 'GET'])
@@ -641,7 +644,9 @@ def page_4_admin():
                     grafik = False
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
-                return flask.send_file("./Calculated_Statistic/Report_File.pdf",as_attachment= True, download_name="Statistik.pdf")
+                print(pdf)
+                flask.session["pdf_path"] = pdf
+                return flask.redirect(flask.url_for("export_statistik_as_pdf"))
             
         return flask.render_template('site_4_admin.html',
                                       RenderParameters = LocalRenderParameters)
