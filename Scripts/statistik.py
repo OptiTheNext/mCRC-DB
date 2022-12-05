@@ -22,6 +22,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
 
+import statsmodels.api as sm
+
 from Scripts import datenausgabe
 
 app = flask.Flask(__name__,
@@ -330,9 +332,43 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
         
 
     
-def normalverteilung(df):
+def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
     #Test auf Normalverteilung und entsprechender T-Test
-    print(scipy.stats.shapiro(df))
+    for x in points_of_interest:
+        if x in decimals:
+            # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
+            df = df[x]
+            
+            df = pandas.to_numeric(df)
+            
+            df = df[~numpy.isnan(df)]
+            
+            if(saphiro == True):
+                result = scipy.stats.shapiro(df)
+                lista = ([x,"Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+                table = Table(lista)
+                elements.append(table)
+            if(kolmogorov == True):
+                result = scipy.stats.kstest(df,'norm')
+                lista = ([x,"Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+                table = Table(lista)
+                elements.append(table)
+            print("anderson")
+            if(anderson == True):
+                result=scipy.stats.anderson(df)
+                lista = ([x,"Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
+                table = Table(lista)
+                elements.append(table)
+            if(qqplot == True):
+                fig = sm.qqplot(df, line='45',xlabel='Zu erwartende Werte',ylabel=x)
+                save_here = PATH_OUT + x +".png"
+                fig.savefig(save_here) 
+                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                fig.clf()
+
+
+
+
     print("Wuhu, normalverteilt")
 
 def korrellation(df):

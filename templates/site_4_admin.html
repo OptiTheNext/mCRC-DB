@@ -30,13 +30,19 @@ function submitTags(){
   // getting the element's value
   let table_one = $("#table_one").is(':checked');
   let grafik_deskriptiv = $("#grafik_deskriptiv").is(':checked');
+  let saphiro = $("#saphiro").is(':checked');
+  let kolmogorov = $("#kolmogorov").is(':checked');
+  let anderson = $("#anderson").is(':checked');
+  let qq = $("#qq").is(':checked');
+  
   console.log($("#serverSideTags").val());
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "/datenanalyse_admin", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
     value: $("#serverSideTags").val(),"table_one": table_one,
-    "grafik_deskriptiv": grafik_deskriptiv
+    "grafik_deskriptiv": grafik_deskriptiv, "saphiro":saphiro,"kolmogorov":kolmogorov,
+    "anderson":anderson,"qq":qq
   }));
   xhr.onreadystatechange = function(){
     if (xhr.readyState !== 4) return;
@@ -86,7 +92,10 @@ function submitTags(){
                <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo-limax2" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                      <div class="form-group">
-                       Optionen für Normalverteilung
+                      <input class="form-check-input" type="checkbox" id="saphiro" name="saphiro" value="Hurensohn"><label for="saphiro">Saphiro Wilkoson Test</label> 
+                      <input class="form-check-input" type="checkbox" id="kolmogorov" name="kolmogorov" value="true"><label for="kolmogorov">Kolmogorov-Smirnov Test</label> 
+                      <input class="form-check-input" type="checkbox" id="anderson" name="anderson" value="true"><label for="anderson">Anderson Test</label>
+                      <input class="form-check-input" type="checkbox" id="qq" name="qq" value="true"><label for="qq">Q-Q Plot</label>
                      </div>
                      
             
