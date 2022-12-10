@@ -12,3 +12,4 @@ scipy
 reportlab
 exchangelib
 jinja2
+statsmodels

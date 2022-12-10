@@ -345,18 +345,18 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
             
             if(saphiro == True):
                 result = scipy.stats.shapiro(df)
-                lista = ([x,"Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+                lista = ([x," :Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 table = Table(lista)
                 elements.append(table)
             if(kolmogorov == True):
                 result = scipy.stats.kstest(df,'norm')
-                lista = ([x,"Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+                lista = ([x," :Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 table = Table(lista)
                 elements.append(table)
             print("anderson")
             if(anderson == True):
                 result=scipy.stats.anderson(df)
-                lista = ([x,"Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
+                lista = ([x," :Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
                 table = Table(lista)
                 elements.append(table)
             if(qqplot == True):
