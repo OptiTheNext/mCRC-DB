@@ -34,6 +34,7 @@ function submitTags(){
   let kolmogorov = $("#kolmogorov").is(':checked');
   let anderson = $("#anderson").is(':checked');
   let qq = $("#qq").is(':checked');
+  let verlauf = $("#verlauf_labor").is(':checked');
   
   console.log($("#serverSideTags").val());
   const xhr = new XMLHttpRequest();
@@ -42,7 +43,7 @@ function submitTags(){
   xhr.send(JSON.stringify({
     value: $("#serverSideTags").val(),"table_one": table_one,
     "grafik_deskriptiv": grafik_deskriptiv, "saphiro":saphiro,"kolmogorov":kolmogorov,
-    "anderson":anderson,"qq":qq
+    "anderson":anderson,"qq":qq , "verlauf": verlauf
   }));
   xhr.onreadystatechange = function(){
     if (xhr.readyState !== 4) return;
@@ -67,6 +68,7 @@ function submitTags(){
         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
            <h3>Statistik</h3>
            <hr>
+           <input class="form-check-input" type="checkbox" id="verlauf_labor" name="verlauf_labor" value="1"><label for="verlauf_labor">Im Verlauf?</label> 
            <div class="accordion accordion-flush" id="op2_accordion_lab">
             <div class="accordion-item">
                <h2 class="accordion-header " id="flush-headingOne-limaxinitial">

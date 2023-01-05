@@ -21,6 +21,7 @@ import reportlab
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
+import regex
 
 import statsmodels.api as sm
 
@@ -46,6 +47,7 @@ styles = getSampleStyleSheet()
 elements = []
 elements.append(Paragraph("Statistische Auswertung", styles['Title']))
 
+labor_verlauf_liste = []
 
 to_drop = ["Kuerzel",
 "pat_id",
@@ -237,6 +239,71 @@ dates = [
     "previous_surgery_date",
 ]
 
+labor_werte = [
+    "fs_Serum_Bili_POD1",
+    "fs_Serum_Bili_POD3",
+    "fs_Serum_Bili_POD5",
+    "fs_Serum_Bili_LAST",
+    "fs_Drain_Bili_POD1",
+    "fs_Drain_Bili_POD3",
+    "fs_Drain_Bili_POD5",
+    "fs_Drain_Bili_LAST",
+    "fs_AST_POD1",
+    "fs_AST_POD3",
+    "fs_AST_POD5",
+    "fs_AST_LAST",
+    "fs_ALT_POD1",
+    "fs_ALT_POD3",
+    "fs_ALT_POD5",
+    "fs_ALT_LAST",
+    "fs_INR_POD1",
+    "fs_INR_POD3",
+    "fs_INR_POD5",
+    "fs_INR_LAST",
+    #Zweite OP
+    "ss_Serum_Bili_POD1",
+    "ss_Serum_Bili_POD3",
+    "ss_Serum_Bili_POD5",
+    "ss_Serum_Bili_LAST",
+    "ss_Drain_Bili_POD1",
+    "ss_Drain_Bili_POD3",
+    "ss_Drain_Bili_POD5",
+    "ss_Drain_Bili_LAST",
+    "ss_AST_POD1",
+    "ss_AST_POD3",
+    "ss_AST_POD5",
+    "ss_AST_LAST",
+    "ss_ALT_POD1",
+    "ss_ALT_POD3",
+    "ss_ALT_POD5",
+    "ss_ALT_LAST",
+    "ss_INR_POD1",
+    "ss_INR_POD3",
+    "ss_INR_POD5",
+    "ss_INR_LAST",
+    #Dritte OP
+    "th_Serum_Bili_POD1",
+    "th_Serum_Bili_POD3",
+    "th_Serum_Bili_POD5",
+    "th_Serum_Bili_LAST",
+    "th_Drain_Bili_POD1",
+    "th_Drain_Bili_POD3",
+    "th_Drain_Bili_POD5",
+    "th_Drain_Bili_LAST",
+    "th_AST_POD1",
+    "th_AST_POD3",
+    "th_AST_POD5",
+    "th_AST_LAST",
+    "th_ALT_POD1",
+    "th_ALT_POD3",
+    "th_ALT_POD5",
+    "th_ALT_LAST",
+    "th_INR_POD1",
+    "th_INR_POD3",
+    "th_INR_POD5",
+    "th_INR_LAST"
+]
+
 def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
@@ -244,25 +311,46 @@ def make_autopct(values):
         return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
     return my_autopct
 
-def deskreptiv(df,points_of_interest,grafik,table_one):
+def deskreptiv(df,points_of_interest,grafik,table_one,verlauf):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
     df = pandas.DataFrame(df)
     print(points_of_interest)
+    
+
     for x in points_of_interest:
         if x in to_drop:
             continue
+            
+        if x in labor_werte and verlauf:
+            print("teste auf verlauf")
+            op_nm = x.split("_")[0]
+            labor_typ = x.split("_")[1]
+            my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
+            for s in labor_verlauf_liste:
+                print("in verlaufs schleife")
+                if regex.search(my_regex, s):
+                    print("its true, verlauf bereits angelegt")
+                else:
+                    print('verlauf noch nicht angelegt')
+                    labor_verlauf_liste.append(op_nm+labor_typ)
+                    print(labor_verlauf_liste)
+            if not labor_verlauf_liste:
+                print('verlauf noch nicht angelegt')
+                labor_verlauf_liste.append(op_nm+labor_typ)
+                print(labor_verlauf_liste)
+
         current_name = x
         current_df = df[x]
         current_df.dropna(inplace=True)
-        print(current_df.dtype)
+        
         if x in booleans:
             df = df.replace({0:False, 1:True})
             print("replaced with False/True")
             result = current_df.describe()
         if x in decimals:
             print("trying to change formats")
-            print(df)
+            
             current_df = pandas.to_numeric(current_df)
             result = current_df.describe()
         if x in categorials:
@@ -332,7 +420,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
         
 
     
-def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
+def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,verlauf):
     #Test auf Normalverteilung und entsprechender T-Test
     for x in points_of_interest:
         if x in decimals:

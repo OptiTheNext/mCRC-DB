@@ -658,7 +658,16 @@ def page_4_admin():
                     if (grafik == "0"):
                         grafik = False
                     print(grafik)
-                statistik.deskreptiv(localDF,tags,grafik,table_one)
+                    
+                if("verlauf" in flask.request.json):
+                    verlauf = flask.request.json["verlauf"]
+                    print(grafik)
+                    if (verlauf == True):
+                        verlauf = True
+                    if (verlauf == "0"):
+                        verlauf = False
+                    print(verlauf)
+                statistik.deskreptiv(localDF,tags,grafik,table_one,verlauf)
 
                 if("saphiro" in flask.request.json):
                     saphiro = flask.request.json["saphiro"]
@@ -695,8 +704,10 @@ def page_4_admin():
                     if (qq == "0"):
                         qq = False
                     print(qq)
+
                 
-                statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq)
+                if (saphiro or kolmogorov or anderson  or qq):
+                    statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq,verlauf)
 
                 grafik = False
                 table_one= False
@@ -704,6 +715,7 @@ def page_4_admin():
                 kolmogorov = False
                 anderson = False
                 qq = False 
+                verlauf = False
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
                 print(pdf)
