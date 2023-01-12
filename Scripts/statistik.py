@@ -115,6 +115,7 @@ decimals = [
     "fs_Serum_Bili_POD3",
     "fs_Serum_Bili_POD5",
     "fs_Serum_Bili_LAST",
+
     "fs_Drain_Bili_POD1",
     "fs_Drain_Bili_POD3",
     "fs_Drain_Bili_POD5",
@@ -311,7 +312,7 @@ def make_autopct(values):
         return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
     return my_autopct
 
-def deskreptiv(df,points_of_interest,grafik,table_one,verlauf):
+def deskreptiv(df,points_of_interest,grafik,table_one):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
     df = pandas.DataFrame(df)
@@ -322,24 +323,6 @@ def deskreptiv(df,points_of_interest,grafik,table_one,verlauf):
         if x in to_drop:
             continue
             
-        if x in labor_werte and verlauf:
-            print("teste auf verlauf")
-            op_nm = x.split("_")[0]
-            labor_typ = x.split("_")[1]
-            my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
-            for s in labor_verlauf_liste:
-                print("in verlaufs schleife")
-                if regex.search(my_regex, s):
-                    print("its true, verlauf bereits angelegt")
-                else:
-                    print('verlauf noch nicht angelegt')
-                    labor_verlauf_liste.append(op_nm+labor_typ)
-                    print(labor_verlauf_liste)
-            if not labor_verlauf_liste:
-                print('verlauf noch nicht angelegt')
-                labor_verlauf_liste.append(op_nm+labor_typ)
-                print(labor_verlauf_liste)
-
         current_name = x
         current_df = df[x]
         current_df.dropna(inplace=True)
@@ -420,7 +403,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one,verlauf):
         
 
     
-def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,verlauf):
+def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
     #Test auf Normalverteilung und entsprechender T-Test
     for x in points_of_interest:
         if x in decimals:
@@ -459,9 +442,104 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,ve
 
     print("Wuhu, normalverteilt")
 
-def korrellation(df):
+def exploration(df, point_of_interest,linear, log):
     #Test / Darstellung von korrellation
-    print("wuhu, korrellation")
+    df = pandas.DataFrame(df)
+    print(df)
+    print("der eingegebene dataframe")
+    labor_verlauf_liste = []
+    global op_nm
+    global labor_typ
+    def verlauf_check(x): 
+        if x in labor_werte:
+                print("teste auf verlauf")
+                global op_nm
+                global labor_typ
+                op_nm = x.split("_")[0]
+                labor_typ = x.split("_")[1]
+                my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
+                for s in labor_verlauf_liste:
+                    print("in verlaufs schleife")
+                    if regex.search(my_regex, s):
+                        print("its true, verlauf bereits angelegt")
+                        return True
+                    else:
+                        print('verlauf noch nicht angelegt')
+                        labor_verlauf_liste.append(op_nm+labor_typ)
+                        print(labor_verlauf_liste)
+                        return False
+                if not labor_verlauf_liste:
+                    print('verlauf noch nicht angelegt')
+                    labor_verlauf_liste.append(op_nm+labor_typ)
+                    print(labor_verlauf_liste)
+                    return False
+    def lin_reg(row):
+        print("linreg")
+        ywerte = []
+        xwerte = []
+        row = pandas.to_numeric(row)
+        print(type(row[0]))
+        if not numpy.isnan(row[0]):
+            ywerte.append(row[0])
+            xwerte.append(1)
+        if not numpy.isnan(row[1]):
+            ywerte.append(row[1])
+            xwerte.append(3)
+        if not numpy.isnan(row[2]):
+            ywerte.append(row[2])
+            xwerte.append(5)
+        if not numpy.isnan(row[3]):
+            ywerte.append(row[3])
+            xwerte.append(row[4])
+        
+        slope, intercept, r, p, se = scipy.stats.linregress(xwerte, y=ywerte, alternative='two-sided')
+        return slope
+
+    if linear:
+        for x in point_of_interest:
+            if verlauf_check(x):
+                continue
+            # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
+            value = op_nm + "_"   
+            if(labor_typ == "Serum" or labor_typ == "Drain"):
+                    value = value + labor_typ + "_Bili"
+            else:
+                    value = value + labor_typ   
+            valuepoint1 = value  + '_POD1'
+            valuepoint2 = value  + '_POD3'
+            valuepoint3 = value + '_POD5'
+            valuepoint4 = value + '_Last'
+            valuepoint5 = op_nm + "_los"
+
+            df2 = df[[valuepoint1,valuepoint2,valuepoint3,valuepoint4,valuepoint5]] 
+            df2.dropna(axis = 0, thresh = "3", inplace = True)
+            
+            #BEGINN DER REGRESSION! 
+            df2['Slope'] = df2.apply(lin_reg, axis = 1)
+            print(df2)
+
+            
+
+            
+
+            print(df2)
+            
+                
+
+
+
+
+
+
+
+
+            
+                    
+            
+    
+
+
+    print("wuhu, explorativ")
 
 
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben

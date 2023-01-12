@@ -638,6 +638,8 @@ def page_4_admin():
                 print( tags)
                 print(flask.request.form.get('table_one'))
                 print("in table one")
+                #Sammeln von Variablen für Deskriptiv
+
                 if("table_one" in flask.request.json):
                     table_one = flask.request.json["table_one"]
                     print(flask.request.json)
@@ -659,16 +661,10 @@ def page_4_admin():
                         grafik = False
                     print(grafik)
                     
-                if("verlauf" in flask.request.json):
-                    verlauf = flask.request.json["verlauf"]
-                    print(grafik)
-                    if (verlauf == True):
-                        verlauf = True
-                    if (verlauf == "0"):
-                        verlauf = False
-                    print(verlauf)
-                statistik.deskreptiv(localDF,tags,grafik,table_one,verlauf)
+                
+                statistik.deskreptiv(localDF,tags,grafik,table_one,)
 
+                #Sammeln von Variablen für Normalverteilung
                 if("saphiro" in flask.request.json):
                     saphiro = flask.request.json["saphiro"]
                     print(grafik)
@@ -707,7 +703,28 @@ def page_4_admin():
 
                 
                 if (saphiro or kolmogorov or anderson  or qq):
-                    statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq,verlauf)
+                    statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq)
+
+                #Sammeln von Variablen für Explorativ
+                if("linear" in flask.request.json):
+                    linear = flask.request.json["linear"]
+                    print(grafik)
+                    if (linear == True):
+                        linear = True
+                    if (linear == "0"):
+                        linear = False
+                    print(linear)
+                if("log" in flask.request.json):
+                    log = flask.request.json["log"]
+                    print(grafik)
+                    if (log == True):
+                        log = True
+                    if (log == "0"):
+                        log = False
+                    print(log)
+
+                if (linear or log):
+                    statistik.exploration(localDF,tags,linear,log)
 
                 grafik = False
                 table_one= False
@@ -715,7 +732,9 @@ def page_4_admin():
                 kolmogorov = False
                 anderson = False
                 qq = False 
-                verlauf = False
+                linear = False
+                log = False
+                
                 pdf = statistik.generate_pdf()
                 #flask.session["pdf_path"] = pdf
                 print(pdf)
