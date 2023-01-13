@@ -305,6 +305,17 @@ labor_werte = [
     "th_INR_LAST"
 ]
 
+global result
+
+def table_one_func(x,loesung):
+    lista = [[x]]
+    print(loesung.values)
+    for i,j in zip(loesung.axes[0].values.astype(str),loesung.values.astype(str)):
+            lista = lista + [[i,j]]
+            
+    return lista
+            
+
 def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
@@ -343,15 +354,9 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
             result = current_df.describe()
             
         print(current_df.dtype)
-        print(result)
         if(table_one):
-            lista = [[x]]
-            print(result.values)
-            for i,j in zip(result.axes[0].values.astype(str),result.values.astype(str)):
-                lista = lista + [[i,j]]
-            print("Hier lista")
-            print(lista)
-            table = Table(lista)
+            table = table_one_func(x,result)
+            table = Table(table)
             global elements
             elements.append(table)
         if(grafik):
@@ -512,15 +517,29 @@ def exploration(df, point_of_interest,linear, log):
             valuepoint5 = op_nm + "_los"
 
             df2 = df[[valuepoint1,valuepoint2,valuepoint3,valuepoint4,valuepoint5]] 
-            df2.dropna(axis = 0, thresh = "3", inplace = True)
+            df2.dropna(axis = 0, how = "all", inplace = True)
             
             #BEGINN DER REGRESSION! 
             df2['Slope'] = df2.apply(lin_reg, axis = 1)
             print(df2)
 
-            
+            #Hier table One
+            df3 = df2['Slope']
+            df3 = pandas.to_numeric(df3)
 
-            
+            result = df3.describe()
+
+            listb = table_one_func(x,result)
+            table = Table(listb)
+            global elements
+            elements.append(table)
+            #Hier Boxplot
+            pie = df3.plot.box(figsize=(6, 6))
+            fig = pie.get_figure()
+            save_here = PATH_OUT + x+".png"
+            fig.savefig(save_here)  
+            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+            fig.clf()
 
             print(df2)
             
