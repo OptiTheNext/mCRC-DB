@@ -30,7 +30,7 @@ function importData() {
                 $("#pve_check").prop('checked', Boolean(value)).trigger("change");
             }
             if(key === "op_date_Surgery2" || key === "op_code_Surgery2") {
-                $("#secondOP_Check").prop('checked', Boolean(value)).trigger("change");
+                $("#secondOP_Check").prop('checked', Boolean(+value)).trigger("change");
                 console.log(key)
                 console.log(Boolean(value))
                 console.log
