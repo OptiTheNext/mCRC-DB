@@ -534,7 +534,7 @@ def exploration(df, point_of_interest,linear, log):
             global elements
             elements.append(table)
             #Hier Boxplot
-            pie = df3.plot.box(figsize=(6, 6))
+            pie = df3.plot.box(figsize=(8, 8))
             fig = pie.get_figure()
             save_here = PATH_OUT + x+".png"
             fig.savefig(save_here)  

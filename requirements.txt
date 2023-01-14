@@ -13,3 +13,4 @@ reportlab
 exchangelib
 jinja2
 statsmodels
+regex
