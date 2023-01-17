@@ -529,7 +529,7 @@ def export_statistik_as_pdf():
     #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
     #output.headers["Content-type"] = "application/pdf"
     #return output
-    return flask.send_file(pdf, attachment_filename = "Statistik.pdf")
+    return flask.send_file(pdf, download_name = "Statistik.pdf")
   
 
 
