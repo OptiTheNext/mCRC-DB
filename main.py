@@ -259,6 +259,8 @@ def dateneingabe():
 
         if "pat_id" in flask.request.form:
             pat_to_delete = flask.request.form["pat_id"]
+            if pat_to_delete == "":
+                pat_to_delete = flask.request.form["pat_id_import"]
             print(pat_to_delete + grund_to_delete)
             try:
                 cursor = mydb.cursor()
@@ -270,16 +272,19 @@ def dateneingabe():
 
 
             try: 
+                print("now into deleted_patients")
                 cursor.execute("INSERT INTO deleted_patients (id,reason) VALUES (%s,%s)",(pat_to_delete,grund_to_delete))
                 mydb.commit()
+                print("now deleteing from mcrc")
                 cursor.execute("DELETE FROM mcrc_tabelle WHERE pat_id = %s", (pat_to_delete,))
                 mydb.commit()
 
                 LocalRenderParameters = RenderParameters.copy()
-                LocalRenderParameters["Success"] = "Deleted the username"
+                LocalRenderParameters["Success"] = "Deleted the ID"
             except Exception as e:
                 print("something went wrong")
-                LocalRenderParameters["Error"] = "Nutzer kann nicht gelöscht werden"
+                print(e)
+                LocalRenderParameters["Error"] = "ID kann nicht gelöscht werden"
                 LocalRenderParameters["error-text"] = e
                 
                 #send_error_mail(e, flask.session["username"])
@@ -749,6 +754,55 @@ def page_4_admin():
 @app.route("/users", methods=['POST', 'GET'])
 def page_5():
     LocalRenderParameters = RenderParameters.copy()
+    def deleted_id_text():
+        try:
+                cursor = mydb.cursor()
+        except Exception as e:
+                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["error-text"] = e
+                return flask.render_template('site_5.html',
+                                      RenderParameters = LocalRenderParameters)
+        cursor.execute("SELECT * FROM deleted_patients")
+        myresult = cursor.fetchall()
+        df = pandas.DataFrame(myresult)
+        if df.empty:
+            return     
+        df.columns= ['ID', 'Reason']
+         
+        cell_hover = {  # for row hover use <tr> instead of <td>
+                    'selector': 'td:hover',
+                    'props': [('background-color', '#ffffb3')]
+                }
+        index_names = {
+                    'selector': '.index_name',
+                    'props':
+                    'font-style: italic; color: darkgrey; font-weight:normal;'
+                }
+        headers = {
+                    'selector': 'th:not(.index_name)',
+                    'props': 'background-color: #000066; color: white;'
+                }
+
+        htmltext = flask.Markup(
+                    df.style.set_table_styles([
+                        cell_hover,
+                        index_names,
+                        headers,
+                        {
+                            'selector': 'th.col_heading',
+                            'props': 'text-align: center;'
+                        },
+                        {
+                            'selector': 'th.col_heading.level0',
+                            'props': 'font-size: 1.5em;'
+                        },
+                        {
+                            'selector': 'td',
+                            'props': 'text-align: center; font-weight: bold;'
+                        },
+                    ],
+                                            overwrite=False).to_html())
+        return htmltext
     def Usertext():
             try:
                 cursor = mydb.cursor()
@@ -800,7 +854,9 @@ def page_5():
                                             overwrite=False).to_html())
             return htmltext
     htmltext=Usertext() 
+    deletedID = deleted_id_text()
     LocalRenderParameters["htmltext"] = htmltext
+    LocalRenderParameters["deleted_ids"] = deletedID
     if ("username" in flask.session and flask.session.get("Admin")):
         
 
@@ -877,6 +933,30 @@ def page_5():
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
+                    LocalRenderParameters["error-text"] = e
+                   # send_error_mail(e, flask.session["username"])
+                    return flask.render_template('site_5.html',
+                                         RenderParameters = LocalRenderParameters)     
+
+            if "add_id_to_db" in flask.request.form:
+                #add id back into db
+                print("trying to add id into db")
+                try:
+                    cursor = mydb.cursor()
+                    print("now insert it")
+                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)",(flask.request.form["id_to_add"],))
+                    mydb.commit()
+                    try:
+                        print("now delete it")
+                        cursor.execute("DELETE FROM deleted_patients WHERE id = %s", (flask.request.form["id_to_add"],))
+                        mydb.commit()
+                    except Exception as e:
+                        print("nothing to delete")
+
+                    LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
+                except Exception as e:
+                    print(e)
+                    LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                    # send_error_mail(e, flask.session["username"])
                     return flask.render_template('site_5.html',

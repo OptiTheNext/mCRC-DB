@@ -6,7 +6,7 @@
 
 
 {% block MainContent %}
-<h3>Nutzerverwaltung</h3>
+<h3>Verwaltung</h3>
 {%if RenderParameters["Admin"] %}
   <form action="" method="post" autocomplete="off">
     <div class="container" style="margin-left: 0">
@@ -52,6 +52,25 @@
             <hr>
             {%if RenderParameters["htmltext"]%}
             {{RenderParameters["htmltext"]}}
+            {%endif%}
+          </div>
+        </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>ID hinzufügen</h3>
+            <hr>
+            <label>ID</label>
+            <input class="form-control" type="string" name="id_to_add">
+            <br>
+            <input class="btn btn-secondary" type="submit" value="add id" name = "add_id_to_db">
+          </div>
+        </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Gelöschte IDs</h3>
+            <hr>
+            {%if RenderParameters["deleted_ids"]%}
+            {{RenderParameters["deleted_ids"]}}
             {%endif%}
           </div>
         </div>
