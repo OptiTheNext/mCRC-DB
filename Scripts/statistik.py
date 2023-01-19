@@ -76,7 +76,7 @@ booleans = [
 "MSS",
 "crlm_bilobular",
 "multimodal",
-"two_staged"
+"two_staged",
 "status_fu",
 "recurrence_status",
 "smoking",
@@ -326,6 +326,9 @@ def make_autopct(values):
 def deskreptiv(df,points_of_interest,grafik,table_one):
     #Table one für Werte aus DF und Liste zur beschränkung der werte
     print("Wuhu, deskreptiv")
+    print("Graphik =")
+    print(grafik)
+    print(table_one)
     df = pandas.DataFrame(df)
     print(points_of_interest)
     
@@ -341,27 +344,32 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
         if x in booleans:
             df = df.replace({0:False, 1:True})
             print("replaced with False/True")
-            result = current_df.describe()
+            
         if x in decimals:
             print("trying to change formats")
             
             current_df = pandas.to_numeric(current_df)
-            result = current_df.describe()
+            
         if x in categorials:
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace = True)
-            result = current_df.describe()
+            
             
         print(current_df.dtype)
         if(table_one):
+            result = current_df.describe()
             table = table_one_func(x,result)
             table = Table(table)
             global elements
             elements.append(table)
         if(grafik):
+            print("ich bin unter if grafik")
+            print(x)
             if x in booleans:
+                print("ich bin in booleans")
                 values = current_df.value_counts()
+                print("ich printe values:")
                 print(values)
                 val = ['False:', 'True:']
                 values = [values[0], values[1]]
