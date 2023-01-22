@@ -470,7 +470,7 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
 
     print("Wuhu, normalverteilt")
 
-def exploration(df, points_of_interest,reg_one,reg_two,linear, log):
+def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
     #Test / Darstellung von korrellation
     df = pandas.DataFrame(df)
     print(df)
@@ -565,20 +565,26 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log):
             fig.clf()
 
             print(df2)
-            
-                
+    if korrelation:
+        print("wir sind in korrelation")
+        
+        print(korrelation)
+        df = df[[reg_one,reg_two]]
+        df.dropna(how="any",inplace=True)
 
-
-
-
-
-
-
-
-            
-                    
-            
-    
+        var1 = df[reg_one]
+        if reg_one in decimals:
+            var1 =  pandas.to_numeric(var1)
+        print(var1)
+        var2 = df[reg_two]
+        if reg_two in decimals:
+            var2 =  pandas.to_numeric(var2)
+        print(var2)
+        result = scipy.stats.stats.pearsonr(var1,var2)
+        x = reg_one + " und " + reg_two
+        lista = ([x," :Korrelation nach Pearson"],["Korrelationskoeffizent",result[0]],["P-Wert",result[1]])
+        table = Table(lista)
+        elements.append(table)
 
 
     print("wuhu, explorativ")

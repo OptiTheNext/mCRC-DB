@@ -742,11 +742,19 @@ def page_4_admin():
                     if (log == "0"):
                         log = False
                     print(log)
+                if("korrelation" in flask.request.json):
+                    korrelation = flask.request.json["korrelation"]
+                    print(grafik)
+                    if (korrelation == True):
+                        korrelation = True
+                    if (korrelation == "0"):
+                        korrelation = False
+                    print(log)
                 
 
 
-                if (linear or log):
-                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log)
+                if (linear or log or korrelation):
+                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log,korrelation)
 
                 grafik = False
                 table_one= False
