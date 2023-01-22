@@ -12,7 +12,7 @@ Lol, hier steht was was keiner lesen kann
 <label for="serverSideTags" class="form-label">Zu Untersuchende Spalten</label>
             <select
               class="form-select"
-              id="serverSideTags"
+              id="server_tags"
               name="server_side_tags[]"
               multiple
               data-allow-new="false"
@@ -37,6 +37,10 @@ function submitTags(){
   let linear = $("#linear").is(':checked');
   let log = $("#log").is(':checked');
   let korrelation = $("#korrelation").is(':checked');
+  let server_tags = $("#server_tags").val()
+  let reg_tags_one = $("#reg_tags_one").val()
+  let reg_tags_two = $("#reg_tags_two").val()
+  let histo = $("#histo").is(':checked');
   
   
   console.log($("#serverSideTags").val());
@@ -44,9 +48,9 @@ function submitTags(){
   xhr.open("POST", "/datenanalyse_admin", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
-    value: $("#serverSideTags").val(),"table_one": table_one,
+    "server_tags":server_tags,"reg_tags_one":reg_tags_one,"reg_tags_two":reg_tags_two,"table_one": table_one,
     "grafik_deskriptiv": grafik_deskriptiv, "saphiro":saphiro,"kolmogorov":kolmogorov,
-    "anderson":anderson,"qq":qq , "linear":linear,"log":log, "korrelation":korrelation
+    "anderson":anderson,"qq":qq , "linear":linear,"log":log, "korrelation":korrelation, "histo":histo
   }));
   xhr.onreadystatechange = function(){
     if (xhr.readyState !== 4) return;
@@ -100,6 +104,7 @@ function submitTags(){
                       <input class="form-check-input" type="checkbox" id="kolmogorov" name="kolmogorov" value="true"><label for="kolmogorov">Kolmogorov-Smirnov Test</label> 
                       <input class="form-check-input" type="checkbox" id="anderson" name="anderson" value="true"><label for="anderson">Anderson Test</label>
                       <input class="form-check-input" type="checkbox" id="qq" name="qq" value="true"><label for="qq">Q-Q Plot</label>
+                      <input class="form-check-input" type="checkbox" id="histo" name="histo" value="true"><label for="histo">Histogram</label> 
                      </div>
                      
             
@@ -116,6 +121,33 @@ function submitTags(){
                   <div class="accordion-body">
                      <div class="form-group">
                         <input class="form-check-input" type="checkbox" id="linear" name="linear" value="true"><label for="linear">Lineare Regression</label>
+                        <label for="serverSideTags" class="form-label">Wähle einen Werte</label>
+                                    <select
+                                    class="form-select"
+                                    id="reg_tags_one"
+                                    name="server_side_tags[]"
+                                    data-allow-new="false"
+                                    data-server="/api/tags"
+                                    data-clearEnd="true"
+                                    data-allowClear="true"
+                                    width = "30%"
+                                    >
+                                    <option disabled hidden value="">Choose a tag...</option>
+                                    </select>
+                        <br>
+      
+                                    <select
+                                    class="form-select"
+                                    width = "30%"
+                                    id="reg_tags_two"
+                                    name="server_side_tags[]"
+                                    data-allow-new="false"
+                                    data-server="/api/tags"
+                                    data-clearEnd="true"
+                                    data-allowClear="true"
+                                    >
+                                    <option disabled hidden value="">Choose a tag...</option>
+                                    </select>
                         <input class="form-check-input" type="checkbox" id="log" name="log" value="true"><label for="log">Logarythmische Regression</label>
                         <input class="form-check-input" type="checkbox" id="korrelation" name="korrelation" value="true"><label for="korrelation">korrelation</label>
                      </div>

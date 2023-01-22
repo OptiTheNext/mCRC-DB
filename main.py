@@ -85,6 +85,9 @@ Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
+
+
+
 #Connecting to ghe database in case of restart or lost connections
 def connect_to_db():
     LocalRenderParameters = RenderParameters.copy()
@@ -529,12 +532,15 @@ def export_to_csv():
 @app.route("/export_statistik")
 def export_statistik_as_pdf():
     pdf = flask.session["pdf_path"]
-    
+    print(pdf)
     #output = flask.make_response(pdf)
     #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
     #output.headers["Content-type"] = "application/pdf"
     #return output
+    
     return flask.send_file(pdf, download_name = "Statistik.pdf")
+    #except Exception as e:
+     #    return flask.redirect(flask.url_for('page_4_admin'))
   
 
 
@@ -639,10 +645,11 @@ def page_4_admin():
                 table_one= False
                 #statistik.deskreptiv(flask.session.get("df"),tags)
                 print(flask.request.json)
-                tags = flask.request.json["value"]
-                print( tags)
-                print(flask.request.form.get('table_one'))
-                print("in table one")
+                tags = flask.request.json["server_tags"]
+                reg_tags_one  = flask.request.json["reg_tags_one"]
+                reg_tags_two  = flask.request.json["reg_tags_two"]
+                print("hier server tags")
+                print(tags)
                 #Sammeln von Variablen für Deskriptiv
 
                 if("table_one" in flask.request.json):
@@ -666,8 +673,8 @@ def page_4_admin():
                         grafik = False
                     print(grafik)
                     
-                
-                statistik.deskreptiv(localDF,tags,grafik,table_one,)
+                if(grafik or table_one):
+                    statistik.deskreptiv(localDF,tags,grafik,table_one,)
 
                 #Sammeln von Variablen für Normalverteilung
                 if("saphiro" in flask.request.json):
@@ -705,10 +712,18 @@ def page_4_admin():
                     if (qq == "0"):
                         qq = False
                     print(qq)
+                if("histo" in flask.request.json):
+                    histo = flask.request.json["histo"]
+                    print(grafik)
+                    if (histo == True):
+                        histo = True
+                    if (histo == "0"):
+                        histo = False
+                    print(histo)
 
                 
-                if (saphiro or kolmogorov or anderson  or qq):
-                    statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq)
+                if (saphiro or kolmogorov or anderson  or qq or histo):
+                    statistik.normalverteilung(localDF,tags,saphiro,kolmogorov,anderson,qq,histo)
 
                 #Sammeln von Variablen für Explorativ
                 if("linear" in flask.request.json):
@@ -727,9 +742,11 @@ def page_4_admin():
                     if (log == "0"):
                         log = False
                     print(log)
+                
+
 
                 if (linear or log):
-                    statistik.exploration(localDF,tags,linear,log)
+                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log)
 
                 grafik = False
                 table_one= False
@@ -741,6 +758,7 @@ def page_4_admin():
                 log = False
                 
                 pdf = statistik.generate_pdf()
+                print(pdf)
                 #flask.session["pdf_path"] = pdf
                 print(pdf)
                 flask.session["pdf_path"] = pdf

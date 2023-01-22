@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import pandas
 import numpy
 import matplotlib
+import matplotlib.pyplot
 import requests
 import string
 import json
@@ -416,11 +417,12 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
         
 
     
-def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
+def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,histo):
     #Test auf Normalverteilung und entsprechender T-Test
     for x in points_of_interest:
         if x in decimals:
             # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
+            df = pandas.DataFrame(df)
             df = df[x]
             
             df = pandas.to_numeric(df)
@@ -449,13 +451,26 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot):
                 fig.savefig(save_here) 
                 elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
                 fig.clf()
+            if(histo == True):
+                print("hier histo")
+                fig, ax = matplotlib.pyplot.subplots()
+                df.plot.kde(ax=ax, legend=False)
+                df.plot.hist(density=True, ax=ax)
+                ax.set_ylabel('Probability')
+                ax.grid(axis='y')
+                ax.set_facecolor('#d8dcd6')
+                save_here = PATH_OUT + x+".png"
+                fig.savefig(save_here) 
+                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                fig.clf()
+
 
 
 
 
     print("Wuhu, normalverteilt")
 
-def exploration(df, point_of_interest,linear, log):
+def exploration(df, points_of_interest,reg_one,reg_two,linear, log):
     #Test / Darstellung von korrellation
     df = pandas.DataFrame(df)
     print(df)
