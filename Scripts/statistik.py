@@ -19,6 +19,7 @@ import jwt
 import scipy
 from reportlab.pdfgen import canvas
 import reportlab
+from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
@@ -593,10 +594,18 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
     styles = getSampleStyleSheet()
+    #add some fowables
     path = PATH_OUT + 'Statistik-' + flask.session["username"] + ".pdf"
-    doc = SimpleDocTemplate(path)
     global elements
-    doc.build(elements)
+    c  = reportlab.pdfgen.canvas.Canvas(path)
+    f = reportlab.platypus.Frame(inch, inch, inch, inch, showBoundary=1)
+    f.addFromList([x],c)
+    
+
+    #doc = SimpleDocTemplate(path)
+    #global elements
+    #doc.buil(elements)
+    c.save()
     elements = []
     elements.append(Paragraph("Statistische Auswertung", styles['Title']))
     return (path)

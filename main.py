@@ -85,6 +85,9 @@ Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
+UPLOAD_FOLDER = './static'
+app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
+
 
 
 
@@ -988,6 +991,43 @@ def page_5():
                     return flask.render_template('site_5.html',
                                          RenderParameters = LocalRenderParameters)              
                 
+            # get the uploaded file
+            uploaded_file = flask.request.files['file']
+            if uploaded_file.filename != '':
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+                # set the file path
+                uploaded_file.save(file_path)
+                # save the file
+                csvData = pandas.read_csv(file_path, index_col= False) 
+                csvData = pandas.DataFrame(csvData)
+
+                try: 
+                    cursor= mydb.cursor()
+                    cursor.execute("SELECT * FROM mcrc_tabelle")
+                    myresult = cursor.fetchall()
+                    df = pandas.DataFrame(myresult)
+                    df.columns = Columns.d 
+  
+                except Exception as e:
+                    LocalRenderParameters["error"] = 'No connection to Database, contact Administrator'
+                    return flask.render_template('site_5.html',
+                                         RenderParameters = LocalRenderParameters)
+                                        
+                df = df.apply(pandas.to_numeric,errors= "ignore")
+                list_to_add_to_DB = []
+                print(csvData["pat_id"])
+                for x in csvData["pat_id"]:
+                    if x not in df["pat_id"].values:
+                        list_to_add_to_DB.append(x)
+
+                
+                for row in list_to_add_to_DB:
+                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)",(row,))
+
+                    mydb.commit()
+                    print("we did it")
+
+
     if ("username" in flask.session):
             if "change_pwd" in flask.request.form:
                 print("trying too change pwd")

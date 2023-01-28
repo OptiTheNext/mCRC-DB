@@ -8,7 +8,7 @@
 {% block MainContent %}
 <h3>Verwaltung</h3>
 {%if RenderParameters["Admin"] %}
-  <form action="" method="post" autocomplete="off">
+  <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
     <div class="container" style="margin-left: 0">
       <div class="row row-cols-1 row-cols-lg-3">
         <div class="col-6" style="border: 1px solid ,padding = 10p;">
@@ -74,6 +74,18 @@
             {%endif%}
           </div>
         </div>
+        <div class="col-6" style="border: 1px solid ,padding = 10p;">
+          <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+            <h3>Upload von neuen IDs</h3>
+            <hr>
+            <input class="form-control" type="file" name = "file" id="file">
+            <br>
+            <input class="btn btn-secondary" type="submit">
+          </div>
+        </div>
+        
+          
+
       </form>
         {%endif%}
         <form action="" method="post" autocomplete="off">
