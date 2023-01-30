@@ -14,12 +14,7 @@
 | `KRK_DB_MAIL_USER`    | Nutzername, auf dem besagtem Mail-Server                                                                             |
 | `KRK_DB_MAIL_SENDER`  | Email-Adresse, zugehörig dem Nutzername                                                                              |
 | `KRK_DB_MAIL_PASSWORD`| Passwort zur Email-Adresse / Nutzername                                                                              |
-
-
-KRK_DB_MAIL_SERVER
-    - KRK_DB_SENDER
-    - KRK_DB_MAIL_USER
-    - KRK_DB_MAIL_PASSWORD
+| `KRK_DB_SENDER`       | Absenderadresse für Emails
 ---
 
 SystemD service file:
@@ -48,23 +43,7 @@ sudo systemctl daemon-reload
 **Cronjobs**
 Hier einmal kurz aufgeschlüsselt, wie die Cronjobs für die Richtige Benutzung aufzusetzen sind.
 ```
-  GNU nano 4.8                                                          /tmp/crontab.wvZw7H/crontab                                                           Modified  # Edit this file to introduce tasks to be run by cron.
-#
-# Each task to run has to be defined through a single line
-# indicating with different fields when the task will be run
-# and what command to run for the task
-#
-# To define the time you can provide concrete values for
-# minute (m), hour (h), day of month (dom), month (mon),
-# and day of week (dow) or use '*' in these fields (for 'any').
-#
-# Notice that tasks will be started based on the cron's system
-# daemon's notion of time and timezones.
-#
-# Output of the crontab jobs (including errors) is sent through
-# email to the user the crontab file belongs to (unless redirected).
-
 */10 * * * * /usr/bin/python3 /path/to/delete_currently_active.py && printf "$(date -u)\n" 2>&1 >> /path/to/cron.log
 0 3 * * * /usr/bin/git -C /path/to/directory pull --rebase && /usr/bin/pip install -r path/to/requirements.txt && /usr/bin/systemctl mcrc-db.service>
-0 3 * * * /usr/bin/python3 path/to/backup_table.py
+10 3 * * * /usr/bin/python3 path/to/backup_table.py
 ```
