@@ -85,7 +85,7 @@ Session(app)
 global RenderParameters
 RenderParameters = {"Topnav":True,"startseite":True,"Admin": False}
 
-UPLOAD_FOLDER = './static'
+UPLOAD_FOLDER = './CSV_TO_IMPORT'
 app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
 
 
@@ -1026,6 +1026,10 @@ def page_5():
 
                     mydb.commit()
                     print("we did it")
+                import os
+
+                for filename in os.listdir(app.session["UPLOAD_FOLDER"]):
+                    os.remove(filename)
 
 
     if ("username" in flask.session):
