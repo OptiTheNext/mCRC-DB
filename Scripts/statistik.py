@@ -28,6 +28,7 @@ import regex
 import statsmodels.api as sm
 
 from Scripts import datenausgabe
+import copy
 
 app = flask.Flask(__name__,
                   template_folder="templates",
@@ -315,6 +316,8 @@ def table_one_func(x,loesung):
     for i,j in zip(loesung.axes[0].values.astype(str),loesung.values.astype(str)):
             lista = lista + [[i,j]]
             
+    lista.pop(0)
+    lista.pop(1)
     return lista
             
 
@@ -336,6 +339,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
     
 
     for x in points_of_interest:
+        items = []
         if x in to_drop:
             continue
             
@@ -360,11 +364,17 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
             
         print(current_df.dtype)
         if(table_one):
+            table_list = []
             result = current_df.describe()
             table = table_one_func(x,result)
+            title = x
+            headline = reportlab.platypus.Paragraph(title)
+            table_list.append(headline)
             table = Table(table)
+            table_list.append(table)
             global elements
-            elements.append(table)
+            table_item =reportlab.platypus.KeepTogether(table_list)
+            items.append(table_item)
         if(grafik):
             print("ich bin unter if grafik")
             print(x)
@@ -383,7 +393,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)
                 
-                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm,hAlign='RIGHT'))
                 print(make_autopct((values)))
                 fig.clf()
                 values = None
@@ -396,7 +406,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 fig = pie.get_figure()
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)  
-                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
                 fig.clf()
 
             if x  in categorials:
@@ -408,10 +418,12 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 fig = pie.get_figure()
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)  
-                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
                 fig.clf()
-
-        
+        item = reportlab.platypus.KeepTogether(items)
+        print("hier item")
+        print(item)
+        elements.append(item)
 
         #for objects here Kuchendiagramm
         #here we add it into the PDF
@@ -586,6 +598,44 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
         lista = ([x," :Korrelation nach Pearson"],["Korrelationskoeffizent",result[0]],["P-Wert",result[1]])
         table = Table(lista)
         elements.append(table)
+    
+    if log:
+        print("logistische Regression")
+        
+        #Now we check the first variable and then set it
+        global constans
+        constans = []
+        global bool_values
+        bool_values = []
+
+        def check_variable(variable):
+            global bool_values
+            global constans
+            if len(bool_values) == 0:
+                if variable in booleans:
+                    bool_values = df[reg_one]
+                    bool_values = pandas.get_dummies(bool_values,drop_first= True)
+            if len(constans)==0:
+                if variable in decimals:
+                    constans = df[reg_one]
+                    constans = pandas.to_numeric(constans)
+                    constans.dropna(inplace = True)
+
+
+        check_variable(reg_one)
+        check_variable(reg_two)
+        try:
+            x = sm.add_constant(constans)
+            model = sm.Logit(bool_values, constans)
+            result = model.fit(method='newton')
+            print("hier results:")
+            print(result.summary())
+        except Exception as e:
+            print("hier fehler von log")
+            print (e)
+
+        
+
 
 
     print("wuhu, explorativ")
@@ -593,21 +643,68 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
 
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
-    styles = getSampleStyleSheet()
+    style = getSampleStyleSheet()
+    global elements
+    #title page styles
+    titleStyle = style["Title"]
+    titleStyle.fontSize=18
+    titleStyle.leading = titleStyle.fontSize*1.1
+
+
+
+    #now create the title page
+    title = "Statistische Auswertung"
+    elements.insert(0,reportlab.platypus.Paragraph(title, titleStyle))
+    #done with the title info, move to the next frame and queue up the later page template
+    elements.insert(1,reportlab.platypus.FrameBreak())
+    elements.insert(2,reportlab.platypus.NextPageTemplate("laterPages"))
+
+
+    
     #add some fowables
     path = PATH_OUT + 'Statistik-' + flask.session["username"] + ".pdf"
-    global elements
-    c  = reportlab.pdfgen.canvas.Canvas(path)
-    f = reportlab.platypus.Frame(inch, inch, inch, inch, showBoundary=1)
-    f.addFromList([x],c)
+    #global elements
+    #c  = reportlab.pdfgen.canvas.Canvas(path)
+    #f = reportlab.platypus.Frame(12*inch, 12*inch,12* inch,12* inch, showBoundary=1)
+    #for x in elements:
+        #f.addFromList([x,],c)
     
 
-    #doc = SimpleDocTemplate(path)
-    #global elements
-    #doc.buil(elements)
-    c.save()
+    ##doc = SimpleDocTemplate(path)
+    
+    ##doc.build(elements)
+    #c.save()
+
+    document = reportlab.platypus.BaseDocTemplate(path, pagesize=reportlab.lib.pagesizes.letter)
+    frameCount = 2
+    frameWidth = document.width/frameCount
+    frameHeight = document.height-.05*inch
+    frames = []
+
+    firstPageHeight = 3*inch
+    firstPageBottom = frameHeight-firstPageHeight
+    framesFirstPage = []
+    titleFrame = reportlab.platypus.Frame(document.leftMargin, firstPageBottom, document.width, firstPageHeight)
+    framesFirstPage.append(titleFrame)
+
+    firstPageColumn = reportlab.platypus.Frame(document.leftMargin, document.bottomMargin, frameWidth, firstPageBottom)
+    framesFirstPage.append(firstPageColumn)
+
+    #construct a frame for each column
+    for frame in range(frameCount):
+        leftMargin = document.leftMargin + frame*frameWidth
+        column = reportlab.platypus.Frame(leftMargin, document.bottomMargin, frameWidth, frameHeight)
+        frames.append(column)
+
+
+    templates = []
+    templates.append(reportlab.platypus.PageTemplate(frames=framesFirstPage, id="firstPage"))
+    templates.append(reportlab.platypus.PageTemplate(frames=frames, id="laterPages"))
+    document.addPageTemplates(templates)
+
+    document.build(elements)
     elements = []
-    elements.append(Paragraph("Statistische Auswertung", styles['Title']))
+    #elements.append(Paragraph("Statistische Auswertung", styles['Title'], fontsize=18, hAlign = "TOP" ))
     return (path)
 
 

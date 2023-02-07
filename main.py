@@ -622,6 +622,7 @@ def page_4():
 @app.route("/datenanalyse_admin", methods = ["POST","GET"])
 def page_4_admin():
     if ("username" in flask.session and flask.session.get("Admin") == 1):
+
         LocalRenderParameters = RenderParameters.copy()
         if(flask.session.get("df")):
             localDF = flask.session.get("df")
@@ -631,6 +632,7 @@ def page_4_admin():
                 cursor= mydb.cursor()
                 cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel")
                 localDF= cursor.fetchall()
+                print("got the entire dataframe")
             except Exception as e:
                 LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
                 LocalRenderParameters["error-text"] = e
