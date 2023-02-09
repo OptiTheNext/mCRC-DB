@@ -27,6 +27,9 @@ import regex
 
 import statsmodels.api as sm
 
+
+
+
 from Scripts import datenausgabe
 import copy
 
@@ -684,7 +687,7 @@ def generate_pdf():
     firstPageHeight = 3*inch
     firstPageBottom = frameHeight-firstPageHeight
     framesFirstPage = []
-    titleFrame = reportlab.platypus.Frame(document.leftMargin, firstPageBottom, document.width, firstPageHeight)
+    titleFrame = reportlab.platypus.Frame(document.leftMargin, firstPageBottom, document.width,  )
     framesFirstPage.append(titleFrame)
 
     firstPageColumn = reportlab.platypus.Frame(document.leftMargin, document.bottomMargin, frameWidth, firstPageBottom)
