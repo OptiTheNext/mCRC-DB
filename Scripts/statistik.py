@@ -25,6 +25,11 @@ from reportlab.platypus import *
 from reportlab.lib import colors
 import regex
 
+import jinja2
+import codecs
+
+
+
 import statsmodels.api as sm
 
 
@@ -32,6 +37,11 @@ import statsmodels.api as sm
 
 from Scripts import datenausgabe
 import copy
+
+
+
+
+
 
 app = flask.Flask(__name__,
                   template_folder="templates",
@@ -49,9 +59,24 @@ app.config["JWT_SECRET_KEY"]= os.environ.get("KRK_APP_SECRET_KEY")
 Session(app)
 
 PATH_OUT="./Calculated_Statistic/"
-styles = getSampleStyleSheet()
+
+latex_jinja_env = jinja2.Environment(
+    block_start_string='\BLOCK{',
+    block_end_string='}',
+    variable_start_string='\VAR{',
+    variable_end_string='}',
+    comment_start_string='\#{',
+    comment_end_string='}',
+    line_statement_prefix='%-',
+    line_comment_prefix='%#',
+    trim_blocks=True,
+    autoescape=False,
+    loader=jinja2.FileSystemLoader(os.path.abspath("."))
+)
+
+template = latex_jinja_env.get_template("stat_template.tex")
+
 elements = []
-elements.append(Paragraph("Statistische Auswertung", styles['Title']))
 
 labor_verlauf_liste = []
 
@@ -313,14 +338,24 @@ labor_werte = [
 
 global result
 
-def table_one_func(x,loesung):
+def build_dict(datatype, data):
+    global elements
+    if datatype not in ["Image","Table"]:
+        raise ValueError("Datatype didn't match Image or Table")
+    elements.append({"type":datatype,"data":data})
+
+
+def table_one_func(x,loesung): #Formatiert result output in liste
     lista = [[x]]
     print(loesung.values)
     for i,j in zip(loesung.axes[0].values.astype(str),loesung.values.astype(str)):
+            i = i.replace("%","\\%")
+            j = j.replace("%", "\\%")
             lista = lista + [[i,j]]
-            
-    lista.pop(0)
-    lista.pop(1)
+    
+    x = x.replace("_","-")
+    lista[0]= [x,"..."]
+    
     return lista
             
 
@@ -367,17 +402,10 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
             
         print(current_df.dtype)
         if(table_one):
-            table_list = []
             result = current_df.describe()
-            table = table_one_func(x,result)
-            title = x
-            headline = reportlab.platypus.Paragraph(title)
-            table_list.append(headline)
-            table = Table(table)
-            table_list.append(table)
-            global elements
-            table_item =reportlab.platypus.KeepTogether(table_list)
-            items.append(table_item)
+            table = table_one_func(x,result) #table is ne liste
+            build_dict("Table", table)
+
         if(grafik):
             print("ich bin unter if grafik")
             print(x)
@@ -395,9 +423,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 fig = pie.get_figure()
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)
-                
-                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm,hAlign='RIGHT'))
-                print(make_autopct((values)))
+                build_dict("Image", x+".png")
                 fig.clf()
                 values = None
                 series2 = None
@@ -409,7 +435,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 fig = pie.get_figure()
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)  
-                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                build_dict("Image", x+".png")
                 fig.clf()
 
             if x  in categorials:
@@ -421,15 +447,9 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 fig = pie.get_figure()
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here)  
-                items.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                build_dict("Image", save_here)
                 fig.clf()
-        item = reportlab.platypus.KeepTogether(items)
-        print("hier item")
-        print(item)
-        elements.append(item)
-
-        #for objects here Kuchendiagramm
-        #here we add it into the PDF
+        
         
 
     
@@ -449,23 +469,23 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
                 result = scipy.stats.shapiro(df)
                 lista = ([x," :Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 table = Table(lista)
-                elements.append(table)
+                build_dict("Table", table)
             if(kolmogorov == True):
                 result = scipy.stats.kstest(df,'norm')
                 lista = ([x," :Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 table = Table(lista)
-                elements.append(table)
+                build_dict("Table", table)
             print("anderson")
             if(anderson == True):
                 result=scipy.stats.anderson(df)
                 lista = ([x," :Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
                 table = Table(lista)
-                elements.append(table)
+                build_dict("Table", table)
             if(qqplot == True):
                 fig = sm.qqplot(df, line='45',xlabel='Zu erwartende Werte',ylabel=x)
                 save_here = PATH_OUT + x +".png"
                 fig.savefig(save_here) 
-                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                build_dict("Image", x+".png")
                 fig.clf()
             if(histo == True):
                 print("hier histo")
@@ -477,7 +497,7 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
                 ax.set_facecolor('#d8dcd6')
                 save_here = PATH_OUT + x+".png"
                 fig.savefig(save_here) 
-                elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+                build_dict("Image", x+".png")
                 fig.clf()
 
 
@@ -569,15 +589,13 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
             result = df3.describe()
 
             listb = table_one_func(x,result)
-            table = Table(listb)
-            global elements
-            elements.append(table)
+            build_dict("Table", listb)
             #Hier Boxplot
             pie = df3.plot.box(figsize=(8, 8))
             fig = pie.get_figure()
             save_here = PATH_OUT + x+".png"
             fig.savefig(save_here)  
-            elements.append(Image(save_here,width=8*reportlab.lib.units.cm, height=8*reportlab.lib.units.cm))
+            build_dict("Image", x+".png")
             fig.clf()
 
             print(df2)
@@ -599,8 +617,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
         result = scipy.stats.stats.pearsonr(var1,var2)
         x = reg_one + " und " + reg_two
         lista = ([x," :Korrelation nach Pearson"],["Korrelationskoeffizent",result[0]],["P-Wert",result[1]])
-        table = Table(lista)
-        elements.append(table)
+        build_dict("Table", lista)
     
     if log:
         print("logistische Regression")
@@ -646,87 +663,25 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
 
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
-    style = getSampleStyleSheet()
     global elements
-    #title page styles
-    titleStyle = style["Title"]
-    titleStyle.fontSize=18
-    titleStyle.leading = titleStyle.fontSize*1.1
+    tuple_list = [tuple(elements[i:i+2]) for i in range(0, len(elements), 2)]
 
+    # Dokument schreiben
+    currentdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+    dokument = template.render(date_generated=currentdate, tuple_list=tuple_list)
+    name = PATH_OUT + "Statistik-" + flask.session["username"] 
+    with codecs.open(name + ".tex", "w", "utf-8") as outputTex:
+        outputTex.write(dokument)
+        outputTex.close()
 
+    # PDF rendern mit tectonic (https://tectonic-typesetting.github.io/), muss installiert und im PATH sein
 
-    #now create the title page
-    title = "Statistische Auswertung"
-    elements.insert(0,reportlab.platypus.Paragraph(title, titleStyle))
-    #done with the title info, move to the next frame and queue up the later page template
-    elements.insert(1,reportlab.platypus.FrameBreak())
-    elements.insert(2,reportlab.platypus.NextPageTemplate("laterPages"))
-
-
+    os.system("./tectonic -X compile " + name +".tex")  
     
-    #add some fowables
-    path = PATH_OUT + 'Statistik-' + flask.session["username"] + ".pdf"
-    #global elements
-    #c  = reportlab.pdfgen.canvas.Canvas(path)
-    #f = reportlab.platypus.Frame(12*inch, 12*inch,12* inch,12* inch, showBoundary=1)
-    #for x in elements:
-        #f.addFromList([x,],c)
-    
-
-    ##doc = SimpleDocTemplate(path)
-    
-    ##doc.build(elements)
-    #c.save()
-
-    document = reportlab.platypus.BaseDocTemplate(path, pagesize=reportlab.lib.pagesizes.letter)
-    frameCount = 2
-    frameWidth = document.width/frameCount
-    frameHeight = document.height-.05*inch
-    frames = []
-
-    firstPageHeight = 3*inch
-    firstPageBottom = frameHeight-firstPageHeight
-    framesFirstPage = []
-    titleFrame = reportlab.platypus.Frame(document.leftMargin, firstPageBottom, document.width,  )
-    framesFirstPage.append(titleFrame)
-
-    firstPageColumn = reportlab.platypus.Frame(document.leftMargin, document.bottomMargin, frameWidth, firstPageBottom)
-    framesFirstPage.append(firstPageColumn)
-
-    #construct a frame for each column
-    for frame in range(frameCount):
-        leftMargin = document.leftMargin + frame*frameWidth
-        column = reportlab.platypus.Frame(leftMargin, document.bottomMargin, frameWidth, frameHeight)
-        frames.append(column)
+    return (name+".pdf")
 
 
-    templates = []
-    templates.append(reportlab.platypus.PageTemplate(frames=framesFirstPage, id="firstPage"))
-    templates.append(reportlab.platypus.PageTemplate(frames=frames, id="laterPages"))
-    document.addPageTemplates(templates)
-
-    document.build(elements)
-    elements = []
-    #elements.append(Paragraph("Statistische Auswertung", styles['Title'], fontsize=18, hAlign = "TOP" ))
-    return (path)
 
 
-## Statistik hier nach Neustart
-
-df = datenausgabe.Analyse({})
-df.replace('', numpy.nan, inplace=True)
-
-
-#Zeilen die nicht ANALysiert werden sollen
-
-
-##for x in Columns.d:
-   
-    
-    # Deskriptive Statistik
-    
-    #Path = "/workspace/template-python-flask/Calculated_Descriptiv/" + x +".csv"
-    
-    #result.to_csv(Path)  
 
 

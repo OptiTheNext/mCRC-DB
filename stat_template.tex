@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[
+    Extension = .otf,
+    UprightFont = *-regular,
+    BoldFont = *-bold,
+    ItalicFont = *-italic,
+    BoldItalicFont = *-bolditalic,
+]
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{babel}
+\usepackage{graphicx,dashrule}
+\usepackage{csquotes}
+\usepackage{paralist}
+\usepackage{mdframed}
+\usepackage{wasysym}
+\usepackage{tabu}
+\usepackage{longtable}
+
+\newcommand{\VAR}[1]{#1}
+\newcommand{\BLOCK}[1]{#1}
+
+\usepackage{xcolor}
+\usepackage[a4paper,left=2cm,right=2cm,top=1cm,bottom=1cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+
+\mdfdefinestyle{MyFormStyle}{%
+    linewidth=1pt,
+    skipbelow=\topskip,
+    skipabove=\topskip
+}
+
+\newcommand{\MyForm}[2][1.0cm]{%
+    \begin{mdframed}[style=MyFormStyle]%
+    {\noindent\footnotesize#2}
+        \vspace{#1}%
+    \end{mdframed}%
+}
+
+\newcommand{\MyFormBox}[3][1.0cm]{%
+    \begin{mdframed}[style=MyFormStyle]%
+    {\noindent\footnotesize#2 \vspace*{1em} \par\normalsize #3}
+        \vspace*{#1}%
+    \end{mdframed}%
+}
+
+%\graphicspath{./Calculated_Statistic}
+
+% Document metadata
+\title{Statistische Auswertung}
+\author{Automatisch Generiert}
+\date{\VAR{date_generated}}
+
+\begin{document}
+
+% Dokumententitel und Datum generieren
+    \maketitle
+
+    \par\noindent\rule{\textwidth}{0.4pt}
+
+    %\MyFormBox[0.0cm]{Aussteller (Bezeichnung und Anschrift der steuerbegünstigten Einrichtung)}{<Name>}
+
+
+
+
+   % \begin{longtabu}{|[0pt]p{0.5\textwidth}|[0pt]p{0.5\textwidth}|[0pt]}
+    \begin{longtabu}{|X{0.5\textwidth}|X{0.5\textwidth}|}
+        \tabucline[1pt]{-}
+        \BLOCK{for tup in tuple_list}
+            \BLOCK{if tup[0] and tup[0].type == "Image"}
+                \includegraphics[width=\linewidth]{\VAR{tup[0].data}} \\
+            \BLOCK{elif tup[0] and tup[0].type == "Table"}
+                \begin{tabu}{|[0pt]p{0.25\textwidth}|[1pt]p{0.25\textwidth}|[0pt]}
+                    \tabucline[1pt]{-}
+                    \BLOCK{for list_element in tup[0].data}
+                        \VAR{list_element[0]} & \VAR{list_element[1]} \\
+                        \tabucline[1pt]{-}
+                    \BLOCK{endfor}
+                \end{tabu}     
+            \BLOCK{else}
+                EMPTYBLOCK
+            \BLOCK{endif} &
+            \BLOCK{if tup[1] and tup[1].type == "Image"}
+                \includegraphics[width=\linewidth]{\VAR{tup[1].data}} \\
+            \BLOCK{elif tup[1] and tup[1].type == "Table"}
+                \begin{tabu}{|[1pt]p{0.25\textwidth}|[1pt]p{0.25\textwidth}|[1pt]}
+                    \tabucline[1pt]{-}
+                    \BLOCK{for list_element in tup[1].data}
+                        \VAR{list_element[0]} & \VAR{list_element[1]} \\
+                        \tabucline[1pt]{-}
+                    \BLOCK{endfor}
+                \end{tabu}
+            \BLOCK{else}
+                EMPTYBLOCK
+            \BLOCK{endif}
+        %    \tabucline[0pt]{-}
+        \tabucline[1pt]{-}
+        \BLOCK{endfor}
+        % \vspace*{1em} & & \\
+        
+    \end{longtabu}
+
+
+\end{document}
