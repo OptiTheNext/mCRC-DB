@@ -534,6 +534,7 @@ def export_to_csv():
 
 @app.route("/export_statistik")
 def export_statistik_as_pdf():
+
     pdf = flask.session["pdf_path"]
     print(pdf)
     #output = flask.make_response(pdf)
@@ -646,10 +647,12 @@ def page_4_admin():
                 print("hi")
         if flask.request.method == "POST":
             if flask.request.json:
+                flask.session["elements"] = []
                 grafik = False
                 table_one= False
                 #statistik.deskreptiv(flask.session.get("df"),tags)
                 print(flask.request.json)
+                flask.session["pdf_completed"] = False
                 tags = flask.request.json["server_tags"]
                 reg_tags_one  = flask.request.json["reg_tags_one"]
                 reg_tags_two  = flask.request.json["reg_tags_two"]
@@ -679,7 +682,7 @@ def page_4_admin():
                     print(grafik)
                     
                 if(grafik or table_one):
-                    statistik.deskreptiv(localDF,tags,grafik,table_one,)
+                    statistik.deskreptiv(localDF,tags,grafik,table_one)
 
                 #Sammeln von Variablen für Normalverteilung
                 if("saphiro" in flask.request.json):
@@ -739,14 +742,6 @@ def page_4_admin():
                     if (linear == "0"):
                         linear = False
                     print(linear)
-                if("log" in flask.request.json):
-                    log = flask.request.json["log"]
-                    print(grafik)
-                    if (log == True):
-                        log = True
-                    if (log == "0"):
-                        log = False
-                    print(log)
                 if("korrelation" in flask.request.json):
                     korrelation = flask.request.json["korrelation"]
                     print(grafik)
@@ -754,12 +749,47 @@ def page_4_admin():
                         korrelation = True
                     if (korrelation == "0"):
                         korrelation = False
-                    print(log)
+                   
+                if("ttest_v" in flask.request.json):
+                    ttest_v = flask.request.json["ttest_v"]
+                    print(grafik)
+                    if (ttest_v == True):
+                        ttest_v = True
+                    if (ttest_v == "0"):
+                        ttest_v = False
+                    print(ttest_v)
+                if("ttest_unv" in flask.request.json):
+                    ttest_unv = flask.request.json["ttest_unv"]
+                    print(grafik)
+                    if (ttest_unv == True):
+                        ttest_unv = True
+                    if (ttest_unv == "0"):
+                        ttest_unv = False
+                    print(ttest_unv)
+                if("utest" in flask.request.json):
+                    utest = flask.request.json["utest"]
+                    print(grafik)
+                    if (utest == True):
+                        utest = True
+                    if (utest == "0"):
+                        utest = False
+                    print(utest)
+                if("will" in flask.request.json):
+                    will = flask.request.json["will"]
+                    print(grafik)
+                    if (will == True):
+                        will = True
+                    if (will == "0"):
+                        will = False
+                    print(will)
+                
                 
 
 
-                if (linear or log or korrelation):
-                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log,korrelation)
+                if (linear or korrelation or ttest_v or ttest_unv or utest or will):
+                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log,korrelation,ttest_v,ttest_unv,utest,will)
+                
+                
 
                 grafik = False
                 table_one= False
@@ -775,6 +805,7 @@ def page_4_admin():
                 #flask.session["pdf_path"] = pdf
                 print(pdf)
                 flask.session["pdf_path"] = pdf
+                flask.session["pdf_completed"] = True
                 return flask.redirect(flask.url_for("export_statistik_as_pdf"))
             
         return flask.render_template('site_4_admin.html',

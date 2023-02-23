@@ -28,12 +28,7 @@ import regex
 import jinja2
 import codecs
 
-
-
 import statsmodels.api as sm
-
-
-
 
 from Scripts import datenausgabe
 import copy
@@ -76,7 +71,7 @@ latex_jinja_env = jinja2.Environment(
 
 template = latex_jinja_env.get_template("stat_template.tex")
 
-elements = []
+
 
 labor_verlauf_liste = []
 
@@ -102,9 +97,6 @@ to_drop = ["Kuerzel",
 booleans = [
 "alcohol",
 "pve",
-"RAS",
-"BRAF",
-"MSS",
 "crlm_bilobular",
 "multimodal",
 "two_staged",
@@ -339,10 +331,10 @@ labor_werte = [
 global result
 
 def build_dict(datatype, data):
-    global elements
+    
     if datatype not in ["Image","Table"]:
         raise ValueError("Datatype didn't match Image or Table")
-    elements.append({"type":datatype,"data":data})
+    flask.session["elements"].append({"type":datatype,"data":data})
 
 
 def table_one_func(x,loesung): #Formatiert result output in liste
@@ -421,9 +413,9 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                     name=current_name +"("+ str(sum(values))+")")
                 pie = series2.plot.pie(figsize=(6, 6),autopct=make_autopct(values))
                 fig = pie.get_figure()
-                save_here = PATH_OUT + x+".png"
+                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_kuchen.png"
                 fig.savefig(save_here)
-                build_dict("Image", x+".png")
+                build_dict("Image", flask.session["username"] +"_"+ x+"_kuchen.png")
                 fig.clf()
                 values = None
                 series2 = None
@@ -433,9 +425,9 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 print("made an boxplot") 
                 pie = current_df.plot.box(figsize=(6, 6))
                 fig = pie.get_figure()
-                save_here = PATH_OUT + x+".png"
+                save_here = PATH_OUT +flask.session["username"] +"_"+ x+"_box.png"
                 fig.savefig(save_here)  
-                build_dict("Image", x+".png")
+                build_dict("Image", flask.session["username"] +"_"+ x+"_box.png")
                 fig.clf()
 
             if x  in categorials:
@@ -445,9 +437,9 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 print(current_df)
                 pie = current_df.plot.bar(figsize = (6,6))
                 fig = pie.get_figure()
-                save_here = PATH_OUT + x+".png"
+                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_balken.png"
                 fig.savefig(save_here)  
-                build_dict("Image", save_here)
+                build_dict("Image",  flask.session["username"] +"_"+ x+"_balken.png")
                 fig.clf()
         
         
@@ -467,47 +459,53 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
             
             if(saphiro == True):
                 result = scipy.stats.shapiro(df)
-                lista = ([x," :Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
-                table = Table(lista)
+                table = ([x," :Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 build_dict("Table", table)
             if(kolmogorov == True):
                 result = scipy.stats.kstest(df,'norm')
-                lista = ([x," :Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
-                table = Table(lista)
+                table = ([x," :Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
                 build_dict("Table", table)
             print("anderson")
             if(anderson == True):
                 result=scipy.stats.anderson(df)
-                lista = ([x," :Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
-                table = Table(lista)
+                table = ([x," :Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
                 build_dict("Table", table)
             if(qqplot == True):
-                fig = sm.qqplot(df, line='45',xlabel='Zu erwartende Werte',ylabel=x)
+                fig = sm.qqplot(df, line='45',xlabel='Zu erwartende Werte',ylabel=x,figsize = (6,6))
                 save_here = PATH_OUT + x +".png"
                 fig.savefig(save_here) 
-                build_dict("Image", x+".png")
+                build_dict("Image", x+"_qqplot.png")
                 fig.clf()
             if(histo == True):
                 print("hier histo")
                 fig, ax = matplotlib.pyplot.subplots()
                 df.plot.kde(ax=ax, legend=False)
-                df.plot.hist(density=True, ax=ax)
+                df.plot.hist(density=True, ax=ax,figsize = (6,6))
                 ax.set_ylabel('Probability')
                 ax.grid(axis='y')
                 ax.set_facecolor('#d8dcd6')
-                save_here = PATH_OUT + x+".png"
+                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_histo.png"
                 fig.savefig(save_here) 
-                build_dict("Image", x+".png")
+                build_dict("Image", flask.session["username"] +"_"+ x+"_histo.png")
                 fig.clf()
-
-
-
-
 
     print("Wuhu, normalverteilt")
 
-def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
+def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,ttest_v,ttest_unv,utest,will):
     #Test / Darstellung von korrellation
+    def check_variable(variable):
+            global bool_values
+            global constans
+            if len(bool_values) == 0:
+                if variable in booleans:
+                    bool_values = df[reg_one]
+                    bool_values = pandas.get_dummies(bool_values,drop_first= True)
+            if len(constans)==0:
+                if variable in decimals:
+                    constans = df[reg_one]
+                    constans = pandas.to_numeric(constans)
+                    constans.dropna(inplace = True)
+                    
     df = pandas.DataFrame(df)
     print(df)
     print("der eingegebene dataframe")
@@ -628,18 +626,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
         global bool_values
         bool_values = []
 
-        def check_variable(variable):
-            global bool_values
-            global constans
-            if len(bool_values) == 0:
-                if variable in booleans:
-                    bool_values = df[reg_one]
-                    bool_values = pandas.get_dummies(bool_values,drop_first= True)
-            if len(constans)==0:
-                if variable in decimals:
-                    constans = df[reg_one]
-                    constans = pandas.to_numeric(constans)
-                    constans.dropna(inplace = True)
+        
 
 
         check_variable(reg_one)
@@ -649,7 +636,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
             model = sm.Logit(bool_values, constans)
             result = model.fit(method='newton')
             print("hier results:")
-            print(result.summary())
+            print(result)
         except Exception as e:
             print("hier fehler von log")
             print (e)
@@ -661,11 +648,12 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation):
     print("wuhu, explorativ")
 
 
+
+    print("help")
+
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
-    global elements
-    tuple_list = [tuple(elements[i:i+2]) for i in range(0, len(elements), 2)]
-
+    tuple_list = [tuple(flask.session["elements"][i:i+2]) for i in range(0, len(flask.session["elements"]), 2)]
     # Dokument schreiben
     currentdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     dokument = template.render(date_generated=currentdate, tuple_list=tuple_list)
@@ -673,11 +661,12 @@ def generate_pdf():
     with codecs.open(name + ".tex", "w", "utf-8") as outputTex:
         outputTex.write(dokument)
         outputTex.close()
+    print(tuple_list)
 
     # PDF rendern mit tectonic (https://tectonic-typesetting.github.io/), muss installiert und im PATH sein
 
     os.system("./tectonic -X compile " + name +".tex")  
-    
+    tuple_list = []
     return (name+".pdf")
 
 

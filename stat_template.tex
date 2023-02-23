@@ -17,6 +17,8 @@
 \usepackage{wasysym}
 \usepackage{tabu}
 \usepackage{longtable}
+\usepackage{makecell}
+\usepackage{array}  
 
 \newcommand{\VAR}[1]{#1}
 \newcommand{\BLOCK}[1]{#1}
@@ -64,40 +66,50 @@
     %\MyFormBox[0.0cm]{Aussteller (Bezeichnung und Anschrift der steuerbegünstigten Einrichtung)}{<Name>}
 
 
-
-
+    \BLOCK{if tuple_list|length == 0}
+    \begin{center} Ups, ich glaube, du hast das was vergessen... \end{center}
+    \BLOCK{endif}
    % \begin{longtabu}{|[0pt]p{0.5\textwidth}|[0pt]p{0.5\textwidth}|[0pt]}
-    \begin{longtabu}{|X{0.5\textwidth}|X{0.5\textwidth}|}
-        \tabucline[1pt]{-}
+    \begin{longtabu}{|m{0.5\textwidth}|m{0.5\textwidth}|}
+       % \tabucline[1pt]{-}
+
         \BLOCK{for tup in tuple_list}
             \BLOCK{if tup[0] and tup[0].type == "Image"}
-                \includegraphics[width=\linewidth]{\VAR{tup[0].data}} \\
+                \includegraphics[width=\linewidth]{\VAR{tup[0].data}} 
             \BLOCK{elif tup[0] and tup[0].type == "Table"}
-                \begin{tabu}{|[0pt]p{0.25\textwidth}|[1pt]p{0.25\textwidth}|[0pt]}
-                    \tabucline[1pt]{-}
+                
+                %\begin{tabu}{|[0pt]p{|p{5cm}}|[1pt]p{|p{5cm}}|[0pt]}
+                 %   \tabucline[1pt]{-}
+                 \parbox{2cm}{
                     \BLOCK{for list_element in tup[0].data}
-                        \VAR{list_element[0]} & \VAR{list_element[1]} \\
-                        \tabucline[1pt]{-}
+                    
+                        \VAR{list_element[0]} : \VAR{list_element[1]} 
+
+                        %\tabucline[1pt]{-}
                     \BLOCK{endfor}
-                \end{tabu}     
+                 }
+                %\end{tabu}     
             \BLOCK{else}
-                EMPTYBLOCK
+                
             \BLOCK{endif} &
             \BLOCK{if tup[1] and tup[1].type == "Image"}
                 \includegraphics[width=\linewidth]{\VAR{tup[1].data}} \\
             \BLOCK{elif tup[1] and tup[1].type == "Table"}
-                \begin{tabu}{|[1pt]p{0.25\textwidth}|[1pt]p{0.25\textwidth}|[1pt]}
-                    \tabucline[1pt]{-}
+               
+                %\begin{tabu}{|[1pt]p{|p{5cm}}|[1pt]p{|p{5cm}}|[1pt]}
+                 %   \tabucline[1pt]{-}
+                 \parbox{2cm}{
                     \BLOCK{for list_element in tup[1].data}
-                        \VAR{list_element[0]} & \VAR{list_element[1]} \\
-                        \tabucline[1pt]{-}
+                        \VAR{list_element[0]} : \VAR{list_element[1]} \\
+                    %    \tabucline[1pt]{-}
                     \BLOCK{endfor}
-                \end{tabu}
+                 }
+               % \end{tabu}
             \BLOCK{else}
-                EMPTYBLOCK
+               
             \BLOCK{endif}
         %    \tabucline[0pt]{-}
-        \tabucline[1pt]{-}
+        %\tabucline[1pt]{-}
         \BLOCK{endfor}
         % \vspace*{1em} & & \\
         

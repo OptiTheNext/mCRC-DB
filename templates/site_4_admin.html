@@ -26,8 +26,19 @@ Lol, hier steht was was keiner lesen kann
 
 
 <script>
+async function send_and_deactivate(){
+
+   $("#Start_Thinking").prop("disabled",true);
+  //aktiviere spinner
+  $("#Start_Thinking").empty()
+   $("#Start_Thinking").append("Loading")
+  $("#Start_Thinking").append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>')
+   console.log("WE DID IT MOTHERFUCKER")
+   await submitTags();
+}
 function submitTags(){
   // getting the element's value
+  //deaktiviere knopf
   let table_one = $("#table_one").is(':checked');
   let grafik_deskriptiv = $("#grafik_deskriptiv").is(':checked');
   let saphiro = $("#saphiro").is(':checked');
@@ -41,6 +52,11 @@ function submitTags(){
   let reg_tags_one = $("#reg_tags_one").val()
   let reg_tags_two = $("#reg_tags_two").val()
   let histo = $("#histo").is(':checked');
+  let ttest_v = $("#ttest_v").is(':checked');
+  let ttest_unv = $("#ttest_unv").is(':checked');
+  let utest = $("#utest").is(':checked');
+  let will = $("#will").is(':checked');
+
   
   
   console.log($("#serverSideTags").val());
@@ -50,16 +66,25 @@ function submitTags(){
   xhr.send(JSON.stringify({
     "server_tags":server_tags,"reg_tags_one":reg_tags_one,"reg_tags_two":reg_tags_two,"table_one": table_one,
     "grafik_deskriptiv": grafik_deskriptiv, "saphiro":saphiro,"kolmogorov":kolmogorov,
-    "anderson":anderson,"qq":qq , "linear":linear,"log":log, "korrelation":korrelation, "histo":histo
+    "anderson":anderson,"qq":qq , "linear":linear, "korrelation":korrelation, "histo":histo, "ttest_v":ttest_v,"ttest_unv":ttest_unv,
+    "utest":utest,"will":will
   }));
   xhr.onreadystatechange = function(){
     if (xhr.readyState !== 4) return;
+    console.log(xhr.readyState)  
     if (xhr.status !== 200 && xhr.status !== 304) {
         alert('HTTP error ' + req.status);
-    }}
-    console.log(xhr.responseText);//this is your response
-    window.sessionStorage['response'] = xhr.responseText;
+    }
+    //window.sessionStorage['response'] = xhr.responseText;
+    $("#Start_Thinking").attr("disabled",false);
+   //deaktiviere spinner
+   $("#Start_Thinking").empty()
+   $("#Start_Thinking").append("STATISTIK!")
     window.open('export_statistik');//The data is accessible through sessionStorage.
+    console.log("ich öffne...")
+    //aktiviere knopf
+   }
+   
 }
 </script>
 {% if RenderParameters["df"] %}
@@ -100,7 +125,7 @@ function submitTags(){
                <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light" aria-labelledby="flush-headingTwo-limax2" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                      <div class="form-group">
-                      <input class="form-check-input" type="checkbox" id="saphiro" name="saphiro" value="Hurensohn"><label for="saphiro">Saphiro Wilkoson Test</label> 
+                      <input class="form-check-input" type="checkbox" id="saphiro" name="saphiro" value="Hurensohn"><label for="saphiro">Saphiro Wilkoson Test auf Normalverteilung</label> 
                       <input class="form-check-input" type="checkbox" id="kolmogorov" name="kolmogorov" value="true"><label for="kolmogorov">Kolmogorov-Smirnov Test</label> 
                       <input class="form-check-input" type="checkbox" id="anderson" name="anderson" value="true"><label for="anderson">Anderson Test</label>
                       <input class="form-check-input" type="checkbox" id="qq" name="qq" value="true"><label for="qq">Q-Q Plot</label>
@@ -147,9 +172,12 @@ function submitTags(){
                                     data-allowClear="true"
                                     >
                                     <option disabled hidden value="">Choose a tag...</option>
-                                    </select>
-                        <input class="form-check-input" type="checkbox" id="log" name="log" value="true"><label for="log" data-toggle="tooltip" data-placement="right" title="Please select a Boolean and a Number" animation="true" html="true">Logistische Regression</label>
+                                 </select>
                         <input class="form-check-input" type="checkbox" id="korrelation" name="korrelation" value="true"><label for="korrelation">korrelations Koeffizent</label>
+                        <input class="form-check-input" type="checkbox" id="ttest_v" name="ttest_v" value="true"><label for="ttest_v" data-toggle="tooltip" data-placement="right" title="Please select a Boolean and a Number" animation="true" html="true">T-Test verbunden</label>
+                        <input class="form-check-input" type="checkbox" id="ttest_unv" name="log" value="true"><label for="ttest_unv" data-toggle="tooltip" data-placement="right" title="Please select a Boolean and a Number" animation="true" html="true">T-Test unverbunden</label>
+                        <input class="form-check-input" type="checkbox" id="utest" name="utest" value="true"><label for="utest" data-toggle="tooltip" data-placement="right" title="Please select a Boolean and a Number" animation="true" html="true">Man Witney U Test</label>
+                        <input class="form-check-input" type="checkbox" id="will" name="will" value="true"><label for="will" data-toggle="tooltip" data-placement="right" title="Please select a Boolean and a Number" animation="true" html="true">Wilcoxon</label>
                      </div>
                   </div>
                </div>
@@ -163,7 +191,7 @@ function submitTags(){
      
      
 
-<button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="submitTags()"  name="Import">STATISTIK!</button>
+<button class="btn btn-secondary" type="button" value ="STATISTIK!" onclick ="send_and_deactivate()" id ="Start_Thinking" name="Start_Thinking">STATISTIK!</button>
 
 <!-- https://www.w3docs.com/snippets/html/how-to-embed-pdf-in-html.html#:~:text=The%20easiest%20way%20to%20put,PDF%20file%20to%20the%20element. -->
 
