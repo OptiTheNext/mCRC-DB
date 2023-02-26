@@ -534,15 +534,20 @@ def export_to_csv():
 
 @app.route("/export_statistik")
 def export_statistik_as_pdf():
-
+    LocalRenderParameters = RenderParameters
     pdf = flask.session["pdf_path"]
     print(pdf)
     #output = flask.make_response(pdf)
     #output.headers["Content.Disposition"] = "attachment; filename = statistik.pdf"
     #output.headers["Content-type"] = "application/pdf"
     #return output
-    
-    return flask.send_file(pdf, download_name = "Statistik.pdf")
+    try:
+        return flask.send_file(pdf, download_name = "Statistik.pdf")
+    except Exception as e:
+        LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
+        LocalRenderParameters["error-text"] = e
+        return flask.render_template('site_4_admin.html',
+                                      RenderParameters = LocalRenderParameters)
     #except Exception as e:
      #    return flask.redirect(flask.url_for('page_4_admin'))
   
@@ -787,7 +792,7 @@ def page_4_admin():
 
 
                 if (linear or korrelation or ttest_v or ttest_unv or utest or will):
-                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,log,korrelation,ttest_v,ttest_unv,utest,will)
+                    statistik.exploration(localDF,tags,reg_tags_one,reg_tags_two,linear,korrelation,ttest_v,ttest_unv,utest,will)
                 
                 
 

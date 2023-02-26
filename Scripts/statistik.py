@@ -384,7 +384,7 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
         if x in decimals:
             print("trying to change formats")
             
-            current_df = pandas.to_numeric(current_df)
+            current_df = pandas.to_numeric(current_df,errors='coerce')
             
         if x in categorials:
             current_df = current_df.astype(str)
@@ -453,7 +453,7 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
             df = pandas.DataFrame(df)
             df = df[x]
             
-            df = pandas.to_numeric(df)
+            df = pandas.to_numeric(df,errors='coerce')
             
             df = df[~numpy.isnan(df)]
             
@@ -491,7 +491,7 @@ def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,hi
 
     print("Wuhu, normalverteilt")
 
-def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,ttest_v,ttest_unv,utest,will):
+def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_v,ttest_unv,utest,will):
     #Test / Darstellung von korrellation
     def check_variable(variable):
             global bool_values
@@ -503,12 +503,10 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,t
             if len(constans)==0:
                 if variable in decimals:
                     constans = df[reg_one]
-                    constans = pandas.to_numeric(constans)
+                    constans = pandas.to_numeric(constans,errors='coerce')
                     constans.dropna(inplace = True)
                     
     df = pandas.DataFrame(df)
-    print(df)
-    print("der eingegebene dataframe")
     labor_verlauf_liste = []
     global op_nm
     global labor_typ
@@ -539,7 +537,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,t
         print("linreg")
         ywerte = []
         xwerte = []
-        row = pandas.to_numeric(row)
+        row = pandas.to_numeric(row,errors='coerce')
         print(type(row[0]))
         if not numpy.isnan(row[0]):
             ywerte.append(row[0])
@@ -582,7 +580,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,t
 
             #Hier table One
             df3 = df2['Slope']
-            df3 = pandas.to_numeric(df3)
+            df3 = pandas.to_numeric(df3,errors='coerce')
 
             result = df3.describe()
 
@@ -606,18 +604,53 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,t
 
         var1 = df[reg_one]
         if reg_one in decimals:
-            var1 =  pandas.to_numeric(var1)
+            var1 =  pandas.to_numeric(var1,errors='coerce')
         print(var1)
         var2 = df[reg_two]
         if reg_two in decimals:
-            var2 =  pandas.to_numeric(var2)
+            var2 =  pandas.to_numeric(var2,errors='coerce')
         print(var2)
         result = scipy.stats.stats.pearsonr(var1,var2)
         x = reg_one + " und " + reg_two
         lista = ([x," :Korrelation nach Pearson"],["Korrelationskoeffizent",result[0]],["P-Wert",result[1]])
         build_dict("Table", lista)
     
-    if log:
+    if ttest_unv:
+        
+        if reg_one in booleans:
+            bools = reg_one
+            other = reg_two
+        else:
+            if reg_two in booleans:
+                bools = reg_two
+                other = reg_one
+            else:
+                other1 = reg_one
+                other2 = reg_two
+        
+        if reg_one in booleans or reg_two in booleans: 
+            df_test = df[[bools,other]]
+            df_test.dropna(inplace= True)
+            print(df_test)
+            group1 = df_test.loc[df_test[bools] == "True"]
+            print(group1)
+            group2 = df_test.loc[df_test[bools] == "False"]
+            print(group2)
+            result = scipy.stats.ttest_ind(group1[other], group2[other])
+            print("hier results")
+            print(result)
+        else:
+            group1 = df[other1]
+            group2 = df[other2]
+            group1 = pandas.to_numeric(group1,errors='coerce')
+            group2 = pandas.to_numeric(group2,errors='coerce')
+            result = scipy.stats.ttest_ind(group1, group2)
+            print("hier results für beide dings")
+            print(result)
+        
+
+
+    if 1 == 0:
         print("logistische Regression")
         
         #Now we check the first variable and then set it
@@ -625,10 +658,6 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear, log,korrelation,t
         constans = []
         global bool_values
         bool_values = []
-
-        
-
-
         check_variable(reg_one)
         check_variable(reg_two)
         try:
