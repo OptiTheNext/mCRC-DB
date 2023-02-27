@@ -625,7 +625,7 @@ def page_4_admin():
             except Exception as e:
                 LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('site_5.html',
+                return flask.render_template('verwaltung.html',
                                              RenderParameters=LocalRenderParameters)
 
         if flask.request.method == 'GET':
@@ -804,7 +804,7 @@ def page_5():
         except Exception as e:
             LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
             LocalRenderParameters["error-text"] = e
-            return flask.render_template('site_5.html',
+            return flask.render_template('verwaltung.html',
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM deleted_patients")
         myresult = cursor.fetchall()
@@ -854,7 +854,7 @@ def page_5():
         except Exception as e:
             LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
             LocalRenderParameters["error-text"] = e
-            return flask.render_template('site_5.html',
+            return flask.render_template('verwaltung.html',
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM Users")
         myresult = cursor.fetchall()
@@ -916,7 +916,7 @@ def page_5():
                 admin = flask.request.form['admin_select']
                 # if("charite.de" not in mail):
                 #   LocalRenderParameters["error"] = 'Nutzer ist nicht Teil der Charité, Korrekte Mailadresse eingeben'
-                #  return flask.render_template('site_5.html',
+                #  return flask.render_template('verwaltung.html',
                 #                            RenderParameters = LocalRenderParameters)
                 if admin == "Admin":
                     admin = "1"
@@ -956,14 +956,14 @@ def page_5():
                     cursor = mydb.cursor()
                     cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
                     mydb.commit()
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
 
             if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get(
@@ -974,14 +974,14 @@ def page_5():
                     cursor = mydb.cursor()
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
 
             if "add_id_to_db" in flask.request.form:
@@ -1005,7 +1005,7 @@ def page_5():
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
 
                     # get the uploaded file
@@ -1027,7 +1027,7 @@ def page_5():
 
                 except Exception as e:
                     LocalRenderParameters["error"] = 'No connection to Database, contact Administrator'
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
 
                 df = df.apply(pandas.to_numeric, errors="ignore")
@@ -1064,22 +1064,22 @@ def page_5():
                                    (newpwd, flask.session["username"]))
                     mydb.commit()
                     LocalRenderParameters["success"] = "Password was changed"
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
                 else:
                     LocalRenderParameters["error"] = 'Could not change password, current password was incorret'
-                    return flask.render_template('site_5.html',
+                    return flask.render_template('verwaltung.html',
                                                  RenderParameters=LocalRenderParameters)
             except Exception as e:
                 LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                 LocalRenderParameters["error-text"] = e
                 # send_error_mail(e, flask.session["username"])
-                return flask.render_template('site_5.html',
+                return flask.render_template('verwaltung.html',
                                              RenderParameters=LocalRenderParameters)
 
-        return flask.render_template('site_5.html',
+        return flask.render_template('verwaltung.html',
                                      RenderParameters=LocalRenderParameters)
-    return flask.render_template('site_5.html',
+    return flask.render_template('verwaltung.html',
                                  RenderParameters=LocalRenderParameters)
 
 

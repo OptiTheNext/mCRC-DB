@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block Unterschrift %}
+    <p>Charite zu Berlin, 2010-2021</p>
+{% endblock %}
+
+{% block MainContent %}
+    <h3>Verwaltung</h3>
+    {% if RenderParameters["Admin"] %}
+        <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="container" style="margin-left: 0">
+                <div class="row row-cols-1 row-cols-lg-3">
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>Nutzer erstellen</h3>
+                            <hr>
+                            <div class="form-group">
+                                <label for="username">Name</label>
+                                <input class="form-control" type="text" name="username" id="username">
+                                <label for="mailadress">Email</label>
+                                <input class="form-control" type="email" name="mailadress" id="mailadress">
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="admin_select">Nutzertyp</label>
+                                <select class="form-control form-select" name="admin_select" id="admin_select">
+                                    <option value="Admin">Administrator</option>
+                                    <option value="Normal">Normaler Nutzer</option>
+                                </select>
+                            </div>
+                            <br>
+                            <input class="btn btn-secondary" type="submit" value="Nutzer erstellen" name="create_user">
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>Nutzer entfernen</h3>
+                            <hr>
+                            <label for="delete_username">Name</label>
+                            <input class="form-control" type="text" name="delete_username" id="delete_username">
+                            <br>
+                            <input class="btn btn-secondary" type="submit" value="Nutzer entfernen" name="delete_user">
+                        </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>Verwalten</h3>
+                            <hr>
+                            {% if RenderParameters["htmltext"] %}
+                                {{ RenderParameters["htmltext"] }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>ID hinzufügen</h3>
+                            <hr>
+                            <label for="id_to_add">ID</label>
+                            <input class="form-control" type="number" name="id_to_add" id="id_to_add">
+                            <br>
+                            <input class="btn btn-secondary" type="submit" value="add id" name="add_id_to_db">
+                        </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>Gelöschte IDs</h3>
+                            <hr>
+                            {% if RenderParameters["deleted_ids"] %}
+                                {{ RenderParameters["deleted_ids"] }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid; padding: 10px;">
+                        <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                            <h3>Upload von neuen IDs</h3>
+                            <hr>
+                            <input class="form-control" type="file" name="file" id="file">
+                            <br>
+                            <input class="btn btn-secondary" type="submit">
+                        </div>
+                    </div>
+        </form>
+    {% endif %}
+    <form action="" method="post" autocomplete="off">
+        <div class="col-6" style="border: 1px solid; padding: 10px;">
+            <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
+                <h3>Password ändern</h3>
+                <hr>
+                <label for="current_password">Momentanes Passwort</label>
+                <input class="form-control" type="password" name="current_password" id="current_password">
+                <br>
+                <label for="new_password">Neues Passwort</label>
+                <input class="form-control" type="password" name="new_password" id="current_password">
+                <br>
+                <input class="btn btn-secondary" type="submit" value="Passwort ändern" name="change_pwd">
+            </div>
+        </div>
+
+    </form>
+    {% if RenderParameters["error"] %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Fehler:</strong> {{ RenderParameters["error"] }}
+        </div>
+    {% endif %}
+    {% if RenderParameters["success"] %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Erfolg:</strong> {{ RenderParameters["success"] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endblock %}
