@@ -1188,7 +1188,7 @@ def getDataForID():
 @app.route("/versions", methods=["GET"])
 def versions():
     LocalRenderParameters = RenderParameters.copy()
-    return flask.render_template("site_6.html", RenderParameters=LocalRenderParameters)
+    return flask.render_template("versionsverlauf.html", RenderParameters = LocalRenderParameters)
 
 
 @app.route("/api/tags", methods=["GET"])
