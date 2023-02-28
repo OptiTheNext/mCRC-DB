@@ -1051,7 +1051,7 @@ def verwaltung():
                     print("we did it")
                 import os
 
-                for filename in os.listdir(app.session["UPLOAD_FOLDER"]):
+                for filename in os.listdir(flask.session["UPLOAD_FOLDER"]):
                     os.remove(filename)
 
     if "username" in flask.session:
