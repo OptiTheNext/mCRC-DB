@@ -214,7 +214,7 @@ def page_1():
             print(e)
             print("No more patients to work on")
 
-        return flask.render_template('site_1.html',
+        return flask.render_template('startseite.html',
                                      RenderParameters=LocalRenderParameters)
 
     else:
@@ -268,7 +268,7 @@ def dateneingabe():
             except Exception as e:
                 LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('site_2.html',
+                return flask.render_template('dateineingabe.html',
                                              RenderParameters=LocalRenderParameters)
 
             try:
@@ -450,7 +450,7 @@ def dateneingabe():
             except Exception as e:
                 LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('site_2.html',
+                return flask.render_template('dateineingabe.html',
                                              RenderParameters=LocalRenderParameters)
             cursor.execute(querySAPID)
             sid = cursor.fetchall()
@@ -496,15 +496,15 @@ def dateneingabe():
                 # send_error_mail(e, flask.session["username"])
                 print("Fehler beim schreiben")
                 # NotAllowed("Fehler", False)
-                return flask.render_template('site_2.html',
+                return flask.render_template('dateineingabe.html',
                                              RenderParameters=LocalRenderParameters)
             # Merging both dataframes
 
-        return flask.render_template('site_2.html',
+        return flask.render_template('dateineingabe.html',
                                      RenderParameters=LocalRenderParameters)
 
     # end of test for buttons
-    return flask.render_template('site_2.html', RenderParameters=RenderParameters)
+    return flask.render_template('dateineingabe.html', RenderParameters=RenderParameters)
 
 
 @app.route("/export")
@@ -533,7 +533,7 @@ def export_statistik_as_pdf():
     except Exception as e:
         LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
         LocalRenderParameters["error-text"] = e
-        return flask.render_template('site_4_admin.html',
+        return flask.render_template('datenanalyse_admin.html',
                                      RenderParameters=LocalRenderParameters)
 
 @app.route("/datenausgabe", methods=['POST', 'GET'])
@@ -585,14 +585,14 @@ def page_3():
 
             LocalRenderParameters["htmltext"] = htmltext
 
-            return flask.render_template('site_3.html', htmltext=htmltext,
+            return flask.render_template('datenausgabe.html', htmltext=htmltext,
                                          RenderParameters=LocalRenderParameters)
             # weiterleitung zum Datenanalyse
 
         if "analysebutton" in flask.request.form:
             return flask.redirect(flask.url_for('page_4'))
 
-        return flask.render_template('site_3.html',
+        return flask.render_template('datenausgabe.html',
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -602,7 +602,7 @@ def page_3():
 def page_4():
     if "username" in flask.session:
         LocalRenderParameters = RenderParameters.copy()
-        return flask.render_template('site_4.html',
+        return flask.render_template('datenanalyse.html',
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -788,7 +788,7 @@ def page_4_admin():
                 flask.session["pdf_completed"] = True
                 return flask.redirect(flask.url_for("export_statistik_as_pdf"))
 
-        return flask.render_template('site_4_admin.html',
+        return flask.render_template('datenanalyse_admin.html',
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -1154,7 +1154,7 @@ def getDataForID():
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
         if cursor.rowcount == 0:
             LocalRenderParameters["error"] = 'Patient not found in database'
-            return flask.render_template('site_2.html',
+            return flask.render_template('dateineingabe.html',
                                          RenderParameters=LocalRenderParameters)
         for row in cursor:
             try:
@@ -1166,22 +1166,22 @@ def getDataForID():
                 print(Error)
                 print("in mysql.connector.error")
                 LocalRenderParameters["error"] = 'ID is currently being worked on, try again later'
-                return flask.render_template('site_2.html',
+                return flask.render_template('dateineingabe.html',
                                              RenderParameters=LocalRenderParameters)
             except Exception as e:
                 print(e)
                 LocalRenderParameters["error"] = 'Cannot connect to database, reach out to an Administrator'
-                return flask.render_template('site_2.html',
+                return flask.render_template('dateineingabe.html',
                                              RenderParameters=LocalRenderParameters)
             print(cursor.statement)
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
         LocalRenderParameters["error"] = 'Error occured'
-        return flask.render_template('site_2.html',
+        return flask.render_template('dateineingabe.html',
                                      RenderParameters=LocalRenderParameters)
     LocalRenderParameters["error"] = 'Error occured'
-    return flask.render_template('site_2.html',
+    return flask.render_template('dateineingabe.html',
                                  RenderParameters=LocalRenderParameters)
 
 
