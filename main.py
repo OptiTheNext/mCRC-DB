@@ -1,32 +1,46 @@
 # Flask
-import flask
-import random
+import datetime
 import json
-from flask_session import Session
-from flask import session
+import os
+import secrets
+# Debugging
+import traceback
+
+import exchangelib
+import flask
+import jinja2
+# Token
+import jwt
 # Mysql
 import mysql.connector
+import numpy
 # Math
 import pandas
-import numpy
-import string
+from dotenv import load_dotenv
 # Mails stuff
 from exchangelib import DELEGATE, Account, Credentials, Configuration
-import exchangelib
-import jinja2
+from flask import session
+from flask_session import Session
+
+from Scripts import Columns
 # Own Scripts
 from Scripts import datenausgabe
 from Scripts import generate_token
 from Scripts import statistik
-from Scripts import Columns
-# Token
-import jwt
 
-# Debugging
-import traceback
-import datetime
-import os
-from dotenv import load_dotenv
+URL_DATENANALYSE = "datenanalyse.html"
+URL_DATENANALYSE_ADMIN = "datenanalyse_admin.html"
+URL_DATENAUSGABE = "datenausgabe.html"
+URL_DATENEINGABE = "dateneingabe.html"
+URl_LOGIN = "login.html"
+URL_RESET = "reset.html"
+URL_STARTSEITE = "startseite.html"
+URL_VERSIONSVERLAUF = "versionsverlauf.html"
+URL_VERWALTUNG = "verwaltung.html"
+
+ERRORTEXT_DATABASECONNECTION = "Cannot reach database, contact administrator."
+
+DATEFORMAT = "%Y-%m-%d"
 
 global sexbefore
 sexbefore = False
@@ -34,14 +48,13 @@ sexbefore = False
 load_dotenv()
 
 querySAPID = "SELECT pat_id FROM mcrc_tabelle"
-# Create an Flask app for the site to work on
+# Create a Flask app for the site to work on
 app = flask.Flask(__name__,
                   template_folder="templates",
                   static_folder="static")
 
 # For mail
-mail_server = os.environ.get("KRK_DB_MAIL_SERVER")
-mail_server = "https://" + mail_server
+mail_server = "https://" + os.environ.get("KRK_DB_MAIL_SERVER")
 sender_mail = os.environ.get("KRK_DB_SENDER")
 mail_user = os.environ.get("KRK_DB_MAIL_USER")
 mail_password = os.environ.get("KRK_DB_MAIL_PASSWORD")
@@ -95,7 +108,7 @@ def connect_to_db():
     except Exception as e:
         LocalRenderParameters["error"] = "Can't connect to Database, please inform Administrator"
         LocalRenderParameters["error-text"] = e
-        return flask.render_template("login.html", RenderParameters=LocalRenderParameters)
+        return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
 
 
 global next_patient
@@ -193,7 +206,7 @@ def login():
             LocalRenderParameters["error"] = 'Something went wrong, Contact a Server Administrator'
             LocalRenderParameters["error-text"] = e
 
-    return flask.render_template("login.html", RenderParameters=LocalRenderParameters)
+    return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
 
 
 @app.route("/startseite")
@@ -214,7 +227,7 @@ def page_1():
             print(e)
             print("No more patients to work on")
 
-        return flask.render_template('startseite.html',
+        return flask.render_template(URL_STARTSEITE,
                                      RenderParameters=LocalRenderParameters)
 
     else:
@@ -266,9 +279,9 @@ def dateneingabe():
             try:
                 cursor = mydb.cursor()
             except Exception as e:
-                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('dateineingabe.html',
+                return flask.render_template(URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
 
             try:
@@ -333,26 +346,26 @@ def dateneingabe():
 
             if params["op_date_Surgery1"] != "" and params["op_date_Surgery2"] != "":
                 p_columns.append("datediff_op1_op2")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
-                b = datetime.datetime.strptime(params["op_date_Surgery2"], "%Y-%m-%d")
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
+                b = datetime.datetime.strptime(params["op_date_Surgery2"], DATEFORMAT)
                 p_values.append(str((b - a).days))
             if params["op_date_Surgery1"] != "" and params["dob"] != "":
                 p_columns.append("age")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
-                b = datetime.datetime.strptime(params["dob"], "%Y-%m-%d")
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
+                b = datetime.datetime.strptime(params["dob"], DATEFORMAT)
                 c = (a - b).days / 365
                 print("years: " + str(int(c)))
                 p_values.append(str(int(c)))
 
             if params["pve_date"] != "":
                 p_columns.append("pve_year")
-                a = datetime.datetime.strptime(params["pve_date"], "%Y-%m-%d")
+                a = datetime.datetime.strptime(params["pve_date"], DATEFORMAT)
                 a = a.year
                 print(a)
                 p_values.append(a)
             if params["op_date_Surgery1"] != "":
                 p_columns.append("op1year")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], "%Y-%m-%d")
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
                 a = a.year
                 p_values.append(a)
 
@@ -448,9 +461,9 @@ def dateneingabe():
             try:
                 cursor = mydb.cursor()
             except Exception as e:
-                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('dateineingabe.html',
+                return flask.render_template(URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             cursor.execute(querySAPID)
             sid = cursor.fetchall()
@@ -496,15 +509,15 @@ def dateneingabe():
                 # send_error_mail(e, flask.session["username"])
                 print("Fehler beim schreiben")
                 # NotAllowed("Fehler", False)
-                return flask.render_template('dateineingabe.html',
+                return flask.render_template(URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             # Merging both dataframes
 
-        return flask.render_template('dateineingabe.html',
+        return flask.render_template(URL_DATENEINGABE,
                                      RenderParameters=LocalRenderParameters)
 
     # end of test for buttons
-    return flask.render_template('dateineingabe.html', RenderParameters=RenderParameters)
+    return flask.render_template(URL_DATENEINGABE, RenderParameters=RenderParameters)
 
 
 @app.route("/export")
@@ -533,8 +546,9 @@ def export_statistik_as_pdf():
     except Exception as e:
         LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
         LocalRenderParameters["error-text"] = e
-        return flask.render_template('datenanalyse_admin.html',
+        return flask.render_template(URL_DATENANALYSE_ADMIN,
                                      RenderParameters=LocalRenderParameters)
+
 
 @app.route("/datenausgabe", methods=['POST', 'GET'])
 def page_3():
@@ -544,7 +558,7 @@ def page_3():
         if "datenausgabe" in flask.request.form:
             print("hi")
 
-            df = datenausgabe.Analyse(flask.request.form)
+            df = datenausgabe.analyse(flask.request.form)
             dfdict = df.to_dict("list")
             flask.session['df'] = dfdict
             df.fillna("", inplace=True)
@@ -585,14 +599,14 @@ def page_3():
 
             LocalRenderParameters["htmltext"] = htmltext
 
-            return flask.render_template('datenausgabe.html', htmltext=htmltext,
+            return flask.render_template(URL_DATENAUSGABE, htmltext=htmltext,
                                          RenderParameters=LocalRenderParameters)
-            # weiterleitung zum Datenanalyse
+            # weiterleitung zur Datenanalyse
 
         if "analysebutton" in flask.request.form:
             return flask.redirect(flask.url_for('page_4'))
 
-        return flask.render_template('datenausgabe.html',
+        return flask.render_template(URL_DATENAUSGABE,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -602,7 +616,7 @@ def page_3():
 def page_4():
     if "username" in flask.session:
         LocalRenderParameters = RenderParameters.copy()
-        return flask.render_template('datenanalyse.html',
+        return flask.render_template(URL_DATENANALYSE,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -623,9 +637,9 @@ def page_4_admin():
                 localDF = cursor.fetchall()
                 print("got the entire dataframe")
             except Exception as e:
-                LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template('verwaltung.html',
+                return flask.render_template(URL_VERWALTUNG,
                                              RenderParameters=LocalRenderParameters)
 
         if flask.request.method == 'GET':
@@ -634,177 +648,177 @@ def page_4_admin():
                 # Später anschauen
                 print("hi")
         if flask.request.method == "POST" and flask.request.json:
-                flask.session["elements"] = []
-                grafik = False
-                table_one = False
-                # statistik.deskreptiv(flask.session.get("df"),tags)
+            flask.session["elements"] = []
+            grafik = False
+            table_one = False
+            # statistik.deskreptiv(flask.session.get("df"),tags)
+            print(flask.request.json)
+            flask.session["pdf_completed"] = False
+            tags = flask.request.json["server_tags"]
+            reg_tags_one = flask.request.json["reg_tags_one"]
+            reg_tags_two = flask.request.json["reg_tags_two"]
+            print("hier server tags")
+            print(tags)
+            # Sammeln von Variablen für Deskriptiv
+
+            if "table_one" in flask.request.json:
+                table_one = flask.request.json["table_one"]
                 print(flask.request.json)
-                flask.session["pdf_completed"] = False
-                tags = flask.request.json["server_tags"]
-                reg_tags_one = flask.request.json["reg_tags_one"]
-                reg_tags_two = flask.request.json["reg_tags_two"]
-                print("hier server tags")
-                print(tags)
-                # Sammeln von Variablen für Deskriptiv
+                if table_one == True:
+                    print("in table one = true")
+                    table_one = True
+                if table_one == "0":
+                    print("in table one = false")
+                    table_one = False
+                print("hier table one")
+                print(table_one)
 
-                if "table_one" in flask.request.json:
-                    table_one = flask.request.json["table_one"]
-                    print(flask.request.json)
-                    if table_one == True:
-                        print("in table one = true")
-                        table_one = True
-                    if table_one == "0":
-                        print("in table one = false")
-                        table_one = False
-                    print("hier table one")
-                    print(table_one)
+            if "grafik_deskriptiv" in flask.request.json:
+                grafik = flask.request.json["grafik_deskriptiv"]
+                print(grafik)
+                if grafik == True:
+                    grafik = True
+                if grafik == "0":
+                    grafik = False
+                print(grafik)
 
-                if "grafik_deskriptiv" in flask.request.json:
-                    grafik = flask.request.json["grafik_deskriptiv"]
-                    print(grafik)
-                    if grafik == True:
-                        grafik = True
-                    if grafik == "0":
-                        grafik = False
-                    print(grafik)
+            if grafik or table_one:
+                statistik.deskreptiv(localDF, tags, grafik, table_one)
 
-                if grafik or table_one:
-                    statistik.deskreptiv(localDF, tags, grafik, table_one)
+            # Sammeln von Variablen für Normalverteilung
+            if "saphiro" in flask.request.json:
+                saphiro = flask.request.json["saphiro"]
+                print(grafik)
+                if saphiro == True:
+                    saphiro = True
+                if saphiro == "0":
+                    saphiro = False
+                print(saphiro)
 
-                # Sammeln von Variablen für Normalverteilung
-                if "saphiro" in flask.request.json:
-                    saphiro = flask.request.json["saphiro"]
-                    print(grafik)
-                    if saphiro == True:
-                        saphiro = True
-                    if saphiro == "0":
-                        saphiro = False
-                    print(saphiro)
+            if "kolmogorov" in flask.request.json:
+                kolmogorov = flask.request.json["kolmogorov"]
+                print(grafik)
+                if kolmogorov == True:
+                    kolmogorov = True
+                if kolmogorov == "0":
+                    kolmogorov = False
+                print(kolmogorov)
 
-                if "kolmogorov" in flask.request.json:
-                    kolmogorov = flask.request.json["kolmogorov"]
-                    print(grafik)
-                    if kolmogorov == True:
-                        kolmogorov = True
-                    if kolmogorov == "0":
-                        kolmogorov = False
-                    print(kolmogorov)
+            if "anderson" in flask.request.json:
+                anderson = flask.request.json["anderson"]
+                print(grafik)
+                if anderson == True:
+                    anderson = True
+                if anderson == "0":
+                    anderson = False
+                print(anderson)
 
-                if "anderson" in flask.request.json:
-                    anderson = flask.request.json["anderson"]
-                    print(grafik)
-                    if anderson == True:
-                        anderson = True
-                    if anderson == "0":
-                        anderson = False
-                    print(anderson)
+            if "qq" in flask.request.json:
+                qq = flask.request.json["qq"]
+                print(grafik)
+                if qq == True:
+                    qq = True
+                if qq == "0":
+                    qq = False
+                print(qq)
+            if "histo" in flask.request.json:
+                histo = flask.request.json["histo"]
+                print(grafik)
+                if histo == True:
+                    histo = True
+                if histo == "0":
+                    histo = False
+                print(histo)
 
-                if "qq" in flask.request.json:
-                    qq = flask.request.json["qq"]
-                    print(grafik)
-                    if qq == True:
-                        qq = True
-                    if qq == "0":
-                        qq = False
-                    print(qq)
-                if "histo" in flask.request.json:
-                    histo = flask.request.json["histo"]
-                    print(grafik)
-                    if histo == True:
-                        histo = True
-                    if histo == "0":
-                        histo = False
-                    print(histo)
+            if saphiro or kolmogorov or anderson or qq or histo:
+                statistik.normalverteilung(localDF, tags, saphiro, kolmogorov, anderson, qq, histo)
 
-                if saphiro or kolmogorov or anderson or qq or histo:
-                    statistik.normalverteilung(localDF, tags, saphiro, kolmogorov, anderson, qq, histo)
+            # Sammeln von Variablen für Explorativ
+            if "linear" in flask.request.json:
+                linear = flask.request.json["linear"]
+                print(grafik)
+                if linear == True:
+                    linear = True
+                if linear == "0":
+                    linear = False
+                print(linear)
+            if "korrelation" in flask.request.json:
+                korrelation = flask.request.json["korrelation"]
+                print(grafik)
+                if korrelation == True:
+                    korrelation = True
+                if korrelation == "0":
+                    korrelation = False
 
-                # Sammeln von Variablen für Explorativ
-                if "linear" in flask.request.json:
-                    linear = flask.request.json["linear"]
-                    print(grafik)
-                    if linear == True:
-                        linear = True
-                    if linear == "0":
-                        linear = False
-                    print(linear)
-                if "korrelation" in flask.request.json:
-                    korrelation = flask.request.json["korrelation"]
-                    print(grafik)
-                    if korrelation == True:
-                        korrelation = True
-                    if korrelation == "0":
-                        korrelation = False
+            if "ttest_v" in flask.request.json:
+                ttest_v = flask.request.json["ttest_v"]
+                print(grafik)
+                if ttest_v == True:
+                    ttest_v = True
+                if ttest_v == "0":
+                    ttest_v = False
+                print(ttest_v)
+            if "ttest_unv" in flask.request.json:
+                ttest_unv = flask.request.json["ttest_unv"]
+                print(grafik)
+                if ttest_unv == True:
+                    ttest_unv = True
+                if ttest_unv == "0":
+                    ttest_unv = False
+                print(ttest_unv)
+            if "utest" in flask.request.json:
+                utest = flask.request.json["utest"]
+                print(grafik)
+                if utest == True:
+                    utest = True
+                if utest == "0":
+                    utest = False
+                print(utest)
+            if "will" in flask.request.json:
+                will = flask.request.json["will"]
+                print(grafik)
+                if will == True:
+                    will = True
+                if will == "0":
+                    will = False
+                print(will)
 
-                if "ttest_v" in flask.request.json:
-                    ttest_v = flask.request.json["ttest_v"]
-                    print(grafik)
-                    if ttest_v == True:
-                        ttest_v = True
-                    if ttest_v == "0":
-                        ttest_v = False
-                    print(ttest_v)
-                if "ttest_unv" in flask.request.json:
-                    ttest_unv = flask.request.json["ttest_unv"]
-                    print(grafik)
-                    if ttest_unv == True:
-                        ttest_unv = True
-                    if ttest_unv == "0":
-                        ttest_unv = False
-                    print(ttest_unv)
-                if "utest" in flask.request.json:
-                    utest = flask.request.json["utest"]
-                    print(grafik)
-                    if utest == True:
-                        utest = True
-                    if utest == "0":
-                        utest = False
-                    print(utest)
-                if "will" in flask.request.json:
-                    will = flask.request.json["will"]
-                    print(grafik)
-                    if will == True:
-                        will = True
-                    if will == "0":
-                        will = False
-                    print(will)
+            if linear or korrelation or ttest_v or ttest_unv or utest or will:
+                statistik.exploration(localDF, tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
+                                      ttest_unv, utest, will)
 
-                if linear or korrelation or ttest_v or ttest_unv or utest or will:
-                    statistik.exploration(localDF, tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
-                                          ttest_unv, utest, will)
+            grafik = False
+            table_one = False
+            saphiro = False
+            kolmogorov = False
+            anderson = False
+            qq = False
+            linear = False
+            log = False
 
-                grafik = False
-                table_one = False
-                saphiro = False
-                kolmogorov = False
-                anderson = False
-                qq = False
-                linear = False
-                log = False
+            pdf = statistik.generate_pdf()
+            print(pdf)
+            flask.session["pdf_path"] = pdf
+            flask.session["pdf_completed"] = True
+            return flask.redirect(flask.url_for("export_statistik_as_pdf"))
 
-                pdf = statistik.generate_pdf()
-                print(pdf)
-                flask.session["pdf_path"] = pdf
-                flask.session["pdf_completed"] = True
-                return flask.redirect(flask.url_for("export_statistik_as_pdf"))
-
-        return flask.render_template('datenanalyse_admin.html',
+        return flask.render_template(URL_DATENANALYSE_ADMIN,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
 
 
 @app.route("/users", methods=['POST', 'GET'])
-def page_5():
+def verwaltung():
     LocalRenderParameters = RenderParameters.copy()
 
     def deleted_id_text():
         try:
             cursor = mydb.cursor()
         except Exception as e:
-            LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+            LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
-            return flask.render_template('verwaltung.html',
+            return flask.render_template(URL_VERWALTUNG,
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM deleted_patients")
         myresult = cursor.fetchall()
@@ -848,13 +862,13 @@ def page_5():
                 overwrite=False).to_html())
         return htmltext
 
-    def Usertext():
+    def usertext():
         try:
             cursor = mydb.cursor()
         except Exception as e:
-            LocalRenderParameters["Error"] = "Cannot reach database, contact administrator"
+            LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
-            return flask.render_template('verwaltung.html',
+            return flask.render_template(URL_VERWALTUNG,
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM Users")
         myresult = cursor.fetchall()
@@ -899,10 +913,10 @@ def page_5():
                 overwrite=False).to_html())
         return htmltext
 
-    htmltext = Usertext()
-    deletedID = deleted_id_text()
+    htmltext = usertext()
+    deleted_id = deleted_id_text()
     LocalRenderParameters["htmltext"] = htmltext
-    LocalRenderParameters["deleted_ids"] = deletedID
+    LocalRenderParameters["deleted_ids"] = deleted_id
     if "username" in flask.session and flask.session.get("Admin"):
 
         if flask.request.method == 'POST':
@@ -916,7 +930,7 @@ def page_5():
                 admin = flask.request.form['admin_select']
                 # if("charite.de" not in mail):
                 #   LocalRenderParameters["error"] = 'Nutzer ist nicht Teil der Charité, Korrekte Mailadresse eingeben'
-                #  return flask.render_template('verwaltung.html',
+                #  return flask.render_template(URL_VERWALTUNG,
                 #                            RenderParameters = LocalRenderParameters)
                 if admin == "Admin":
                     admin = "1"
@@ -924,14 +938,7 @@ def page_5():
                     admin = "0"
                 # Generating Link for password
 
-                lower = string.ascii_lowercase
-                upper = string.ascii_uppercase
-                num = string.digits
-                alll = lower + upper + num
-
-                temp = random.sample(alll, random.randint(8, 12))
-
-                password = "".join(temp)
+                password = secrets.token_urlsafe(secrets.SystemRandom.randint(a=8, b=16))
                 token = generate_token.generate_password_reset_token(name, password)
                 print(type(token))
                 # generate token for link:
@@ -956,14 +963,14 @@ def page_5():
                     cursor = mydb.cursor()
                     cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
                     mydb.commit()
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
             if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get(
@@ -974,14 +981,14 @@ def page_5():
                     cursor = mydb.cursor()
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
             if "add_id_to_db" in flask.request.form:
@@ -1005,7 +1012,7 @@ def page_5():
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
                     # get the uploaded file
@@ -1027,7 +1034,7 @@ def page_5():
 
                 except Exception as e:
                     LocalRenderParameters["error"] = 'No connection to Database, contact Administrator'
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
                 df = df.apply(pandas.to_numeric, errors="ignore")
@@ -1064,22 +1071,22 @@ def page_5():
                                    (newpwd, flask.session["username"]))
                     mydb.commit()
                     LocalRenderParameters["success"] = "Password was changed"
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 else:
                     LocalRenderParameters["error"] = 'Could not change password, current password was incorret'
-                    return flask.render_template('verwaltung.html',
+                    return flask.render_template(URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
             except Exception as e:
                 LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                 LocalRenderParameters["error-text"] = e
                 # send_error_mail(e, flask.session["username"])
-                return flask.render_template('verwaltung.html',
+                return flask.render_template(URL_VERWALTUNG,
                                              RenderParameters=LocalRenderParameters)
 
-        return flask.render_template('verwaltung.html',
+        return flask.render_template(URL_VERWALTUNG,
                                      RenderParameters=LocalRenderParameters)
-    return flask.render_template('verwaltung.html',
+    return flask.render_template(URL_VERWALTUNG,
                                  RenderParameters=LocalRenderParameters)
 
 
@@ -1094,7 +1101,7 @@ def reset(token):
     except Exception as e:
         LocalRenderParameters["error"] = 'Your token is invalid, Please contact an Administrator'
         print(e)
-        return flask.render_template("login.html", RenderParameters=LocalRenderParameters)
+        return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
     print(decoded)
 
     ##Check for timestamp
@@ -1127,24 +1134,24 @@ def reset(token):
                         LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                         LocalRenderParameters["error-text"] = e
                         # send_error_mail(e, flask.session["username"])
-                        return flask.render_template('reset.html',
+                        return flask.render_template(URL_RESET,
                                                      RenderParameters=LocalRenderParameters)
 
                 else:
                     LocalRenderParameters["error"] = 'Passwords do not match, try again'
-            return flask.render_template('reset.html',
+            return flask.render_template(URL_RESET,
                                          RenderParameters=LocalRenderParameters)
         else:
             return flask.redirect(flask.url_for('login'))
     except Exception as e:
-        LocalRenderParameters["error"] = "Couldnt reach database, Contact Administrator"
+        LocalRenderParameters["error"] = ERRORTEXT_DATABASECONNECTION
         LocalRenderParameters["error-text"] = e
         # send_error_mail(e, flask.session["username"])
         return flask.redirect(flask.url_for('login'))
 
 
 @app.route("/api/getDataForID", methods=['GET'])
-def getDataForID():
+def get_data_for_id():
     LocalRenderParameters = RenderParameters.copy()
     if flask.request.args["pat_id_import"]:
         try:
@@ -1154,7 +1161,7 @@ def getDataForID():
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
         if cursor.rowcount == 0:
             LocalRenderParameters["error"] = 'Patient not found in database'
-            return flask.render_template('dateineingabe.html',
+            return flask.render_template(URL_DATENEINGABE,
                                          RenderParameters=LocalRenderParameters)
         for row in cursor:
             try:
@@ -1166,29 +1173,29 @@ def getDataForID():
                 print(Error)
                 print("in mysql.connector.error")
                 LocalRenderParameters["error"] = 'ID is currently being worked on, try again later'
-                return flask.render_template('dateineingabe.html',
+                return flask.render_template(URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             except Exception as e:
                 print(e)
                 LocalRenderParameters["error"] = 'Cannot connect to database, reach out to an Administrator'
-                return flask.render_template('dateineingabe.html',
+                return flask.render_template(URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             print(cursor.statement)
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
         LocalRenderParameters["error"] = 'Error occured'
-        return flask.render_template('dateineingabe.html',
+        return flask.render_template(URL_DATENEINGABE,
                                      RenderParameters=LocalRenderParameters)
     LocalRenderParameters["error"] = 'Error occured'
-    return flask.render_template('dateineingabe.html',
+    return flask.render_template(URL_DATENEINGABE,
                                  RenderParameters=LocalRenderParameters)
 
 
 @app.route("/versions", methods=["GET"])
 def versions():
     LocalRenderParameters = RenderParameters.copy()
-    return flask.render_template("versionsverlauf.html", RenderParameters = LocalRenderParameters)
+    return flask.render_template(URL_VERSIONSVERLAUF, RenderParameters=LocalRenderParameters)
 
 
 @app.route("/api/tags", methods=["GET"])
