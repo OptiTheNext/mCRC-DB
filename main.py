@@ -938,7 +938,7 @@ def verwaltung():
                     admin = "0"
                 # Generating Link for password
 
-                password = secrets.token_urlsafe(secrets.SystemRandom.randint(a=8, b=16))
+                password = secrets.token_urlsafe(secrets.SystemRandom().randint(a=8, b=16))
                 token = generate_token.generate_password_reset_token(name, password)
                 print(type(token))
                 # generate token for link:
