@@ -92,8 +92,8 @@ Session(app)
 global RenderParameters
 RenderParameters = {"Topnav": True, "startseite": True, "Admin": False}
 
-UPLOAD_FOLDER = './CSV_TO_IMPORT'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['UPLOAD_FOLDER'] = constants.UPLOAD_FOLDER
 
 
 # Connecting to ghe database in case of restart or lost connections
@@ -108,7 +108,7 @@ def connect_to_db():
     except Exception as e:
         LocalRenderParameters["error"] = "Can't connect to Database, please inform Administrator"
         LocalRenderParameters["error-text"] = e
-        return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
+        return flask.render_template(constants.URL_LOGIN, RenderParameters=LocalRenderParameters)
 
 
 global next_patient
@@ -206,7 +206,7 @@ def login():
             LocalRenderParameters["error"] = 'Something went wrong, Contact a Server Administrator'
             LocalRenderParameters["error-text"] = e
 
-    return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
+    return flask.render_template(constants.URL_LOGIN, RenderParameters=LocalRenderParameters)
 
 
 @app.route("/startseite")
@@ -227,7 +227,7 @@ def page_1():
             print(e)
             print("No more patients to work on")
 
-        return flask.render_template(URL_STARTSEITE,
+        return flask.render_template(constants.URL_STARTSEITE,
                                      RenderParameters=LocalRenderParameters)
 
     else:
@@ -279,9 +279,9 @@ def dateneingabe():
             try:
                 cursor = mydb.cursor()
             except Exception as e:
-                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
+                LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template(URL_DATENEINGABE,
+                return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
 
             try:
@@ -346,26 +346,26 @@ def dateneingabe():
 
             if params["op_date_Surgery1"] != "" and params["op_date_Surgery2"] != "":
                 p_columns.append("datediff_op1_op2")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
-                b = datetime.datetime.strptime(params["op_date_Surgery2"], DATEFORMAT)
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], constants.DATEFORMAT)
+                b = datetime.datetime.strptime(params["op_date_Surgery2"], constants.DATEFORMAT)
                 p_values.append(str((b - a).days))
             if params["op_date_Surgery1"] != "" and params["dob"] != "":
                 p_columns.append("age")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
-                b = datetime.datetime.strptime(params["dob"], DATEFORMAT)
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], constants.DATEFORMAT)
+                b = datetime.datetime.strptime(params["dob"], constants.DATEFORMAT)
                 c = (a - b).days / 365
                 print("years: " + str(int(c)))
                 p_values.append(str(int(c)))
 
             if params["pve_date"] != "":
                 p_columns.append("pve_year")
-                a = datetime.datetime.strptime(params["pve_date"], DATEFORMAT)
+                a = datetime.datetime.strptime(params["pve_date"], constants.DATEFORMAT)
                 a = a.year
                 print(a)
                 p_values.append(a)
             if params["op_date_Surgery1"] != "":
                 p_columns.append("op1year")
-                a = datetime.datetime.strptime(params["op_date_Surgery1"], DATEFORMAT)
+                a = datetime.datetime.strptime(params["op_date_Surgery1"], constants.DATEFORMAT)
                 a = a.year
                 p_values.append(a)
 
@@ -461,9 +461,9 @@ def dateneingabe():
             try:
                 cursor = mydb.cursor()
             except Exception as e:
-                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
+                LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template(URL_DATENEINGABE,
+                return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             cursor.execute(querySAPID)
             sid = cursor.fetchall()
@@ -509,15 +509,15 @@ def dateneingabe():
                 # send_error_mail(e, flask.session["username"])
                 print("Fehler beim schreiben")
                 # NotAllowed("Fehler", False)
-                return flask.render_template(URL_DATENEINGABE,
+                return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             # Merging both dataframes
 
-        return flask.render_template(URL_DATENEINGABE,
+        return flask.render_template(constants.URL_DATENEINGABE,
                                      RenderParameters=LocalRenderParameters)
 
     # end of test for buttons
-    return flask.render_template(URL_DATENEINGABE, RenderParameters=RenderParameters)
+    return flask.render_template(constants.URL_DATENEINGABE, RenderParameters=RenderParameters)
 
 
 @app.route("/export")
@@ -546,7 +546,7 @@ def export_statistik_as_pdf():
     except Exception as e:
         LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
         LocalRenderParameters["error-text"] = e
-        return flask.render_template(URL_DATENANALYSE_ADMIN,
+        return flask.render_template(constants.URL_DATENANALYSE_ADMIN,
                                      RenderParameters=LocalRenderParameters)
 
 
@@ -599,14 +599,14 @@ def page_3():
 
             LocalRenderParameters["htmltext"] = htmltext
 
-            return flask.render_template(URL_DATENAUSGABE, htmltext=htmltext,
+            return flask.render_template(constants.URL_DATENAUSGABE, htmltext=htmltext,
                                          RenderParameters=LocalRenderParameters)
             # weiterleitung zur Datenanalyse
 
         if "analysebutton" in flask.request.form:
             return flask.redirect(flask.url_for('page_4'))
 
-        return flask.render_template(URL_DATENAUSGABE,
+        return flask.render_template(constants.URL_DATENAUSGABE,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -616,7 +616,7 @@ def page_3():
 def page_4():
     if "username" in flask.session:
         LocalRenderParameters = RenderParameters.copy()
-        return flask.render_template(URL_DATENANALYSE,
+        return flask.render_template(constants.URL_DATENANALYSE,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -637,9 +637,9 @@ def page_4_admin():
                 localDF = cursor.fetchall()
                 print("got the entire dataframe")
             except Exception as e:
-                LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
+                LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.render_template(URL_VERWALTUNG,
+                return flask.render_template(constants.URL_VERWALTUNG,
                                              RenderParameters=LocalRenderParameters)
 
         if flask.request.method == 'GET':
@@ -651,7 +651,7 @@ def page_4_admin():
             flask.session["elements"] = []
             grafik = False
             table_one = False
-            # statistik.deskreptiv(flask.session.get("df"),tags)
+            # statistik.deskriptiv(flask.session.get("df"),tags)
             print(flask.request.json)
             flask.session["pdf_completed"] = False
             tags = flask.request.json["server_tags"]
@@ -683,7 +683,7 @@ def page_4_admin():
                 print(grafik)
 
             if grafik or table_one:
-                statistik.deskreptiv(localDF, tags, grafik, table_one)
+                statistik.deskriptiv(localDF, tags, grafik, table_one)
 
             # Sammeln von Variablen für Normalverteilung
             if "saphiro" in flask.request.json:
@@ -802,7 +802,7 @@ def page_4_admin():
             flask.session["pdf_completed"] = True
             return flask.redirect(flask.url_for("export_statistik_as_pdf"))
 
-        return flask.render_template(URL_DATENANALYSE_ADMIN,
+        return flask.render_template(constants.URL_DATENANALYSE_ADMIN,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))
@@ -816,9 +816,9 @@ def verwaltung():
         try:
             cursor = mydb.cursor()
         except Exception as e:
-            LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
+            LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
-            return flask.render_template(URL_VERWALTUNG,
+            return flask.render_template(constants.URL_VERWALTUNG,
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM deleted_patients")
         myresult = cursor.fetchall()
@@ -866,9 +866,9 @@ def verwaltung():
         try:
             cursor = mydb.cursor()
         except Exception as e:
-            LocalRenderParameters["Error"] = ERRORTEXT_DATABASECONNECTION
+            LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
-            return flask.render_template(URL_VERWALTUNG,
+            return flask.render_template(constants.URL_VERWALTUNG,
                                          RenderParameters=LocalRenderParameters)
         cursor.execute("SELECT * FROM Users")
         myresult = cursor.fetchall()
@@ -930,7 +930,7 @@ def verwaltung():
                 admin = flask.request.form['admin_select']
                 # if("charite.de" not in mail):
                 #   LocalRenderParameters["error"] = 'Nutzer ist nicht Teil der Charité, Korrekte Mailadresse eingeben'
-                #  return flask.render_template(URL_VERWALTUNG,
+                #  return flask.render_template(constants.URL_VERWALTUNG,
                 #                            RenderParameters = LocalRenderParameters)
                 if admin == "Admin":
                     admin = "1"
@@ -963,14 +963,14 @@ def verwaltung():
                     cursor = mydb.cursor()
                     cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
                     mydb.commit()
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
             if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get(
@@ -981,14 +981,14 @@ def verwaltung():
                     cursor = mydb.cursor()
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
             if "add_id_to_db" in flask.request.form:
@@ -1012,7 +1012,7 @@ def verwaltung():
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
                     LocalRenderParameters["error-text"] = e
                     # send_error_mail(e, flask.session["username"])
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
                     # get the uploaded file
@@ -1034,7 +1034,7 @@ def verwaltung():
 
                 except Exception as e:
                     LocalRenderParameters["error"] = 'No connection to Database, contact Administrator'
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
 
                 df = df.apply(pandas.to_numeric, errors="ignore")
@@ -1071,22 +1071,22 @@ def verwaltung():
                                    (newpwd, flask.session["username"]))
                     mydb.commit()
                     LocalRenderParameters["success"] = "Password was changed"
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
                 else:
                     LocalRenderParameters["error"] = 'Could not change password, current password was incorret'
-                    return flask.render_template(URL_VERWALTUNG,
+                    return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
             except Exception as e:
                 LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                 LocalRenderParameters["error-text"] = e
                 # send_error_mail(e, flask.session["username"])
-                return flask.render_template(URL_VERWALTUNG,
+                return flask.render_template(constants.URL_VERWALTUNG,
                                              RenderParameters=LocalRenderParameters)
 
-        return flask.render_template(URL_VERWALTUNG,
+        return flask.render_template(constants.URL_VERWALTUNG,
                                      RenderParameters=LocalRenderParameters)
-    return flask.render_template(URL_VERWALTUNG,
+    return flask.render_template(constants.URL_VERWALTUNG,
                                  RenderParameters=LocalRenderParameters)
 
 
@@ -1101,7 +1101,7 @@ def reset(token):
     except Exception as e:
         LocalRenderParameters["error"] = 'Your token is invalid, Please contact an Administrator'
         print(e)
-        return flask.render_template(URl_LOGIN, RenderParameters=LocalRenderParameters)
+        return flask.render_template(constants.URL_LOGIN, RenderParameters=LocalRenderParameters)
     print(decoded)
 
     ##Check for timestamp
@@ -1134,17 +1134,17 @@ def reset(token):
                         LocalRenderParameters["error"] = 'Could not write into Database, Contact an Admin for help'
                         LocalRenderParameters["error-text"] = e
                         # send_error_mail(e, flask.session["username"])
-                        return flask.render_template(URL_RESET,
+                        return flask.render_template(constants.URL_RESET,
                                                      RenderParameters=LocalRenderParameters)
 
                 else:
                     LocalRenderParameters["error"] = 'Passwords do not match, try again'
-            return flask.render_template(URL_RESET,
+            return flask.render_template(constants.URL_RESET,
                                          RenderParameters=LocalRenderParameters)
         else:
             return flask.redirect(flask.url_for('login'))
     except Exception as e:
-        LocalRenderParameters["error"] = ERRORTEXT_DATABASECONNECTION
+        LocalRenderParameters["error"] = constants.ERRORTEXT_DATABASECONNECTION
         LocalRenderParameters["error-text"] = e
         # send_error_mail(e, flask.session["username"])
         return flask.redirect(flask.url_for('login'))
@@ -1161,7 +1161,7 @@ def get_data_for_id():
         cursor.execute("SELECT * FROM mcrc_tabelle WHERE pat_id = %s", (flask.request.args["pat_id_import"],))
         if cursor.rowcount == 0:
             LocalRenderParameters["error"] = 'Patient not found in database'
-            return flask.render_template(URL_DATENEINGABE,
+            return flask.render_template(constants.URL_DATENEINGABE,
                                          RenderParameters=LocalRenderParameters)
         for row in cursor:
             try:
@@ -1173,29 +1173,29 @@ def get_data_for_id():
                 print(Error)
                 print("in mysql.connector.error")
                 LocalRenderParameters["error"] = 'ID is currently being worked on, try again later'
-                return flask.render_template(URL_DATENEINGABE,
+                return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             except Exception as e:
                 print(e)
                 LocalRenderParameters["error"] = 'Cannot connect to database, reach out to an Administrator'
-                return flask.render_template(URL_DATENEINGABE,
+                return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             print(cursor.statement)
             print("entered the Currently Working thing into the DB")
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
         LocalRenderParameters["error"] = 'Error occured'
-        return flask.render_template(URL_DATENEINGABE,
+        return flask.render_template(constants.URL_DATENEINGABE,
                                      RenderParameters=LocalRenderParameters)
     LocalRenderParameters["error"] = 'Error occured'
-    return flask.render_template(URL_DATENEINGABE,
+    return flask.render_template(constants.URL_DATENEINGABE,
                                  RenderParameters=LocalRenderParameters)
 
 
 @app.route("/versions", methods=["GET"])
 def versions():
     LocalRenderParameters = RenderParameters.copy()
-    return flask.render_template(URL_VERSIONSVERLAUF, RenderParameters=LocalRenderParameters)
+    return flask.render_template(constants.URL_VERSIONSVERLAUF, RenderParameters=LocalRenderParameters)
 
 
 @app.route("/api/tags", methods=["GET"])

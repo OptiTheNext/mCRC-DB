@@ -6,6 +6,7 @@ import pandas
 from dotenv import load_dotenv
 
 from Scripts import Columns
+from Scripts import constants
 
 # Debugging
 
@@ -89,26 +90,25 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check für SAPID
 
-    if parameters.get('pat_id_check', None):
-        if parameters["pat_id"]:
-            print(type(parameters["pat_id"]))
-            global pat_id
-            pat_id = int(parameters['pat_id'])
-            # df.query("pat_id == @pat_id", inplace= True)
-            sort_df("pat_id == @pat_id")
+    if parameters.get('pat_id_check', None) and parameters["pat_id"]:
+        print(type(parameters["pat_id"]))
+        global pat_id
+        pat_id = int(parameters['pat_id'])
+        # df.query("pat_id == @pat_id", inplace= True)
+        sort_df("pat_id == @pat_id")
 
     # Check for Geburtsdatum
     if parameters.get('geburtcheck', None):
         if parameters['von_geburt']:
             global von_geburt
-            von_geburt = datetime.datetime.strptime(parameters['von_geburt'], '%Y-%m-%d')
+            von_geburt = datetime.datetime.strptime(parameters['von_geburt'], constants.DATEFORMAT)
             von_geburt = datetime.date(von_geburt.year, von_geburt.month, von_geburt.day)
             print(von_geburt)
             # df.query("dob >= @von_geburt",inplace=True)
             sort_df("dob >= @von_geburt")
         if parameters["bis_geburt"]:
             global bis_geburt
-            bis_geburt = datetime.datetime.strptime(parameters['bis_geburt'], '%Y-%m-%d')
+            bis_geburt = datetime.datetime.strptime(parameters['bis_geburt'], constants.DATEFORMAT)
             bis_geburt = datetime.date(bis_geburt.year, bis_geburt.month, bis_geburt.day)
             # df.query("dob <= @bis_geburt",inplace=True)
             sort_df("dob <= @bis_geburt")
@@ -144,14 +144,14 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get("diagnosis_date_check", None):
         if parameters['von_diagnosis_date']:
             global von_diagnosis_date
-            von_diagnosis_date = datetime.datetime.strptime(parameters['von_diagnosis_date'], '%Y-%m-%d')
+            von_diagnosis_date = datetime.datetime.strptime(parameters['von_diagnosis_date'], constants.DATEFORMAT)
             von_diagnosis_date = datetime.date(von_diagnosis_date.year, von_diagnosis_date.month,
                                                von_diagnosis_date.day)
             # df.query("diagnosis_date >= @von_diagnosis_date",inplace=True)
             sort_df("diagnosis_date >= @von_diagnosis_date")
         if parameters["bis_diagnosis_date"]:
             global bis_diagnosis_date
-            bis_diagnosis_date = datetime.datetime.strptime(parameters['bis_diagnosis_date'], '%Y-%m-%d')
+            bis_diagnosis_date = datetime.datetime.strptime(parameters['bis_diagnosis_date'], constants.DATEFORMAT)
             bis_diagnosis_date = datetime.date(bis_diagnosis_date.year, bis_diagnosis_date.month,
                                                bis_diagnosis_date.day)
             # df.query("diagnosis_date <= @bis_diagnosis_date",inplace=True)
@@ -236,69 +236,61 @@ def analyse(parameters) -> pandas.DataFrame:
         # df.query("MSS in @mss", inplace=True)
         sort_df("MSS in @mss")
     # Check for T
-    if parameters.get('t_check', None):
-        if parameters["T"]:
-            para = parameters['T']
-            # df.query("T == @para", inplace= True)
-            sort_df("T == @para")
+    if parameters.get('t_check', None) and parameters["T"]:
+        para = parameters['T']
+        # df.query("T == @para", inplace= True)
+        sort_df("T == @para")
 
     # Check for N
-    if parameters.get('n_check', None):
-        if parameters["N"]:
-            para = parameters['N']
-            # df.query("N == @para", inplace= True)
-            sort_df("N == @para")
+    if parameters.get('n_check', None) and parameters["N"]:
+        para = parameters['N']
+        # df.query("N == @para", inplace= True)
+        sort_df("N == @para")
 
     # Check for M
-    if parameters.get('m_check', None):
-        if parameters["M"]:
-            para = parameters['M']
-            # df.query("M == @para", inplace= True)
-            sort_df("M==@para")
+    if parameters.get('m_check', None) and parameters["M"]:
+        para = parameters['M']
+        # df.query("M == @para", inplace= True)
+        sort_df("M==@para")
     # Check for LK
-    if parameters.get('lk_check', None):
-        if parameters["LK"]:
-            para = int(parameters['LK'])
-            # df.query("LK == @para", inplace= True)
-            sort_df("LK == @para")
-            # Check for L
-    if parameters.get('l_check', None):
-        if parameters["L"]:
-            para = int(parameters['L'])
-            # df.query("L == @para", inplace= True)
-            sort_df("L == @para")
+    if parameters.get('lk_check', None) and parameters["LK"]:
+        para = int(parameters['LK'])
+        # df.query("LK == @para", inplace= True)
+        sort_df("LK == @para")
+        # Check for L
+    if parameters.get('l_check', None) and parameters["L"]:
+        para = int(parameters['L'])
+        # df.query("L == @para", inplace= True)
+        sort_df("L == @para")
 
     # Check for V
-    if parameters.get('v_check', None):
-        if parameters["V"]:
-            para = int(parameters['V'])
-            # df.query("V == @para", inplace= True)
-            sort_df("V == @para")
+    if parameters.get('v_check', None) and parameters["V"]:
+        para = int(parameters['V'])
+        # df.query("V == @para", inplace= True)
+        sort_df("V == @para")
     # Check for R
-    if parameters.get('r_check', None):
-        if parameters["R"]:
-            para = int(parameters['R'])
-            # df.query("R == @para", inplace= True)
-            sort_df("R == @para")
+    if parameters.get('r_check', None) and parameters["R"]:
+        para = int(parameters['R'])
+        # df.query("R == @para", inplace= True)
+        sort_df("R == @para")
 
     # Check for G
-    if parameters.get('g_check', None):
-        if parameters["G"]:
-            para = int(parameters['G'])
-            # df.query("G == @para", inplace= True)
-            sort_df("G==@para")
+    if parameters.get('g_check', None) and parameters["G"]:
+        para = int(parameters['G'])
+        # df.query("G == @para", inplace= True)
+        sort_df("G==@para")
 
     # Check for Last Seen Date
     if parameters.get("last_seen_check", None):
         if parameters['date_fu_von']:
             global date_fu_von
-            date_fu_von = datetime.datetime.strptime(parameters['date_fu_von'], '%Y-%m-%d')
+            date_fu_von = datetime.datetime.strptime(parameters['date_fu_von'], constants.DATEFORMAT)
             date_fu_von = datetime.date(date_fu_von.year, date_fu_von.month, date_fu_von.day)
             # df.query("date_fu >= @date_fu_von",inplace=True)
             sort_df("date_fu >= @date_fu_von")
         if parameters["date_fu_bis"]:
             global date_fu_bis
-            date_fu_bis = datetime.datetime.strptime(parameters['date_fu_bis'], '%Y-%m-%d')
+            date_fu_bis = datetime.datetime.strptime(parameters['date_fu_bis'], constants.DATEFORMAT)
             date_fu_bis = datetime.date(date_fu_bis.year, date_fu_bis.month, date_fu_bis.day)
             # df.query("date_fu <= @date_fu_bis",inplace=True)
             sort_df("date_fu <= @date_fu_bis")
@@ -402,12 +394,12 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("previous_surgery == @parameters('previous_surgery_code')",inplace=True)
             sort_df("previous_surgery == @parameters('previous_surgery_code')")
         if parameters['previous_surgery_date_von']:
-            von_date = datetime.datetime.strptime(parameters['previous_surgery_date_von'], '%Y-%m-%d')
+            von_date = datetime.datetime.strptime(parameters['previous_surgery_date_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
             # df.query("previous_surgery >= @von_date",inplace=True)
             sort_df("previous_surgery >= @von_date")
         if parameters['previous_surgery_date_bis']:
-            bis_date = datetime.datetime.strptime(parameters['previous_surgery_date_bis'], '%Y-%m-%d')
+            bis_date = datetime.datetime.strptime(parameters['previous_surgery_date_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             # df.query("previous_surgery <= @bis_date",inplace=True)
             sort_df("previous_surgery <= @bis_date")
@@ -528,13 +520,13 @@ def analyse(parameters) -> pandas.DataFrame:
         # df.query("limax_initial <= @para", inplace=True)
         sort_df("limax_initial <= @para")
     if parameters.get('limax_initial_date_von', None):
-        von_date = datetime.datetime.strptime(parameters['limax_initial_date_von'], '%Y-%m-%d')
+        von_date = datetime.datetime.strptime(parameters['limax_initial_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
         print(von_geburt)
         # df.query("limax_initial_date >= @von_date",inplace=True)
         sort_df("limax_initial_date >= @von_date")
     if parameters.get('limax_initial_date_bis', None):
-        bis_date = datetime.datetime.strptime(parameters['limax_initial_date_bis'], '%Y-%m-%d')
+        bis_date = datetime.datetime.strptime(parameters['limax_initial_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
         print(von_geburt)
         # df.query("limax_initial_date <= @bis_date",inplace=True)
@@ -551,13 +543,13 @@ def analyse(parameters) -> pandas.DataFrame:
         # df.query("limax_second <= @para", inplace=True)
         sort_df("limax_second <= @para")
     if parameters.get('limax_second_date_von', None):
-        von_date = datetime.datetime.strptime(parameters['limax_second_date_von'], '%Y-%m-%d')
+        von_date = datetime.datetime.strptime(parameters['limax_second_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
         print(von_geburt)
         # df.query("limax_second_date >= @von_date",inplace=True)
         sort_df("limax_second_date >= @von_date")
     if parameters.get('limax_second_date_bis', None):
-        bis_date = datetime.datetime.strptime(parameters['limax_second_date_bis'], '%Y-%m-%d')
+        bis_date = datetime.datetime.strptime(parameters['limax_second_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
         print(von_geburt)
         sort_df("limax_second_date <= @bis_date")
@@ -574,13 +566,13 @@ def analyse(parameters) -> pandas.DataFrame:
         # df.query("limax_third <= @para", inplace=True)
         sort_df("limax_third <= @para")
     if parameters.get('limax_third_date_von', None):
-        von_date = datetime.datetime.strptime(parameters['limax_third_date_von'], '%Y-%m-%d')
+        von_date = datetime.datetime.strptime(parameters['limax_third_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
         print(von_geburt)
         # df.query("limax_third_date >= @von_date",inplace=True)
         sort_df("limax_third_date >= @von_date")
     if parameters.get('limax_third_date_bis', None):
-        bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], '%Y-%m-%d')
+        bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
         print(von_geburt)
         # df.query("limax_third_date <= @bis_date",inplace=True)
@@ -590,13 +582,13 @@ def analyse(parameters) -> pandas.DataFrame:
 
     if parameters.get("Fs_op_date", None):
         if parameters.get('op_date_Surgery1_von', None):
-            von_date = datetime.datetime.strptime(parameters['op_date_Surgery1_von'], '%Y-%m-%d')
+            von_date = datetime.datetime.strptime(parameters['op_date_Surgery1_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery1 >= @von_date",inplace=True)
             sort_df("op_date_Surgery1 >= @von_date")
         if parameters.get('op_date_Surgery1', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], '%Y-%m-%d')
+            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery1 <= @bis_date",inplace=True)
@@ -676,15 +668,31 @@ def analyse(parameters) -> pandas.DataFrame:
     # Check for DINDO
     if parameters.get('fs_dindo_checkbox', None):
         paralist = []
-        if parameters.get('fs_check_dindo_0', None): paralist.append('No comp'); paralist.append('No comp'); print(
-            "No Complications")
-        if parameters.get('fs_check_dindo_1', None): paralist.append('I'); print("I")
-        if parameters.get('fs_check_dindo_2', None): paralist.append('II'); print("II")
-        if parameters.get('fs_check_dindo_3a', None): paralist.append('IIIa'); print("IIIa")
-        if parameters.get('fs_check_dindo_3b', None): paralist.append('IIIb'); print("IIIb")
-        if parameters.get('fs_check_dindo_4a', None): paralist.append('IVa'); print("IVa")
-        if parameters.get('fs_check_dindo_4b', None): paralist.append('IVb'); print("IVb")
-        if parameters.get('fs_check_dindo_5', None): paralist.append('V'); print("V")
+        if parameters.get('fs_check_dindo_0', None):
+            paralist.append('No comp')
+            paralist.append('No comp')
+            print("No Complications")
+        if parameters.get('fs_check_dindo_1', None):
+            paralist.append('I')
+            print("I")
+        if parameters.get('fs_check_dindo_2', None):
+            paralist.append('II')
+            print("II")
+        if parameters.get('fs_check_dindo_3a', None):
+            paralist.append('IIIa')
+            print("IIIa")
+        if parameters.get('fs_check_dindo_3b', None):
+            paralist.append('IIIb')
+            print("IIIb")
+        if parameters.get('fs_check_dindo_4a', None):
+            paralist.append('IVa')
+            print("IVa")
+        if parameters.get('fs_check_dindo_4b', None):
+            paralist.append('IVb')
+            print("IVb")
+        if parameters.get('fs_check_dindo_5', None):
+            paralist.append('V')
+            print("V")
         print(paralist)
         # df.query("fs_dindo in @paralist", inplace=True)
         sort_df("fs_dindo in @paralist")
@@ -920,13 +928,13 @@ def analyse(parameters) -> pandas.DataFrame:
     # Second OP Data
     if parameters.get("ss_op_date", None):
         if parameters.get('op_date_Surgery2_von', None):
-            von_date = datetime.datetime.strptime(parameters['op_date_Surgery2_von'], '%Y-%m-%d')
+            von_date = datetime.datetime.strptime(parameters['op_date_Surgery2_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery2 >= @von_date",inplace=True)
             sort_df("op_date_Surgery2 >= @von_date")
         if parameters.get('op_date_Surgery2', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], '%Y-%m-%d')
+            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery2 <= @bis_date",inplace=True)
@@ -1248,13 +1256,13 @@ def analyse(parameters) -> pandas.DataFrame:
     # Third Op Data
     if parameters.get("ts_op_date", None):
         if parameters.get('op_date_Surgery3_von', None):
-            von_date = datetime.datetime.strptime(parameters['op_date_Surgery3_von'], '%Y-%m-%d')
+            von_date = datetime.datetime.strptime(parameters['op_date_Surgery3_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery3 >= @von_date",inplace=True)
             sort_df("op_date_Surgery3 >= @von_date")
         if parameters.get('op_date_Surgery3', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], '%Y-%m-%d')
+            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery3 <= @bis_date",inplace=True)
