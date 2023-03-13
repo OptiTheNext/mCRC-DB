@@ -1,42 +1,18 @@
-import flask
-import random
-import mysql.connector
+import codecs
 import datetime
-from Scripts import Columns
-import os
-from dotenv import load_dotenv
-import pandas
-import numpy
+
+import flask
+import jinja2
 import matplotlib
 import matplotlib.pyplot
-import requests
-import string
-import json
-from flask_session import Session
-from flask import Flask, session
-from mailjet_rest import Client
-import jwt
-import scipy
-from reportlab.pdfgen import canvas
-import reportlab
-from reportlab.lib.units import inch
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import *
-from reportlab.lib import colors
+import numpy
+import pandas
 import regex
-
-import jinja2
-import codecs
-
+import scipy
 import statsmodels.api as sm
-
-from Scripts import datenausgabe
-import copy
-
-
-
-
-
+from flask_session import Session
+from mailjet_rest import Client
+import os
 
 app = flask.Flask(__name__,
                   template_folder="templates",
@@ -50,10 +26,10 @@ mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 
 app.secret_key = os.environ.get("KRK_APP_SECRET_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
-app.config["JWT_SECRET_KEY"]= os.environ.get("KRK_APP_SECRET_KEY")
+app.config["JWT_SECRET_KEY"] = os.environ.get("KRK_APP_SECRET_KEY")
 Session(app)
 
-PATH_OUT="./Calculated_Statistic/"
+PATH_OUT = "./Calculated_Statistic/"
 
 latex_jinja_env = jinja2.Environment(
     block_start_string='\BLOCK{',
@@ -71,55 +47,53 @@ latex_jinja_env = jinja2.Environment(
 
 template = latex_jinja_env.get_template("stat_template.tex")
 
-
-
 labor_verlauf_liste = []
 
 to_drop = ["Kuerzel",
-"pat_id",
-"case_id",
-"study_id",
-"crlm_procedure_planned",
-"crlm_procedure_realize",
-"previous_surgery_which",
-"fs_previous_chemotherapy_type",
-"ss_previous_chemotherapy_type",
-"th_previous_chemotherapy_type",
-"first_surgery_type",
-"second_surgery_type",
-"third_surgery_type",
-"fs_complication_which",
-"ss_complication_which",
-"ts_complication_which",
-"Kommentar",
-]
+           "pat_id",
+           "case_id",
+           "study_id",
+           "crlm_procedure_planned",
+           "crlm_procedure_realize",
+           "previous_surgery_which",
+           "fs_previous_chemotherapy_type",
+           "ss_previous_chemotherapy_type",
+           "th_previous_chemotherapy_type",
+           "first_surgery_type",
+           "second_surgery_type",
+           "third_surgery_type",
+           "fs_complication_which",
+           "ss_complication_which",
+           "ts_complication_which",
+           "Kommentar",
+           ]
 
 booleans = [
-"alcohol",
-"pve",
-"crlm_bilobular",
-"multimodal",
-"two_staged",
-"status_fu",
-"recurrence_status",
-"smoking",
-"diabetes",
-"cirrhosis",
-"fibrosis",
-"previous_surgery",
-"fs_previous_chemotherapy",
-"first_surgery_ablation",
-"first_surgery_conversion",
-"seccond_surgery_planned",
-"second_surgery_realized",
-"ss_previous_chemotherapy",
-"second_surgery_ablation",
-"second_surgery_conversion",
-"third_surgery_planned",
-"third_surgery_realized",
-"th_previous_chemotherapy",
-"third_surgery_ablation",
-"third_surgery_conversion"
+    "alcohol",
+    "pve",
+    "crlm_bilobular",
+    "multimodal",
+    "two_staged",
+    "status_fu",
+    "recurrence_status",
+    "smoking",
+    "diabetes",
+    "cirrhosis",
+    "fibrosis",
+    "previous_surgery",
+    "fs_previous_chemotherapy",
+    "first_surgery_ablation",
+    "first_surgery_conversion",
+    "seccond_surgery_planned",
+    "second_surgery_realized",
+    "ss_previous_chemotherapy",
+    "second_surgery_ablation",
+    "second_surgery_conversion",
+    "third_surgery_planned",
+    "third_surgery_realized",
+    "th_previous_chemotherapy",
+    "third_surgery_ablation",
+    "third_surgery_conversion"
 ]
 
 decimals = [
@@ -132,7 +106,7 @@ decimals = [
     "limax_third",
     "fs_previous_chemotherapy_cycles",
     "first_surgery_length",
-    #Laborwerte
+    # Laborwerte
     ##Erste OP
     "fs_Serum_Bili_POD1",
     "fs_Serum_Bili_POD3",
@@ -155,7 +129,7 @@ decimals = [
     "fs_INR_POD3",
     "fs_INR_POD5",
     "fs_INR_LAST",
-    #Zweite OP
+    # Zweite OP
     "ss_Serum_Bili_POD1",
     "ss_Serum_Bili_POD3",
     "ss_Serum_Bili_POD5",
@@ -176,7 +150,7 @@ decimals = [
     "ss_INR_POD3",
     "ss_INR_POD5",
     "ss_INR_LAST",
-    #Dritte OP
+    # Dritte OP
     "th_Serum_Bili_POD1",
     "th_Serum_Bili_POD3",
     "th_Serum_Bili_POD5",
@@ -213,7 +187,6 @@ decimals = [
     "datediff_op1_op2"
 ]
 
-
 ordinals = [
     "T",
     "N",
@@ -223,7 +196,7 @@ ordinals = [
     "L",
     "V",
     "R"
-    ]
+]
 
 categorials = [
     "diagnosis1",
@@ -284,7 +257,7 @@ labor_werte = [
     "fs_INR_POD3",
     "fs_INR_POD5",
     "fs_INR_LAST",
-    #Zweite OP
+    # Zweite OP
     "ss_Serum_Bili_POD1",
     "ss_Serum_Bili_POD3",
     "ss_Serum_Bili_POD5",
@@ -305,7 +278,7 @@ labor_werte = [
     "ss_INR_POD3",
     "ss_INR_POD5",
     "ss_INR_LAST",
-    #Dritte OP
+    # Dritte OP
     "th_Serum_Bili_POD1",
     "th_Serum_Bili_POD3",
     "th_Serum_Bili_POD5",
@@ -330,75 +303,74 @@ labor_werte = [
 
 global result
 
+
 def build_dict(datatype, data):
-    
-    if datatype not in ["Image","Table"]:
+    if datatype not in ["Image", "Table"]:
         raise ValueError("Datatype didn't match Image or Table")
-    flask.session["elements"].append({"type":datatype,"data":data})
+    flask.session["elements"].append({"type": datatype, "data": data})
 
 
-def table_one_func(x,loesung): #Formatiert result output in liste
+def table_one_func(x, loesung):  # Formatiert result output in liste
     lista = [[x]]
     print(loesung.values)
-    for i,j in zip(loesung.axes[0].values.astype(str),loesung.values.astype(str)):
-            i = i.replace("%","\\%")
-            j = j.replace("%", "\\%")
-            lista = lista + [[i,j]]
-    
-    x = x.replace("_","-")
-    lista[0]= [x,"..."]
-    
+    for i, j in zip(loesung.axes[0].values.astype(str), loesung.values.astype(str)):
+        i = i.replace("%", "\\%")
+        j = j.replace("%", "\\%")
+        lista = lista + [[i, j]]
+
+    x = x.replace("_", "-")
+    lista[0] = [x, "..."]
+
     return lista
-            
+
 
 def make_autopct(values):
     def my_autopct(pct):
         total = sum(values)
-        val = int(round(pct*total/100.0))
-        return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
+        val = int(round(pct * total / 100.0))
+        return '{p:.2f}%  ({v:d})'.format(p=pct, v=val)
+
     return my_autopct
 
-def deskreptiv(df,points_of_interest,grafik,table_one):
-    #Table one für Werte aus DF und Liste zur beschränkung der werte
-    print("Wuhu, deskreptiv")
+
+def deskriptiv(df, points_of_interest, grafik, table_one):
+    # Table one für Werte aus DF und Liste zur beschränkung der werte
+    print("Wuhu, deskriptiv")
     print("Graphik =")
     print(grafik)
     print(table_one)
     df = pandas.DataFrame(df)
     print(points_of_interest)
-    
 
     for x in points_of_interest:
-        items = []
         if x in to_drop:
             continue
-            
+
         current_name = x
         current_df = df[x]
         current_df.dropna(inplace=True)
-        
+
         if x in booleans:
-            df = df.replace({0:False, 1:True})
+            df = df.replace({0: False, 1: True})
             print("replaced with False/True")
-            
+
         if x in decimals:
             print("trying to change formats")
-            
-            current_df = pandas.to_numeric(current_df,errors='coerce')
-            
+
+            current_df = pandas.to_numeric(current_df, errors='coerce')
+
         if x in categorials:
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
-            current_df[1] = current_df.dropna(inplace = True)
-            
-            
+            current_df[1] = current_df.dropna(inplace=True)
+
         print(current_df.dtype)
-        if(table_one):
+        if (table_one):
             result = current_df.describe()
-            table = table_one_func(x,result) #table is ne liste
+            table = table_one_func(x, result)  # table is ne liste
             build_dict("Table", table)
 
-        if(grafik):
+        if (grafik):
             print("ich bin unter if grafik")
             print(x)
             if x in booleans:
@@ -408,136 +380,136 @@ def deskreptiv(df,points_of_interest,grafik,table_one):
                 print(values)
                 val = ['False:', 'True:']
                 values = [values[0], values[1]]
-                series2 = pandas.Series(values, 
-                    index=val, 
-                    name=current_name +"("+ str(sum(values))+")")
-                pie = series2.plot.pie(figsize=(6, 6),autopct=make_autopct(values))
+                series2 = pandas.Series(values,
+                                        index=val,
+                                        name=current_name + "(" + str(sum(values)) + ")")
+                pie = series2.plot.pie(figsize=(6, 6), autopct=make_autopct(values))
                 fig = pie.get_figure()
-                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_kuchen.png"
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_kuchen.png"
                 fig.savefig(save_here)
-                build_dict("Image", flask.session["username"] +"_"+ x+"_kuchen.png")
+                build_dict("Image", flask.session["username"] + "_" + x + "_kuchen.png")
                 fig.clf()
                 values = None
                 series2 = None
                 print("Hier kuchendiagramm")
 
             if x in decimals:
-                print("made an boxplot") 
+                print("made an boxplot")
                 pie = current_df.plot.box(figsize=(6, 6))
                 fig = pie.get_figure()
-                save_here = PATH_OUT +flask.session["username"] +"_"+ x+"_box.png"
-                fig.savefig(save_here)  
-                build_dict("Image", flask.session["username"] +"_"+ x+"_box.png")
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_box.png"
+                fig.savefig(save_here)
+                build_dict("Image", flask.session["username"] + "_" + x + "_box.png")
                 fig.clf()
 
-            if x  in categorials:
-                print ("making a Balkendiagramm")
-                
-                current_df=current_df.value_counts()
+            if x in categorials:
+                print("making a Balkendiagramm")
+
+                current_df = current_df.value_counts()
                 print(current_df)
-                pie = current_df.plot.bar(figsize = (6,6))
+                pie = current_df.plot.bar(figsize=(6, 6))
                 fig = pie.get_figure()
-                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_balken.png"
-                fig.savefig(save_here)  
-                build_dict("Image",  flask.session["username"] +"_"+ x+"_balken.png")
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_balken.png"
+                fig.savefig(save_here)
+                build_dict("Image", flask.session["username"] + "_" + x + "_balken.png")
                 fig.clf()
-        
-        
 
-    
-def normalverteilung(df,points_of_interest,saphiro,kolmogorov,anderson,qqplot,histo):
-    #Test auf Normalverteilung und entsprechender T-Test
+
+def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo):
+    # Test auf Normalverteilung und entsprechender T-Test
     for x in points_of_interest:
         if x in decimals:
             # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
             df = pandas.DataFrame(df)
             df = df[x]
-            
-            df = pandas.to_numeric(df,errors='coerce')
-            
+
+            df = pandas.to_numeric(df, errors='coerce')
+
             df = df[~numpy.isnan(df)]
-            
-            if(saphiro == True):
+
+            if (saphiro == True):
                 result = scipy.stats.shapiro(df)
-                table = ([x," :Saphiro-Wilkoson Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+                table = ([x, " :Saphiro-Wilkoson Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
                 build_dict("Table", table)
-            if(kolmogorov == True):
-                result = scipy.stats.kstest(df,'norm')
-                table = ([x," :Kolmogorov-Smirnov Test"],["Teststatistik",result[0]],["P-Wert",result[1]])
+            if (kolmogorov == True):
+                result = scipy.stats.kstest(df, 'norm')
+                table = ([x, " :Kolmogorov-Smirnov Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
                 build_dict("Table", table)
             print("anderson")
-            if(anderson == True):
-                result=scipy.stats.anderson(df)
-                table = ([x," :Anderson-Test"],["Teststatistik",result[0]],["Kritische Werte",result[1]],["Signifikanslevel",result[2]])
+            if (anderson == True):
+                result = scipy.stats.anderson(df)
+                table = ([x, " :Anderson-Test"], ["Teststatistik", result[0]], ["Kritische Werte", result[1]],
+                         ["Signifikanslevel", result[2]])
                 build_dict("Table", table)
-            if(qqplot == True):
-                fig = sm.qqplot(df, line='45',xlabel='Zu erwartende Werte',ylabel=x,figsize = (6,6))
-                save_here = PATH_OUT + x +".png"
-                fig.savefig(save_here) 
-                build_dict("Image", x+"_qqplot.png")
+            if (qqplot == True):
+                fig = sm.qqplot(df, line='45', xlabel='Zu erwartende Werte', ylabel=x, figsize=(6, 6))
+                save_here = PATH_OUT + x + ".png"
+                fig.savefig(save_here)
+                build_dict("Image", x + "_qqplot.png")
                 fig.clf()
-            if(histo == True):
+            if (histo == True):
                 print("hier histo")
                 fig, ax = matplotlib.pyplot.subplots()
                 df.plot.kde(ax=ax, legend=False)
-                df.plot.hist(density=True, ax=ax,figsize = (6,6))
+                df.plot.hist(density=True, ax=ax, figsize=(6, 6))
                 ax.set_ylabel('Probability')
                 ax.grid(axis='y')
                 ax.set_facecolor('#d8dcd6')
-                save_here = PATH_OUT + flask.session["username"] +"_"+ x+"_histo.png"
-                fig.savefig(save_here) 
-                build_dict("Image", flask.session["username"] +"_"+ x+"_histo.png")
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_histo.png"
+                fig.savefig(save_here)
+                build_dict("Image", flask.session["username"] + "_" + x + "_histo.png")
                 fig.clf()
 
     print("Wuhu, normalverteilt")
 
-def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_v,ttest_unv,utest,will):
-    #Test / Darstellung von korrellation
+
+def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will):
+    # Test / Darstellung von korrellation
     def check_variable(variable):
-            global bool_values
-            global constans
-            if len(bool_values) == 0:
-                if variable in booleans:
-                    bool_values = df[reg_one]
-                    bool_values = pandas.get_dummies(bool_values,drop_first= True)
-            if len(constans)==0:
-                if variable in decimals:
-                    constans = df[reg_one]
-                    constans = pandas.to_numeric(constans,errors='coerce')
-                    constans.dropna(inplace = True)
-                    
+        global bool_values
+        global constans
+        if len(bool_values) == 0 and variable in booleans:
+            bool_values = df[reg_one]
+            bool_values = pandas.get_dummies(bool_values, drop_first=True)
+        if len(constans) == 0 and variable in decimals:
+            constans = df[reg_one]
+            constans = pandas.to_numeric(constans, errors='coerce')
+            constans.dropna(inplace=True)
+
     df = pandas.DataFrame(df)
     labor_verlauf_liste = []
     global op_nm
     global labor_typ
-    def verlauf_check(x): 
+
+    def verlauf_check(x):
         if x in labor_werte:
-                print("teste auf verlauf")
-                global op_nm
-                global labor_typ
-                op_nm = x.split("_")[0]
-                labor_typ = x.split("_")[1]
-                my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
-                for s in labor_verlauf_liste:
-                    print("in verlaufs schleife")
-                    if regex.search(my_regex, s):
-                        print("its true, verlauf bereits angelegt")
-                        return True
-                    else:
-                        print('verlauf noch nicht angelegt')
-                        labor_verlauf_liste.append(op_nm+labor_typ)
-                        print(labor_verlauf_liste)
-                        return False
-                if not labor_verlauf_liste:
+            print("teste auf verlauf")
+            global op_nm
+            global labor_typ
+            op_nm = x.split("_")[0]
+            labor_typ = x.split("_")[1]
+            my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
+            for s in labor_verlauf_liste:
+                print("in verlaufs schleife")
+                if regex.search(my_regex, s):
+                    print("its true, verlauf bereits angelegt")
+                    return True
+                else:
                     print('verlauf noch nicht angelegt')
-                    labor_verlauf_liste.append(op_nm+labor_typ)
+                    labor_verlauf_liste.append(op_nm + labor_typ)
                     print(labor_verlauf_liste)
                     return False
+            if not labor_verlauf_liste:
+                print('verlauf noch nicht angelegt')
+                labor_verlauf_liste.append(op_nm + labor_typ)
+                print(labor_verlauf_liste)
+                return False
+
     def lin_reg(row):
         print("linreg")
         ywerte = []
         xwerte = []
-        row = pandas.to_numeric(row,errors='coerce')
+        row = pandas.to_numeric(row, errors='coerce')
         print(type(row[0]))
         if not numpy.isnan(row[0]):
             ywerte.append(row[0])
@@ -551,7 +523,7 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_
         if not numpy.isnan(row[3]):
             ywerte.append(row[3])
             xwerte.append(row[4])
-        
+
         slope, intercept, r, p, se = scipy.stats.linregress(xwerte, y=ywerte, alternative='two-sided')
         return slope
 
@@ -560,63 +532,63 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_
             if verlauf_check(x):
                 continue
             # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
-            value = op_nm + "_"   
-            if(labor_typ == "Serum" or labor_typ == "Drain"):
-                    value = value + labor_typ + "_Bili"
+            value = op_nm + "_"
+            if (labor_typ == "Serum" or labor_typ == "Drain"):
+                value = value + labor_typ + "_Bili"
             else:
-                    value = value + labor_typ   
-            valuepoint1 = value  + '_POD1'
-            valuepoint2 = value  + '_POD3'
+                value = value + labor_typ
+            valuepoint1 = value + '_POD1'
+            valuepoint2 = value + '_POD3'
             valuepoint3 = value + '_POD5'
             valuepoint4 = value + '_Last'
             valuepoint5 = op_nm + "_los"
 
-            df2 = df[[valuepoint1,valuepoint2,valuepoint3,valuepoint4,valuepoint5]] 
-            df2.dropna(axis = 0, how = "all", inplace = True)
-            
-            #BEGINN DER REGRESSION! 
-            df2['Slope'] = df2.apply(lin_reg, axis = 1)
+            df2 = df[[valuepoint1, valuepoint2, valuepoint3, valuepoint4, valuepoint5]]
+            df2.dropna(axis=0, how="all", inplace=True)
+
+            # BEGINN DER REGRESSION!
+            df2['Slope'] = df2.apply(lin_reg, axis=1)
             print(df2)
 
-            #Hier table One
+            # Hier table One
             df3 = df2['Slope']
-            df3 = pandas.to_numeric(df3,errors='coerce')
+            df3 = pandas.to_numeric(df3, errors='coerce')
 
             result = df3.describe()
 
-            listb = table_one_func(x,result)
+            listb = table_one_func(x, result)
             build_dict("Table", listb)
-            #Hier Boxplot
+            # Hier Boxplot
             pie = df3.plot.box(figsize=(8, 8))
             fig = pie.get_figure()
-            save_here = PATH_OUT + x+".png"
-            fig.savefig(save_here)  
-            build_dict("Image", x+".png")
+            save_here = PATH_OUT + x + ".png"
+            fig.savefig(save_here)
+            build_dict("Image", x + ".png")
             fig.clf()
 
             print(df2)
     if korrelation:
         print("wir sind in korrelation")
-        
+
         print(korrelation)
-        df = df[[reg_one,reg_two]]
-        df.dropna(how="any",inplace=True)
+        df = df[[reg_one, reg_two]]
+        df.dropna(how="any", inplace=True)
 
         var1 = df[reg_one]
         if reg_one in decimals:
-            var1 =  pandas.to_numeric(var1,errors='coerce')
+            var1 = pandas.to_numeric(var1, errors='coerce')
         print(var1)
         var2 = df[reg_two]
         if reg_two in decimals:
-            var2 =  pandas.to_numeric(var2,errors='coerce')
+            var2 = pandas.to_numeric(var2, errors='coerce')
         print(var2)
-        result = scipy.stats.stats.pearsonr(var1,var2)
+        result = scipy.stats.stats.pearsonr(var1, var2)
         x = reg_one + " und " + reg_two
-        lista = ([x," :Korrelation nach Pearson"],["Korrelationskoeffizent",result[0]],["P-Wert",result[1]])
+        lista = ([x, " :Korrelation nach Pearson"], ["Korrelationskoeffizent", result[0]], ["P-Wert", result[1]])
         build_dict("Table", lista)
-    
+
     if ttest_unv:
-        
+
         if reg_one in booleans:
             bools = reg_one
             other = reg_two
@@ -627,10 +599,10 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_
             else:
                 other1 = reg_one
                 other2 = reg_two
-        
-        if reg_one in booleans or reg_two in booleans: 
-            df_test = df[[bools,other]]
-            df_test.dropna(inplace= True)
+
+        if reg_one in booleans or reg_two in booleans:
+            df_test = df[[bools, other]]
+            df_test.dropna(inplace=True)
             print(df_test)
             group1 = df_test.loc[df_test[bools] == "True"]
             print(group1)
@@ -642,18 +614,16 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_
         else:
             group1 = df[other1]
             group2 = df[other2]
-            group1 = pandas.to_numeric(group1,errors='coerce')
-            group2 = pandas.to_numeric(group2,errors='coerce')
+            group1 = pandas.to_numeric(group1, errors='coerce')
+            group2 = pandas.to_numeric(group2, errors='coerce')
             result = scipy.stats.ttest_ind(group1, group2)
             print("hier results für beide dings")
             print(result)
-        
-
 
     if 1 == 0:
         print("logistische Regression")
-        
-        #Now we check the first variable and then set it
+
+        # Now we check the first variable and then set it
         global constans
         constans = []
         global bool_values
@@ -668,25 +638,20 @@ def exploration(df, points_of_interest,reg_one,reg_two,linear,korrelation,ttest_
             print(result)
         except Exception as e:
             print("hier fehler von log")
-            print (e)
-
-        
-
-
+            print(e)
 
     print("wuhu, explorativ")
 
-
-
     print("help")
+
 
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
-    tuple_list = [tuple(flask.session["elements"][i:i+2]) for i in range(0, len(flask.session["elements"]), 2)]
+    tuple_list = [tuple(flask.session["elements"][i:i + 2]) for i in range(0, len(flask.session["elements"]), 2)]
     # Dokument schreiben
     currentdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     dokument = template.render(date_generated=currentdate, tuple_list=tuple_list)
-    name = PATH_OUT + "Statistik-" + flask.session["username"] 
+    name = PATH_OUT + "Statistik-" + flask.session["username"]
     with codecs.open(name + ".tex", "w", "utf-8") as outputTex:
         outputTex.write(dokument)
         outputTex.close()
@@ -694,18 +659,12 @@ def generate_pdf():
 
     # PDF rendern mit tectonic (https://tectonic-typesetting.github.io/), muss installiert und im PATH sein
 
-    os.system("./tectonic -X compile " + name +".tex")  
+    os.system("./tectonic -X compile " + name + ".tex")
     tuple_list = []
     for x in flask.session["elements"]:
         print(x)
-        if(x["type"] == "Image"):
+        if (x["type"] == "Image"):
             os.remove(PATH_OUT + x["data"])
-    os.remove(name+".tex")
+    os.remove(name + ".tex")
 
-    return (name+".pdf")
-
-
-
-
-
-
+    return (name + ".pdf")

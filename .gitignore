@@ -2,3 +2,7 @@ __pycache__
 .env
 flask_session
 Calculated_Descriptiv/*
+
+.idea/
+
+node_modules/

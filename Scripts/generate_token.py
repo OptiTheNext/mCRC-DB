@@ -1,9 +1,10 @@
-import os
-import jwt
 import datetime
+import os
+
+import jwt
 
 
-def generate_password_reset_token(username,password):
+def generate_password_reset_token(username, password):
     key = os.environ.get("KRK_APP_SECRET_KEY")
     print(key)
     delta = datetime.timedelta(hours=48)
@@ -15,10 +16,10 @@ def generate_password_reset_token(username,password):
             "exp": exp,
             "nbf": now,
             "username": username,
-            "pwd":password
+            "pwd": password
         },
         key,
         algorithm="HS256",
     )
-    
-    return encoded_jwt 
+
+    return encoded_jwt
