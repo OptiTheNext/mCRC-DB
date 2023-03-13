@@ -47,6 +47,7 @@ def analyse(parameters) -> pandas.DataFrame:
 
     df = df.apply(pandas.to_numeric, errors="ignore")
     df['pve'] = df['pve'].astype('bool')
+    df['dob'] = pandas.to_datetime(df.dob)
     df['crlm_bilobular'] = df['crlm_bilobular'].astype('bool')
     df['multimodal'] = df['multimodal'].astype('bool')
     df['two_staged'] = df['two_staged'].astype('bool')
@@ -254,7 +255,7 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("M==@para")
     # Check for LK
     if parameters.get('lk_check', None) and parameters["LK"]:
-        para = int(parameters['LK'])
+        #para = int(parameters['LK'])
         # df.query("LK == @para", inplace= True)
         sort_df("LK == @para")
         # Check for L

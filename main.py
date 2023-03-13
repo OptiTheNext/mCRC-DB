@@ -30,7 +30,6 @@ from Scripts import statistik
 from Scripts import constants
 
 URL_DATENANALYSE = "datenanalyse.html"
-URL_DATENANALYSE_ADMIN = "datenanalyse_admin.html"
 URL_DATENAUSGABE = "datenausgabe.html"
 URL_DATENEINGABE = "dateneingabe.html"
 URl_LOGIN = "login.html"
@@ -548,7 +547,7 @@ def export_statistik_as_pdf():
         LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
         LocalRenderParameters["error-text"] = e
         print(e)
-        return flask.render_template(constants.URL_DATENANALYSE_ADMIN,
+        return flask.render_template(constants.URL_DATENANALYSE,
                                      RenderParameters=LocalRenderParameters)
 
 
@@ -614,18 +613,8 @@ def page_3():
         return flask.redirect(flask.url_for('login'))
 
 
-@app.route("/datenanalyse", methods=['POST', 'GET'])
+@app.route("/datenanalyse", methods=["POST", "GET"])
 def page_4():
-    if "username" in flask.session:
-        LocalRenderParameters = RenderParameters.copy()
-        return flask.render_template(constants.URL_DATENANALYSE,
-                                     RenderParameters=LocalRenderParameters)
-    else:
-        return flask.redirect(flask.url_for('login'))
-
-
-@app.route("/datenanalyse_admin", methods=["POST", "GET"])
-def page_4_admin():
     if "username" in flask.session and flask.session.get("Admin") == 1:
 
         LocalRenderParameters = RenderParameters.copy()
@@ -804,7 +793,7 @@ def page_4_admin():
             flask.session["pdf_completed"] = True
             return flask.redirect(flask.url_for("export_statistik_as_pdf"))
 
-        return flask.render_template(constants.URL_DATENANALYSE_ADMIN,
+        return flask.render_template(constants.URL_DATENANALYSE,
                                      RenderParameters=LocalRenderParameters)
     else:
         return flask.redirect(flask.url_for('login'))

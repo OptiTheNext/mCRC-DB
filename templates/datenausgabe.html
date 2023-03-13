@@ -6,20 +6,20 @@
     <h3>Datenausgabe</h3>
     <form action="" autocomplete="off" method="post">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="Mode" id="Additiv" value="additiv">
+            <input class="form-check-input" type="radio" name="Mode" id="Additiv" value="additiv" checked>
             <label class="form-check-label" for="Additiv">
                 Additive Suche
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="Mode" id="Subtraktiv" value="subtraktiv" checked>
+            <input class="form-check-input" type="radio" name="Mode" id="Subtraktiv" value="subtraktiv">
             <label class="form-check-label" for="Subtraktiv">
                 Subtraktive Suche
             </label>
         </div>
         <div class="container" style="margin-left: 0;">
             <div class="row row-cols-1 row-cols-lg-3 overflow-auto border" style="height: 400px;">
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Stammdaten</h3>
                         <hr/>
@@ -62,7 +62,7 @@
 
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Diagnose</h3>
                         <hr/>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>TNM-Klassifikation</h3>
                         <hr/>
@@ -216,9 +216,9 @@
                                 </span>
 
                             <div class="form-group">
-                                <label for="t_check">T</label>
                                 <input class="form-check-input" id="t_check" name="t_check"
                                        onchange="showInputField('t_check','t_field')" type="checkbox" value="1"/>
+                                       <label for="t_check">T</label>
                                 <span class="hidden-on-default, border_box" id="t_field" style="display: none;">
                                         <input class="form-control" id="T" max="4" min="0" name="T" placeholder="Code"
                                                type="number"/>
@@ -284,7 +284,7 @@
                     </div>
                 </div>
                 <div class="w-100 gy-4"></div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Allgemeiner Zustand</h3>
                         <hr/>
@@ -443,7 +443,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Vorgeschichte</h3>
                         <hr/>
@@ -544,7 +544,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height: 400px;">
                         <h3>Allgemeine OP Daten</h3>
                         <div class="form-group">
@@ -675,7 +675,7 @@
 
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid ; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Erste OP</h3>
                         <div class="form-group">
@@ -704,10 +704,10 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <label for="op_diagnosis_Surgery1_checkbox">OP Diagnose</label>
+                            
                             <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery1_checkbox"
                                    value="1"
-                                   onchange="showInputField('op_diagnosis_Surgery1_checkbox','op_diagnosis_Surgery1_field')">
+                                   onchange="showInputField('op_diagnosis_Surgery1_checkbox','op_diagnosis_Surgery1_field')"><label for="op_diagnosis_Surgery1_checkbox">OP Diagnose</label>
                             <span id="op_diagnosis_Surgery1_field" class='hidden-on-default border_box'
                                   style="display:none;">
                               <input type="text" class="form-control" id="op_diagnosis_Surgery1"
@@ -815,7 +815,7 @@
                     </div>
                 </div>
 
-                <div class="col-6" style="border: 1px solid ; padding: 10px;">
+                <div class="col-6" style=" padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Erste OP Labordaten</h3>
                         <div class="accordion accordion-flush" id="op1_accordion_lab">
@@ -1216,7 +1216,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid ; padding: 10px;">
+                <div class="col-6" style=" padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Zweite OP</h3>
                         <div class="form-group">
@@ -1301,9 +1301,9 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <label for="ss_icu_checkbox">Intensivzeit</label>
                             <input class="form-check-input" type="checkbox" id="ss_icu_checkbox" value="1"
                                    onchange="showInputField('ss_icu_checkbox','ss_icu_field')">
+                                   <label for="ss_icu_checkbox">Intensivzeit</label>
                             <span id="ss_icu_field" class='hidden-on-default border_box' style="display:none;">
                                 <label for="ss_icu_von">Intensivzeit von</label>
                                 <input type="number" min="0" max="10000" class="form-control" id="ss_icu_von"
@@ -1359,7 +1359,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid ; padding: 10px;">
+                <div class="col-6" style=" padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Zweite OP Labordaten</h3>
                         <div class="accordion accordion-flush" id="op2_accordion_lab">
@@ -1761,7 +1761,7 @@
                     </div>
                 </div>
 
-                <div class="col-6" style="border: 1px solid ; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Dritte OP</h3>
                         <div class="form-group">
@@ -1903,7 +1903,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="border: 1px solid; padding: 10px;">
+                <div class="col-6" style="padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Dritte OP Labordaten</h3>
                         <div class="accordion accordion-flush" id="op3_accordion_lab">
