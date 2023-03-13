@@ -20,10 +20,10 @@
 SystemD service file:
 
 **Vor der Installation**
-Pfad der main.py in `ExecStart`
-Pfad des Arbeitsverzeichnisses in `WorkingDirectory` auf Pfad der geklonten Repository ändern
-Werte von `User` und `Group` entsprechend anpassen
-[Tectonic (LaTeX "Compiler")](https://tectonic-typesetting.github.io/en-US/index.html) installieren mit `curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh`
+- Pfad der main.py in `ExecStart`
+- Pfad des Arbeitsverzeichnisses in `WorkingDirectory` auf Pfad der geklonten Repository ändern
+- Werte von `User` und `Group` entsprechend anpassen
+- [Tectonic (LaTeX "Compiler")](https://tectonic-typesetting.github.io/en-US/index.html) installieren mit `curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh`
 
 
 **Installation**
