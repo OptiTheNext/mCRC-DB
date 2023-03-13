@@ -11,7 +11,6 @@ import regex
 import scipy
 import statsmodels.api as sm
 from flask_session import Session
-from mailjet_rest import Client
 import os
 
 app = flask.Flask(__name__,
@@ -22,7 +21,6 @@ api_key = os.environ.get("KRK_DB_API_KEY")
 print(api_key)
 
 api_secret = os.environ.get("KRK_DB_SECRET_KEY")
-mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 
 app.secret_key = os.environ.get("KRK_APP_SECRET_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'

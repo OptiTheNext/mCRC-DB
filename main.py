@@ -27,6 +27,7 @@ from Scripts import Columns
 from Scripts import datenausgabe
 from Scripts import generate_token
 from Scripts import statistik
+from Scripts import constants
 
 URL_DATENANALYSE = "datenanalyse.html"
 URL_DATENANALYSE_ADMIN = "datenanalyse_admin.html"
@@ -546,6 +547,7 @@ def export_statistik_as_pdf():
     except Exception as e:
         LocalRenderParameters["Error"] = "Something went wrong, contact Administrator"
         LocalRenderParameters["error-text"] = e
+        print(e)
         return flask.render_template(constants.URL_DATENANALYSE_ADMIN,
                                      RenderParameters=LocalRenderParameters)
 
