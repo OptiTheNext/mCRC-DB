@@ -1,5 +1,4 @@
 URL_DATENANALYSE = "datenanalyse.html"
-URL_DATENANALYSE_ADMIN = "datenanalyse_admin.html"
 URL_DATENAUSGABE = "datenausgabe.html"
 URL_DATENEINGABE = "dateneingabe.html"
 URL_LOGIN = "login.html"
