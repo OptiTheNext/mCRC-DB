@@ -231,12 +231,7 @@ def dateneingabe():
     def get_next_patient_id():
         try:
             cursor = mydb.cursor()
-            cursor.execute(
-                'SELECT mcrc_tabelle.pat_id'
-                'FROM mcrc_tabelle'
-                'WHERE mcrc_tabelle.Kuerzel = "" '
-                'AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active)'
-                ' ORDER BY mcrc_tabelle.op_date_Surgery1 DESC LIMIT 1')
+            cursor.execute('SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = "" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) ORDER BY mcrc_tabelle.op_date_Surgery1 DESC LIMIT 1')
             next_patient = cursor.fetchall()[0][0]
             print("Nächster Patient: ")
             print(next_patient)
@@ -602,7 +597,7 @@ def page_3():
 
 @app.route("/datenanalyse", methods=["POST", "GET"])
 def page_4():
-    if "username" in flask.session and flask.session.get("Admin") == 1:
+    if "username" in flask.session:
 
         LocalRenderParameters = RenderParameters.copy()
         if flask.session.get("df"):
