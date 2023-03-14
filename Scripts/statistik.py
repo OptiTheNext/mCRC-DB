@@ -600,7 +600,6 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
 
         if reg_one in booleans or reg_two in booleans:
             df_test = df[[bools, other]]
-            df_test.dropna(inplace=True)
             print(df_test)
             group1 = df_test.loc[df_test[bools] == "True"]
             print(group1)
@@ -614,10 +613,14 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
             group2 = df[other2]
             group1 = pandas.to_numeric(group1, errors='coerce')
             group2 = pandas.to_numeric(group2, errors='coerce')
+            group1 = group1.dropna(inplace=True)
+            group2 = group2.dropna(inplace=False)
+            print(group1)
+            print(group2)
             result = scipy.stats.ttest_ind(group1, group2)
             print("hier results für beide dings")
             print(result)
-
+    
     if 1 == 0:
         print("logistische Regression")
 
