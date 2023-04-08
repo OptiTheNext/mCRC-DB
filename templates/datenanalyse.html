@@ -55,6 +55,10 @@ Lol, hier steht was, was keiner lesen kann.
             let utest = $("#utest").is(':checked');
             let will = $("#will").is(':checked');
 
+            let Mode_unv = document.querySelector('input[name="Mode_unv"]:checked').value;
+            let Mode_v = document.querySelector('input[name="Mode_v"]:checked').value;
+            let Mode_u =document.querySelector('input[name="Mode_u"]:checked').value;
+            let Mode_w =document.querySelector('input[name="Mode_w"]:checked').value;
 
             console.log($("#serverSideTags").val());
             const xhr = new XMLHttpRequest();
@@ -76,7 +80,13 @@ Lol, hier steht was, was keiner lesen kann.
                 "ttest_v": ttest_v,
                 "ttest_unv": ttest_unv,
                 "utest": utest,
-                "will": will
+                "will": will,
+                "Mode_unv": Mode_unv,
+                "Mode_v":Mode_v,
+                "Mode_u":Mode_u,
+                "Mode_w":Mode_w
+                
+
             }));
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
@@ -191,7 +201,7 @@ Lol, hier steht was, was keiner lesen kann.
                                             >
                                                 <option disabled hidden value="">Choose a tag...</option>
                                             </select>
-                                            <br>
+                                           <br>
                                             <select
                                                     class="form-select"
                                                     style="width: 30%;"
@@ -203,34 +213,114 @@ Lol, hier steht was, was keiner lesen kann.
                                                     data-allowClear="true"
                                             >
                                                 <option disabled hidden value="">Choose a tag...</option>
-                                            </select>
+                                            </select> <br>
                                             <input class="form-check-input" type="checkbox" id="korrelation"
                                                    name="korrelation" value="true">
                                             <label for="korrelation">Korrelationskoeffizient</label>
                                             <input class="form-check-input" type="checkbox" id="ttest_v" name="ttest_v"
-                                                   value="true">
+                                                   value="true" onchange="showInputField('ttest_v','ttest_v_field')">
                                             <label for="ttest_v" data-toggle="tooltip"
                                                    data-placement="right"
-                                                   title="Please select a Boolean and a Number"
+                                                   title="Der t-Test für abhängige Stichproben testet zweiseitig, ob die Mittelwerte zweier abhängiger Stichproben verschieden sind."
                                                    animation="true" html="true">T-Test verbunden</label>
+                                                   <span id="ttest_v_field" class='hidden-on-default border_box' style="display:none;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_v" id="zweiseitig_v" value="zweiseitig" checked>
+                                                        <label class="form-check-label" for="zweiseitig_v">
+                                                            Zweiseitig
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_v" id="links_v" value="links">
+                                                        <label class="form-check-label" for="links_v">
+                                                            Links
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_v" id="rechts_v" value="rechts">
+                                                        <label class="form-check-label" for="rechts_v">
+                                                            Rechts
+                                                        </label>
+                                                    </div>
+                                                </span>
                                             <input class="form-check-input" type="checkbox" id="ttest_unv" name="log"
-                                                   value="true">
+                                                   value="true" onchange="showInputField('ttest_unv','ttest_unv_field')">
                                             <label for="ttest_unv" data-toggle="tooltip"
-                                                   data-placement="right"
-                                                   title="Please select a Boolean and a Number"
-                                                   animation="true" html="true">T-Test unverbunden</label>
+                                            data-placement="right"
+                                            title="Der t-Test für unabhängige Stichproben testet zweiseitig, ob die Mittelwerte zweier abhängiger Stichproben verschieden sind."
+                                            animation="true" html="true">T-Test unverbunden</label> 
+                                                    <span id="ttest_unv_field" class='hidden-on-default border_box' style="display:none;">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="Mode_unv" id="zweiseitig_unv" value="zweiseitig" checked>
+                                                            <label class="form-check-label" for="zweiseitig_unv">
+                                                                Zweiseitig
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="Mode_unv" id="links_unv" value="links">
+                                                            <label class="form-check-label" for="links_unv">
+                                                                Links
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="Mode_unv" id="rechts_unv" value="rechts">
+                                                            <label class="form-check-label" for="rechts_unv">
+                                                                Rechts
+                                                            </label>
+                                                        </div>
+                                                    </span>
                                             <input class="form-check-input" type="checkbox" id="utest" name="utest"
-                                                   value="true">
+                                                   value="true" onchange="showInputField('utest','utest_field')">
                                             <label for="utest" data-toggle="tooltip"
                                                    data-placement="right"
                                                    title="Please select a Boolean and a Number"
                                                    animation="true" html="true">Mann-Whitney-U-Test</label>
+                                                   <span id="utest_field" class='hidden-on-default border_box' style="display:none;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_u" id="zweiseitig_u" value="zweiseitig" checked>
+                                                        <label class="form-check-label" for="zweiseitig_u">
+                                                            Zweiseitig
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_u" id="links_u" value="links">
+                                                        <label class="form-check-label" for="links_u">
+                                                            Links
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_u" id="rechts_u" value="rechts">
+                                                        <label class="form-check-label" for="rechts_u">
+                                                            Rechts
+                                                        </label>
+                                                    </div>
+                                                </span>
                                             <input class="form-check-input" type="checkbox" id="will" name="will"
-                                                   value="true">
+                                                   value="true" onchange="showInputField('will','will_field')">
                                             <label for="will" data-toggle="tooltip"
                                                    data-placement="right"
                                                    title="Please select a Boolean and a Number"
                                                    animation="true" html="true">Wilcoxon</label>
+                                                   <span id="will_field" class='hidden-on-default border_box' style="display:none;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_w" id="zweiseitig_w" value="zweiseitig" checked>
+                                                        <label class="form-check-label" for="zweiseitig_w">
+                                                            Zweiseitig
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_w" id="links_w" value="links">
+                                                        <label class="form-check-label" for="links_w">
+                                                            Links
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="Mode_w" id="rechts_w" value="rechts">
+                                                        <label class="form-check-label" for="rechts_w">
+                                                            Rechts
+                                                        </label>
+                                                    </div>
+                                                </span>
                                         </div>
                                     </div>
                                 </div>

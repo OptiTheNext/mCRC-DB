@@ -461,8 +461,16 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
     print("Wuhu, normalverteilt")
 
 
-def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will):
+def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
     # Test / Darstellung von korrellation
+    def modus(mode):
+        if mode == "zweizeitig":
+            return "two-sided" 
+        if mode == "links":
+            return "less"
+        if mode == "rechts":
+            return "greater"
+
     def check_variable(variable):
         global bool_values
         global constans
@@ -586,41 +594,122 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
         build_dict("Table", lista)
 
     if ttest_unv:
+        group1 = df[reg_one]
+        group1 = group1.dropna()
+        print(group1)
+        group2 = df[reg_two]
+        group2=group2.dropna()
 
-        if reg_one in booleans:
-            bools = reg_one
-            other = reg_two
-        else:
-            if reg_two in booleans:
-                bools = reg_two
-                other = reg_one
-            else:
-                other1 = reg_one
-                other2 = reg_two
+        side = modus(mode_unv)
+        print(side)
 
-        if reg_one in booleans or reg_two in booleans:
-            df_test = df[[bools, other]]
-            print(df_test)
-            group1 = df_test.loc[df_test[bools] == "True"]
-            print(group1)
-            group2 = df_test.loc[df_test[bools] == "False"]
-            print(group2)
-            result = scipy.stats.ttest_ind(group1[other], group2[other])
-            print("hier results")
-            print(result)
+        result = scipy.stats.ttest_ind(group1, group2, alternative=side)
+      
+        if result[1] <= 0.05:
+            emp = "H0 verwerfen"
         else:
-            group1 = df[other1]
-            group2 = df[other2]
-            group1 = pandas.to_numeric(group1, errors='coerce')
-            group2 = pandas.to_numeric(group2, errors='coerce')
-            group1 = group1.dropna(inplace=True)
-            group2 = group2.dropna(inplace=False)
-            print(group1)
-            print(group2)
-            result = scipy.stats.ttest_ind(group1, group2)
-            print("hier results für beide dings")
-            print(result)
+            emp = "H0 annehmen"
+        
+        x = reg_one + " and " + reg_two
+        x = x.replace("_", "-")
+        stat = str(result[0])
+        p = str(result[1])
+
+        lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung: ",emp])
+        build_dict("Table", lista)
+
+    if ttest_v:
+        group1 = df[reg_one]
+        group1 = group1.dropna()
+        print(group1)
+        group2 = df[reg_two]
+        group2=group2.dropna()
+        
+
+        k = len(group1)
+ 
+        # using pop()
+        # to truncate list
+        n = len(group2)
+        for i in range(0, n - k ):
+            group2.pop(i)
+        side = modus(mode_v)
+        # printing result
+        result = scipy.stats.ttest_rel(group1, group2, alternative=side)
+        print(result)
+
+        if result[1] <= 0.05:
+            emp = "H0 verwerfen"
+        else:
+            emp = "H0 annehmen"
+        
+        x = reg_one + " and " + reg_two
+        x = x.replace("_", "-")
+        stat = str(result[0])
+        p = str(result[1])
+        paar = len(group1)
+
+        lista = ([x, "T-Test Verbunden"], ["Stat", stat], ["P-Value", p],["Seite",mode_v],["Wertepaare",paar],["Empfehlung: ",emp])
+        build_dict("Table", lista)
+
+    if utest:
+        print("u_test")
+        group1 = df[reg_one]
+        group1 = group1.dropna()
+        print(group1)
+        group2 = df[reg_two]
+        group2=group2.dropna()
+        
+        side = modus(mode_u)
+
+        result = scipy.stats.mannwhitneyu(group1,group2, alternative = side)
+        print(result)
+        if result[1] <= 0.05:
+            emp = "H0 verwerfen"
+        else:
+            emp = "H0 annehmen"
+        
+        x = reg_one + " and " + reg_two
+        x = x.replace("_", "-")
+        stat = str(result[0])
+        p = str(result[1])
+        paar = len(group1)
+
+        lista = ([x, "U Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_u],["Werte",paar],["Empfehlung: ",emp])
+        build_dict("Table", lista)
     
+    if will:
+        print("will")
+        group1 = df[reg_one]
+        group1 = group1.dropna()
+        print(group1)
+        group2 = df[reg_two]
+        group2=group2.dropna()
+        
+
+        k = len(group1)
+ 
+        # using pop()
+        # to truncate list
+        n = len(group2)
+        for i in range(0, n - k ):
+            group2.pop(i)
+        side = modus(mode_w)
+        result = scipy.stats.wilcoxon(group1, group2, alternative = side)
+        if result[1] <= 0.05:
+            emp = "H0 verwerfen"
+        else:
+            emp = "H0 annehmen"
+        
+        x = reg_one + " and " + reg_two
+        x = x.replace("_", "-")
+        stat = str(result[0])
+        p = str(result[1])
+        paar = len(group1)
+
+        lista = ([x, "Wilcoxon Rank Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_w],["Wertepaare",paar],["Empfehlung: ",emp])
+        build_dict("Table", lista)
+
     if 1 == 0:
         print("logistische Regression")
 
@@ -666,6 +755,6 @@ def generate_pdf():
         print(x)
         if (x["type"] == "Image"):
             os.remove(PATH_OUT + x["data"])
-    os.remove(name + ".tex")
+    #os.remove(name + ".tex")
 
     return (name + ".pdf")

@@ -756,9 +756,16 @@ def page_4():
                     will = False
                 print(will)
 
+            print(flask.request.json)
+
+            mode_v = flask.request.json["Mode_v"]
+            mode_unv = flask.request.json["Mode_unv"]
+            mode_u = flask.request.json["Mode_u"]
+            mode_w = flask.request.json["Mode_w"]
+
             if linear or korrelation or ttest_v or ttest_unv or utest or will:
                 statistik.exploration(localDF, tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
-                                      ttest_unv, utest, will)
+                                      ttest_unv, utest, will,mode_unv,mode_v,mode_u,mode_w )
 
             grafik = False
             table_one = False
