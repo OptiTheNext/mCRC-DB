@@ -589,7 +589,7 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("op_date_Surgery1 >= @von_date",inplace=True)
             sort_df("op_date_Surgery1 >= @von_date")
         if parameters.get('op_date_Surgery1', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
+            bis_date = datetime.datetime.strptime(parameters['op_date_Surgery1_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             print(von_geburt)
             # df.query("op_date_Surgery1 <= @bis_date",inplace=True)
