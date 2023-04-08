@@ -60,7 +60,10 @@ def analyse(parameters) -> pandas.DataFrame:
     df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].astype('bool')
     df['ss_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
     df['th_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
-    df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format =constants.DATEFORMAT)
+    df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format=constants.DATEFORMAT,errors='coerce')
+    df['op_date_Surgery2'] = pandas.to_datetime(df["op_date_Surgery2"],format =constants.DATEFORMAT,errors='coerce')
+    df['op_date_Surgery3'] = pandas.to_datetime(df["op_date_Surgery3"],format =constants.DATEFORMAT,errors='coerce')
+    df['diagnosis_date'] = pandas.to_datetime(df["diagnosis_date"],format=constants.DATEFORMAT,errors='coerce')
     # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
     df.query("Kuerzel != ''", inplace=True)
 
@@ -124,9 +127,6 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters.get('weiblichcheck', None):
             sexlist.append('f')
             print("weiblich")
-        if parameters.get('diverscheck', None):
-            sexlist.append('d')
-            print("Divers")
         sort_df("sex in @sexlist")
 
     # Check for Diagnose Codes
@@ -134,11 +134,13 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters['diagnosis1']:
             print(type(parameters['diagnosis1']))
             # df.query("diagnosis1 == @parameters['diagnosis1']",inplace=True)
-            sort_df("diagnosis1 == @parameters['diagnosis1']")
+            para = parameters['diagnosis1']
+            sort_df("diagnosis1 == @para")
             print("checked for diagnosis1")
         if parameters["diagnosis2"]:
             # df.query("diagnosis2 == @parameters['diagnosis2']",inplace=True)
-            sort_df("diagnosis2 == @parameters['diagnosis2']")
+            para = parameters['diagnosis2']
+            sort_df("diagnosis2 == @para")
             print("checked for diagnosis2")
 
     # Check for Diagnosis Date
@@ -280,6 +282,12 @@ def analyse(parameters) -> pandas.DataFrame:
         para = int(parameters['G'])
         # df.query("G == @para", inplace= True)
         sort_df("G==@para")
+    
+    #Check for Pn
+    if parameters.get('Pn_check', None) and parameters["Pn"]:
+        para = int(parameters['Pn'])
+        # df.query("G == @para", inplace= True)
+        sort_df("Pn==@para")
 
     # Check for Last Seen Date
     if parameters.get("last_seen_check", None):
@@ -479,11 +487,11 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters.get("PVE_check_yes", None):
             print("checking for PVE = 1")
             # df.query("pve == 1", inplace=True)
-            sort_df("pve == 1")
+            sort_df("pve == True")
         if parameters.get("PVE_check_no", None):
             print("checking for PVE = 0")
             # df.query("pve == 0", inplace=True)
-            sort_df("pve == 0")
+            sort_df("pve == False")
 
     # Check for First OPs 
 
@@ -602,14 +610,16 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters['op_code_Surgery1']:
             print(type(parameters['op_code_Surgery1']))
             # df.query("op_code_Surgery1 == @parameters['op_code_Surgery1']",inplace=True)
-            sort_df("op_code_Surgery1 == @parameters['op_code_Surgery1']")
+            para =  parameters['op_code_Surgery1']
+            sort_df("op_code_Surgery1 == @para")
 
     # Check for First OP Diagnosis
     if parameters.get("op_diagnosis_Surgery1_checkbox", None):
         if parameters['op_diagnosis_Surgery1']:
             print(type(parameters['op_diagnosis_Surgery1']))
             # df.query("op_diagnosis_Surgery1 == @parameters['op_diagnosis_Surgery1']",inplace=True)
-            sort_df("op_diagnosis_Surgery1 == @parameters['op_diagnosis_Surgery1']")
+            para = parameters['op_diagnosis_Surgery1']
+            sort_df("op_diagnosis_Surgery1 == @para")
     print(parameters)
 
     # Check for OP Methode
@@ -929,26 +939,28 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("fs_INR_Last <= @para")
 
     # Second OP Data
-    if parameters.get("ss_op_date", None):
+    if parameters.get("op_date_Surgery2_von", None) or parameters.get("op_date_Surgery2_bis", None) :
         if parameters.get('op_date_Surgery2_von', None):
             von_date = datetime.datetime.strptime(parameters['op_date_Surgery2_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-            print(von_geburt)
             # df.query("op_date_Surgery2 >= @von_date",inplace=True)
             sort_df("op_date_Surgery2 >= @von_date")
-        if parameters.get('op_date_Surgery2', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
+            print("surgery2 von")
+        if parameters.get('op_date_Surgery2_bis', None):
+            bis_date = datetime.datetime.strptime(parameters['op_date_Surgery2_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-            print(von_geburt)
             # df.query("op_date_Surgery2 <= @bis_date",inplace=True)
             sort_df("op_date_Surgery2 <= @bis_date")
+            print("surgery2 bis")
 
     # Check for Second Op Code
     if parameters.get("op_code_Surgery2_checkbox", None):
+        print("du dummer hurensohn")
         if parameters['op_code_Surgery2']:
             print(type(parameters['op_code_Surgery2']))
             # df.query("op_code_Surgery2 == @parameters['op_code_Surgery2']",inplace=True)
-            sort_df("op_code_Surgery2 == @parameters['op_code_Surgery2']")
+            para = parameters['op_code_Surgery2']
+            sort_df("op_code_Surgery2 == @para")
 
     # Check for Second OP Diagnosis
     if parameters.get("op_diagnosis_Surgery2_checkbox", None):
@@ -1257,17 +1269,15 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("ss_INR_Last <= @para")
 
     # Third Op Data
-    if parameters.get("ts_op_date", None):
+    if parameters.get('op_date_Surgery3_von', None) or parameters.get('op_date_Surgery3_bis', None):
         if parameters.get('op_date_Surgery3_von', None):
             von_date = datetime.datetime.strptime(parameters['op_date_Surgery3_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-            print(von_geburt)
             # df.query("op_date_Surgery3 >= @von_date",inplace=True)
             sort_df("op_date_Surgery3 >= @von_date")
-        if parameters.get('op_date_Surgery3', None):
-            bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
+        if parameters.get('op_date_Surgery3_bis', None):
+            bis_date = datetime.datetime.strptime(parameters['op_date_Surgery3_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-            print(von_geburt)
             # df.query("op_date_Surgery3 <= @bis_date",inplace=True)
             sort_df("op_date_Surgery3 <= @bis_date")
 
@@ -1276,14 +1286,16 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters['op_code_Surgery3']:
             print(type(parameters['op_code_Surgery3']))
             # df.query("op_code_Surgery3 == @parameters['op_code_Surgery3']",inplace=True)
-            sort_df("op_code_Surgery3 == @parameters['op_code_Surgery3']")
+            para = parameters['op_code_Surgery3']
+            sort_df("op_code_Surgery3 == @para")
 
     # Check for Second OP Diagnosis
     if parameters.get("op_diagnosis_Surgery3_checkbox", None):
         if parameters['op_diagnosis_Surgery3']:
             print(type(parameters['op_diagnosis_Surgery3']))
             # df.query("op_diagnosis_Surgery3 == @parameters['op_diagnosis_Surgery3']",inplace=True)
-            sort_df("op_diagnosis_Surgery3 == @parameters['op_diagnosis_Surgery3']")
+            para = parameters['op_diagnosis_Surgery3']
+            sort_df("op_diagnosis_Surgery3 == @para")
 
     print(parameters)
 

@@ -55,8 +55,6 @@
                                            value="Männlich"/> <label for="checkMale">Männlich</label>
                                     <input class="form-check-input" id="checkFemale" name="weiblichcheck"
                                            type="checkbox" value="Weiblich"/> <label for="checkFemale">Weiblich</label>
-                                    <input class="form-check-input" id="checkDiv" name="diverscheck" type="checkbox"
-                                           value="Divers"/> <label for="checkDiv">Divers</label>
                                 </span>
                         </div>
 
@@ -79,7 +77,7 @@
                                 </span>
                         </div>
                         <div class="form-group">
-                            <input class="form-check-input" id="diagnosis_date_check" name="diagnosis_date_check"
+                            <input class="form-check-input" id="diagnosis_date_check" name="diagnosis_date_check" name="diagnosis_date_check"
                                    onchange="showInputField('diagnosis_date_check','diagnosis_date_field')"
                                    type="checkbox" value="1"/>
                             <label for="diagnosis_date_check">Datum Erstdiagnose</label>
@@ -280,6 +278,14 @@
                                         class="form-control" id="G" max="4" min="1" name="G" placeholder="Code"
                                         type="number"/></span>
                             </div>
+                            <div class="form-group">
+                                   <input class="form-check-input" id="Pn_check" name="Pn_check"
+                                          onchange="showInputField('Pn_check','Pn_field')" type="checkbox" value="1"/> <label
+                                       for="Pn_check">Pn</label>
+                                   <span class="hidden-on-default, border_box" id="Pn_field" style="display: none;"><input
+                                           class="form-control" id="Pn" name = "Pn" max="1" min="0" name="Pn" placeholder="Code"
+                                           type="number"/></span>
+                               </div>
                         </div>
                     </div>
                 </div>
@@ -693,7 +699,7 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_code_Surgery1_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" name = "op_code_Surgery1_checkbox" id="op_code_Surgery1_checkbox" value="1"
                                    onchange="showInputField('op_code_Surgery1_checkbox','op_code_Surgery1_field')">
                             <label for="op_code_Surgery1_checkbox">OP Code</label>
                             <span id="op_code_Surgery1_field" class='hidden-on-default border_box'
@@ -705,7 +711,7 @@
                         </div>
                         <div class="form-group">
                             
-                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery1_checkbox"
+                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery1_checkbox" name = "op_diagnosis_Surgery1_checkbox"
                                    value="1"
                                    onchange="showInputField('op_diagnosis_Surgery1_checkbox','op_diagnosis_Surgery1_field')"><label for="op_diagnosis_Surgery1_checkbox">OP Diagnose</label>
                             <span id="op_diagnosis_Surgery1_field" class='hidden-on-default border_box'
@@ -1234,7 +1240,7 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_code_Surgery2_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" name = "op_code_Surgery2_checkbox" id="op_code_Surgery2_checkbox" value="1"
                                    onchange="showInputField('op_code_Surgery2_checkbox','op_code_Surgery2_field')">
                             <label for="op_code_Surgery2_checkbox">OP Code</label>
 
@@ -1248,7 +1254,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery2_checkbox"
+                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery2_checkbox" name="op_diagnosis_Surgery2_checkbox"
                                    value="1"
                                    onchange="showInputField('op_diagnosis_Surgery2_checkbox','op_diagnosis_Surgery2_field')">
                             <label for="op_diagnosis_Surgery2_checkbox">OP Diagnose</label>
@@ -1780,7 +1786,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_code_Surgery3_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" name= "op_code_Surgery3_checkbox" id="op_code_Surgery3_checkbox" value="1"
                                    onchange="showInputField('op_code_Surgery3_checkbox','op_code_Surgery3_field')">
                             <label for="op_code_Surgery3_checkbox">OP Code</label>
 
@@ -1794,7 +1800,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery3_checkbox"
+                            <input class="form-check-input" type="checkbox" id="op_diagnosis_Surgery3_checkbox" name="op_diagnosis_Surgery3_checkbox"
                                    value="1"
                                    onchange="showInputField('op_diagnosis_Surgery3_checkbox','op_diagnosis_Surgery3_field')">
                             <label for="op_diagnosis_Surgery3_checkbox">OP Diagnose</label>
