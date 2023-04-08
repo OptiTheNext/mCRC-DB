@@ -60,7 +60,7 @@ def analyse(parameters) -> pandas.DataFrame:
     df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].astype('bool')
     df['ss_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
     df['th_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
-
+    df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format =constants.DATEFORMAT)
     # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
     df.query("Kuerzel != ''", inplace=True)
 
@@ -581,17 +581,19 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for First OP Parameters Date
 
-    if parameters.get("Fs_op_date", None):
+    if parameters.get("op_date_Surgery1_von", None) or parameters.get("op_date_Surgery1_bis", None) :
+        print("hurensohn")
         if parameters.get('op_date_Surgery1_von', None):
             von_date = datetime.datetime.strptime(parameters['op_date_Surgery1_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-            print(von_geburt)
+            print(von_date)
             # df.query("op_date_Surgery1 >= @von_date",inplace=True)
             sort_df("op_date_Surgery1 >= @von_date")
-        if parameters.get('op_date_Surgery1', None):
+        if parameters.get('op_date_Surgery1_bis', None):
             bis_date = datetime.datetime.strptime(parameters['op_date_Surgery1_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-            print(von_geburt)
+            print("hier bis date")
+            print(bis_date)
             # df.query("op_date_Surgery1 <= @bis_date",inplace=True)
             sort_df("op_date_Surgery1 <= @bis_date")
 
