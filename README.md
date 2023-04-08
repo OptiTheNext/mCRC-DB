@@ -20,6 +20,7 @@
 SystemD service file:
 
 **Vor der Installation**
+- MariaDB installieren
 - Pfad der main.py in `ExecStart`
 - Pfad des Arbeitsverzeichnisses in `WorkingDirectory` auf Pfad der geklonten Repository ändern
 - Werte von `User` und `Group` entsprechend anpassen
