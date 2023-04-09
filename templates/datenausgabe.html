@@ -144,7 +144,7 @@
                                 </span>
                         </div>
                         <div class="form-group">
-                            <input class="form-check-input" id="multimodal_check" name="bilobulär_check"
+                            <input class="form-check-input" id="multimodal_check" name="multimodal_check"
                                    onchange="showInputField('multimodal_check','multimodal_field')" type="checkbox"
                                    value="1"/>
                             <label for="multimodal_check" class="form-check-label">Mutimodal</label>
@@ -336,6 +336,32 @@
                                 </span>
                         </div>
                         <div class="form-group">
+                            <input class="form-check-input" id="rezidiv_organ" name="rezidiv_organ"
+                                   onchange="showInputField('rezidiv_organ','rezidiv_organ_field')" type="checkbox" value="1"/> <label
+                                for="rezidiv_organ" class="form-check-label">Rezidiv Organ</label>
+                            <span class="hidden-on-default, border_box" id="rezidiv_organ_field" style="display: none;">
+                                   <input class="form-check-input" id="rezidiv_organ_leber" name="rezidiv_organ_leber"
+                                   type="checkbox" value="leber"/> <label
+                                   for="rezidiv_organ_leber">Leber</label>
+                                   <input class="form-check-input" id="rezidiv_organ_lunge" name="rezidiv_organ_lunge"
+                                   type="checkbox" value="lunge"/> <label
+                                   for="rezidiv_organ_lunge">lunge</label>
+                                   <input class="form-check-input" id="rezidiv_organ_lokal" name="rezidiv_organ_lokal"
+                                   type="checkbox" value="lokal"/> <label
+                                   for="rezidiv_organ_lunge">Lokal</label>
+                                   <input class="form-check-input" id="rezidiv_organ_peritoneum" name="rezidiv_organ_peritoneum"
+                                   type="checkbox" value="peritoneum"/> <label
+                                   for="rezidiv_organ_lunge">Peritoneum</label>
+                                   <input class="form-check-input" id="rezidiv_organ_cerebral" name="rezidiv_organ_cerebral"
+                                   type="checkbox" value="cerebral"/> <label
+                                   for="rezidiv_organ_cerebral">Cerebral</label>
+                                   <input class="form-check-input" id="rezidiv_organ_other" name="rezidiv_organ_other"
+                                   type="checkbox" value="other"/> <label
+                                   for="rezidiv_organ_cerebral">Other</label>  
+                                   
+                                </span>
+                        </div>
+                        <div class="form-group">
                             <input class="form-check-input" id="asa_check" name="asa_check"
                                    onchange="showInputField('asa_check','asa_field')" type="checkbox" value="1"/>
                             <label for="asa_check">ASA</label>
@@ -454,7 +480,7 @@
                         <h3>Vorgeschichte</h3>
                         <hr/>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="PreviousOPs" value="1"
+                            <input class="form-check-input" type="checkbox" id="PreviousOPs" name= "PreviousOPs" value="1"
                                    onchange="showInputField('PreviousOPs','OPfield')">
                             <label for="PreviousOPs">Vorhergegangene OPs</label>
 

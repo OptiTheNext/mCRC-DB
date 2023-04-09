@@ -55,6 +55,7 @@ def analyse(parameters) -> pandas.DataFrame:
     df['recurrence_status'] = df['recurrence_status'].astype('bool')
     df['alcohol'] = df['alcohol'].astype('bool')
     df['smoking'] = df['smoking'].astype('bool')
+    df['diabetes'] = df['diabetes'].astype('bool')
     df['cirrhosis'] = df['cirrhosis'].astype('bool')
     df['fibrosis'] = df['fibrosis'].astype('bool')
     df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].astype('bool')
@@ -63,7 +64,12 @@ def analyse(parameters) -> pandas.DataFrame:
     df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format=constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery2'] = pandas.to_datetime(df["op_date_Surgery2"],format =constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery3'] = pandas.to_datetime(df["op_date_Surgery3"],format =constants.DATEFORMAT,errors='coerce')
+    df['limax_initial_date'] = pandas.to_datetime(df["limax_initial_date"],format =constants.DATEFORMAT,errors='coerce')
+    df['limax_second_date'] = pandas.to_datetime(df["limax_second_date"],format =constants.DATEFORMAT,errors='coerce')
+    df['limax_third_date'] = pandas.to_datetime(df["limax_third_date"],format =constants.DATEFORMAT,errors='coerce')
     df['diagnosis_date'] = pandas.to_datetime(df["diagnosis_date"],format=constants.DATEFORMAT,errors='coerce')
+    df['previous_surgery_date'] = pandas.to_datetime(df["previous_surgery_date"],format=constants.DATEFORMAT,errors='coerce')
+    #df['limax_initial'] = df['limax_initial'].astype('int',errors='ignore')
     # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
     df.query("Kuerzel != ''", inplace=True)
 
@@ -184,12 +190,14 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("crlm_met_syn in @crlm_list")
 
     # check for Bilobulär#
-    if parameters.get('Bilobulär_check', None):
+    if parameters.get('bilobulär_check', None):
         if parameters.get('bilobulär_check_yes', None):
+            print("in yes")
             # df.query("crlm_bilobular == 1", inplace = True)
             sort_df("crlm_bilobular == 1")
         if parameters.get('bilobulär_check_no', None):
             # df.query("crlm_bilobular == 0", inplace = True)
+            print("in no")
             sort_df("crlm_bilobular == 0")
         print("inside bilobulär")
 
@@ -257,8 +265,9 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("M==@para")
     # Check for LK
     if parameters.get('lk_check', None) and parameters["LK"]:
-        #para = int(parameters['LK'])
+        para = parameters['LK']
         # df.query("LK == @para", inplace= True)
+        print("hier lk")
         sort_df("LK == @para")
         # Check for L
     if parameters.get('l_check', None) and parameters["L"]:
@@ -308,10 +317,10 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get("died_check", None):
         if parameters.get("died_no_check", None):
             # df.query("status_fu == 0",inplace=True)
-            sort_df("status_fu == 0")
+            sort_df("status_fu == 1")
         if parameters.get("died_yes_check", None):
             # df.query("status_fu == 1",inplace=True)
-            sort_df("status_fu == 1")
+            sort_df("status_fu == 0")
 
     # Check for Rezidiv
     if parameters.get("rezidiv_check", None):
@@ -321,6 +330,19 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters.get("rezidiv_check_yes", None):
             # df.query("recurrence_status == 1",inplace=True)
             sort_df("recurrence_status == 1")
+    #Check for Rezidiv organ
+    if parameters.get("rezidiv_organ",None):
+        global organs
+        organs = []
+        if parameters.get('rezidiv_organ_leber', None): organs.append('liver')
+        if parameters.get('rezidiv_organ_lunge', None): organs.append('lung')
+        if parameters.get('rezidiv_organ_lokal', None): organs.append('lokal')
+        if parameters.get('rezidiv_organ_peritoneum', None): organs.append('peritoneum')
+        if parameters.get('rezidiv_organ_cerebral', None): organs.append('cerebral')
+        if parameters.get('rezidiv_organ_other', None): organs.append('other')
+        # df.query("primary_location in @locations", inplace=True)
+        sort_df("recurrence_organ in @organs")
+
     # Check for ASA
     if parameters.get("asa_check", None):
         if parameters.get("asa_check_not_found", None):
@@ -345,11 +367,15 @@ def analyse(parameters) -> pandas.DataFrame:
     # Check for BMI
     if parameters.get("bmi_check", None):
         if parameters["von_bmi_input"]:
+            print("bmi von")
             # df.query("bmi == @parameters['von_bmi_input']", inpacte=True)
-            sort_df("bmi == @parameters['von_bmi_input']")
+            para = parameters['von_bmi_input']
+            sort_df("bmi >= @para")
         if parameters["bis_bmi_input"]:
+            print("bmi bis")
+            para = parameters['bis_bmi_input']
             # df.query("bmi == @parameters['bis_bmi_input']", inplace=True)
-            sort_df("bmi == @parameters['von_bmi_input']")
+            sort_df("bmi <= @para")
 
     # Check for alc
     if parameters.get("alc_check", None):
@@ -364,60 +390,60 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get("smoking_check", None):
         if parameters.get("smoking_check_yes", None):
             # df.query("smoking  == 0",inplace=True)
-            sort_df("smoking == 0")
+            sort_df("smoking == 1")
         if parameters.get("smoking_check_no", None):
             # df.query("smoking  == 1",inplace=True)
-            sort_df("smoking == 1")
+            sort_df("smoking == 0")
 
     # Check for Diabetiker
     if parameters.get("diabetes_check", None):
         if parameters.get("diabetes_check_yes", None):
             # df.query("diabetes  == 0",inplace=True)
-            sort_df("diabetes  == 0")
+            sort_df("diabetes  == 1")
         if parameters.get("diabetes_check_no", None):
             # df.query("diabetes  == 1",inplace=True)
-            sort_df("diabetes  == 1")
+            sort_df("diabetes  == 0")
 
     # Check for Zirrose
     if parameters.get("zirrose_check", None):
         if parameters.get("zirrose_check_yes", None):
             # df.query("cirrhosis   == 0",inplace=True)
-            sort_df("cirrhosis   == 0")
+            sort_df("cirrhosis   == 1")
 
         if parameters.get("zirrose_check_no", None):
             # df.query("cirrhosis   == 1",inplace=True)
-            sort_df("cirrhosis   == 1")
+            sort_df("cirrhosis   == 0")
 
     # Check for Fibrose
     if parameters.get("fibrose_check", None):
         if parameters.get("fibrose_check_yes", None):
             # df.query("fibrosis == 0",inplace=True)
-            sort_df("fibrosis == 0")
+            sort_df("fibrosis == 1")
         if parameters.get("fibrose_check_no", None):
             # df.query("fibrosis == 1",inplace=True)
-            sort_df("fibrosis == 1")
+            sort_df("fibrosis == 0")
 
     # Check for Previous OPs
     if parameters.get("PreviousOPs", None):
         if parameters["previous_surgery_code"]:
             # df.query("previous_surgery == @parameters('previous_surgery_code')",inplace=True)
-            sort_df("previous_surgery == @parameters('previous_surgery_code')")
+            para = parameters['previous_surgery_code']
+            sort_df("previous_surgery == @para")
         if parameters['previous_surgery_date_von']:
             von_date = datetime.datetime.strptime(parameters['previous_surgery_date_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
             # df.query("previous_surgery >= @von_date",inplace=True)
-            sort_df("previous_surgery >= @von_date")
+            sort_df("previous_surgery_date >= @von_date")
         if parameters['previous_surgery_date_bis']:
             bis_date = datetime.datetime.strptime(parameters['previous_surgery_date_bis'], constants.DATEFORMAT)
             bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
             # df.query("previous_surgery <= @bis_date",inplace=True)
-            sort_df("previous_surgery <= @bis_date")
+            sort_df("previous_surgery_date <= @bis_date")
 
     # Check for FS_Chemo
     if parameters.get("fs_previous_chemotherapy", None):
         if parameters.get("fs_chemo_check_no", None):
-            if Mode:
-                df_AND = df_AND[df_AND['op_date_Surgery1'].notnull()]
+            sort_df("op_date_Surgery1 != ''")
             # df.query("fs_previous_chemotherapy == 0", inplace=True)
             sort_df("fs_previous_chemotherapy == 0")
         if parameters["fs_previous_chemotherapy_cycles_von"]:
@@ -430,10 +456,12 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("fs_previous_chemotherapy_cycles <= @para")
         if parameters["fs_previous_chemotherapy_type"]:
             # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
-            sort_df("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']")
+            para = parameters['fs_previous_chemotherapy_typ']
+            sort_df("fs_previous_chemotherapy_type = @para")
         if parameters["fs_previous_antibody"]:
+            para= parameters['fs_previous_antibody']
             # df.query("fs_previous_antibody = @parameters['fs_previous_antibody']",inplace=True)
-            sort_df("fs_previous_antibody = @parameters['fs_previous_antibody']")
+            sort_df("fs_previous_antibody = @para")
 
     # Check for SS_Chemo
     if parameters.get("ss_previous_chemotherapy", None):
@@ -521,23 +549,23 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for Limax Initial + Date
     if parameters.get("limax_initial_von", None):
-        para = int(parameters['limax_initial_von'])
+        para = parameters['limax_initial_von']
+        df["limax_initial"] = df["limax_initial"].dropna()
         # df.query("limax_initial >= @para", inplace=True)
         sort_df("limax_initial >= @para")
     if parameters.get("limax_initial_bis", None):
-        para = int(parameters['limax_initial_bis'])
+        para = parameters['limax_initial_bis']
+        df["limax_initial"] = df["limax_initial"].dropna()
         # df.query("limax_initial <= @para", inplace=True)
         sort_df("limax_initial <= @para")
     if parameters.get('limax_initial_date_von', None):
         von_date = datetime.datetime.strptime(parameters['limax_initial_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-        print(von_geburt)
         # df.query("limax_initial_date >= @von_date",inplace=True)
         sort_df("limax_initial_date >= @von_date")
     if parameters.get('limax_initial_date_bis', None):
         bis_date = datetime.datetime.strptime(parameters['limax_initial_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-        print(von_geburt)
         # df.query("limax_initial_date <= @bis_date",inplace=True)
         sort_df("limax_initial_date <= @bis_date")
 
@@ -554,13 +582,11 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get('limax_second_date_von', None):
         von_date = datetime.datetime.strptime(parameters['limax_second_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-        print(von_geburt)
         # df.query("limax_second_date >= @von_date",inplace=True)
         sort_df("limax_second_date >= @von_date")
     if parameters.get('limax_second_date_bis', None):
         bis_date = datetime.datetime.strptime(parameters['limax_second_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-        print(von_geburt)
         sort_df("limax_second_date <= @bis_date")
         # df.query("limax_second_date <= @bis_date",inplace=True)
 
@@ -577,15 +603,13 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get('limax_third_date_von', None):
         von_date = datetime.datetime.strptime(parameters['limax_third_date_von'], constants.DATEFORMAT)
         von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-        print(von_geburt)
         # df.query("limax_third_date >= @von_date",inplace=True)
         sort_df("limax_third_date >= @von_date")
     if parameters.get('limax_third_date_bis', None):
         bis_date = datetime.datetime.strptime(parameters['limax_third_date_bis'], constants.DATEFORMAT)
         bis_date = datetime.date(bis_date.year, bis_date.month, bis_date.day)
-        print(von_geburt)
         # df.query("limax_third_date <= @bis_date",inplace=True)
-        sort_date("limax_third_date <= @bis_date")
+        sort_df("limax_third_date <= @bis_date")
 
     # Check for First OP Parameters Date
 
@@ -594,7 +618,6 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters.get('op_date_Surgery1_von', None):
             von_date = datetime.datetime.strptime(parameters['op_date_Surgery1_von'], constants.DATEFORMAT)
             von_date = datetime.date(von_date.year, von_date.month, von_date.day)
-            print(von_date)
             # df.query("op_date_Surgery1 >= @von_date",inplace=True)
             sort_df("op_date_Surgery1 >= @von_date")
         if parameters.get('op_date_Surgery1_bis', None):
