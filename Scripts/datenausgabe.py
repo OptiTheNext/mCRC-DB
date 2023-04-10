@@ -691,15 +691,15 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("first_surgery_length <= @para")
 
     # Check for INtensivzeit
-    if parameters.get("icu_checkbox", None):
+    if parameters.get("fs_icu_checkbox", None):
         print("in ICU")
-        if parameters["icu_von"]:
+        if parameters["fs_icu_von"]:
             print("tried to filter >")
 
-            para = int(parameters['icu_von'])
+            para = int(parameters['fs_icu_von'])
             # df.query("fs_icu >= @para", inplace=True)
             sort_df("fs_icu >= @para")
-        if parameters["icu_bis"]:
+        if parameters["fs_icu_bis"]:
             print("tried to filter <")
 
             para = int(parameters['fs_icu_bis'])
@@ -725,25 +725,25 @@ def analyse(parameters) -> pandas.DataFrame:
             paralist.append('No comp')
             print("No Complications")
         if parameters.get('fs_check_dindo_1', None):
-            paralist.append('I')
+            paralist.append('1')
             print("I")
         if parameters.get('fs_check_dindo_2', None):
-            paralist.append('II')
+            paralist.append('2')
             print("II")
         if parameters.get('fs_check_dindo_3a', None):
-            paralist.append('IIIa')
+            paralist.append('3a')
             print("IIIa")
         if parameters.get('fs_check_dindo_3b', None):
-            paralist.append('IIIb')
+            paralist.append('3b')
             print("IIIb")
         if parameters.get('fs_check_dindo_4a', None):
-            paralist.append('IVa')
+            paralist.append('4a')
             print("IVa")
         if parameters.get('fs_check_dindo_4b', None):
-            paralist.append('IVb')
+            paralist.append('4b')
             print("IVb")
         if parameters.get('fs_check_dindo_5', None):
-            paralist.append('V')
+            paralist.append('5')
             print("V")
         print(paralist)
         # df.query("fs_dindo in @paralist", inplace=True)
@@ -850,69 +850,74 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # #Check for AST
     # # Check for POD1
-    if parameters.get("fs_AST_pod1_checkbox", None):
-        if parameters["fs_AST_pod1_von"]:
-            para = int(parameters['fs_AST_pod1_von'])
+    if parameters.get("fs_AST_POD1_checkbox", None):
+        if parameters["fs_AST_POD1_von"]:
+            para = int(parameters['fs_AST_POD1_von'])
             # df.query("fs_AST_POD1 >= @para", inplace= True)
             sort_df("fs_AST_POD1 >= @para")
-        if parameters["fs_AST_pod1_bis"]:
-            para = int(parameters['fs_AST_pod1_bis'])
+        if parameters["fs_AST_POD1_bis"]:
+            para = int(parameters['fs_AST_POD1_bis'])
             # df.query("fs_AST_POD1 <= @para", inplace= True)
             sort_df("fs_AST_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("fs_AST_pod3_checkbox", None):
-        if parameters["fs_AST_pod3_von"]:
-            para = int(parameters['fs_AST_pod3_von'])
+    if parameters.get("fs_AST_POD3_checkbox", None):
+        if parameters["fs_AST_POD3_von"]:
+            para = int(parameters['fs_AST_POD3_von'])
             # df.query("fs_AST_POD3 >= @para", inplace= True)
             sort_df("fs_AST_POD3 >= @para")
-        if parameters["fs_AST_pod3_bis"]:
-            para = int(parameters['fs_AST_pod3_bis'])
+        if parameters["fs_AST_POD3_bis"]:
+            para = int(parameters['fs_AST_POD3_bis'])
             # df.query("fs_AST_POD3 <= @para", inplace= True)
             sort_df("fs_AST_POD3 <= @para")
 
     # # Check for POD5
-    if parameters.get("fs_AST_pod5_checkbox", None):
-        if parameters["fs_AST_pod5_von"]:
-            para = int(parameters['fs_AST_pod5_von'])
+    if parameters.get("fs_AST_POD5_checkbox", None):
+        print("in pod5 checkbox")
+        if parameters.get("fs_AST_POD5_von",None):
+            print("in pod5 von")
+            para = int(parameters['fs_AST_POD5_von'])
             # df.query("fs_AST_POD5 >= @para", inplace= True)
             sort_df("fs_AST_POD5 >= @para")
-        if parameters["fs_AST_pod5_bis"]:
-            para = int(parameters['fs_AST_pod5_bis'])
+        if parameters.get("fs_AST_POD5_bis",None):
+            print("in pod5 von")
+            para = int(parameters['fs_AST_POD5_bis'])
             # df.query("fs_AST_POD5 <= @para", inplace= True)
             sort_df("fs_AST_POD5 <= @para")
 
     # # Check for Last
-    if parameters.get("fs_AST_last_checkbox", None):
-        if parameters["fs_AST_last_von"]:
-            para = int(parameters['fs_AST_last_von'])
+    if parameters.get("fs_AST_Last_checkbox", None):
+        if parameters["fs_AST_Last_von"]:
+            para = int(parameters['fs_AST_Last_von'])
             # df.query("fs_AST_Last >= @para", inplace= True)
             sort_df("fs_AST_Last >= @para")
-        if parameters["fs_AST_last_bis"]:
-            para = int(parameters['fs_AST_last_bis'])
+        if parameters["fs_AST_Last_bis"]:
+            para = int(parameters['fs_AST_Last_bis'])
             # df.query("fs_AST_Last <= @para", inplace= True)
             sort_df("fs_AST_Last <= @para")
 
     # #Check for ALT fs
     # # Check for POD1
-    if parameters.get("fs_ALT_pod1_checkbox", None):
-        if parameters["fs_ALT_pod1_von"]:
-            para = int(parameters['fs_ALT_pod1_von'])
+    if parameters.get("fs_ALT_POD1_checkbox", None):
+        if parameters.get("fs_ALT_POD1_von"):
+            print("in alt_pod1 von")
+            para = int(parameters['fs_ALT_POD1_von'])
             # df.query("fs_ALT_POD1 >= @para", inplace= True)
             sort_df("fs_ALT_POD1 >= @para")
-        if parameters["fs_ALT_pod1_bis"]:
-            para = int(parameters['fs_ALT_pod1_bis'])
+        if parameters.get("fs_ALT_POD1_bis",None):
+            print("in alt_pod1 bis")
+            para = int(parameters['fs_ALT_POD1_bis'])
             # df.query("fs_ALT_POD1 <= @para", inplace= True)
             sort_df("fs_ALT_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("fs_ALT_pod3_checkbox", None):
-        if parameters["fs_ALT_pod3_von"]:
-            para = int(parameters['fs_ALT_pod3_von'])
+    if parameters.get("fs_ALT_POD3_checkbox", None):
+        if parameters["fs_ALT_POD3_von"]:
+            para = int(parameters['fs_ALT_POD3_von'])
             # df.query("fs_ALT_POD3 >= @para", inplace= True)
             sort_df("fs_ALT_POD3 >= @para")
-        if parameters["fs_ALT_pod3_bis"]:
-            para = int(parameters['fs_ALT_pod3_bis'])
+        if parameters["fs_ALT_POD3_bis"]:
+            para = int(parameters['fs_ALT_POD3_bis'])
             # df.query("fs_ALT_POD3 <= @para", inplace= True)
             sort_df("fs_ALT_POD3 <= @para")
 
@@ -939,46 +944,46 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("fs_ALT_Last <= @para")
 
     # #Check for INR
-    if parameters.get("fs_INR_pod1_checkbox", None):
-        if parameters["fs_INR_pod1_von"]:
-            para = int(parameters['fs_INR_pod1_von'])
+    if parameters.get("fs_INR_POD1_checkbox", None):
+        if parameters["fs_INR_POD1_von"]:
+            para = float(parameters['fs_INR_POD1_von'])
             # df.query("fs_INR_POD1 >= @para", inplace= True)
             sort_df("fs_INR_POD1 >= @para")
-        if parameters["fs_INR_pod1_bis"]:
-            para = int(parameters['fs_INR_pod1_bis'])
+        if parameters["fs_INR_POD1_bis"]:
+            para = float(parameters['fs_INR_POD1_bis'])
             # df.query("fs_INR_POD1 <= @para", inplace= True)
             sort_df("fs_INR_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("fs_INR_pod3_checkbox", None):
-        if parameters["fs_INR_pod3_von"]:
-            para = int(parameters['fs_INR_pod3_von'])
+    if parameters.get("fs_INR_POD3_checkbox", None):
+        if parameters["fs_INR_POD3_von"]:
+            para = float(parameters['fs_INR_POD3_von'])
             # df.query("fs_INR_POD3 >= @para", inplace= True)
             sort_df("fs_INR_POD3 >= @para")
-        if parameters["fs_INR_pod3_bis"]:
-            para = int(parameters['fs_INR_pod3_bis'])
+        if parameters["fs_INR_POD3_bis"]:
+            para = float(parameters['fs_INR_POD3_bis'])
             # df.query("fs_INR_POD3 <= @para", inplace= True)
             sort_df("fs_INR_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("fs_INR_pod5_checkbox", None):
         if parameters["fs_INR_pod5_von"]:
-            para = int(parameters['fs_INR_pod5_von'])
+            para = float(parameters['fs_INR_pod5_von'])
             # df.query("fs_INR_POD5 >= @para", inplace= True)
             sort_df("fs_INR_POD5 >= @para")
         if parameters["fs_INR_pod5_bis"]:
-            para = int(parameters['fs_INR_pod5_bis'])
+            para = float(parameters['fs_INR_pod5_bis'])
             # df.query("fs_INR_POD5 <= @para", inplace= True)
             sort_df("fs_INR_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("fs_INR_Last_checkbox", None):
         if parameters["fs_INR_Last_von"]:
-            para = int(parameters['fs_INR_Last_von'])
+            para = float(parameters['fs_INR_Last_von'])
             # df.query("fs_INR_Last >= @para", inplace= True)
             sort_df("fs_INR_Last >= @para")
         if parameters["fs_INR_Last_bis"]:
-            para = int(parameters['fs_INR_Last_bis'])
+            para = float(parameters['fs_INR_Last_bis'])
             # df.query("fs_INR_Last <= @para", inplace= True)
             sort_df("fs_INR_Last <= @para")
 

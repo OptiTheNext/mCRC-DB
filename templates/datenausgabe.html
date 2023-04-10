@@ -792,21 +792,21 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="icu_checkbox" name="icu_checkbox"
-                                   value="1" onchange="showInputField('icu_checkbox','icu_field')">
-                            <label for="icu_checkbox">Intensivzeit</label>
-                            <span id="icu_field" class='hidden-on-default border_box' style="display:none;">
-                                <label for="icu_von">Intensivzeit von</label>
-                                <input type="number" min="0" max="10000" class="form-control" id="icu_von"
-                                       name="icu_von" placeholder="In Tagen">
-                                <label for="icu_bis">Intensivzeit bis</label>
-                                <input type="number" min="0" max="10000" class="form-control" id="icu_bis"
-                                       name="icu_bis" placeholder="In Tagen">
+                            <input class="form-check-input" type="checkbox" id="fs_icu_checkbox" name="fs_icu_checkbox"
+                                   value="1" onchange="showInputField('fs_icu_checkbox','fs_icu_field')">
+                            <label for="fs_icu_checkbox">Intensivzeit</label>
+                            <span id="fs_icu_field" class='hidden-on-default border_box' style="display:none;">
+                                <label for="fs_icu_von">Intensivzeit von</label>
+                                <input type="number" min="0" max="10000" class="form-control" id="fs_icu_von"
+                                       name="fs_icu_von" placeholder="In Tagen">
+                                <label for="fs_icu_bis">Intensivzeit bis</label>
+                                <input type="number" min="0" max="10000" class="form-control" id="fs_icu_bis"
+                                       name="fs_icu_bis" placeholder="In Tagen">
                             </span>
                         </div>
 
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="fs_los_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" id="fs_los_checkbox" name="fs_los_checkbox" value="1"
                                    onchange="showInputField('fs_los_checkbox','fs_los_field')">
                             <label for="fs_los_checkbox">Aufenthaltsdauert</label>
                             <span id="fs_los_field" class='hidden-on-default border_box' style="display:none;">
@@ -1047,10 +1047,10 @@
                                             <span id="fs_AST_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_AST_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_POD1_von" id="fs_AST_POD1_von" placeholder="Wert">
                                             <label for="fs_AST_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_POD1_bis" id="fs_AST_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1062,26 +1062,26 @@
                                             <span id="fs_AST_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_AST_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_POD3_von" id="fs_AST_POD3_von" placeholder="Wert">
                                             <label for="fs_AST_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_POD3_bis" id="fs_AST_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-check-input" type="checkbox" id="fs_AST_pod5_checkbox"
-                                                   name="fs_AST_pod5_checkbox" value="fs_AST_pod5_checkbox"
-                                                   onchange="showInputField('fs_AST_pod5_checkbox','fs_AST_pod5_field')">
-                                            <label for="fs_AST_pod5_checkbox">POD 5</label>
+                                            <input class="form-check-input" type="checkbox" id="fs_AST_POD5_checkbox"
+                                                   name="fs_AST_POD5_checkbox" value="1"
+                                                   onchange="showInputField('fs_AST_POD5_checkbox','fs_AST_pod5_field')">
+                                            <label for="fs_AST_POD5_checkbox">POD 5</label>
                                             <span id="fs_AST_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_AST_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
-                                                   name="fs_AST_pod5_von" id="fs_AST_pod5_von" placeholder="Wert">
-                                            <label for="fs_AST_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
-                                                   name="fs_AST_pod5_bis" id="fs_AST_pod5_bis" placeholder="Wert">
+                                            <input type="number" class="form-control" min="0" 
+                                                   name="fs_AST_POD5_von" id="fs_AST_POD5_von" placeholder="Wert">
+                                            <label for="fs_AST_POD5_von">pod5 Bis</label>
+                                            <input type="number" class="form-control" min="0" 
+                                                   name="fs_AST_POD5_bis" id="fs_AST_POD5_bis" placeholder="Wert">
                                           </span>
                                         </div>
                                         <div class="form-group">
@@ -1092,10 +1092,10 @@
                                             <span id="fs_AST_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_AST_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_Last_von" id="fs_AST_Last_von" placeholder="Wert">
                                             <label for="fs_AST_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_AST_Last_bis" id="fs_AST_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1121,10 +1121,10 @@
                                             <span id="fs_ALT_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_ALT_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_POD1_von" id="fs_ALT_POD1_von" placeholder="Wert">
                                             <label for="fs_ALT_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_POD1_bis" id="fs_ALT_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1136,10 +1136,10 @@
                                             <span id="fs_ALT_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_ALT_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_POD3_von" id="fs_ALT_POD3_von" placeholder="Wert">
                                             <label for="fs_ALT_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_POD3_bis" id="fs_ALT_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1151,10 +1151,10 @@
                                             <span id="fs_ALT_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_ALT_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_pod5_von" id="fs_ALT_pod5_von" placeholder="Wert">
                                             <label for="fs_ALT_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_pod5_bis" id="fs_ALT_pod5_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1166,10 +1166,10 @@
                                             <span id="fs_ALT_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_ALT_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_Last_von" id="fs_ALT_Last_von" placeholder="Wert">
                                             <label for="fs_ALT_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="fs_ALT_Last_bis" id="fs_ALT_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1195,10 +1195,10 @@
                                             <span id="fs_INR_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_INR_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_POD1_von" id="fs_INR_POD1_von" placeholder="Wert">
                                             <label for="fs_INR_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_POD1_bis" id="fs_INR_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1210,10 +1210,10 @@
                                             <span id="fs_INR_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_INR_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_POD3_von" id="fs_INR_POD3_von" placeholder="Wert">
                                             <label for="fs_INR_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_POD3_bis" id="fs_INR_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1225,10 +1225,10 @@
                                             <span id="fs_INR_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_INR_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_pod5_von" id="fs_INR_pod5_von" placeholder="Wert">
                                             <label for="fs_INR_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_pod5_bis" id="fs_INR_pod5_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1240,10 +1240,10 @@
                                             <span id="fs_INR_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="fs_INR_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_Last_von" id="fs_INR_Last_von" placeholder="Wert">
                                             <label for="fs_INR_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step = "0.1"
                                                    name="fs_INR_Last_bis" id="fs_INR_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>
