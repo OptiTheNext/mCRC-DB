@@ -61,6 +61,8 @@ def analyse(parameters) -> pandas.DataFrame:
     df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].astype('bool')
     df['ss_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
     df['th_previous_chemotherapy'] = df['ss_previous_chemotherapy'].astype('bool')
+    df['first_surgery_ablation'] = df['first_surgery_ablation'].astype('bool')
+    df['first_surgery_conversion'] = df['first_surgery_conversion'].astype('bool')
     df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format=constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery2'] = pandas.to_datetime(df["op_date_Surgery2"],format =constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery3'] = pandas.to_datetime(df["op_date_Surgery3"],format =constants.DATEFORMAT,errors='coerce')
@@ -69,6 +71,7 @@ def analyse(parameters) -> pandas.DataFrame:
     df['limax_third_date'] = pandas.to_datetime(df["limax_third_date"],format =constants.DATEFORMAT,errors='coerce')
     df['diagnosis_date'] = pandas.to_datetime(df["diagnosis_date"],format=constants.DATEFORMAT,errors='coerce')
     df['previous_surgery_date'] = pandas.to_datetime(df["previous_surgery_date"],format=constants.DATEFORMAT,errors='coerce')
+
     #df['limax_initial'] = df['limax_initial'].astype('int',errors='ignore')
     # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
     df.query("Kuerzel != ''", inplace=True)
@@ -455,13 +458,14 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
             sort_df("fs_previous_chemotherapy_cycles <= @para")
         if parameters["fs_previous_chemotherapy_type"]:
+            print("bin da wo ich sein soll")
             # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
-            para = parameters['fs_previous_chemotherapy_typ']
-            sort_df("fs_previous_chemotherapy_type = @para")
+            para = parameters['fs_previous_chemotherapy_type']
+            sort_df("fs_previous_chemotherapy_type == @para")
         if parameters["fs_previous_antibody"]:
             para= parameters['fs_previous_antibody']
             # df.query("fs_previous_antibody = @parameters['fs_previous_antibody']",inplace=True)
-            sort_df("fs_previous_antibody = @para")
+            sort_df("fs_previous_antibody == @para")
 
     # Check for SS_Chemo
     if parameters.get("ss_previous_chemotherapy", None):
@@ -655,22 +659,34 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("first_surgery_minimal_invasive in @paralist")
 
     # Check for OP Konversion
-    if parameters.get('op_occurence_checkbox', None):
-        if parameters['op1_conversion_check']:
+    if parameters.get('op1_conversion_checkbox', None):
+        print("in conversion")
+        if parameters.get('op1_conversion_yes', None):
             # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("first_surgery_conversion == 1")
-        if parameters['op1_ablation_check']:
+        if parameters.get('op1_conversion_no', None):
             # df.query("first_surgery == 1",inplace=True)
+            sort_df("first_surgery_conversion == 0")
+    
+    if parameters.get('op1_ablation_checkbox', None):
+        print("in ablation")
+        if parameters.get('op1_ablation_yes', None):
+            # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("first_surgery_ablation == 1")
+        if parameters.get('op1_ablation_no', None):
+            # df.query("first_surgery == 1",inplace=True)
+            sort_df("first_surgery_ablation == 0")
 
     # Check for Length
     if parameters.get("op_length_checkbox", None):
-        if parameters["op_length_von"]:
-            para = int(parameters['op_length_von'])
+        if parameters.get("first_surgery_length_von",None):
+            print("length von")
+            para = int(parameters['first_surgery_length_von'])
             # df.query("first_surgery_length >= @para", inplace=True)
             sort_df("first_surgery_length >= @para")
-        if parameters["op_length_bis"]:
-            para = int(parameters['op_length_bis'])
+        if parameters.get("first_surgery_length_bis"):
+            print("length bis")
+            para = int(parameters['first_surgery_length_bis'])
             # df.query("first_surgery_length <= @para", inplace=True)
             sort_df("first_surgery_length <= @para")
 
@@ -785,22 +801,27 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # # Check for POD1
     if parameters.get("fs_drain_bili_pod1_checkbox", None):
-        if parameters["fs_drain_Bili_pod1_von"]:
-            para = int(parameters['fs_drain_Bili_pod1_von'])
+        print("in drain check")
+        if parameters.get("fs_drain_Bili_POD1_von",None):
+            print("in pod1 von drain")
+            para = int(parameters['fs_drain_Bili_POD1_von'])
             # df.query("fs_Drain_Bili_POD1 >= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD1 >= @para")
-        if parameters["fs_drain_Bili_pod1_bis"]:
-            para = int(parameters['fs_drain_Bili_pod1_bis'])
+        if parameters.get("fs_drain_Bili_POD1_bis",None):
+            para = int(parameters['fs_drain_Bili_POD1_bis'])
+            print("pod1 drain bis")
             # df.query("fs_Drain_Bili_POD1 <= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("fs_drain_bili_pod3_checkbox", None):
-        if parameters["fs_drain_Bili_pod3_von"]:
+        if parameters.get("fs_drain_Bili_pod3_von",None):
+            print("in von")
             para = int(parameters['fs_drain_Bili_pod3_von'])
             # df.query("fs_Drain_Bili_POD3 >= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD3 >= @para")
-        if parameters["fs_drain_Bili_pod3_bis"]:
+        if parameters.get("fs_drain_Bili_pod3_bis",None):
+            print("in bis")
             para = int(parameters['fs_drain_Bili_pod3_bis'])
             # df.query("fs_Drain_Bili_POD3 <= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD3 <= @para")
@@ -825,7 +846,7 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters["fs_drain_Bili_last_bis"]:
             para = int(parameters['fs_drain_Bili_last_bis'])
             # df.query("fs_Drain_Bili_Last <= @para", inplace= True)
-            sort_para("fs_Drain_Bili_Last <= @para")
+            sort_df("fs_Drain_Bili_Last <= @para")
 
     # #Check for AST
     # # Check for POD1
@@ -1005,13 +1026,23 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("second_surgery_minimal_invasive in @paralist")
 
     # Check for OP Konversion
-    if parameters.get('ss_op_occurence_checkbox', None):
-        if parameters['op2_conversion_check']:
-            # df.query("second_surgery_conversion == 1",inplace=True)
+    if parameters.get('op2_conversion_checkbox', None):
+        print("in conversion")
+        if parameters.get('op2_conversion_yes', None):
+            # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("second_surgery_conversion == 1")
-        if parameters['op2_ablation_check']:
-            # df.query("second_surgery_ablation == 1",inplace=True)
+        if parameters.get('op2_conversion_no', None):
+            # df.query("first_surgery == 1",inplace=True)
+            sort_df("second_surgery_conversion == 0")
+    
+    if parameters.get('op2ablation_checkbox', None):
+        print("in ablation")
+        if parameters.get('op2_ablation_yes', None):
+            # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("second_surgery_ablation == 1")
+        if parameters.get('op2_ablation_no', None):
+            # df.query("first_surgery == 1",inplace=True)
+            sort_df("second_surgery_ablation == 0")
 
     # Check for Length
     if parameters.get("ss_op_length_checkbox", None):
@@ -1333,13 +1364,23 @@ def analyse(parameters) -> pandas.DataFrame:
         sort_df("third_surgery_minimal_invasive in @paralist")
 
     # Check for OP Konversion
-    if parameters.get('ts_op_occurence_checkbox', None):
-        if parameters['op3_conversion_check']:
-            # df.query("third_surgery_conversion == 1",inplace=True)
+    if parameters.get('op3_conversion_checkbox', None):
+        print("in conversion")
+        if parameters.get('op3_conversion_yes', None):
+            # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("third_surgery_conversion == 1")
-        if parameters['op3_ablation_check']:
-            # df.query("third_surgery_ablation == 1",inplace=True)
+        if parameters.get('op3_conversion_no', None):
+            # df.query("first_surgery == 1",inplace=True)
+            sort_df("third_surgery_conversion == 0")
+    
+    if parameters.get('op3_ablation_checkbox', None):
+        print("in ablation")
+        if parameters.get('op3_ablation_yes', None):
+            # df.query("first_surgery_conversion == 1",inplace=True)
             sort_df("third_surgery_ablation == 1")
+        if parameters.get('op3_ablation_no', None):
+            # df.query("first_surgery == 1",inplace=True)
+            sort_df("third_surgery_ablation == 0")
 
     # Check for Length
     if parameters.get("ts_op_length_checkbox", None):

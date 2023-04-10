@@ -504,23 +504,17 @@
                             <label for="fs_previous_chemotherapy"> Chemotherapie 1.OP</label>
 
                             <span id="fs_Chemo_field" class="hidden-on-default, border_box" style="display:none;">
-									<input class="form-check-input " type="checkbox" id="fs_chemo_check_no"
-                                           name="fs_chemo_check_no" value="1"/> <label for="fs_chemo_check_no">Keine Chemotherapie</label>
-								<label for="fs_previous_chemotherapy_cycles_von"
-                                       class="form-labels">Anzahl Zyklen Von</label>
-								<input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_von"
-                                       id="fs_previous_chemotherapy_cycles_von" placeholder="Zahl">
-								<label for="fs_previous_chemotherapy_cycles_bis"
-                                       class="form-labels">Anzahl Zyklen Bis</label>
-								<input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_bis"
-                                       id="fs_previous_chemotherapy_cycles_bis" placeholder="Zahl">
-								<label for="fs_previous_chemotherapy_type" class="form-labels">Medikament</label>
-								<input class="form-control" type="text" name="fs_previous_chemotherapy_type"
-                                       id="fs_previous_chemotherapy_type" placeholder="Freitext">
-								<label for="fs_previous_antibody" class="form-labels">Antikörper</label>
-								<input class="form-control" type="text" name="fs_previous_antibody"
-                                       id="fs_previous_antibody" placeholder="Freitext">
-								</span>
+						<input class="form-check-input " type="checkbox" id="fs_chemo_check_no"name="fs_chemo_check_no" value="1"/> 
+                                          <label for="fs_chemo_check_no">Keine Chemotherapie</label>
+					       <label for="fs_previous_chemotherapy_cycles_von"class="form-labels">Anzahl Zyklen Von</label>
+	                                   <input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_von" id="fs_previous_chemotherapy_cycles_von" placeholder="Zahl">
+						<label for="fs_previous_chemotherapy_cycles_bis" class="form-labels">Anzahl Zyklen Bis</label>
+						<input class="form-control" type="number" name="fs_previous_chemotherapy_cycles_bis" id="fs_previous_chemotherapy_cycles_bis" placeholder="Zahl">
+						<label for="fs_previous_chemotherapy_type" class="form-labels">Medikament</label>
+						<input class="form-control" type="text" name="fs_previous_chemotherapy_type"id="fs_previous_chemotherapy_type" placeholder="Freitext">
+						<label for="fs_previous_antibody" class="form-labels">Antikörper</label>
+						<input class="form-control" type="text" name="fs_previous_antibody" id="fs_previous_antibody" placeholder="Freitext">
+						</span>
                         </div>
                         <div class="form-group">
                             <input class="form-check-input" type="checkbox" name="ss_previous_chemotherapy"
@@ -748,7 +742,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_method_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" name = "op_method_checkbox" id="op_method_checkbox" value="1"
                                    onchange="showInputField('op_method_checkbox','op_method_field')">
                             <label for="op_method_checkbox">OP Methode</label>
                             <span id="op_method_field" class='hidden-on-default border_box' style="display:none;">
@@ -761,18 +755,29 @@
                             </span>
                         </div>
 
-                        <input class="form-check-input" type="checkbox" id="op_occurence_checkbox" value="1"
-                               onchange="showInputField('op_occurence_checkbox','op_occurence_field')">
-                        <label for="op_occurence_checkbox">OP Begebenheiten</label>
-                        <span id="op_occurence_field" class='hidden-on-default border_box' style="display:none;">
-                           <input class="form-check-input" type="checkbox" id="op1_conversion_check"
-                                  name="op1_conversion_check" value="1"><label
-                                for="op1_conversion_check"> Konversion</label>
-                           <input class="form-check-input" type="checkbox" id="op1_ablation_check"
-                                  name="op1_ablation_check" value="1"> <label for="op1_ablation_check">Ablation</label>
+                        <input class="form-check-input" type="checkbox" id="op1_conversion_checkbox" name="op1_conversion_checkbox" value="1"
+                               onchange="showInputField('op1_conversion_checkbox','op1_conversion_field')">
+                        <label for="op1_conversion_checkbox">Konversion</label>
+                        <span id="op1_conversion_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id = "op1_conversion_yes"
+                                  name="op1_conversion_yes" value="1"><label
+                                for="op1_conversion_yes">Konvertiert</label>
+                           <input class="form-check-input" type="checkbox" id="op1_conversion_no"
+                                  name="op1_conversion_no" value="1"> <label for="op1_conversion_no"> nicht Konvertiert</label>
+                          </span>
+
+                          <input class="form-check-input" type="checkbox" id="op1_ablation_checkbox" name="op1_ablation_checkbox" value="1"
+                               onchange="showInputField('op1_ablation_checkbox','op1_ablation_field')">
+                        <label for="op1_ablation_checkbox">Ablation</label>
+                        <span id="op1_ablation_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op1_ablation_yes"
+                                  name="op1_ablation_yes" value="1"><label
+                                for="op1_ablation_yes">Ablatiert</label>
+                           <input class="form-check-input" type="checkbox" id="op1_ablation_no"
+                                  name="op1_ablation_no" value="1"> <label for="op1_ablation_no"> Nicht Ablatiert</label>
                           </span>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="op_length_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" id="op_length_checkbox" name="op_length_checkbox" value="1"
                                    onchange="showInputField('op_length_checkbox','op_length_field')">
                             <label for="op_length_checkbox">Länge</label>
                             <span id="op_length_field" class='hidden-on-default border_box' style="display:none;">
@@ -951,7 +956,7 @@
                                         <div class="form-group">
                                             <input class="form-check-input" type="checkbox"
                                                    id="fs_drain_bili_pod1_checkbox" name="fs_drain_bili_pod1_checkbox"
-                                                   value="fs_drain_bili_pod1_checkbox"
+                                                   value="1"
                                                    onchange="showInputField('fs_drain_bili_pod1_checkbox','fs_drain_bili_field')">
                                             <label for="fs_drain_bili_pod1_checkbox">POD 1</label>
                                             <span id="fs_drain_bili_field" class='hidden-on-default border_box'
@@ -1307,15 +1312,26 @@
                             </span>
                         </div>
 
-                        <input class="form-check-input" type="checkbox" id="ss_op_occurence_checkbox" value="1"
-                               onchange="showInputField('ss_op_occurence_checkbox','ss_op_occurence_field')">
-                        <label for="ss_op_occurence_checkbox">OP Begebenheiten</label>
-                        <span id="ss_op_occurence_field" class='hidden-on-default border_box' style="display:none;">
-                           <input class="form-check-input" type="checkbox" id="op2_conversion_check"
-                                  name="op2_conversion_check" value="1"><label
-                                for="op2_conversion_check"> Konversion</label>
-                           <input class="form-check-input" type="checkbox" id="op2_ablation_check"
-                                  name="op2_ablation_check" value="1"> <label for="op2_ablation_check">Ablation</label>
+                        <input class="form-check-input" type="checkbox" id="op2_conversion_checkbox" name="op2_conversion_checkbox" value="1"
+                               onchange="showInputField('op2_conversion_checkbox','op2_conversion_field')">
+                        <label for="op2_conversion_checkbox">Konversion</label>
+                        <span id="op2_conversion_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id = "op2_conversion_yes"
+                                  name="op2_conversion_yes" value="1"><label
+                                for="op1_conversion_yes">Konvertiert</label>
+                           <input class="form-check-input" type="checkbox" id="op2_conversion_no"
+                                  name="op2_conversion_no" value="1"> <label for="op2_conversion_no"> nicht Konvertiert</label>
+                          </span>
+
+                          <input class="form-check-input" type="checkbox" id="op2_ablation_checkbox" name="op2_ablation_checkbox" value="1"
+                               onchange="showInputField('op2_ablation_checkbox','op2_ablation_field')">
+                        <label for="op2_ablation_checkbox">Ablation</label>
+                        <span id="op2_ablation_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op2_ablation_yes"
+                                  name="op2_ablation_yes" value="1"><label
+                                for="op2_ablation_yes">Ablatiert</label>
+                           <input class="form-check-input" type="checkbox" id="op2_ablation_no"
+                                  name="op2_ablation_no" value="1"> <label for="op2_ablation_no"> Nicht Ablatiert</label>
                           </span>
                         <div class="form-group">
                             <input class="form-check-input" type="checkbox" id="ss_op_length_checkbox" value="1"
@@ -1852,15 +1868,26 @@
                             </span>
                         </div>
 
-                        <input class="form-check-input" type="checkbox" id="ts_op_occurence_checkbox" value="1"
-                               onchange="showInputField('ts_op_occurence_checkbox','ts_op_occurence_field')">
-                        <label for="ts_op_occurence_checkbox">OP Begebenheiten</label>
-                        <span id="ts_op_occurence_field" class='hidden-on-default border_box' style="display:none;">
-                           <input class="form-check-input" type="checkbox" id="op3_conversion_check"
-                                  name="op3_conversion_check" value="1"><label
-                                for="op3_conversion_check"> Konversion</label>
-                           <input class="form-check-input" type="checkbox" id="op3_ablation_check"
-                                  name="op3_ablation_check" value="1"> <label for="op3_ablation_check">Ablation</label>
+                        <input class="form-check-input" type="checkbox" id="op3_conversion_checkbox" name="op3_conversion_checkbox" value="1"
+                               onchange="showInputField('op3_conversion_checkbox','op3_conversion_field')">
+                        <label for="op3_conversion_checkbox">Konversion</label>
+                        <span id="op3_conversion_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id = "op3_conversion_yes"
+                                  name="op3_conversion_yes" value="1"><label
+                                for="op3_conversion_yes">Konvertiert</label>
+                           <input class="form-check-input" type="checkbox" id="op3_conversion_no"
+                                  name="op3_conversion_no" value="1"> <label for="op3_conversion_no"> nicht Konvertiert</label>
+                          </span>
+
+                          <input class="form-check-input" type="checkbox" id="op3_ablation_checkbox" name="op3_ablation_checkbox" value="1"
+                               onchange="showInputField('op3_ablation_checkbox','op3_ablation_field')">
+                        <label for="op3_ablation_checkbox">Ablation</label>
+                        <span id="op3_ablation_field" class='hidden-on-default border_box' style="display:none;">
+                           <input class="form-check-input" type="checkbox" id="op3_ablation_yes"
+                                  name="op3_ablation_yes" value="1"><label
+                                for="op3_ablation_yes">Ablatiert</label>
+                           <input class="form-check-input" type="checkbox" id="op3_ablation_no"
+                                  name="op3_ablation_no" value="1"> <label for="op3_ablation_no"> Nicht Ablatiert</label>
                           </span>
                         <div class="form-group">
                             <input class="form-check-input" type="checkbox" id="ts_op_length_checkbox" value="1"

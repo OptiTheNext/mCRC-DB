@@ -553,13 +553,17 @@ def page_3():
             index_names = {
                 'selector': '.index_name',
                 'props':
-                    'font-style: italic; color: darkgrey; font-weight:normal;'
+                    'font-style: italic; color: darkgrey; font-weight:normal;',
+
             }
             headers = {
                 'selector': 'th:not(.index_name)',
-                'props': 'background-color: #000066; color: white;'
+                'props': 'background-color: #000999; color: white;',
+                
             }
 
+            df.columns = Columns.b
+            df.drop(['Study ID', 'Case ID'], axis=1)
             htmltext = flask.Markup(
                 df.style.set_table_styles([
                     cell_hover,
@@ -571,11 +575,11 @@ def page_3():
                     },
                     {
                         'selector': 'th.col_heading.level0',
-                        'props': 'font-size: 1.5em;'
+                        'props': 'font-size: 1em;'
                     },
                     {
                         'selector': 'td',
-                        'props': 'text-align: center; font-weight: bold; border:solid'
+                        'props': 'text-align: center; font-weight: bold; border:solid;'
                     },
                 ],
                     overwrite=False).to_html())
