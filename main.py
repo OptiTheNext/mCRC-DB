@@ -393,13 +393,18 @@ def dateneingabe():
                 p_columns.append("first_surgery_ablation")
                 p_values.append("0")
 
+            
+            if params.get("fs_previous_chemotherapy", None) is None :
+                p_columns.append("fs_previous_chemotherapy")
+                p_values.append("0")
+
             if params["op_date_Surgery2"] and params.get("second_surgery_planned", None) is None:
                 p_columns.append("second_surgery_planned")
                 p_values.append("0")
             if params["op_date_Surgery2"] and params.get("second_surgery_realized", None) is None:
                 p_columns.append("second_surgery_realized")
                 p_values.append("0")
-            if params.get("ss_previous_chemotherapy", None) is None and params["op_date_Surgery2"]:
+            if params.get("ss_previous_chemotherapy", None) is None and params.get("op_date_Surgery2",None):
                 p_columns.append("ss_previous_chemotherapy")
                 p_values.append("0")
             if params.get("second_surgery_conversion", None) is None and params["op_date_Surgery2"]:
@@ -415,7 +420,7 @@ def dateneingabe():
             if params["op_date_Surgery3"] and params.get("third_surgery_realized", None) is None:
                 p_columns.append("third_surgery_realized")
                 p_values.append("0")
-            if params.get("th_previous_chemotherapy", None) is None and params["op_date_Surgery3"]:
+            if params.get("th_previous_chemotherapy", None) is None and params.get("op_date_Surgery3",None):
                 p_columns.append("th_previous_chemotherapy")
                 p_values.append("0")
             if params.get("third_surgery_conversion", None) is None and params["op_date_Surgery3"]:

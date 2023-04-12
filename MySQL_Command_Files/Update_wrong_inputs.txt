@@ -49,5 +49,8 @@ UPDATE mcrc_tabelle set primary_location = "Rektosigmoid" where primary_location
 UPDATE mcrc_tabelle set primary_location = "Transversum" where primary_location = "Colon transversum"
 UPDATE mcrc_tabelle SET ts_dindo = "" WHERE th_los = "";
 
+UPDATE mcrc_tabelle set sex = "f" where sex = "w";
+UPDATE mcrc_tabelle set sex = "f" where sex = "W";
+UPDATE mcrc_tabelle set first_surgery_minimal_invasive = "offen" where first_surgery_minimal_invasive = "Offen"; 
 
-
+UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
