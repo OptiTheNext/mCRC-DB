@@ -301,14 +301,14 @@ labor_werte = [
 
 global result
 
-
+#This function builds a dict for LaTeC to understand and render in a Table
 def build_dict(datatype, data):
     if datatype not in ["Image", "Table"]:
         raise ValueError("Datatype didn't match Image or Table")
     flask.session["elements"].append({"type": datatype, "data": data})
 
 
-def table_one_func(x, loesung):  # Formatiert result output in liste
+def table_one_func(x, loesung):  #Formates result output into a list
     lista = [[x]]
     print(loesung.values)
     for i, j in zip(loesung.axes[0].values.astype(str), loesung.values.astype(str)):
@@ -330,16 +330,9 @@ def make_autopct(values):
 
     return my_autopct
 
-
 def deskriptiv(df, points_of_interest, grafik, table_one):
     # Table one für Werte aus DF und Liste zur beschränkung der werte
-    print("Wuhu, deskriptiv")
-    print("Graphik =")
-    print(grafik)
-    print(table_one)
     df = pandas.DataFrame(df)
-    print(points_of_interest)
-
     for x in points_of_interest:
         if x in to_drop:
             continue
@@ -348,34 +341,27 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
         current_df = df[x]
         current_df.dropna(inplace=True)
 
+        #Format input df for better functionality with statistical libaries
         if x in booleans:
             df = df.replace({0: False, 1: True})
-            print("replaced with False/True")
 
         if x in decimals:
-            print("trying to change formats")
-
             current_df = pandas.to_numeric(current_df, errors='coerce')
 
         if x in categorials:
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace=True)
-
-        print(current_df.dtype)
+        #Generate table one if wanted
         if (table_one):
             result = current_df.describe()
             table = table_one_func(x, result)  # table is ne liste
             build_dict("Table", table)
-
+        #Generate A Graph from Table One
         if (grafik):
-            print("ich bin unter if grafik")
-            print(x)
+            #Generate Graph as Cake Graph
             if x in booleans:
-                print("ich bin in booleans")
                 values = current_df.value_counts()
-                print("ich printe values:")
-                print(values)
                 val = ['False:', 'True:']
                 values = [values[0], values[1]]
                 series2 = pandas.Series(values,
@@ -389,22 +375,17 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 fig.clf()
                 values = None
                 series2 = None
-                print("Hier kuchendiagramm")
-
+            #Generate a Boxplot Graph 
             if x in decimals:
-                print("made an boxplot")
                 pie = current_df.plot.box(figsize=(6, 6))
                 fig = pie.get_figure()
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_box.png"
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_box.png")
                 fig.clf()
-
+            #Generate A Balkendiagramm
             if x in categorials:
-                print("making a Balkendiagramm")
-
                 current_df = current_df.value_counts()
-                print(current_df)
                 pie = current_df.plot.bar(figsize=(6, 6))
                 fig = pie.get_figure()
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_balken.png"
@@ -433,7 +414,6 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
                 result = scipy.stats.kstest(df, 'norm')
                 table = ([x, " :Kolmogorov-Smirnov Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
                 build_dict("Table", table)
-            print("anderson")
             if (anderson == True):
                 result = scipy.stats.anderson(df)
                 table = ([x, " :Anderson-Test"], ["Teststatistik", result[0]], ["Kritische Werte", result[1]],
