@@ -844,6 +844,7 @@ def verwaltung():
 
         if flask.request.method == 'POST':
             #Admin can create new users
+            print("in post")
             if "create_user" in flask.request.form \
                     and "username" in flask.request.form \
                     and "mailadress" in flask.request.form:
@@ -851,11 +852,11 @@ def verwaltung():
                 name = flask.request.form['username']
                 mail = flask.request.form['mailadress']
                 #check if user has charite mail
-                if "charite" not in mail:
-                    LocalRenderParameters["Error"] = "Email muss eine Charite-Email sein"
-                    LocalRenderParameters["error-text"] = e
-                    return flask.render_template(constants.URL_VERWALTUNG,
-                                         RenderParameters=LocalRenderParameters)
+               # if "charite" not in mail:
+                #    print("keine charite mail")
+                 #   LocalRenderParameters["Error"] = "Email muss eine Charite-Email sein"
+                  #  return flask.render_template(constants.URL_VERWALTUNG,
+                   #                      RenderParameters=LocalRenderParameters)
 
                 admin = flask.request.form['admin_select']
                 if admin == "Admin":
@@ -876,8 +877,6 @@ def verwaltung():
                     cursor = mydb.cursor()
                     cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
                     mydb.commit()
-                    return flask.render_template(constants.URL_VERWALTUNG,
-                                                 RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt enter user into Database, Contact an Administrator"
@@ -893,7 +892,15 @@ def verwaltung():
                     body=exchangelib.HTMLBody(template.render({'name': name, "url": url})),
                     to_recipients=[exchangelib.Mailbox(email_address=mail)]
                 )
-                m.send_and_save()
+                try:
+                    print("email sent")
+                    m.send_and_save()
+                    return flask.render_template(constants.URL_VERWALTUNG,
+                                                 RenderParameters=LocalRenderParameters)
+                except Exception as e:
+                    print(e)
+                    print("mail coulnd be send")
+                    LocalRenderParameters["error"] = "Couldnt send mail, Contact Administrator"
 
             # deletuser
             if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get(

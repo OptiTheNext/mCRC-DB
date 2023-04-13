@@ -5,7 +5,7 @@
 
 {% block MainContent %}
     <h3>Verwaltung</h3>
-    <form action="" method="post" autocomplete="off" enctype="multipart/form-data"></form>
+    <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
     {% if RenderParameters["Admin"] %}
             <div class="container" style="margin-left: 0">
                 <div class="row row-cols-1 row-cols-lg-3">
@@ -28,8 +28,8 @@
                                 </select>
                             </div>
                             <br>
-                            <input class="btn btn-secondary" type="submit" value="Nutzer erstellen" name="create_user">
-                            <br>
+                            <input class="btn btn-secondary" type="submit" value="Nutzer erstellen" name="create_user" id="create_user">
+                            <br> 
                         </div>
                     </div>
                     <div class="col-6" style="padding: 10px;">
@@ -90,7 +90,7 @@
                 <input class="form-control" type="password" name="current_password" id="current_password">
                 <br>
                 <label for="new_password">Neues Passwort</label>
-                <input class="form-control" type="password" name="new_password" id="current_password">
+                <input class="form-control" type="password" name="new_password" id="new_password">
                 <br>
                 <input class="btn btn-secondary" type="submit" value="Passwort ändern" name="change_pwd">
             </div>
