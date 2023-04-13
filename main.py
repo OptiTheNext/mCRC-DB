@@ -201,11 +201,12 @@ def page_1():
             cursor = mydb.cursor()
             cursor.execute("SELECT COUNT(*) FROM mcrc_tabelle where Kuerzel=''")
             pat_to_do = cursor.fetchall()
-            LocalRenderParameters["Pat_To_Do"] = pat_to_do[0][0]
+            pat_to_do = "Noch " + str(pat_to_do[0][0])
+            LocalRenderParameters["Pat_To_Do"] = pat_to_do
         except Exception as e:
             print(e)
             print("No more patients to work on")
-            LocalRenderParameters["Pat_To_Do"] = "Keine Verbindung zur Datenbank"
+            LocalRenderParameters["Pat_To_Do"] = "Keine Verbindung zur Datenbank, logge dich neu ein"
 
         return flask.render_template(constants.URL_STARTSEITE,
                                      RenderParameters=LocalRenderParameters)
