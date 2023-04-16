@@ -537,7 +537,6 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters['op_diagnosis_Surgery1']:
             para = parameters['op_diagnosis_Surgery1']
             sort_df("op_diagnosis_Surgery1 == @para")
-)
 
     # Check for OP Methode
     if parameters.get('op_method_checkbox', None):
@@ -829,7 +828,6 @@ def analyse(parameters) -> pandas.DataFrame:
     # Check for Second Op Code
     if parameters.get("op_code_Surgery2_checkbox", None):
         if parameters['op_code_Surgery2']:
-            print(type(parameters['op_code_Surgery2']))
             para = parameters['op_code_Surgery2']
             sort_df("op_code_Surgery2 == @para")
 
