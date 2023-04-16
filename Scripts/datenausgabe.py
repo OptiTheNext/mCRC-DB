@@ -64,7 +64,7 @@ def analyse(parameters) -> pandas.DataFrame:
     df['first_surgery_ablation'] = df['first_surgery_ablation'].fillna(False).astype('bool')
     df['first_surgery_conversion'] = df['first_surgery_conversion'].fillna(False).astype('bool')
     df["second_surgery_planned"]=df["second_surgery_planned"].replace({"0": False, "1": True})
-    df["second_surgery_realized"]=df["second_surgery_realized"].replace({1: False, 1: True})
+    df["second_surgery_realized"]=df["second_surgery_realized"].replace({0: False, 1: True})
     df["second_surgery_conversion"]=df["second_surgery_conversion"].replace({0: False, 1: True})
     df["second_surgery_ablation"]=df["third_surgery_ablation"].replace({0: False, 1: True})
     df["third_surgery_conversion"]=df["third_surgery_conversion"].replace({0: False, 1: True})
@@ -468,7 +468,6 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
             sort_df("fs_previous_chemotherapy_cycles <= @para")
         if parameters["fs_previous_chemotherapy_type"]:
-            print("bin da wo ich sein soll")
             # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
             para = parameters['fs_previous_chemotherapy_type']
             sort_df("fs_previous_chemotherapy_type == @para")
@@ -492,7 +491,6 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
             sort_df("ss_previous_chemotherapy_cycles <= @para")
         if parameters["ss_previous_chemotherapy_type"]:
-            print("bin da wo ich sein soll")
             # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
             para = parameters['ss_previous_chemotherapy_type']
             sort_df("ss_previous_chemotherapy_type == @para")
@@ -516,7 +514,6 @@ def analyse(parameters) -> pandas.DataFrame:
             # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
             sort_df("th_previous_chemotherapy_cycles <= @para")
         if parameters["th_previous_chemotherapy_type"]:
-            print("bin da wo ich sein soll")
             # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
             para = parameters['th_previous_chemotherapy_type']
             sort_df("th_previous_chemotherapy_type == @para")
@@ -1004,7 +1001,6 @@ def analyse(parameters) -> pandas.DataFrame:
     
     #Second OP 
     if parameters.get("second_surgery_planned_yes", None) or parameters.get("second_surgery_planned_no", None):
-        print("here we are")
         df = df.dropna(subset=["second_surgery_planned"])
         print(df)
         if parameters.get('second_surgery_planned_yes', None):
@@ -1013,7 +1009,6 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("second_surgery_planned == False")
 
     if parameters.get("second_surgery_realized_yes", None) or parameters.get("second_surgery_realized_no", None):
-        print("here we are")
         df = df.dropna(subset=["second_surgery_realized"])
         print(df)
         if parameters.get('second_surgery_realized_yes', None):
@@ -1363,7 +1358,6 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Third Op Data
     if parameters.get("third_surgery_planned_yes", None) or parameters.get("third_surgery_planned_no", None):
-        print("here we are")
         df = df.dropna(subset=["third_surgery_planned"])
         print(df)
         if parameters.get('third_surgery_planned_yes', None):
@@ -1372,7 +1366,6 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("third_surgery_planned == False")
 
     if parameters.get("third_surgery_realized_yes", None) or parameters.get("third_surgery_realized_no", None):
-        print("here we are")
         df = df.dropna(subset=["third_surgery_realized"])
         print(df)
         if parameters.get('third_surgery_realized_yes', None):
