@@ -59,14 +59,20 @@ def analyse(parameters) -> pandas.DataFrame:
     df['cirrhosis'] = df['cirrhosis'].fillna(False).astype('bool')
     df['fibrosis'] = df['fibrosis'].fillna(False).astype('bool')
     df['fs_previous_chemotherapy'] = df['fs_previous_chemotherapy'].fillna(False).astype('bool')
-    df["ss_previous_chemotherapy"]=df["ss_previous_chemotherapy"].replace({"0": False, "1": True})
-    df["th_previous_chemotherapy"]=df["th_previous_chemotherapy"].replace({"0": False, "1": True})
+    df["ss_previous_chemotherapy"]=df["ss_previous_chemotherapy"].replace({0: False, 1: True})
+    df["th_previous_chemotherapy"]=df["th_previous_chemotherapy"].replace({0: False, 1: True})
     df['first_surgery_ablation'] = df['first_surgery_ablation'].fillna(False).astype('bool')
     df['first_surgery_conversion'] = df['first_surgery_conversion'].fillna(False).astype('bool')
     df["second_surgery_planned"]=df["second_surgery_planned"].replace({"0": False, "1": True})
-    df["second_surgery_realized"]=df["second_surgery_realized"].replace({"0": False, "1": True})
-    df["second_surgery_conversion"]=df["second_surgery_conversion"].replace({"0": False, "1": True})
-    df["second_surgery_ablation"]=df["second_surgery_ablation"].replace({"0": False, "1": True})
+    df["second_surgery_realized"]=df["second_surgery_realized"].replace({1: False, 1: True})
+    df["second_surgery_conversion"]=df["second_surgery_conversion"].replace({0: False, 1: True})
+    df["second_surgery_ablation"]=df["third_surgery_ablation"].replace({0: False, 1: True})
+    df["third_surgery_conversion"]=df["third_surgery_conversion"].replace({0: False, 1: True})
+    df["third_surgery_ablation"]=df["second_surgery_ablation"].replace({0: False, 1: True})
+    df["third_surgery_planned"]=df["third_surgery_planned"].replace({0: False, 1: True})
+    df["third_surgery_realized"]=df["third_surgery_realized"].replace({0: False, 1: True})
+    df["third_surgery_conversion"]=df["third_surgery_conversion"].replace({"0": False, "1": True})
+    df["third_surgery_ablation"]=df["third_surgery_ablation"].replace({"0": False, "1": True})
     df['op_date_Surgery1'] = pandas.to_datetime(df["op_date_Surgery1"],format=constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery2'] = pandas.to_datetime(df["op_date_Surgery2"],format =constants.DATEFORMAT,errors='coerce')
     df['op_date_Surgery3'] = pandas.to_datetime(df["op_date_Surgery3"],format =constants.DATEFORMAT,errors='coerce')
@@ -498,25 +504,26 @@ def analyse(parameters) -> pandas.DataFrame:
     # Check for TH_Chemo
     if parameters.get("th_previous_chemotherapy", None):
         if parameters.get("th_chemo_check_no", None):
-            if Mode:
-                df_AND = df_AND[df_AND['op_date_Surgery23'].notnull()]
-            # df.query("th_previous_chemotherapy == 0", inplace=True)
+            sort_df("op_date_Surgery3 != ''")
+            # df.query("fs_previous_chemotherapy == 0", inplace=True)
             sort_df("th_previous_chemotherapy == 0")
-
         if parameters["th_previous_chemotherapy_cycles_von"]:
             para = int(parameters['th_previous_chemotherapy_cycles_von'])
-            # df.query("th_previous_chemotherapy_cycles == @para", inplace= True)
-            sort_df("th_previous_chemotherapy_cycles == @para")
+            # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
+            sort_df("th_previous_chemotherapy_cycles >= @para")
         if parameters["th_previous_chemotherapy_cycles_bis"]:
             para = int(parameters['th_previous_chemotherapy_cycles_bis'])
-            # df.query("th_previous_chemotherapy_cycles == @para", inplace= True)
-            sort_df("th_previous_chemotherapy_cycles == @para")
+            # df.query("fs_previous_chemotherapy_cycles == @para", inplace= True)
+            sort_df("th_previous_chemotherapy_cycles <= @para")
         if parameters["th_previous_chemotherapy_type"]:
-            # df.query("th_previous_chemotherapy_type = @parameters['th_previous_chemotherapy_typ']",inplace=True)
-            sort_df("th_previous_chemotherapy_type = @parameters['th_previous_chemotherapy_typ']")
+            print("bin da wo ich sein soll")
+            # df.query("fs_previous_chemotherapy_type = @parameters['fs_previous_chemotherapy_typ']",inplace=True)
+            para = parameters['th_previous_chemotherapy_type']
+            sort_df("th_previous_chemotherapy_type == @para")
         if parameters["th_previous_antibody"]:
-            # df.query("th_previous_antibody = @parameters['th_previous_antibody']",inplace=True)
-            sort_df("th_previous_antibody = @parameters['th_previous_antibody']")
+            para= parameters['th_previous_antibody']
+            # df.query("fs_previous_antibody = @parameters['fs_previous_antibody']",inplace=True)
+            sort_df("th_previous_antibody == @para")
 
     # Check for PVE
     if parameters.get("PVECheck", None):
@@ -698,7 +705,9 @@ def analyse(parameters) -> pandas.DataFrame:
     # Check for INtensivzeit
     if parameters.get("fs_icu_checkbox", None):
         print("in ICU")
+        df = df.dropna(subset=["op_date_Surgery1"])
         if parameters["fs_icu_von"]:
+        
             print("tried to filter >")
 
             para = int(parameters['fs_icu_von'])
@@ -724,6 +733,7 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for DINDO
     if parameters.get('fs_dindo_checkbox', None):
+        sort_df("op_date_Surgery1 != ''")
         paralist = []
         if parameters.get('fs_check_dindo_0', None):
             paralist.append('No comp')
@@ -761,44 +771,44 @@ def analyse(parameters) -> pandas.DataFrame:
     # # Check for POD1
     if parameters.get("fs_serum_bili_pod1_checkbox", None):
         if parameters["fs_Serum_Bili_POD1_von"]:
-            para = int(parameters['fs_Serum_Bili_POD1_von'])
+            para = float(parameters['fs_Serum_Bili_POD1_von'])
             # df.query("fs_Serum_Bili_POD1 >= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD1 >= @para")
         if parameters["fs_Serum_Bili_POD1_bis"]:
-            para = int(parameters['fs_Serum_Bili_POD1_bis'])
+            para = float(parameters['fs_Serum_Bili_POD1_bis'])
             # df.query("fs_Serum_Bili_POD1 <= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("fs_serum_bili_pod3_checkbox", None):
         if parameters["fs_Serum_Bili_POD3_von"]:
-            para = int(parameters['fs_Serum_Bili_POD3_von'])
+            para = float(parameters['fs_Serum_Bili_POD3_von'])
             # df.query("fs_Serum_Bili_POD3 >= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD3 >= @para")
         if parameters["fs_Serum_Bili_POD3_bis"]:
-            para = int(parameters['fs_Serum_Bili_POD3_bis'])
+            para = float(parameters['fs_Serum_Bili_POD3_bis'])
             # df.query("fs_Serum_Bili_POD3 <= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("fs_serum_bili_pod5_checkbox", None):
         if parameters["fs_Serum_Bili_POD5_von"]:
-            para = int(parameters['fs_Serum_Bili_POD5_von'])
+            para = float(parameters['fs_Serum_Bili_POD5_von'])
             # df.query("fs_Serum_Bili_POD5 >= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD5 >= @para")
         if parameters["fs_Serum_Bili_POD5_bis"]:
-            para = int(parameters['fs_Serum_Bili_POD5_bis'])
+            para = float(parameters['fs_Serum_Bili_POD5_bis'])
             # df.query("fs_Serum_Bili_POD5 <= @para", inplace= True)
             sort_df("fs_Serum_Bili_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("fs_serum_bili_last_checkbox", None):
         if parameters["fs_Serum_Bili_last_von"]:
-            para = int(parameters['fs_Serum_Bili_last_von'])
+            para = float(parameters['fs_Serum_Bili_last_von'])
             # df.query("fs_Serum_Bili_Last >= @para", inplace= True)
             sort_df("fs_Serum_Bili_Last >= @para")
         if parameters["fs_Serum_Bili_last_bis"]:
-            para = int(parameters['fs_Serum_Bili_last_bis'])
+            para = float(parameters['fs_Serum_Bili_last_bis'])
             # df.query("fs_Serum_Bili_Last <= @para", inplace= True)
             sort_df("fs_Serum_Bili_Last <= @para")
 
@@ -809,11 +819,11 @@ def analyse(parameters) -> pandas.DataFrame:
         print("in drain check")
         if parameters.get("fs_drain_Bili_POD1_von",None):
             print("in pod1 von drain")
-            para = int(parameters['fs_drain_Bili_POD1_von'])
+            para = float(parameters['fs_drain_Bili_POD1_von'])
             # df.query("fs_Drain_Bili_POD1 >= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD1 >= @para")
         if parameters.get("fs_drain_Bili_POD1_bis",None):
-            para = int(parameters['fs_drain_Bili_POD1_bis'])
+            para = float(parameters['fs_drain_Bili_POD1_bis'])
             print("pod1 drain bis")
             # df.query("fs_Drain_Bili_POD1 <= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD1 <= @para")
@@ -822,34 +832,34 @@ def analyse(parameters) -> pandas.DataFrame:
     if parameters.get("fs_drain_bili_pod3_checkbox", None):
         if parameters.get("fs_drain_Bili_pod3_von",None):
             print("in von")
-            para = int(parameters['fs_drain_Bili_pod3_von'])
+            para = float(parameters['fs_drain_Bili_pod3_von'])
             # df.query("fs_Drain_Bili_POD3 >= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD3 >= @para")
         if parameters.get("fs_drain_Bili_pod3_bis",None):
             print("in bis")
-            para = int(parameters['fs_drain_Bili_pod3_bis'])
+            para = float(parameters['fs_drain_Bili_pod3_bis'])
             # df.query("fs_Drain_Bili_POD3 <= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("fs_drain_bili_pod5_checkbox", None):
         if parameters["fs_drain_Bili_pod5_von"]:
-            para = int(parameters['fs_drain_Bili_pod5_von'])
+            para = float(parameters['fs_drain_Bili_pod5_von'])
             # df.query("fs_Drain_Bili_POD5 >= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD5 >= @para")
         if parameters["fs_drain_Bili_pod5_bis"]:
-            para = int(parameters['fs_drain_Bili_pod5_bis'])
+            para = float(parameters['fs_drain_Bili_pod5_bis'])
             # df.query("fs_Drain_Bili_POD5 <= @para", inplace= True)
             sort_df("fs_Drain_Bili_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("fs_drain_bili_last_checkbox", None):
         if parameters["fs_drain_Bili_last_von"]:
-            para = int(parameters['fs_drain_Bili_last_von'])
+            para = float(parameters['fs_drain_Bili_last_von'])
             # df.query("fs_Drain_Bili_Last >= @para", inplace= True)
             sort_df("fs_Drain_Bili_Last >= @para")
         if parameters["fs_drain_Bili_last_bis"]:
-            para = int(parameters['fs_drain_Bili_last_bis'])
+            para = float(parameters['fs_drain_Bili_last_bis'])
             # df.query("fs_Drain_Bili_Last <= @para", inplace= True)
             sort_df("fs_Drain_Bili_Last <= @para")
 
@@ -1085,10 +1095,11 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for INtensivzeit
     if parameters.get("ss_icu_checkbox", None):
+        df = df.dropna(subset=["op_date_Surgery2"])
         if parameters["ss_icu_von"]:
             para = int(parameters['ss_icu_von'])
             # df.query("ss_icu_von >= @para", inplace=True)
-            sort_df("ss_icu_von >= @para")
+            sort_df("ss_icu >= @para")
         if parameters["ss_icu_bis"]:
             para = int(parameters['ss_icu_bis'])
             # df.query("ss_icu <= @para", inplace=True)
@@ -1107,7 +1118,7 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for DINDO
     if parameters.get('ss_dindo_checkbox', None):
-
+        sort_df("op_date_Surgery2 != ''")
         paralist = []
         if parameters.get('ss_check_dindo_0', None): paralist.append('No comp'); paralist.append('No comp'); print(
             "No Complications")
@@ -1129,44 +1140,44 @@ def analyse(parameters) -> pandas.DataFrame:
     # # Check for POD1
     if parameters.get("ss_serum_bili_pod1_checkbox", None):
         if parameters["ss_Serum_Bili_POD1_von"]:
-            para = int(parameters['ss_Serum_Bili_POD1_von'])
+            para = float(parameters['ss_Serum_Bili_POD1_von'])
             # df.query("ss_Serum_Bili_POD1 >= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD1 >= @para")
         if parameters["ss_Serum_Bili_POD1_bis"]:
-            para = int(parameters['ss_Serum_Bili_POD1_bis'])
+            para = float(parameters['ss_Serum_Bili_POD1_bis'])
             # df.query("ss_Serum_Bili_POD1 <= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("ss_serum_bili_pod3_checkbox", None):
         if parameters["ss_Serum_Bili_POD3_von"]:
-            para = int(parameters['ss_Serum_Bili_POD3_von'])
+            para = float(parameters['ss_Serum_Bili_POD3_von'])
             # df.query("ss_Serum_Bili_POD3 >= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD3 >= @para")
         if parameters["ss_Serum_Bili_POD3_bis"]:
-            para = int(parameters['ss_Serum_Bili_POD3_bis'])
+            para = float(parameters['ss_Serum_Bili_POD3_bis'])
             # df.query("ss_Serum_Bili_POD3 <= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ss_serum_bili_pod5_checkbox", None):
         if parameters["ss_Serum_Bili_POD5_von"]:
-            para = int(parameters['ss_Serum_Bili_POD5_von'])
+            para = float(parameters['ss_Serum_Bili_POD5_von'])
             # df.query("ss_Serum_Bili_POD5 >= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD5 >= @para")
         if parameters["ss_Serum_Bili_POD5_bis"]:
-            para = int(parameters['ss_Serum_Bili_POD5_bis'])
+            para = float(parameters['ss_Serum_Bili_POD5_bis'])
             # df.query("ss_Serum_Bili_POD5 <= @para", inplace= True)
             sort_df("ss_Serum_Bili_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("ss_serum_bili_last_checkbox", None):
         if parameters["ss_Serum_Bili_last_von"]:
-            para = int(parameters['ss_Serum_Bili_last_von'])
+            para = float(parameters['ss_Serum_Bili_last_von'])
             # df.query("ss_Serum_Bili_Last >= @para", inplace= True)
             sort_df("ss_Serum_Bili_Last >= @para")
         if parameters["ss_Serum_Bili_last_bis"]:
-            para = int(parameters['ss_Serum_Bili_last_bis'])
+            para = float(parameters['ss_Serum_Bili_last_bis'])
             # df.query("ss_Serum_Bili_Last <= @para", inplace= True)
             sort_df("ss_Serum_Bili_Last <= @para")
 
@@ -1175,33 +1186,33 @@ def analyse(parameters) -> pandas.DataFrame:
     # # Check for POD1
     if parameters.get("ss_drain_bili_pod1_checkbox", None):
         if parameters["ss_drain_Bili_POD1_von"]:
-            para = int(parameters['ss_drain_Bili_POD1_von'])
+            para = float(parameters['ss_drain_Bili_POD1_von'])
             # df.query("ss_Drain_Bili_POD1 >= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD1 >= @para")
         if parameters["ss_drain_Bili_POD1_bis"]:
-            para = int(parameters['ss_drain_Bili_POD1_bis'])
+            para = float(parameters['ss_drain_Bili_POD1_bis'])
             # df.query("ss_Drain_Bili_POD1 <= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("ss_drain_bili_pod3_checkbox", None):
         if parameters["ss_drain_Bili_pod3_von"]:
-            para = int(parameters['ss_drain_Bili_pod3_von'])
+            para = float(parameters['ss_drain_Bili_pod3_von'])
             # df.query("ss_Drain_Bili_POD3 >= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD3 >= @para")
         if parameters["ss_drain_Bili_pod3_bis"]:
-            para = int(parameters['ss_drain_Bili_pod3_bis'])
+            para = float(parameters['ss_drain_Bili_pod3_bis'])
             # df.query("ss_Drain_Bili_POD3 <= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ss_drain_bili_pod5_checkbox", None):
         if parameters["ss_drain_Bili_pod5_von"]:
-            para = int(parameters['ss_drain_Bili_pod5_von'])
+            para = float(parameters['ss_drain_Bili_pod5_von'])
             # df.query("ss_Drain_Bili_POD5 >= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD5 >= @para")
         if parameters["ss_drain_Bili_pod5_bis"]:
-            para = int(parameters['ss_drain_Bili_pod5_bis'])
+            para = float(parameters['ss_drain_Bili_pod5_bis'])
             # df.query("ss_Drain_Bili_POD5 <= @para", inplace= True)
             sort_df("ss_Drain_Bili_POD5 <= @para")
 
@@ -1263,24 +1274,24 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # #Check for ALT ss
     # # Check for POD1
-    if parameters.get("ss_ALT_pod1_checkbox", None):
-        if parameters["ss_ALT_pod1_von"]:
-            para = int(parameters['ss_ALT_pod1_von'])
+    if parameters.get("ss_ALT_POD1_checkbox", None):
+        if parameters["ss_ALT_POD1_von"]:
+            para = int(parameters['ss_ALT_POD1_von'])
             # df.query("ss_ALT_POD1 >= @para", inplace= True)
             sort_df("ss_ALT_POD1 >= @para")
-        if parameters["ss_ALT_pod1_bis"]:
-            para = int(parameters['ss_ALT_pod1_bis'])
+        if parameters["ss_ALT_POD1_bis"]:
+            para = int(parameters['ss_ALT_POD1_bis'])
             # df.query("ss_ALT_POD1 <= @para", inplace= True)
             sort_df("ss_ALT_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("ss_ALT_pod3_checkbox", None):
-        if parameters["ss_ALT_pod3_von"]:
-            para = int(parameters['ss_ALT_pod3_von'])
+    if parameters.get("ss_ALT_POD3_checkbox", None):
+        if parameters["ss_ALT_POD3_von"]:
+            para = int(parameters['ss_ALT_POD3_von'])
             # df.query("ss_ALT_POD3 >= @para", inplace= True)
             sort_df("ss_ALT_POD3 >= @para")
-        if parameters["ss_ALT_pod3_bis"]:
-            para = int(parameters['ss_ALT_pod3_bis'])
+        if parameters["ss_ALT_POD3_bis"]:
+            para = int(parameters['ss_ALT_POD3_bis'])
             # df.query("ss_ALT_POD3 <= @para", inplace= True)
             sort_df("ss_ALT_POD3 <= @para")
 
@@ -1307,50 +1318,69 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("ss_ALT_Last <= @para")
 
     # #Check for INR
-    if parameters.get("ss_INR_pod1_checkbox", None):
-        if parameters["ss_INR_pod1_von"]:
-            para = int(parameters['ss_INR_pod1_von'])
+    if parameters.get("ss_INR_POD1_checkbox", None):
+        if parameters["ss_INR_POD1_von"]:
+            para = float(parameters['ss_INR_POD1_von'])
             # df.query("ss_INR_POD1 >= @para", inplace= True)
             sort_df("ss_INR_POD1 >= @para")
-        if parameters["ss_INR_pod1_bis"]:
-            para = int(parameters['ss_INR_pod1_bis'])
+        if parameters["ss_INR_POD1_bis"]:
+            para = float(parameters['ss_INR_POD1_bis'])
             # df.query("ss_INR_POD1 <= @para", inplace= True)
             sort_df("ss_INR_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("ss_INR_pod3_checkbox", None):
-        if parameters["ss_INR_pod3_von"]:
-            para = int(parameters['ss_INR_pod3_von'])
+    if parameters.get("ss_INR_POD3_checkbox", None):
+        if parameters["ss_INR_POD3_von"]:
+            para = float(parameters['ss_INR_POD3_von'])
             # df.query("ss_INR_POD3 >= @para", inplace= True)
             sort_df("ss_INR_POD3 >= @para")
-        if parameters["ss_INR_pod3_bis"]:
-            para = int(parameters['ss_INR_pod3_bis'])
+        if parameters["ss_INR_POD3_bis"]:
+            para = float(parameters['ss_INR_POD3_bis'])
             # df.query("ss_INR_POD3 <= @para", inplace= True)
             sort_df("ss_INR_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ss_INR_pod5_checkbox", None):
         if parameters["ss_INR_pod5_von"]:
-            para = int(parameters['ss_INR_pod5_von'])
+            para = float(parameters['ss_INR_pod5_von'])
             # df.query("ss_INR_POD5 >= @para", inplace= True)
             sort_df("ss_INR_POD5 >= @para")
         if parameters["ss_INR_pod5_bis"]:
-            para = int(parameters['ss_INR_pod5_bis'])
+            para = float(parameters['ss_INR_pod5_bis'])
             # df.query("ss_INR_POD5 <= @para", inplace= True)
             sort_df("ss_INR_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("ss_INR_Last_checkbox", None):
         if parameters["ss_INR_Last_von"]:
-            para = int(parameters['ss_INR_Last_von'])
+            para = float(parameters['ss_INR_Last_von'])
             # df.query("ss_INR_Last >= @para", inplace= True)
             sort_df("ss_INR_Last >= @para")
         if parameters["ss_INR_Last_bis"]:
-            para = int(parameters['ss_INR_Last_bis'])
+            para = float(parameters['ss_INR_Last_bis'])
             # df.query("ss_INR_Last <= @para", inplace= True)
             sort_df("ss_INR_Last <= @para")
 
     # Third Op Data
+    if parameters.get("third_surgery_planned_yes", None) or parameters.get("third_surgery_planned_no", None):
+        print("here we are")
+        df = df.dropna(subset=["third_surgery_planned"])
+        print(df)
+        if parameters.get('third_surgery_planned_yes', None):
+            sort_df("third_surgery_planned == True")
+        if parameters.get('third_surgery_planned_no', None):
+            sort_df("third_surgery_planned == False")
+
+    if parameters.get("third_surgery_realized_yes", None) or parameters.get("third_surgery_realized_no", None):
+        print("here we are")
+        df = df.dropna(subset=["third_surgery_realized"])
+        print(df)
+        if parameters.get('third_surgery_realized_yes', None):
+            sort_df("third_surgery_realized == True")
+        if parameters.get('third_surgery_realized_no', None):
+            sort_df("third_surgery_realized == False")
+
+
     if parameters.get('op_date_Surgery3_von', None) or parameters.get('op_date_Surgery3_bis', None):
         if parameters.get('op_date_Surgery3_von', None):
             von_date = datetime.datetime.strptime(parameters['op_date_Surgery3_von'], constants.DATEFORMAT)
@@ -1389,7 +1419,7 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters.get('ts_checklaparoskopisch', None): paralist.append('laparoskopisch');print("laparoskopisch")
         if parameters.get('ts_checkrobo', None): paralist.append('robotisch');print("checkrobo")
         # df.query("third_surgery_minimal_invasive in @paralist", inplace=True)
-        sort_df("third_surgery_minimal_invasive in @paralist")
+        sort_df("third_surgery_minimal_invasiv in @paralist")
 
     # Check for OP Konversion
     if parameters.get('op3_conversion_checkbox', None):
@@ -1412,23 +1442,27 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # Check for Length
     if parameters.get("ts_op_length_checkbox", None):
-        if parameters["op_length_von"]:
-            para = int(parameters['op_length_von'])
+        if parameters["third_surgery_length_von"]:
+            para = int(parameters['third_surgery_length_von'])
             # df.query("third_surgery_length >= @para", inplace=True)
             sort_df("third_surgery_length >= @para")
-        if parameters["ts_op_length_bis"]:
-            para = int(parameters['op_length_bis'])
+        if parameters["third_surgery_length_bis"]:
+            para = int(parameters['third_surgery_length_bis'])
             # df.query("third_surgery_length <= @para", inplace=True)
             sort_df("third_surgery_length <= @para")
 
     # Check for INtensivzeit
     if parameters.get("ts_icu_checkbox", None):
+        df = df.dropna(subset=["op_date_Surgery3"])
         if parameters["ts_icu_von"]:
+
             para = int(parameters['ts_icu_von'])
+            print("in von")
             # df.query("ts_icu_von >= @para", inplace=True)
-            sort_df("ts_icu_von >= @para")
+            sort_df("ts_icu >= @para")
         if parameters["ts_icu_bis"]:
             para = int(parameters['ts_icu_bis'])
+            print("in bis")
             # df.query("ts_icu <= @para", inplace=True)
             sort_df("ts_icu <= @para")
 
@@ -1437,15 +1471,15 @@ def analyse(parameters) -> pandas.DataFrame:
         if parameters["ts_los_von"]:
             para = int(parameters['ts_los_von'])
             # df.query("ts_los >= @para", inplace=True)
-            sort_df("ts_los >= @para")
+            sort_df("th_los >= @para")
         if parameters["ts_los_bis"]:
             para = int(parameters['ts_los_bis'])
             # df.query("ts_los <= @para", inplace=True)
-            sort_df("ts_los <= @para")
+            sort_df("th_los <= @para")
 
     # Check for DINDO
     if parameters.get('ts_dindo_checkbox', None):
-
+        sort_df("op_date_Surgery3 != ''")
         paralist = []
         if parameters.get('ts_check_dindo_0', None): paralist.append('No comp'); paralist.append('No comp'); print(
             "No Complications")
@@ -1468,44 +1502,44 @@ def analyse(parameters) -> pandas.DataFrame:
     # # Check for POD1
     if parameters.get("ts_serum_bili_pod1_checkbox", None):
         if parameters["ts_Serum_Bili_POD1_von"]:
-            para = int(parameters['ts_Serum_Bili_POD1_von'])
+            para = float(parameters['ts_Serum_Bili_POD1_von'])
             # df.query("ts_Serum_Bili_POD1 >= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD1 >= @para")
         if parameters["ts_Serum_Bili_POD1_bis"]:
-            para = int(parameters['ts_Serum_Bili_POD1_bis'])
+            para = float(parameters['ts_Serum_Bili_POD1_bis'])
             # df.query("ts_Serum_Bili_POD1 <= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("ts_serum_bili_pod3_checkbox", None):
         if parameters["ts_Serum_Bili_POD3_von"]:
-            para = int(parameters['ts_Serum_Bili_POD3_von'])
+            para = float(parameters['ts_Serum_Bili_POD3_von'])
             # df.query("ts_Serum_Bili_POD3 >= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD3 >= @para")
         if parameters["ts_Serum_Bili_POD3_bis"]:
-            para = int(parameters['ts_Serum_Bili_POD3_bis'])
+            para = float(parameters['ts_Serum_Bili_POD3_bis'])
             # df.query("ts_Serum_Bili_POD3 <= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ts_serum_bili_pod5_checkbox", None):
         if parameters["ts_Serum_Bili_POD5_von"]:
-            para = int(parameters['ts_Serum_Bili_POD5_von'])
+            para = float(parameters['ts_Serum_Bili_POD5_von'])
             # df.query("ts_Serum_Bili_POD5 >= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD5 >= @para")
         if parameters["ts_Serum_Bili_POD5_bis"]:
-            para = int(parameters['ts_Serum_Bili_POD5_bis'])
+            para = float(parameters['ts_Serum_Bili_POD5_bis'])
             # df.query("ts_Serum_Bili_POD5 <= @para", inplace= True)
             sort_df("ts_Serum_Bili_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("ts_serum_bili_last_checkbox", None):
         if parameters["ts_Serum_Bili_last_von"]:
-            para = int(parameters['ts_Serum_Bili_last_von'])
+            para = float(parameters['ts_Serum_Bili_last_von'])
             # df.query("ts_Serum_Bili_Last >= @para", inplace= True)
             sort_df("ts_Serum_Bili_Last >= @para")
         if parameters["ts_Serum_Bili_last_bis"]:
-            para = int(parameters['ts_Serum_Bili_last_bis'])
+            para = float(parameters['ts_Serum_Bili_last_bis'])
             # df.query("ts_Serum_Bili_Last <= @para", inplace= True)
             sort_df("ts_Serum_Bili_Last <= @para")
 
@@ -1513,68 +1547,68 @@ def analyse(parameters) -> pandas.DataFrame:
 
     # # Check for POD1
     if parameters.get("ts_drain_bili_pod1_checkbox", None):
-        if parameters["ts_drain_Bili_pod1_von"]:
-            para = int(parameters['ts_drain_Bili_pod1_von'])
+        if parameters["ts_drain_Bili_POD1_von"]:
+            para = float(parameters['ts_drain_Bili_POD1_von'])
             # df.query("ts_Drain_Bili_POD1 >= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD1 >= @para")
-        if parameters["ts_drain_Bili_pod1_bis"]:
-            para = int(parameters['ts_drain_Bili_pod1_bis'])
+        if parameters["ts_drain_Bili_POD1_bis"]:
+            para = float(parameters['ts_drain_Bili_POD1_bis'])
             # df.query("ts_Drain_Bili_POD1 <= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD1 <= @para")
 
     # # Check for POD3
     if parameters.get("ts_drain_bili_pod3_checkbox", None):
         if parameters["ts_drain_Bili_pod3_von"]:
-            para = int(parameters['ts_drain_Bili_pod3_von'])
+            para = float(parameters['ts_drain_Bili_pod3_von'])
             # df.query("ts_Drain_Bili_POD3 >= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD3 >= @para")
         if parameters["ts_drain_Bili_pod3_bis"]:
-            para = int(parameters['ts_drain_Bili_pod3_bis'])
+            para = float(parameters['ts_drain_Bili_pod3_bis'])
             # df.query("ts_Drain_Bili_POD3 <= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ts_drain_bili_pod5_checkbox", None):
         if parameters["ts_drain_Bili_pod5_von"]:
-            para = int(parameters['ts_drain_Bili_pod5_von'])
+            para = float(parameters['ts_drain_Bili_pod5_von'])
             # df.query("ts_Drain_Bili_POD5 >= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD5 >= @para")
         if parameters["ts_drain_Bili_pod5_bis"]:
-            para = int(parameters['ts_drain_Bili_pod5_bis'])
+            para = float(parameters['ts_drain_Bili_pod5_bis'])
             # df.query("ts_Drain_Bili_POD5 <= @para", inplace= True)
             sort_df("ts_Drain_Bili_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("ts_drain_bili_last_checkbox", None):
         if parameters["ts_drain_Bili_last_von"]:
-            para = int(parameters['ts_drain_Bili_last_von'])
+            para = float(parameters['ts_drain_Bili_last_von'])
             # df.query("ts_Drain_Bili_Last >= @para", inplace= True)
             sort_df("ts_Drain_Bili_Last >= @para")
         if parameters["ts_drain_Bili_last_bis"]:
-            para = int(parameters['ts_drain_Bili_last_bis'])
+            para = float(parameters['ts_drain_Bili_last_bis'])
             # df.query("ts_Drain_Bili_Last <= @para", inplace= True)
             sort_df("ts_Drain_Bili_Last <= @para")
 
     # #Check for AST
     # # Check for POD1
-    if parameters.get("ts_AST_pod1_checkbox", None):
-        if parameters["ts_AST_pod1_von"]:
-            para = int(parameters['ts_AST_pod1_von'])
+    if parameters.get("ts_AST_POD1_checkbox", None):
+        if parameters["ts_AST_POD1_von"]:
+            para = int(parameters['ts_AST_POD1_von'])
             # df.query("ts_AST_POD1 >= @para", inplace= True)
             sort_df("ts_AST_POD1 >= @para")
-        if parameters["ts_AST_pod1_bis"]:
-            para = int(parameters['ts_AST_pod1_bis'])
+        if parameters["ts_AST_POD1_bis"]:
+            para = int(parameters['ts_AST_POD1_bis'])
             # df.query("ts_AST_POD1 <= @para", inplace= True)
             sort_df("ts_AST_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("ts_AST_pod3_checkbox", None):
-        if parameters["ts_AST_pod3_von"]:
-            para = int(parameters['ts_AST_pod3_von'])
+    if parameters.get("ts_AST_POD3_checkbox", None):
+        if parameters["ts_AST_POD3_von"]:
+            para = int(parameters['ts_AST_POD3_von'])
             # df.query("ts_AST_POD3 >= @para", inplace= True)
             sort_df("ts_AST_POD3 >= @para")
-        if parameters["ts_AST_pod3_bis"]:
-            para = int(parameters['ts_AST_pod3_bis'])
+        if parameters["ts_AST_POD3_bis"]:
+            para = int(parameters['ts_AST_POD3_bis'])
             # df.query("ts_AST_POD3 <= @para", inplace= True)
             sort_df("ts_AST_POD3 <= @para")
 
@@ -1590,36 +1624,36 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("ts_AST_POD5 <= @para")
 
     # # Check for Last
-    if parameters.get("ts_AST_last_checkbox", None):
-        if parameters["ts_AST_last_von"]:
-            para = int(parameters['ts_AST_last_von'])
+    if parameters.get("ts_AST_Last_checkbox", None):
+        if parameters["ts_AST_Last_von"]:
+            para = int(parameters['ts_AST_Last_von'])
             # f.query("ts_AST_Last >= @para", inplace= True)
-            sort_df("ts_AST_Last >= @para")
-        if parameters["ts_AST_last_bis"]:
-            para = int(parameters['ts_AST_last_bis'])
+            sort_df("ts_AST_LAST >= @para")
+        if parameters["ts_AST_Last_bis"]:
+            para = int(parameters['ts_AST_Last_bis'])
             # df.query("ts_AST_Last <= @para", inplace= True)
-            sort_df("ts_AST_Last <= @para")
+            sort_df("ts_AST_LAST <= @para")
 
     # #Check for ALT ss
     # # Check for POD1
-    if parameters.get("ts_ALT_pod1_checkbox", None):
-        if parameters["ts_ALT_pod1_von"]:
-            para = int(parameters['ts_ALT_pod1_von'])
+    if parameters.get("ts_ALT_POD1_checkbox", None):
+        if parameters["ts_ALT_POD1_von"]:
+            para = int(parameters['ts_ALT_POD1_von'])
             # df.query("ts_ALT_POD1 >= @para", inplace= True)
             sort_df("ts_ALT_POD1 >= @para")
-        if parameters["ts_ALT_pod1_bis"]:
-            para = int(parameters['ts_ALT_pod1_bis'])
+        if parameters["ts_ALT_POD1_bis"]:
+            para = int(parameters['ts_ALT_POD1_bis'])
             # df.query("ts_ALT_POD1 <= @para", inplace= True)
             sort_df("ts_ALT_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("ts_ALT_pod3_checkbox", None):
-        if parameters["ts_ALT_pod3_von"]:
-            para = int(parameters['ts_ALT_pod3_von'])
+    if parameters.get("ts_ALT_POD3_checkbox", None):
+        if parameters["ts_ALT_POD3_von"]:
+            para = int(parameters['ts_ALT_POD3_von'])
             # df.query("ts_ALT_POD3 >= @para", inplace= True)
             sort_df("ts_ALT_POD3 >= @para")
-        if parameters["ts_ALT_pod3_bis"]:
-            para = int(parameters['ts_ALT_pod3_bis'])
+        if parameters["ts_ALT_POD3_bis"]:
+            para = int(parameters['ts_ALT_POD3_bis'])
             # df.query("ts_ALT_POD3 <= @para", inplace= True)
             sort_df("ts_ALT_POD3 <= @para")
 
@@ -1646,46 +1680,46 @@ def analyse(parameters) -> pandas.DataFrame:
             sort_df("ts_ALT_Last <= @para")
 
     # #Check for INR
-    if parameters.get("ts_INR_pod1_checkbox", None):
-        if parameters["ts_INR_pod1_von"]:
-            para = int(parameters['ts_INR_pod1_von'])
+    if parameters.get("ts_INR_POD1_checkbox", None):
+        if parameters["ts_INR_POD1_von"]:
+            para = float(parameters['ts_INR_POD1_von'])
             # df.query("ts_INR_POD1 >= @para", inplace= True)
             sort_df("ts_INR_POD1 >= @para")
-        if parameters["ts_INR_pod1_bis"]:
-            para = int(parameters['ts_INR_pod1_bis'])
+        if parameters["ts_INR_POD1_bis"]:
+            para = float(parameters['ts_INR_POD1_bis'])
             # df.query("ts_INR_POD1 <= @para", inplace= True)
             sort_df("ts_INR_POD1 <= @para")
 
     # # Check for POD3
-    if parameters.get("ts_INR_pod3_checkbox", None):
-        if parameters["ts_INR_pod3_von"]:
-            para = int(parameters['ts_INR_pod3_von'])
+    if parameters.get("ts_INR_POD3_checkbox", None):
+        if parameters["ts_INR_POD3_von"]:
+            para = float(parameters['ts_INR_POD3_von'])
             # df.query("ts_INR_POD3 >= @para", inplace= True)
             sort_df("ts_INR_POD3 >= @para")
-        if parameters["ts_INR_pod3_bis"]:
-            para = int(parameters['ts_INR_pod3_bis'])
+        if parameters["ts_INR_POD3_bis"]:
+            para = float(parameters['ts_INR_POD3_bis'])
             # df.query("ts_INR_POD3 <= @para", inplace= True)
             sort_df("ts_INR_POD3 <= @para")
 
     # # Check for POD5
     if parameters.get("ts_INR_pod5_checkbox", None):
         if parameters["ts_INR_pod5_von"]:
-            para = int(parameters['ts_INR_pod5_von'])
+            para = float(parameters['ts_INR_pod5_von'])
             # df.query("ts_INR_POD5 >= @para", inplace= True)
             sort_df("ts_INR_POD5 >= @para")
         if parameters["ts_INR_pod5_bis"]:
-            para = int(parameters['ts_INR_pod5_bis'])
+            para = float(parameters['ts_INR_pod5_bis'])
             # df.query("ts_INR_POD5 <= @para", inplace= True)
             sort_df("ts_INR_POD5 <= @para")
 
     # # Check for Last
     if parameters.get("ts_INR_Last_checkbox", None):
         if parameters["ts_INR_Last_von"]:
-            para = int(parameters['ts_INR_Last_von'])
+            para = float(parameters['ts_INR_Last_von'])
             # df.query("ts_INR_Last >= @para", inplace= True)
             sort_df("ts_INR_Last >= @para")
         if parameters["ts_INR_Last_bis"]:
-            para = int(parameters['ts_INR_Last_bis'])
+            para = float(parameters['ts_INR_Last_bis'])
             # df.query("ts_INR_Last <= @para", inplace= True)
             sort_df("ts_INR_Last <= @para")
 
