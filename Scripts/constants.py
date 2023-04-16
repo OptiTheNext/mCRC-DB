@@ -10,5 +10,6 @@ URL_VERWALTUNG = "verwaltung.html"
 ERRORTEXT_DATABASECONNECTION = "Cannot reach database, contact administrator."
 
 DATEFORMAT = "%Y-%m-%d"
+BACKUP_DATE = "%b-%d-%Y"
 
 UPLOAD_FOLDER = './CSV_TO_IMPORT'

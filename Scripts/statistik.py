@@ -441,8 +441,12 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
     print("Wuhu, normalverteilt")
 
 
-def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
+def exploration(df, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
     # Test / Darstellung von korrellation
+
+    H0_x = "H0 verwerfen"
+    H0_y= "H0 annehmen"
+    
     def modus(mode):
         if mode == "zweizeitig":
             return "two-sided" 
@@ -586,9 +590,9 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
         result = scipy.stats.ttest_ind(group1, group2, alternative=side)
       
         if result[1] <= 0.05:
-            emp = "H0 verwerfen"
+            emp = H0_x
         else:
-            emp = "H0 annehmen"
+            emp = H0_y
         
         x = reg_one + " and " + reg_two
         x = x.replace("_", "-")
@@ -619,9 +623,9 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
         print(result)
 
         if result[1] <= 0.05:
-            emp = "H0 verwerfen"
+            emp = H0_x
         else:
-            emp = "H0 annehmen"
+            emp = H0_y
         
         x = reg_one + " and " + reg_two
         x = x.replace("_", "-")
@@ -645,9 +649,9 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
         result = scipy.stats.mannwhitneyu(group1,group2, alternative = side)
         print(result)
         if result[1] <= 0.05:
-            emp = "H0 verwerfen"
+            emp = H0_x
         else:
-            emp = "H0 annehmen"
+            emp = H0_y
         
         x = reg_one + " and " + reg_two
         x = x.replace("_", "-")
@@ -677,9 +681,9 @@ def exploration(df, points_of_interest, reg_one, reg_two, linear, korrelation, t
         side = modus(mode_w)
         result = scipy.stats.wilcoxon(group1, group2, alternative = side)
         if result[1] <= 0.05:
-            emp = "H0 verwerfen"
+            emp = H0_x
         else:
-            emp = "H0 annehmen"
+            emp = H0_y
         
         x = reg_one + " and " + reg_two
         x = x.replace("_", "-")

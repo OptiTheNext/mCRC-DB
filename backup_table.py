@@ -12,6 +12,7 @@ import traceback
 import sys
 import pandas
 from Scripts import Columns
+from Scripts import constants
 
 load_dotenv()
 
@@ -34,7 +35,7 @@ dates_to_check = []
 for x in onlyfiles:
     date = x.split("_")[1]
     date = date.split(".")[0]
-    date = datetime.datetime.strptime(date, "%b-%d-%Y")
+    date = datetime.datetime.strptime(date, constants.BACKUP_DATE)
     print (date)
     dates_to_check.append(date)
 
@@ -44,12 +45,11 @@ if len(dates_to_check):
     youngest = max(dt for dt in dates_to_check if dt < datetime.datetime.now())
     print(youngest)
 
-    path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime("%b-%d-%Y") +".csv"
+    path_to_newest_file = "./backups/mcrc.table.backup_" + youngest.strftime(constants.BACKUP_DATE) +".csv"
     print(path_to_newest_file)
 
 last_updated = cursor.execute("SELECT update_time FROM information_schema.tables WHERE table_schema = 'mcrc_db' AND table_name = 'mcrc_tabelle';")
 last_updated = cursor.fetchall()
-#last_updated = last_updated[0][0].strftime("%b-%d-%Y")
 
 print("Hier das datum")
 print(last_updated)
@@ -61,7 +61,7 @@ if( youngest == None or youngest < last_updated[0][0]):
     user = os.environ.get('KRK_DB_USER')
     password = os.environ.get('KRK_DB_PASS')
 
-    path = "./backups/mcrc.table.backup_" + datetime.date.today().strftime("%b-%d-%Y") +".sql"
+    path = "./backups/mcrc.table.backup_" + datetime.date.today().strftime(constants.BACKUP_DATE) +".sql"
     os.system('mysqldump -u%s -p%s mcrc_db > %s' %(user,password,path))
     print("we did it")
 

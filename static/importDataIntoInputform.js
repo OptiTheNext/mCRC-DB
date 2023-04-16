@@ -1,5 +1,5 @@
 function importData() {
-    var pid = $('#pat_id_import').val();
+    const pid = $('#pat_id_import').val();
     $.getJSON("/api/getDataForID", "pat_id_import="+pid, function(result){
         console.log(result);
         $.each(result, function(key, value) {
