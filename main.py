@@ -1103,7 +1103,7 @@ def get_data_for_id():
                                  RenderParameters=LocalRenderParameters)
 
 
-@app.route("/versions", methods=["GET","POST"])
+@app.route("/versions", methods=["GET"])
 def versions():
     LocalRenderParameters = RenderParameters
     if "username" not in flask.session:
