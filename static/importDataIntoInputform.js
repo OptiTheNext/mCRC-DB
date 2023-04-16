@@ -31,9 +31,6 @@ function importData() {
             }
             if(key === "op_date_Surgery2" || key === "op_code_Surgery2") {
                 $("#secondOP_Check").prop('checked', Boolean(+value)).trigger("change");
-                console.log(key)
-                console.log(Boolean(value))
-                console.log
             }
             if(key === "op_date_Surgery3") {
                 $("#thirdOP_Check").prop('checked', Boolean(value)).trigger("change");
