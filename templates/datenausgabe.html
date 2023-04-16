@@ -1256,7 +1256,45 @@
                 <div class="col-6" style=" padding: 10px;">
                     <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                         <h3>Zweite OP</h3>
+
                         <div class="form-group">
+
+                            
+                            <input class="form-check-input" type="checkbox" id="second_surgery_planned_check" value="1"
+                                   onchange="showInputField('second_surgery_planned_check','second_surgery_planned_field')">
+                            <label for="second_surgery_planned_check">Geplant</label>
+
+                            <span id="second_surgery_planned_field" class='hidden-on-default border_box' style="display:none;">
+                            <input class="form-control" type="checkbox" name="second_surgery_planned_yes"
+                                   id="second_surgery_planned_yes">
+                            <label for="second_surgery_planned_yes" class="form-labels">Ja</label>
+                            
+                            <input class="form-control" type="checkbox" name="second_surgery_planned_no"
+                                    id="second_surgery_planned_no">
+                                   <label for="second_surgery_planned_no" class="form-labels">Nein</label>
+                            </span>
+                        </div>
+                        <div class="form-group">
+
+                            
+                            <input class="form-check-input" type="checkbox" id="second_surgery_realized_check" value="1"
+                                   onchange="showInputField('second_surgery_realized_check','second_surgery_realized_field')">
+                            <label for="second_surgery_realized_check">Umgesetzt</label>
+
+                            <span id="second_surgery_realized_field" class='hidden-on-default border_box' style="display:none;">
+                            <input class="form-control" type="checkbox" name="second_surgery_realized_yes"
+                                   id="second_surgery_realized_yes">
+                            <label for="second_surgery_realized_yes" class="form-labels">Ja</label>
+                            <input class="form-control" type="checkbox" name="second_surgery_realized_no"
+                             id="second_surgery_realized_no">
+                             <label for="second_surgery_realized_no" class="form-labels">Nein</label>
+                            </span>
+                        </div>
+
+
+                        <div class="form-group">
+
+
                             <input class="form-check-input" type="checkbox" id="ss_op_date" value="1"
                                    onchange="showInputField('ss_op_date','ss_op_date_field')">
                             <label for="ss_op_date">OP Datum</label>
@@ -1298,7 +1336,7 @@
 
                         <div class="form-group">
                             <!--Hier noch import_var ändern, immer noch geschlecht -->
-                            <input class="form-check-input" type="checkbox" id="ss_op_method_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" name="ss_op_method_checkbox" id="ss_op_method_checkbox" value="1"
                                    onchange="showInputField('ss_op_method_checkbox','ss_op_method_field')">
                             <label for="ss_op_method_checkbox">OP Methode</label>
                             <span id="ss_op_method_field" class='hidden-on-default border_box' style="display:none;">
@@ -1318,7 +1356,7 @@
                         <span id="op2_conversion_field" class='hidden-on-default border_box' style="display:none;">
                            <input class="form-check-input" type="checkbox" id = "op2_conversion_yes"
                                   name="op2_conversion_yes" value="1"><label
-                                for="op1_conversion_yes">Konvertiert</label>
+                                for="op2_conversion_yes">Konvertiert</label>
                            <input class="form-check-input" type="checkbox" id="op2_conversion_no"
                                   name="op2_conversion_no" value="1"> <label for="op2_conversion_no"> nicht Konvertiert</label>
                           </span>
@@ -1334,7 +1372,7 @@
                                   name="op2_ablation_no" value="1"> <label for="op2_ablation_no"> Nicht Ablatiert</label>
                           </span>
                         <div class="form-group">
-                            <input class="form-check-input" type="checkbox" id="ss_op_length_checkbox" value="1"
+                            <input class="form-check-input" type="checkbox" id="ss_op_length_checkbox" name="ss_op_length_checkbox" value="1"
                                    onchange="showInputField('ss_op_length_checkbox','ss_op_length_field')">
                             <label for="ss_op_length_checkbox">Länge</label>
                             <span id="ss_op_length_field" class='hidden-on-default border_box' style="display:none;">
@@ -1431,11 +1469,11 @@
                                             <span id="ss_serum_bili_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                           <label for="ss_Serum_Bili_POD1_von">POD1 Von</label>
-                                          <input type="number" class="form-control" min="0" max="3"
+                                          <input type="number" class="form-control" min="0" 
                                                  name="ss_Serum_Bili_POD1_von" id="ss_Serum_Bili_POD1_von"
                                                  placeholder="Wert">
                                           <label for="ss_Serum_Bili_POD1_bis">POD1 Bis</label>
-                                          <input type="number" class="form-control" min="0" max="3"
+                                          <input type="number" class="form-control" min="0"
                                                  name="ss_Serum_Bili_POD1_bis" id="ss_Serum_Bili_POD1_bis"
                                                  placeholder="Wert">
                                         </span>
@@ -1449,11 +1487,11 @@
                                             <span id="ss_serum_bili_pod3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                         <label for="ss_Serum_Bili_POD3_von">POD3 Von</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_POD3_von" id="ss_Serum_Bili_POD3_von"
                                                placeholder="Wert">
                                         <label for="ss_Serum_Bili_POD3_bis">POD3 Bis</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_POD3_bis" id="ss_Serum_Bili_POD3_bis"
                                                placeholder="Wert">
                                       </span>
@@ -1467,11 +1505,11 @@
                                             <span id="ss_serum_bili_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                         <label for="ss_Serum_Bili_POD5_von">POD5 Von</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_POD5_von" id="ss_Serum_Bili_POD5_von"
                                                placeholder="Wert">
                                         <label for="ss_Serum_Bili_POD5_bis">POD5 Bis</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_POD5_bis" id="ss_Serum_Bili_POD5_bis"
                                                placeholder="Wert">
                                       </span>
@@ -1485,11 +1523,11 @@
                                             <span id="ss_serum_bili_last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                         <label for="ss_Serum_Bili_last_von">Wert Von</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_last_von" id="ss_Serum_Bili_last_von"
                                                placeholder="Wert">
                                         <label for="ss_Serum_Bili_last_bis">Wert Bis</label>
-                                        <input type="number" class="form-control" min="0" max="3"
+                                        <input type="number" class="form-control" min="0" 
                                                name="ss_Serum_Bili_last_bis" id="ss_Serum_Bili_last_bis"
                                                placeholder="Wert">
                                       </span>
@@ -1602,10 +1640,10 @@
                                             <span id="ss_AST_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_AST_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_POD1_von" id="ss_AST_POD1_von" placeholder="Wert">
                                             <label for="ss_AST_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_POD1_bis" id="ss_AST_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1617,10 +1655,10 @@
                                             <span id="ss_AST_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_AST_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_POD3_von" id="ss_AST_POD3_von" placeholder="Wert">
                                             <label for="ss_AST_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_POD3_bis" id="ss_AST_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1632,10 +1670,10 @@
                                             <span id="ss_AST_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_AST_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_pod5_von" id="ss_AST_pod5_von" placeholder="Wert">
                                             <label for="ss_AST_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_pod5_bis" id="ss_AST_pod5_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1647,10 +1685,10 @@
                                             <span id="ss_AST_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_AST_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_Last_von" id="ss_AST_Last_von" placeholder="Wert">
                                             <label for="ss_AST_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_AST_Last_bis" id="ss_AST_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1676,10 +1714,10 @@
                                             <span id="ss_ALT_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_ALT_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_POD1_von" id="ss_ALT_POD1_von" placeholder="Wert">
                                             <label for="ss_ALT_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_POD1_bis" id="ss_ALT_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1691,10 +1729,10 @@
                                             <span id="ss_ALT_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_ALT_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_POD3_von" id="ss_ALT_POD3_von" placeholder="Wert">
                                             <label for="ss_ALT_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_POD3_bis" id="ss_ALT_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1706,10 +1744,10 @@
                                             <span id="ss_ALT_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_ALT_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_pod5_von" id="ss_ALT_pod5_von" placeholder="Wert">
                                             <label for="ss_ALT_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0"
                                                    name="ss_ALT_pod5_bis" id="ss_ALT_pod5_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1721,10 +1759,10 @@
                                             <span id="ss_ALT_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_ALT_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" 
                                                    name="ss_ALT_Last_von" id="ss_ALT_Last_von" placeholder="Wert">
                                             <label for="ss_ALT_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0"
                                                    name="ss_ALT_Last_bis" id="ss_ALT_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1750,10 +1788,10 @@
                                             <span id="ss_INR_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_INR_POD1_von">pod1 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_POD1_von" id="ss_INR_POD1_von" placeholder="Wert">
                                             <label for="ss_INR_POD1_bis">pod1 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_POD1_bis" id="ss_INR_POD1_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1765,10 +1803,10 @@
                                             <span id="ss_INR_POD3_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_INR_POD3_von">pod3 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_POD3_von" id="ss_INR_POD3_von" placeholder="Wert">
                                             <label for="ss_INR_POD3_bis">pod3 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_POD3_bis" id="ss_INR_POD3_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1780,10 +1818,10 @@
                                             <span id="ss_INR_pod5_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_INR_pod5_von">pod5 Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_pod5_von" id="ss_INR_pod5_von" placeholder="Wert">
                                             <label for="ss_INR_pod5_bis">pod5 Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_pod5_bis" id="ss_INR_pod5_bis" placeholder="Wert">
                                           </span>
                                         </div>
@@ -1795,10 +1833,10 @@
                                             <span id="ss_INR_Last_field" class='hidden-on-default border_box'
                                                   style="display:none;">
                                             <label for="ss_INR_Last_von">Wert Von</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_Last_von" id="ss_INR_Last_von" placeholder="Wert">
                                             <label for="ss_INR_Last_bis">Wert Bis</label>
-                                            <input type="number" class="form-control" min="0" max="3"
+                                            <input type="number" class="form-control" min="0" step="0.1"
                                                    name="ss_INR_Last_bis" id="ss_INR_Last_bis" placeholder="Wert">
                                           </span>
                                         </div>

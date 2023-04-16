@@ -1103,10 +1103,84 @@ def get_data_for_id():
                                  RenderParameters=LocalRenderParameters)
 
 
-@app.route("/versions", methods=["GET"])
+@app.route("/versions", methods=["GET","POST"])
 def versions():
+
+    if "username" not in flask.session:
+         return flask.render_template(constants.URL_LOGIN, RenderParameters=LocalRenderParameters)
     LocalRenderParameters = RenderParameters.copy()
-    return flask.render_template(constants.URL_VERSIONSVERLAUF, RenderParameters=LocalRenderParameters)
+    return flask.render_template(constants.URL_VERSIONSVERLAUF,RenderParameters=LocalRenderParameters)
+
+#Hier entwurf für Eine Funktion welche dynamisch neue Einträge generiert, am besten für eine Seite um Publikationen dazustellen
+#@app.route("/publications",methods=["GET","POST"])
+#def publics():
+#
+#    if "update_name" in flask.request.form:
+#        update_name = flask.request.form["update_name"]
+#
+#        try:
+#            update_inhalt = flask.request.form["update_inhalt"]
+#        except Exception as e:
+#            LocalRenderParameters["Error"] = "Inhalt des Updates muss gesetzt sein"
+#            return flask.render_template(constants.URL_VERSIONSVERLAUF,
+#                                             RenderParameters=LocalRenderParameters)
+#        try:
+#                cursor = mydb.cursor()
+#        except Exception as e:
+#                LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
+#                LocalRenderParameters["error-text"] = e
+#                return flask.render_template(constants.URL_VERSIONSVERLAUF,
+#                                             RenderParameters=LocalRenderParameters)#
+#
+#        try:
+#
+ #               #now into versions
+#                cursor.execute("INSERT INTO versions (version,date,updatetext) VALUES (%s,%s,%s)",
+#                               (update_name, update_inhalt, datetime.datetime.now()))
+#                mydb.commit()
+#                LocalRenderParameters = RenderParameters.copy()
+#                LocalRenderParameters["Success"] = "Deleted the ID"
+#        except Exception as e:
+ #               print("something went wrong")
+#                print(e)
+ #               LocalRenderParameters["Error"] = "ID kann nicht gelöscht werden"
+#                LocalRenderParameters["error-text"] = e
+#
+#    try:
+#        cursor = mydb.cursor()
+ #       cursor.execute("SELECT * FROM versions ORDER BY versions.date DESC")
+ #       versions_to_display = cursor.fetchall()
+#        print(versions_to_display)
+#
+ #   except Exception as e:
+ #       LocalRenderParameters["error"] = "Can't connect to Database, please inform Administrator"
+ #       LocalRenderParameters["error-text"] = e
+ #       return flask.render_template(constants.URL_VERSIONSVERLAUF, RenderParameters=LocalRenderParameters)
+
+   # versions_html = ""
+#
+ #   for entry in versions_to_display:
+        
+  #      versions_html = versions_html + '<div class="container py-3 mb-4 bg-light rounded-1 shadow-sm"> <div class="p-3 mb-4 lc-block"> <div class="lc-block"> <div editable="rich"><h3 class="fw-bolder">'
+  #      
+  #      date = entry[1].strftime("%d.%m.%Y")
+  #      versions_html = versions_html + entry[0] + ": " + date
+#
+        
+
+    #    versions_html = versions_html + '</h3></div></div><div class="lc-block col-md-12"><div editable="rich"><p >'
+
+  #      updates = entry[2].split(",")
+  #      for obj in updates:
+  #          versions_html = versions_html + "- "
+  #          versions_html = versions_html + obj
+  #          versions_html = versions_html + "<br>"
+ #       versions_html = versions_html + '</p></div></div></div></div></div>'
+  #  print(versions_html)
+
+  #  versions_html = flask.Markup(versions_html)
+
+  #  LocalRenderParameters["versions_html"] = versions_html
 
 
 @app.route("/api/tags", methods=["GET"])
@@ -1120,5 +1194,5 @@ def tags_list():
     return p
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(host=os.environ.get('KRK_APP_HOST'), port=os.environ.get('KRK_APP_PORT'), debug=True)

@@ -198,6 +198,54 @@
 		</div>
 	</div>
 </div>
+<!--
+<hr>
+Test für Versionen aus DB
+
+{% if versions_html %} {{ versions_html }} {% endif %}
+
+<script>
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+<div id="overlay">
+	<form>
+	<div class="container py-3 mb-4 bg-light rounded-1 shadow-sm ">
+		<div class="row">
+			<div class="lc-block">
+				<div editable="rich">
+					<h3 class="fw-bolder">Neuen Eintrag erstellen</h3>
+				</div>
+			</div>
+			<div class="lc-block col-md-12">
+				<div editable="rich">
+					<label>Name des Updates</label>
+					<input type="text" class="form-control" name="update_name" id="update_name" placeholder="Name">
+					<br>
+					<label  data-toggle="tooltip"
+					data-placement="right"
+					title="Inhalt des Updates durch Komma trennen um einzelne Stichpunkte zu erzeugen"
+					animation="true" html="true">Inhalt des Updates</label>
+					<input type="text" class="form-control" name="update_inhalt" id="update_inhalt" placeholder="Name">
+					<br>
+					<input class="btn btn-secondary" name="submit_update" type="submit" value="Hinzufügen" onclick="off(); submit()">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+
+<button onclick="on()">Turn on overlay effect</button>
+-->
+
   {%endblock%}
 
   
