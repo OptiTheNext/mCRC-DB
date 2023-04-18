@@ -6,8 +6,8 @@
 {% block MainContent %}
     <h3>Verwaltung</h3>
     <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+    <div class="container" style="margin-left: 0">
     {% if RenderParameters["Admin"] %}
-            <div class="container" style="margin-left: 0">
                 <div class="row row-cols-1 row-cols-lg-3">
                     <div class="col-6" style="padding: 10px;">
                         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
@@ -85,7 +85,6 @@
                 </div>
     {% endif %}
     {% if RenderParameters["Admin"] != Admin %}
-    <div class="container" style="margin-left: 0">
     <div class="row row-cols-1 row-cols-lg-3">
     {% endif %}
         <div class="col-6" style="padding: 10px;">
