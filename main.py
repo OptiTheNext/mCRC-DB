@@ -2,6 +2,7 @@
 import datetime
 import json
 import os
+from os.path import join, dirname, realpath
 import secrets
 # Debugging
 import traceback
@@ -894,8 +895,9 @@ def verwaltung():
                 try:
                     print("email sent")
                     m.send_and_save()
-                    return flask.render_template(constants.URL_VERWALTUNG,
-                                                 RenderParameters=LocalRenderParameters)
+                    htmltext = htmltext()
+                    LocalRenderParameters["htmltext"] = htmltext
+                    return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     print("mail coulnd be send")
@@ -908,8 +910,9 @@ def verwaltung():
                     cursor = mydb.cursor()
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
-                    return flask.render_template(constants.URL_VERWALTUNG,
-                                                 RenderParameters=LocalRenderParameters)
+                    deleted_ids = deleted_id_text()()
+                    LocalRenderParameters["deleted_ids"] = deleted_ids
+                    return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
@@ -927,9 +930,15 @@ def verwaltung():
                     try:
                         cursor.execute("DELETE FROM deleted_patients WHERE id = %s", (flask.request.form["id_to_add"],))
                         mydb.commit()
+                        deleted_id = deleted_id_text()
+                        LocalRenderParameters["deleted_ids"] = deleted_id
+                        return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
                     except Exception as e:
 
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
+                        deleted_ids = deleted_id_text()()
+                        LocalRenderParameters["deleted_ids"] = deleted_ids
+                        return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
@@ -938,10 +947,10 @@ def verwaltung():
                                                  RenderParameters=LocalRenderParameters)
 
             # get the uploaded file
-            uploaded_file = flask.request.files['file']
-            if uploaded_file.filename != '':
+            if flask.request.files['file']:
+                uploaded_file = flask.request.files['file']
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-                # set the file path
+                #set the file path
                 uploaded_file.save(file_path)
                 # save the file
                 csvData = pandas.read_csv(file_path, index_col=False)
@@ -967,12 +976,12 @@ def verwaltung():
 
                 for row in list_to_add_to_DB:
                     cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)", (row,))
-
                     mydb.commit()
-                import os
+                
 
-                for filename in os.listdir(flask.session["UPLOAD_FOLDER"]):
-                    os.remove(filename)
+                for filename in os.listdir(constants.UPLOAD_FOLDER):
+                    os.remove(file_path)
+                return flask.redirect(flask.url_for("verwaltung"))
 
     #Function if you are not an admin
     if "username" in flask.session:

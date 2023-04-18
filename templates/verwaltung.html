@@ -79,9 +79,12 @@
                             <input class="btn btn-secondary" type="submit">
                         </div>
                     </div>
-        </form>
+                </div>
     {% endif %}
-    
+    {% if RenderParameters["Admin"] != Admin %}
+    <div class="container" style="margin-left: 0">
+    <div class="row row-cols-1 row-cols-lg-3">
+    {% endif %}
         <div class="col-6" style="padding: 10px;">
             <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                 <h3>Password ändern</h3>
@@ -95,8 +98,14 @@
                 <input class="btn btn-secondary" type="submit" value="Passwort ändern" name="change_pwd">
             </div>
         </div>
+    {% if RenderParameters["Admin"] != Admin %} 
+    </div>
+    </div>
+    {% endif %}
+
 
     </form>
+
     {% if RenderParameters["error"] %}
         <div class="alert alert-danger" role="alert">
             <strong>Fehler:</strong> {{ RenderParameters["error"] }}
@@ -105,7 +114,7 @@
     {% if RenderParameters["success"] %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Erfolg:</strong> {{ RenderParameters["success"] }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
