@@ -74,7 +74,10 @@
                         <div class="p-3 border bg-light shadow-sm overflow-auto" style="height:400px;">
                             <h3>Upload von neuen IDs</h3>
                             <hr>
-                            <input class="form-control" type="file" name="file" id="file">
+                            <input class="form-control" type="file" name="file" id="file" data-toggle="tooltip"
+                            data-placement="right"
+                            title="Es muss sich um eine CSV Datei Handeln, mit einer Spalte die mit 'pat_id' betitelt ist"
+                            animation="true" html="true">
                             <br>
                             <input class="btn btn-secondary" type="submit">
                         </div>

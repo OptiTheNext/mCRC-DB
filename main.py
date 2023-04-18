@@ -897,7 +897,7 @@ def verwaltung():
                     m.send_and_save()
                     htmltext = htmltext()
                     LocalRenderParameters["htmltext"] = htmltext
-                    return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
+                    return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     print("mail coulnd be send")
@@ -912,7 +912,7 @@ def verwaltung():
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
                     deleted_ids = deleted_id_text()()
                     LocalRenderParameters["deleted_ids"] = deleted_ids
-                    return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
+                    return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
@@ -932,13 +932,13 @@ def verwaltung():
                         mydb.commit()
                         deleted_id = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_id
-                        return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                     except Exception as e:
 
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
                         deleted_ids = deleted_id_text()()
                         LocalRenderParameters["deleted_ids"] = deleted_ids
-                        return flask.redirect(url_for("/verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
