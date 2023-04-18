@@ -978,9 +978,7 @@ def verwaltung():
                     cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)", (row,))
                     mydb.commit()
                 
-
-                for filename in os.listdir(constants.UPLOAD_FOLDER):
-                    os.remove(file_path)
+                os.remove(file_path)
                 return flask.redirect(flask.url_for("verwaltung"))
 
     #Function if you are not an admin
