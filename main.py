@@ -705,7 +705,7 @@ def page_4():
 
             #If any variable is set, make the analysis
             if linear or korrelation or ttest_v or ttest_unv or utest or will:
-                statistik.exploration(localDF,point_of_interest, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
+                statistik.exploration(localDF,tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
                                       ttest_unv, utest, will,mode_unv,mode_v,mode_u,mode_w )
             #Reset Variables
             grafik = False
