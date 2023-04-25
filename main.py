@@ -156,10 +156,10 @@ def login():
     LocalRenderParameters["startseite"] = False
     LocalRenderParameters["Admin"] = False
     try:
-        dbcursor = mydb.cursor()
+        dbcursor = mydb.cursor(buffered=True)
     except Exception as e:
         connect_to_db()
-        dbcursor = mydb.cursor()
+        dbcursor = mydb.cursor(buffered=True)
 
     RenderParameters["error"] = ''
     if flask.request.method == 'POST':
@@ -199,7 +199,7 @@ def page_1():
         LocalRenderParameters["startseite"] = False
         # FFind how many Patients are left to work on
         try:
-            cursor = mydb.cursor()
+            cursor = mydb.cursor(buffered=True)
             cursor.execute("SELECT COUNT(*) FROM mcrc_tabelle where Kuerzel=''")
             pat_to_do = cursor.fetchall()
             pat_to_do = "Noch " + str(pat_to_do[0][0])
@@ -226,7 +226,7 @@ def dateneingabe():
     #Find an ID to work on next, without a Kürzel
     def get_next_patient_id():
         try:
-            cursor = mydb.cursor()
+            cursor = mydb.cursor(buffered=True)
             cursor.execute('SELECT mcrc_tabelle.pat_id FROM mcrc_tabelle WHERE mcrc_tabelle.Kuerzel = "" AND mcrc_tabelle.pat_id NOT IN (SELECT currently_active.pat_id FROM currently_active) ORDER BY mcrc_tabelle.op_date_Surgery1 DESC LIMIT 1')
             next_patient = cursor.fetchall()[0][0]
             RenderParameters["next_patient"] = next_patient
@@ -248,7 +248,7 @@ def dateneingabe():
             if pat_to_delete == "":
                 pat_to_delete = flask.request.form["pat_id_import"]
             try:
-                cursor = mydb.cursor()
+                cursor = mydb.cursor(buffered=True)
             except Exception as e:
                 LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
@@ -432,7 +432,7 @@ def dateneingabe():
                 p_values.append("0")
 
             try:
-                cursor = mydb.cursor()
+                cursor = mydb.cursor(buffered=True)
             except Exception as e:
                 LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
@@ -442,7 +442,7 @@ def dateneingabe():
 
             # Insert the new data into the SQL Database
             try:
-                cursor = mydb.cursor()
+                cursor = mydb.cursor(buffered=True)
                 p_columns.append("Kuerzel")
                 p_values.append(f"{flask.session.get('username')}")
                 statement = Columns.sql + "("
@@ -587,7 +587,7 @@ def page_4():
             LocalRenderParameters["df"] = True
         else:
             try:
-                cursor = mydb.cursor()
+                cursor = mydb.cursor(buffered=True)
                 cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel")
                 localDF = cursor.fetchall()
             except Exception as e:
@@ -735,7 +735,7 @@ def verwaltung():
     #Generate table with deleted patients
     def deleted_id_text():
         try:
-            cursor = mydb.cursor()
+            cursor = mydb.cursor(buffered=True)
         except Exception as e:
             LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
@@ -785,7 +785,7 @@ def verwaltung():
     #Generate Table with users
     def usertext():
         try:
-            cursor = mydb.cursor()
+            cursor = mydb.cursor(buffered=True)
         except Exception as e:
             LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
             LocalRenderParameters["error-text"] = e
@@ -874,7 +874,7 @@ def verwaltung():
                 #Add user into database
                 val = (name, password, admin)
                 try:
-                    cursor = mydb.cursor()
+                    cursor = mydb.cursor(buffered=True)
                     cursor.execute('INSERT INTO Users (LoginID, Password, Admin) VALUES (%s, %s, %s)', val)
                     mydb.commit()
                 except Exception as e:
@@ -907,7 +907,7 @@ def verwaltung():
             if "delete_user" in flask.request.form and flask.request.form["delete_username"] != flask.session.get(
                     "username"):
                 try:
-                    cursor = mydb.cursor()
+                    cursor = mydb.cursor(buffered=True)
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
                     LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
                     deleted_ids = deleted_id_text()()
@@ -924,7 +924,7 @@ def verwaltung():
             if "add_id_to_db" in flask.request.form:
                 # add id back into db
                 try:
-                    cursor = mydb.cursor()
+                    cursor = mydb.cursor(buffered=True)
                     cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)", (flask.request.form["id_to_add"],))
                     mydb.commit()
                     try:
@@ -957,7 +957,7 @@ def verwaltung():
                 csvData = pandas.DataFrame(csvData)
 
                 try:
-                    cursor = mydb.cursor()
+                    cursor = mydb.cursor(buffered=True)
                     cursor.execute("SELECT * FROM mcrc_tabelle")
                     myresult = cursor.fetchall()
                     df = pandas.DataFrame(myresult)
@@ -988,7 +988,7 @@ def verwaltung():
             newpwd = flask.request.form["new_password"]
 
             try:
-                cursor = mydb.cursor()
+                cursor = mydb.cursor(buffered=True)
                 cursor.execute("SELECT * FROM Users WHERE LoginID = %s", (flask.session["username"],))
                 pwd = cursor.fetchone()[1]
                 if pwd == currentpw:
@@ -1035,7 +1035,7 @@ def reset(token):
         return flask.redirect(flask.url_for('login'))
     ##Check for username 
     try:
-        dbcursor = mydb.cursor()
+        dbcursor = mydb.cursor(buffered=True)
         select_query = "SELECT * FROM Users WHERE LoginID=%s AND Password=%s"
         dbcursor.execute(select_query, (decoded["username"], decoded["pwd"]))
         selected_rows = dbcursor.fetchall()
@@ -1046,7 +1046,7 @@ def reset(token):
 
                 if passwort1 == passwort2:
                     try:
-                        cursor = mydb.cursor()
+                        cursor = mydb.cursor(buffered=True)
                         val = (decoded["username"], passwort1)
                         cursor.execute('REPLACE INTO Users (LoginID, Password) VALUES (%s, %s)', val)
                         mydb.commit()
