@@ -441,7 +441,7 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
     print("Wuhu, normalverteilt")
 
 
-def exploration(df, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
+def exploration(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
     # Test / Darstellung von korrellation
 
     H0_x = "H0 verwerfen"
