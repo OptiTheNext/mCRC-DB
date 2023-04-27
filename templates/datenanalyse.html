@@ -53,6 +53,7 @@ Lol, hier steht was, was keiner lesen kann.
             let ttest_unv = $("#ttest_unv").is(':checked');
             let utest = $("#utest").is(':checked');
             let will = $("#will").is(':checked');
+            let scat =  $("#scat").is(':checked');
 
             let Mode_unv = document.querySelector('input[name="Mode_unv"]:checked').value;
             let Mode_v = document.querySelector('input[name="Mode_v"]:checked').value;
@@ -80,6 +81,7 @@ Lol, hier steht was, was keiner lesen kann.
                 "ttest_unv": ttest_unv,
                 "utest": utest,
                 "will": will,
+                "scat" : scat,
                 "Mode_unv": Mode_unv,
                 "Mode_v":Mode_v,
                 "Mode_u":Mode_u,
@@ -146,7 +148,7 @@ Lol, hier steht was, was keiner lesen kann.
                                     <button class="accordion-button collapsed bg-light" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo-limax2"
                                             aria-expanded="false" aria-controls="flush-collapseTwo">
-                                        Normalverteilung
+                                        Explorative Statistik
                                     </button>
                                 </h2>
                                 <div id="flush-collapseTwo-limax2" class="accordion-collapse collapse bg-light"
@@ -168,6 +170,13 @@ Lol, hier steht was, was keiner lesen kann.
                                             <input class="form-check-input" type="checkbox" id="histo" name="histo"
                                                    value="true">
                                             <label for="histo">Histogram</label>
+                                            <input class="form-check-input" type="checkbox" id="scat" name="scat"
+                                                   value="true">
+                                            <label for="scat" data-toggle="tooltip"
+                                            data-placement="right"
+                                            title="Scatterplot aus den ersten Drei Spalten."
+                                            animation="true" html="true">Scatterplot</label>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -187,10 +196,12 @@ Lol, hier steht was, was keiner lesen kann.
                                         <div class="form-group">
                                             <input class="form-check-input" type="checkbox" id="linear" name="linear"
                                                    value="true"><label for="linear">Lineare Regression</label>
+                                            
                                             <label for="serverSideTags" class="form-label">Wähle einen Werte</label>
+                                            <div style="padding-bottom:30px;" name="großes Div">
+                                           <div style="width: 30%; float:left">
                                             <select
                                                     class="form-select"
-                                                    style="width: 30%;"
                                                     id="reg_tags_one"
                                                     name="server_side_tags[]"
                                                     data-allow-new="false"
@@ -200,7 +211,8 @@ Lol, hier steht was, was keiner lesen kann.
                                             >
                                                 <option disabled hidden value="">Choose a tag...</option>
                                             </select>
-                                           <br>
+                                           </div>
+                                           <div style="width: 30%; float:left">
                                             <select
                                                     class="form-select"
                                                     style="width: 30%;"
@@ -212,7 +224,10 @@ Lol, hier steht was, was keiner lesen kann.
                                                     data-allowClear="true"
                                             >
                                                 <option disabled hidden value="">Choose a tag...</option>
-                                            </select> <br>
+                                            </select> 
+                                        </div>
+                                            </div>
+                                            <br>
                                             <input class="form-check-input" type="checkbox" id="korrelation"
                                                    name="korrelation" value="true">
                                             <label for="korrelation">Korrelationskoeffizient</label>

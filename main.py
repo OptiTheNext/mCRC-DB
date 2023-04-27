@@ -655,9 +655,15 @@ def page_4():
                     histo = True
                 if histo == "0":
                     histo = False
+            if "scat" in flask.request.json:
+                scat = flask.request.json["scat"]
+                if scat == True:
+                    scat = True
+                if scat == "0":
+                    scat = False
             #If any variable is set, make the analysis
-            if saphiro or kolmogorov or anderson or qq or histo:
-                statistik.normalverteilung(localDF, tags, saphiro, kolmogorov, anderson, qq, histo)
+            if saphiro or kolmogorov or anderson or qq or histo or scat:
+                statistik.explorativ(localDF, tags, saphiro, kolmogorov, anderson, qq, histo, scat)
 
             # Sammeln von Variablen für Explorativ
             if "linear" in flask.request.json:
@@ -697,6 +703,7 @@ def page_4():
                     will = True
                 if will == "0":
                     will = False
+
             #This is not a boolean, just a variable to choose from
             mode_v = flask.request.json["Mode_v"]
             mode_unv = flask.request.json["Mode_unv"]
@@ -705,7 +712,7 @@ def page_4():
 
             #If any variable is set, make the analysis
             if linear or korrelation or ttest_v or ttest_unv or utest or will:
-                statistik.exploration(localDF,tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
+                statistik.stat_test(localDF,tags, reg_tags_one, reg_tags_two, linear, korrelation, ttest_v,
                                       ttest_unv, utest, will,mode_unv,mode_v,mode_u,mode_w )
             #Reset Variables
             grafik = False

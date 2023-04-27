@@ -8,7 +8,7 @@
  * - background-color utility
  * - margin-end utility
  * - float-start utility
- * - forms
+ * - s
  * - dropdown
  */
 
@@ -253,6 +253,7 @@ class Tags {
 
   _configureHolderElement() {
     this._holderElement.classList.add(...["form-control", "dropdown"]);
+   
     if (this._selectElement.classList.contains("form-select-lg")) {
       this._holderElement.classList.add("form-control-lg");
     }

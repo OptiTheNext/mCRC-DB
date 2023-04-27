@@ -43,6 +43,9 @@ def analyse(parameters) -> pandas.DataFrame:
     df = pandas.DataFrame(myresult)
     df.columns = Columns.d
 
+    # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
+    df.query("Kuerzel != ''", inplace=True)
+
     # Convert Booleans into Python Booleans
 
     df = df.apply(pandas.to_numeric, errors="ignore")
@@ -82,9 +85,7 @@ def analyse(parameters) -> pandas.DataFrame:
     df['diagnosis_date'] = pandas.to_datetime(df["diagnosis_date"],format=constants.DATEFORMAT,errors='coerce')
     df['previous_surgery_date'] = pandas.to_datetime(df["previous_surgery_date"],format=constants.DATEFORMAT,errors='coerce')
 
-    # Entferne Spalten ohne Kürzel -> Entferne noch nicht bearbeitete Zeilen
-    df.query("Kuerzel != ''", inplace=True)
-
+  
     if parameters.get("Mode"):
         global Mode
         if parameters['Mode'] == "additiv":

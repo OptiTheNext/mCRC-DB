@@ -394,33 +394,127 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 fig.clf()
 
 
-def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo):
+def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo,scat):
     # Test auf Normalverteilung und entsprechender T-Test
+    if (scat == True):
+        df = pandas.DataFrame(df)
+        current_df = df
+        listb= [points_of_interest[0],points_of_interest[1]]
+        listc = []
+        for obj in listb:
+            temp_df = current_df[obj]
+            if obj in booleans:
+                temp_df  = temp_df.replace({0: False, 1: True})
+                temp_df.dropna(inplace=True)
+                a1 = temp_df
+
+            if obj in decimals:
+                temp_df.dropna(inplace=True)
+                temp_df[1] = temp_df.replace("", numpy.nan, inplace=True)
+                temp_df = temp_df.astype(float)
+                a1 = temp_df
+
+            if obj in categorials:
+                temp_df.dropna(inplace=True)
+                temp_df = temp_df.astype(str)
+                a1 = temp_df
+
+            listc.append(a1)
+            
+            
+        value1 = listc[0]
+        value2 = listc[1]
+
+
+        value1 = value1.reset_index()
+        print(value1)
+        value1 = value1[points_of_interest[0]]
+        value2 = value2.reset_index()
+        print(value2)
+        value2 = value2[points_of_interest[1]]
+
+        print(value1)
+        print(value2)
+
+       # if n > g:
+        #    k = n
+         #   n = g 
+        #else:
+         #   k = g
+
+        n = len(value1)
+        k = len(value2)
+
+        print("n - k:")
+        print (n - k)
+
+        print("k - n:")
+        print (k - n)
+
+        
+
+        if ((n - k) > 0):
+            for i in range(0, n - k ):
+                print("in pop v2")
+                print("das ist i: ")
+                print(i)
+                value1.pop(i)
+        if((n - k)<0):
+            for i in range(0, k - n ):
+                print("in pop v1")
+                print("das ist i: ")
+                print(i)
+                value2.pop(i)
+
+        print("len value1")
+        print(value1)
+        print(len(value1))
+        print("len value2")
+        print(value2)
+        print(len(value2))
+
+        print("in scatter plot")
+        print (points_of_interest[0])
+
+                 
+        if len(listc) == 2: #and array3: 
+                print("moin")
+                scatter = matplotlib.pyplot.scatter(value1 ,value2)
+                fig = scatter.get_figure()
+                x = points_of_interest[0] + " and " + points_of_interest[1]
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_scat.png"
+                fig.savefig(save_here)
+                build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
+                fig.clf()
+        else:
+            
+
     for x in points_of_interest:
         if x in decimals:
-            # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
             df = pandas.DataFrame(df)
-            df = df[x]
+            print(df)
+            # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
+            current_df = df[x]
 
-            df = pandas.to_numeric(df, errors='coerce')
+            current_df = pandas.to_numeric(current_df, errors='coerce')
 
-            df = df[~numpy.isnan(df)]
+            current_df = current_df[~numpy.isnan(current_df)]
 
             if (saphiro == True):
-                result = scipy.stats.shapiro(df)
+                result = scipy.stats.shapiro(current_df)
                 table = ([x, " :Saphiro-Wilkoson Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
                 build_dict("Table", table)
             if (kolmogorov == True):
-                result = scipy.stats.kstest(df, 'norm')
+                result = scipy.stats.kstest(current_df, 'norm')
                 table = ([x, " :Kolmogorov-Smirnov Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
                 build_dict("Table", table)
             if (anderson == True):
-                result = scipy.stats.anderson(df)
+                result = scipy.stats.anderson(current_df)
                 table = ([x, " :Anderson-Test"], ["Teststatistik", result[0]], ["Kritische Werte", result[1]],
                          ["Signifikanslevel", result[2]])
                 build_dict("Table", table)
             if (qqplot == True):
-                fig = sm.qqplot(df, line='45', xlabel='Zu erwartende Werte', ylabel=x, figsize=(6, 6))
+                fig = sm.qqplot(current_df, line='45', xlabel='Zu erwartende Werte', ylabel=x, figsize=(6, 6))
                 save_here = PATH_OUT + x + ".png"
                 fig.savefig(save_here)
                 build_dict("Image", x + "_qqplot.png")
@@ -428,8 +522,8 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
             if (histo == True):
                 print("hier histo")
                 fig, ax = matplotlib.pyplot.subplots()
-                df.plot.kde(ax=ax, legend=False)
-                df.plot.hist(density=True, ax=ax, figsize=(6, 6))
+                current_df.plot.kde(ax=ax, legend=False)
+                current_df.plot.hist(density=True, ax=ax, figsize=(6, 6))
                 ax.set_ylabel('Probability')
                 ax.grid(axis='y')
                 ax.set_facecolor('#d8dcd6')
@@ -437,11 +531,15 @@ def normalverteilung(df, points_of_interest, saphiro, kolmogorov, anderson, qqpl
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_histo.png")
                 fig.clf()
+            
+        
+
+
 
     print("Wuhu, normalverteilt")
 
 
-def exploration(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
+def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
     # Test / Darstellung von korrellation
 
     H0_x = "H0 verwerfen"
@@ -499,7 +597,9 @@ def exploration(df, point_of_interest, reg_one, reg_two, linear, korrelation, tt
         print("linreg")
         ywerte = []
         xwerte = []
+        print(row)
         row = pandas.to_numeric(row, errors='coerce')
+
         print(type(row[0]))
         if not numpy.isnan(row[0]):
             ywerte.append(row[0])
@@ -513,9 +613,12 @@ def exploration(df, point_of_interest, reg_one, reg_two, linear, korrelation, tt
         if not numpy.isnan(row[3]):
             ywerte.append(row[3])
             xwerte.append(row[4])
-
-        slope, intercept, r, p, se = scipy.stats.linregress(xwerte, y=ywerte, alternative='two-sided')
-        return slope
+        
+        print(xwerte)
+        print(ywerte)
+        if len(xwerte) != 0 or len(ywerte) != 0:
+            slope, intercept, r, p, se = scipy.stats.linregress(x=xwerte, y=ywerte, alternative='two-sided')
+            return slope
 
     if linear:
         for x in point_of_interest:
@@ -675,6 +778,7 @@ def exploration(df, point_of_interest, reg_one, reg_two, linear, korrelation, tt
  
         # using pop()
         # to truncate list
+        
         n = len(group2)
         for i in range(0, n - k ):
             group2.pop(i)
