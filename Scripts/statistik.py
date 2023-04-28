@@ -487,6 +487,7 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
                 build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
                 fig.clf()
         else:
+            print("hier ist noch nix")
             
 
     for x in points_of_interest:
