@@ -394,12 +394,19 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 fig.clf()
 
 
-def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo,scat):
+def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo,scat,scat_one,scat_two,scat_three):
     # Test auf Normalverteilung und entsprechender T-Test
     if (scat == True):
+        print(scat_one)
+        print(scat_two)
+        print(scat_three)
         df = pandas.DataFrame(df)
+        print(df)
         current_df = df
-        listb= [points_of_interest[0],points_of_interest[1]]
+        listb= [scat_one,scat_two]
+        if scat_three:
+            listb.append(scat_three)
+        
         listc = []
         for obj in listb:
             temp_df = current_df[obj]
@@ -421,73 +428,94 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
 
             listc.append(a1)
             
-            
-        value1 = listc[0]
-        value2 = listc[1]
-
-
-        value1 = value1.reset_index()
-        print(value1)
-        value1 = value1[points_of_interest[0]]
-        value2 = value2.reset_index()
-        print(value2)
-        value2 = value2[points_of_interest[1]]
-
-        print(value1)
-        print(value2)
-
-       # if n > g:
-        #    k = n
-         #   n = g 
-        #else:
-         #   k = g
-
-        n = len(value1)
-        k = len(value2)
-
-        print("n - k:")
-        print (n - k)
-
-        print("k - n:")
-        print (k - n)
-
-        
-
-        if ((n - k) > 0):
-            for i in range(0, n - k ):
-                print("in pop v2")
-                print("das ist i: ")
-                print(i)
-                value1.pop(i)
-        if((n - k)<0):
-            for i in range(0, k - n ):
-                print("in pop v1")
-                print("das ist i: ")
-                print(i)
-                value2.pop(i)
-
-        print("len value1")
-        print(value1)
-        print(len(value1))
-        print("len value2")
-        print(value2)
-        print(len(value2))
-
-        print("in scatter plot")
-        print (points_of_interest[0])
-
-                 
         if len(listc) == 2: #and array3: 
+                print("hier value1")
+                value1 = listc[0]
+                value1.dropna(inplace=True)
+                value1 = value1.reset_index()
+                value1 = value1[[scat_one]]
+                value1 = value1.squeeze()
+                print(value1)
+                value2 = listc[1]
+                value2.dropna(inplace=True)
+                value2 = value2.reset_index()
+                value2 = value2[[scat_two]]
+                value2 = value2.squeeze()
+                print(value2)
+
+                n = len(value1)
+                k = len(value2)
+
+                print("n - k:")
+                print (n - k)
+
+                print("k - n:")
+                print (k - n)
+
+                print(type(value1))
+                print(type(value2))
+
+                if ((n - k) > 0):
+                    for i in range(0, n - k ):
+                        print("in pop v2")
+                        print("das ist i: ")
+                        print(i)
+                        print(value1[i])
+                        value1.pop(i)
+                if((n - k)<0):
+                    for i in range(0, k - n ):
+                        print("in pop v1")
+                        print("das ist i: ")
+                        print(i)
+                        value2.pop(i)
+
+                print("len value1")
+                print(value1)
+                print(len(value1))
+                print("len value2")
+                print(value2)
+                print(len(value2))
+
+                print("in scatter plot")
+
                 print("moin")
                 scatter = matplotlib.pyplot.scatter(value1 ,value2)
                 fig = scatter.get_figure()
-                x = points_of_interest[0] + " and " + points_of_interest[1]
+                x = scat_one + " and " + scat_two
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_scat.png"
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
                 fig.clf()
-        else:
+        elif len(listc) == 3:
+            print("in 3 len")
+            if scat_three in booleans or scat_three in categorials:
+                print("in scat_there")
+                df_temp = df[[scat_one,scat_two,scat_three]]
+                df_temp.dropna(inplace=True)
+                valuelist = []
+                for x in df_temp[scat_three].values:
+                    if x not in valuelist:
+                        valuelist.append(x)
+                for x in valuelist:
+                    mask = df_temp[scat_three] == x
+                    a = df_temp[mask]
+                    value1= a[a.columns[0]]
+                    value2 = a[a.columns[1]]
+                    fig = matplotlib.pyplot.scatter(value1 ,value2,label=x)
+
+                matplotlib.pyplot.legend()
+                fig= fig.get_figure()
+                x = scat_one + " and " + scat_two
+                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_scat.png"
+                fig.savefig(save_here)
+                build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
+                fig.clf()
+
+                
+
             print("hier ist noch nix")
+        else:
+            print("lollll")
             
 
     for x in points_of_interest:

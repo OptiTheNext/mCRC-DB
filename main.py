@@ -267,11 +267,15 @@ def dateneingabe():
 
                 LocalRenderParameters = RenderParameters.copy()
                 LocalRenderParameters["Success"] = "Deleted the ID"
+                return flask.render_template(constants.URL_DATENEINGABE,
+                                             RenderParameters=LocalRenderParameters)
             except Exception as e:
                 print("something went wrong")
                 print(e)
                 LocalRenderParameters["Error"] = "ID kann nicht gelöscht werden"
                 LocalRenderParameters["error-text"] = e
+                return flask.render_template(constants.URL_DATENEINGABE,
+                                             RenderParameters=LocalRenderParameters)
 
                
 
@@ -587,13 +591,14 @@ def page_4():
             LocalRenderParameters["df"] = True
         else:
             try:
-                cursor = mydb.cursor(buffered=True)
+                cursor = mydb.cursor(buffered= True)
                 cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel")
                 localDF = cursor.fetchall()
+                LocalRenderParameters["df"] = True
             except Exception as e:
                 LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
-                return flask.redirect(flask.url_for('datenausgabe'))
+                return flask.redirect(flask.url_for("page_4"))
         if flask.request.method == "POST" and flask.request.json:
             flask.session["elements"] = []
             grafik = False
@@ -662,8 +667,12 @@ def page_4():
                 if scat == "0":
                     scat = False
             #If any variable is set, make the analysis
+            scat_one = flask.request.json["scat_one"]
+            scat_two = flask.request.json["scat_two"]
+            scat_three = flask.request.json["scat_three"]
+
             if saphiro or kolmogorov or anderson or qq or histo or scat:
-                statistik.explorativ(localDF, tags, saphiro, kolmogorov, anderson, qq, histo, scat)
+                statistik.explorativ(localDF, tags, saphiro, kolmogorov, anderson, qq, histo, scat, scat_one, scat_two, scat_three)
 
             # Sammeln von Variablen für Explorativ
             if "linear" in flask.request.json:
