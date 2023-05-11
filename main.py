@@ -952,7 +952,7 @@ def verwaltung():
                     except Exception as e:
 
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
-                        deleted_ids = deleted_id_text()()
+                        deleted_ids = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_ids
                         return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:

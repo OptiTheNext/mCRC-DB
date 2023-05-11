@@ -515,7 +515,9 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
 
             print("hier ist noch nix")
         else:
-            print("lollll")
+            table = ([x, " :Scatterplott"], ["Fehler", "Bitte wähle mehr als einen Wert"])
+            build_dict("Table", table)
+            
             
 
     for x in points_of_interest:
