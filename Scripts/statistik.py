@@ -338,7 +338,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
     for x in points_of_interest:
         if x in to_drop:
             continue
-
+        print(df["N"])
         current_name = x
         current_df = df[x]
         current_df.dropna(inplace=True)
@@ -354,9 +354,11 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             current_df = pandas.to_numeric(current_df, errors='coerce')
 
         if x in categorials or x in ordinals:
+            print("in cat or ordinals: " + x)
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace=True)
+            print(current_df)
         #Generate table one if wanted
         if (table_one):
             result = current_df.describe()
