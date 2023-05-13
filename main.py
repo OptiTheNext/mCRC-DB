@@ -201,8 +201,14 @@ def page_1():
         try:
             cursor = mydb.cursor(buffered=True)
             cursor.execute("SELECT COUNT(*) FROM mcrc_tabelle where Kuerzel=''")
-            pat_to_do = cursor.fetchall()
-            pat_to_do = "Noch " + str(pat_to_do[0][0])
+            pat_to_do_1 = cursor.fetchall()
+            print(pat_to_do_1[0][0])
+            cursor.execute("select COUNT(*) from mcrc_tabelle where Kuerzel is Null")
+            pat_to_do_2 = cursor.fetchall()
+            print(pat_to_do_2[0][0])
+            pat_to_do = pat_to_do_1[0][0] + pat_to_do_2[0][0]
+            print(pat_to_do)
+            pat_to_do = "Noch " + str(pat_to_do)
             LocalRenderParameters["Pat_To_Do"] = pat_to_do
         except Exception as e:
             print(e)
@@ -941,7 +947,7 @@ def verwaltung():
                 # add id back into db
                 try:
                     cursor = mydb.cursor(buffered=True)
-                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)", (flask.request.form["id_to_add"],))
+                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id,Kuerzel) VALUES (%s,%s)", (flask.request.form["id_to_add"],''))
                     mydb.commit()
                     try:
                         cursor.execute("DELETE FROM deleted_patients WHERE id = %s", (flask.request.form["id_to_add"],))
@@ -950,7 +956,6 @@ def verwaltung():
                         LocalRenderParameters["deleted_ids"] = deleted_id
                         return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                     except Exception as e:
-
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
                         deleted_ids = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_ids
@@ -991,7 +996,7 @@ def verwaltung():
                         list_to_add_to_DB.append(x)
 
                 for row in list_to_add_to_DB:
-                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id) VALUES (%s)", (row,))
+                    cursor.execute("INSERT INTO mcrc_tabelle (pat_id,Kuerzel) VALUES (%s,%s)", (row,''))
                     mydb.commit()
                 
                 os.remove(file_path)
