@@ -64,6 +64,8 @@ to_drop = ["Kuerzel",
            "ss_complication_which",
            "ts_complication_which",
            "Kommentar",
+           
+
            ]
 
 booleans = [
@@ -220,7 +222,6 @@ categorials = [
 ]
 
 dates = [
-    "dob",
     "op_date_Surgery1",
     "op_date_Surgery2",
     "op_date_Surgery3",
@@ -232,6 +233,7 @@ dates = [
     "limax_second_date",
     "limax_third_date",
     "previous_surgery_date",
+    "dob",
 ]
 
 labor_werte = [
@@ -342,6 +344,9 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
         current_df.dropna(inplace=True)
 
         #Format input df for better functionality with statistical libaries
+        if x in dates:
+            continue
+
         if x in booleans:
             df = df.replace({0: False, 1: True})
 
@@ -545,7 +550,8 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
                          ["Signifikanslevel", result[2]])
                 build_dict("Table", table)
             if (qqplot == True):
-                fig = sm.qqplot(current_df, line='45', xlabel='Zu erwartende Werte', ylabel=x, figsize=(6, 6))
+                fig = sm.qqplot(current_df, line='45', xlabel='Zu erwartende Werte', ylabel=x)
+                fig.rc("figure", figsize=(16,8))
                 save_here = PATH_OUT + x + ".png"
                 fig.savefig(save_here)
                 build_dict("Image", x + "_qqplot.png")
