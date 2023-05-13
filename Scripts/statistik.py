@@ -396,6 +396,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             #Generate A Balkendiagramm
             if x in categorials or x in ordinals:
                 current_df = current_df.value_counts()
+                print(current_df)
                 pie = current_df.plot.bar(figsize=(6, 6))
                 fig = pie.get_figure()
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_balken.png"
