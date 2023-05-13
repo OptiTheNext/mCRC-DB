@@ -550,7 +550,11 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
                          ["Signifikanslevel", result[2]])
                 build_dict("Table", table)
             if (qqplot == True):
-                fig = sm.qqplot(current_df, line='45', xlabel='Zu erwartende Werte', ylabel=x)
+
+                with matplotlib.rc_context():
+                    matplotlib.rc("figure", figsize=(6,6))
+                    fig = sm.qqplot(current_df, line='45', xlabel='Zu erwartende Werte', ylabel=x)
+               
                 save_here = PATH_OUT + x + "_qqplot.png"
                 fig.savefig(save_here)
                 build_dict("Image", x + "_qqplot.png")
