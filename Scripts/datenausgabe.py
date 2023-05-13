@@ -24,7 +24,7 @@ von_date = ""
 bis_date = ""
 
 
-def analyse(parameters) -> pandas.DataFrame:
+def data_output(parameters) -> pandas.DataFrame:
     # Connect to Database
     global mydb
     global para
@@ -1384,6 +1384,8 @@ def analyse(parameters) -> pandas.DataFrame:
     df.fillna("None")
 
     if Mode:
+        
         return df_AND
     else:
+        
         return df_or

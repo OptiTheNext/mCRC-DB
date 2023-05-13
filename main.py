@@ -527,7 +527,7 @@ def page_3():
         LocalRenderParameters = RenderParameters.copy()
         if "datenausgabe" in flask.request.form:
 
-            df = datenausgabe.analyse(flask.request.form)
+            df = datenausgabe.data_output(flask.request.form)
             dfdict = df.to_dict("list")
             flask.session['df'] = dfdict
             df.fillna("", inplace=True)
@@ -551,6 +551,7 @@ def page_3():
 
             df.columns = Columns.b
             df.drop(['Study ID', 'Case ID'], axis=1)
+            df.reset_index(drop=True,inplace= True)
             #Change variables here for direct impact on table
             htmltext = flask.Markup(
                 df.style.set_table_styles([
