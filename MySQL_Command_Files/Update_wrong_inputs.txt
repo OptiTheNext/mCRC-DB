@@ -65,6 +65,16 @@ UPDATE mcrc_tabelle set T = "4" where T = "4b";
 UPDATE mcrc_tabelle set N = "1" where N = "1a";
 UPDATE mcrc_tabelle set N = "1" where N = "1b";
 UPDATE mcrc_tabelle set N = "1" where N = "1c"; 
+UPDATE mcrc_tabelle set N = "2" where N = "2a"; 
+
+UPDATE mcrc_tabelle set M = "1" where M = "1a";
+UPDATE mcrc_tabelle set M = "1" where M = "1b";
+UPDATE mcrc_tabelle set M = "1" where M = "1c"; 
+
+UPDATE mcrc_tabelle set Pn = "1" where Pn = "1a";
+UPDATE mcrc_tabelle set Pn = "1" where Pn = "1b";
+UPDATE mcrc_tabelle set Pn= "1" where Pn = "1c"; 
+
 
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
 UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;

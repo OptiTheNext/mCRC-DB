@@ -359,6 +359,9 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace=True)
             print(current_df)
+            
+
+
         #Generate table one if wanted
         if (table_one):
             result = current_df.describe()

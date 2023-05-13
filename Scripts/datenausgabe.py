@@ -56,6 +56,7 @@ def data_output(parameters) -> pandas.DataFrame:
     df['two_staged'] = df['two_staged'].fillna(False).astype('bool')
     df['status_fu'] = df['status_fu'].fillna(False).astype('bool')
     df['recurrence_status'] = df['recurrence_status'].fillna(False).astype('bool')
+    df['Pn'] = df['Pn'].fillna(False).astype('string')
     df['alcohol'] = df['alcohol'].fillna(False).astype('bool')
     df['smoking'] = df['smoking'].fillna(False).astype('bool')
     df['diabetes'] = df['diabetes'].fillna(False).astype('bool')
@@ -267,7 +268,7 @@ def data_output(parameters) -> pandas.DataFrame:
     
     #Check for Pn
     if parameters.get('Pn_check', None) and parameters["Pn"]:
-        para = int(parameters['Pn'])
+        para = parameters['Pn']
         sort_df("Pn==@para")
 
     # Check for Last Seen Date
