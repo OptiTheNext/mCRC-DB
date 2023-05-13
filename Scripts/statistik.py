@@ -353,7 +353,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
         if x in decimals:
             current_df = pandas.to_numeric(current_df, errors='coerce')
 
-        if x in categorials:
+        if x in categorials or x in ordinals:
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace=True)
@@ -389,7 +389,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 build_dict("Image", flask.session["username"] + "_" + x + "_box.png")
                 fig.clf()
             #Generate A Balkendiagramm
-            if x in categorials:
+            if x in categorials or x in ordinals:
                 current_df = current_df.value_counts()
                 pie = current_df.plot.bar(figsize=(6, 6))
                 fig = pie.get_figure()
