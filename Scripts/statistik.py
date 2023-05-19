@@ -46,6 +46,10 @@ latex_jinja_env = jinja2.Environment(
 template = latex_jinja_env.get_template("stat_template.tex")
 
 labor_verlauf_liste = []
+op_nm = ""
+labor_typ = ""
+
+
 
 to_drop = ["Kuerzel",
            "pat_id",
@@ -612,8 +616,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
 
     df = pandas.DataFrame(df)
     labor_verlauf_liste = []
-    global op_nm
-    global labor_typ
+    
 
     def verlauf_check(x):
         if x in labor_werte:
@@ -621,7 +624,9 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             global op_nm
             global labor_typ
             op_nm = x.split("_")[0]
+            print(op_nm)
             labor_typ = x.split("_")[1]
+            print(labor_typ)
             my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
             for s in labor_verlauf_liste:
                 print("in verlaufs schleife")
@@ -668,10 +673,15 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
 
     if linear:
         for x in point_of_interest:
+            if x not in labor_werte:
+                continue
+
             if verlauf_check(x):
                 continue
             # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
+            print(op_nm)
             value = op_nm + "_"
+            print(value)
             if (labor_typ == "Serum" or labor_typ == "Drain"):
                 value = value + labor_typ + "_Bili"
             else:
