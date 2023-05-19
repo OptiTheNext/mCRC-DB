@@ -887,8 +887,8 @@ def generate_pdf():
     tuple_list = []
     for x in flask.session["elements"]:
         print(x)
-      #  if (x["type"] == "Image"):
-       #     os.remove(PATH_OUT + x["data"])
-    #os.remove(name + ".tex")
+        if (x["type"] == "Image"):
+            os.remove(PATH_OUT + x["data"])
+    os.remove(name + ".tex")
 
     return (name + ".pdf")

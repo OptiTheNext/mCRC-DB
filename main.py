@@ -248,8 +248,9 @@ def dateneingabe():
     
     if "Grund" in flask.request.form:
         grund_to_delete = flask.request.form["Grund"]
+        print(grund_to_delete)
 
-        if "pat_id" in flask.request.form:
+        if "pat_id" in flask.request.form and grund_to_delete:
             pat_to_delete = flask.request.form["pat_id"]
             if pat_to_delete == "":
                 pat_to_delete = flask.request.form["pat_id_import"]
@@ -273,10 +274,12 @@ def dateneingabe():
 
                 LocalRenderParameters = RenderParameters.copy()
                 LocalRenderParameters["Success"] = "Deleted the ID"
+                print("Deleted Ids as wished")
+
                 return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
             except Exception as e:
-                print("something went wrong")
+                print("something went wrong in pat_id")
                 print(e)
                 LocalRenderParameters["Error"] = "ID kann nicht gelöscht werden"
                 LocalRenderParameters["error-text"] = e
@@ -463,6 +466,7 @@ def dateneingabe():
                 statement += ")"
                 cursor.execute(statement.format(",".join(p_columns)), p_values)
                 mydb.commit()
+                print("sucess")
                 LocalRenderParameters["success"] = "Eingabe erfolgreich"
 
                 # trying to delete from currently acitve

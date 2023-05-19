@@ -50,7 +50,7 @@ def data_output(parameters) -> pandas.DataFrame:
 
     df = df.apply(pandas.to_numeric, errors="ignore")
     df['pve'] = df['pve'].fillna(False).astype('bool')
-    df['dob'] = pandas.to_datetime(df.dob)
+    df['dob'] = pandas.to_datetime(df.dob,errors='coerce' )
     df['crlm_bilobular'] = df['crlm_bilobular'].fillna(False).astype('bool')
     df['multimodal'] = df['multimodal'].fillna(False).astype('bool')
     df['two_staged'] = df['two_staged'].fillna(False).astype('bool')
@@ -110,8 +110,10 @@ def data_output(parameters) -> pandas.DataFrame:
     # Check für SAPID
 
     if parameters.get('pat_id_check', None) and parameters["pat_id"]:
+        print("in sap_id")
         global pat_id
         pat_id = int(parameters['pat_id'])
+        print(pat_id)
         sort_df("pat_id == @pat_id")
 
     # Check for Geburtsdatum
