@@ -68,6 +68,7 @@ to_drop = ["Kuerzel",
            "ss_complication_which",
            "ts_complication_which",
            "Kommentar",
+           "fs_previous_antibody",
            
 
            ]
