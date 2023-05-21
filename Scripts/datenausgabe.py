@@ -67,7 +67,7 @@ def data_output(parameters) -> pandas.DataFrame:
     df["th_previous_chemotherapy"]=df["th_previous_chemotherapy"].replace({0: False, 1: True})
     df['first_surgery_ablation'] = df['first_surgery_ablation'].fillna(False).astype('bool')
     df['first_surgery_conversion'] = df['first_surgery_conversion'].fillna(False).astype('bool')
-    df["second_surgery_planned"]=df["second_surgery_planned"].replace({"0": False, "1": True})
+    df["second_surgery_planned"]=df["second_surgery_planned"].replace({0: False, 1: True})
     df["second_surgery_realized"]=df["second_surgery_realized"].replace({0: False, 1: True})
     df["second_surgery_conversion"]=df["second_surgery_conversion"].replace({0: False, 1: True})
     df["second_surgery_ablation"]=df["third_surgery_ablation"].replace({0: False, 1: True})
