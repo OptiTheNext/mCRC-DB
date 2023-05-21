@@ -307,6 +307,8 @@ labor_werte = [
 
 global result
 
+pandas.set_option('display.float_format', lambda x: '%.3f' % x)
+
 #This function builds a dict for LaTeC to understand and render in a Table
 def build_dict(datatype, data):
     if datatype not in ["Image", "Table"]:
@@ -409,7 +411,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 fig.clf()
 
 
-def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, histo,scat,scat_one,scat_two,scat_three):
+def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,scat_one,scat_two,scat_three):
     # Test auf Normalverteilung und entsprechender T-Test
     if (scat == True):
         print(scat_one)
@@ -548,16 +550,15 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, anderson, qqplot, hi
 
             if (saphiro == True):
                 result = scipy.stats.shapiro(current_df)
-                table = ([x, " :Saphiro-Wilkoson Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
+                tt = round(result[0],3)
+                pw = round(result[1],3)
+                table = ([x[0].replace("_", "-"), " :Saphiro-Wilkoson Test"], ["Teststatistik", tt], ["P-Wert", pw])
                 build_dict("Table", table)
             if (kolmogorov == True):
                 result = scipy.stats.kstest(current_df, 'norm')
-                table = ([x, " :Kolmogorov-Smirnov Test"], ["Teststatistik", result[0]], ["P-Wert", result[1]])
-                build_dict("Table", table)
-            if (anderson == True):
-                result = scipy.stats.anderson(current_df)
-                table = ([x, " :Anderson-Test"], ["Teststatistik", result[0]], ["Kritische Werte", result[1]],
-                         ["Signifikanslevel", result[2]])
+                tt = round(result[0],3)
+                pw = round(result[1],3)
+                table = ([x[0].replace("_", "-"), " :Kolmogorov-Smirnov Test"], ["Teststatistik", tt], ["P-Wert",pw])
                 build_dict("Table", table)
             if (qqplot == True):
 
@@ -734,6 +735,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         result = scipy.stats.stats.pearsonr(var1, var2)
         x = reg_one + " und " + reg_two
         lista = ([x, " :Korrelation nach Pearson"], ["Korrelationskoeffizent", result[0]], ["P-Wert", result[1]])
+        lista = lista.replace("_", "-")
         build_dict("Table", lista)
 
     if ttest_unv:
@@ -758,7 +760,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         stat = str(result[0])
         p = str(result[1])
 
-        lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung: ",emp])
+        lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung:",emp])
+        lista = lista.replace("_", "-")
         build_dict("Table", lista)
 
     if ttest_v:
@@ -793,6 +796,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "T-Test Verbunden"], ["Stat", stat], ["P-Value", p],["Seite",mode_v],["Wertepaare",paar],["Empfehlung: ",emp])
+        lista = lista.replace("_", "-")
         build_dict("Table", lista)
 
     if utest:
@@ -819,6 +823,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "U Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_u],["Werte",paar],["Empfehlung: ",emp])
+        lista = lista.replace("_", "-")
         build_dict("Table", lista)
     
     if will:
@@ -852,6 +857,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "Wilcoxon Rank Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_w],["Wertepaare",paar],["Empfehlung: ",emp])
+        lista = lista.replace("_", "-")
         build_dict("Table", lista)
 
     if 1 == 0:
@@ -897,8 +903,8 @@ def generate_pdf():
     tuple_list = []
     for x in flask.session["elements"]:
         print(x)
-        if (x["type"] == "Image"):
-            os.remove(PATH_OUT + x["data"])
-    os.remove(name + ".tex")
+       # if (x["type"] == "Image"):
+        #    os.remove(PATH_OUT + x["data"])
+   # os.remove(name + ".tex")
 
     return (name + ".pdf")

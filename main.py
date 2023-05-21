@@ -652,12 +652,7 @@ def page_4():
                 if kolmogorov == "0":
                     kolmogorov = False
 
-            if "anderson" in flask.request.json:
-                anderson = flask.request.json["anderson"]
-                if anderson == True:
-                    anderson = True
-                if anderson == "0":
-                    anderson = False
+          
 
             if "qq" in flask.request.json:
                 qq = flask.request.json["qq"]
@@ -682,8 +677,8 @@ def page_4():
             scat_two = flask.request.json["scat_two"]
             scat_three = flask.request.json["scat_three"]
 
-            if saphiro or kolmogorov or anderson or qq or histo or scat:
-                statistik.explorativ(localDF, tags, saphiro, kolmogorov, anderson, qq, histo, scat, scat_one, scat_two, scat_three)
+            if saphiro or kolmogorov or qq or histo or scat:
+                statistik.explorativ(localDF, tags, saphiro, kolmogorov, qq, histo, scat, scat_one, scat_two, scat_three)
 
             # Sammeln von Variablen für Explorativ
             if "linear" in flask.request.json:
@@ -739,7 +734,6 @@ def page_4():
             table_one = False
             saphiro = False
             kolmogorov = False
-            anderson = False
             qq = False
             linear = False
 
