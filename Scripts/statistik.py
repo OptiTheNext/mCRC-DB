@@ -69,6 +69,8 @@ to_drop = ["Kuerzel",
            "ts_complication_which",
            "Kommentar",
            "fs_previous_antibody",
+           "ss_previous_antibody",
+           "th_previous_antibody",
            
 
            ]
@@ -382,19 +384,20 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             #Generate Graph as Cake Graph
             if x in booleans:
                 values = current_df.value_counts()
-                val = ['False:', 'True:']
-                values = [values[0], values[1]]
-                series2 = pandas.Series(values,
-                                        index=val,
-                                        name=current_name + "(" + str(sum(values)) + ")")
-                pie = series2.plot.pie(figsize=(6, 6), autopct=make_autopct(values))
-                fig = pie.get_figure()
-                save_here = PATH_OUT + flask.session["username"] + "_" + x + "_kuchen.png"
-                fig.savefig(save_here)
-                build_dict("Image", flask.session["username"] + "_" + x + "_kuchen.png")
-                fig.clf()
-                values = None
-                series2 = None
+                if len(values) >= 2:
+                    val = ['False:', 'True:']
+                    values = [values[0], values[1]]
+                    series2 = pandas.Series(values,
+                                            index=val,
+                                            name=current_name + "(" + str(sum(values)) + ")")
+                    pie = series2.plot.pie(figsize=(6, 6), autopct=make_autopct(values))
+                    fig = pie.get_figure()
+                    save_here = PATH_OUT + flask.session["username"] + "_" + x + "_kuchen.png"
+                    fig.savefig(save_here)
+                    build_dict("Image", flask.session["username"] + "_" + x + "_kuchen.png")
+                    fig.clf()
+                    values = None
+                    series2 = None
             #Generate a Boxplot Graph 
             if x in decimals:
                 pie = current_df.plot.box(figsize=(6, 6))
