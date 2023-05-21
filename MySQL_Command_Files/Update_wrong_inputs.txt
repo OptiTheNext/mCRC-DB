@@ -96,7 +96,7 @@ UPDATE mcrc_tabelle set recurrence_organ = "liver" where recurrence_organ = "liv
 UPDATE mcrc_tabelle set first_surgery_minimal_invasive = "robotisch" where first_surgery_minimal_invasive = "robotisch ";
 UPDATE mcrc_tabelle set first_surgery_minimal_invasive = "laparoskopisch" where first_surgery_minimal_invasive = "laparoskopisch ";
 
-
+UPDATE mcrc_tabelle set fs_dindo = "No Comp" where fs_dindo = "No comp";
 
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
 UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;
