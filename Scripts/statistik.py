@@ -200,7 +200,10 @@ ordinals = [
     "G",
     "L",
     "V",
-    "R"
+    "R",
+    "first_surgery_minimal_invasive",
+    "second_surgery_minimal_invasive",
+    "third_surgery_minimal_invasive"
 ]
 
 categorials = [
