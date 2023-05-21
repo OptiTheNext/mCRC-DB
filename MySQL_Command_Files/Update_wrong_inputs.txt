@@ -93,6 +93,9 @@ UPDATE mcrc_tabelle set recurrence_organ = "peritoneum" where recurrence_organ =
 UPDATE mcrc_tabelle set recurrence_organ = "liver" where recurrence_organ = "liver, lung";
 UPDATE mcrc_tabelle set recurrence_organ = "liver" where recurrence_organ = "liver,lung";
 
+UPDATE mcrc_tabelle set first_surgery_minimal_invasive = "robotisch" where first_surgery_minimal_invasive = "robotisch ";
+UPDATE mcrc_tabelle set first_surgery_minimal_invasive = "laparoskopisch" where first_surgery_minimal_invasive = "laparoskopisch ";
+
 
 
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;

@@ -203,7 +203,7 @@ ordinals = [
     "R",
     "first_surgery_minimal_invasive",
     "second_surgery_minimal_invasive",
-    "third_surgery_minimal_invasive"
+    "third_surgery_minimal_invasiv"
 ]
 
 categorials = [
@@ -417,7 +417,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
 
 def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,scat_one,scat_two,scat_three):
     # Test auf Normalverteilung und entsprechender T-Test
-    if (scat == True):
+    if (scat == True and scat_one and scat_two and scat_three):
         print(scat_one)
         print(scat_two)
         print(scat_three)
@@ -709,7 +709,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             df3 = pandas.to_numeric(df3, errors='coerce')
 
             result = df3.describe()
-
+            round(result, 5)
+            x =  value + "- Regression"
             listb = table_one_func(x, result)
             build_dict("Table", listb)
             # Hier Boxplot
