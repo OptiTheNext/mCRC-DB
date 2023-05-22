@@ -12,6 +12,9 @@ import scipy
 import statsmodels.api as sm
 from flask_session import Session
 import os
+import main
+import threading
+import time
 
 app = flask.Flask(__name__,
                   template_folder="templates",
@@ -312,6 +315,24 @@ labor_werte = [
 ]
 
 global result
+status = 0
+current_task = 0
+max_task = 0
+
+def update_max(max):
+    global max_task
+    max_task = max
+
+def max():
+    print("jetzt current update")
+    global current_task
+    current_task += 1 
+    main.progress_bar(current_task, max_task)
+
+def give_status(stat):
+    global status
+    status = stat
+
 
 pandas.set_option('display.float_format', lambda x: '%.3f' % x)
 
@@ -345,18 +366,24 @@ def make_autopct(values):
     return my_autopct
 
 def deskriptiv(df, points_of_interest, grafik, table_one):
+   
     # Table one für Werte aus DF und Liste zur beschränkung der werte
     df = pandas.DataFrame(df)
     for x in points_of_interest:
         if x in to_drop:
+            print("to_drop für" + x)
+            max()
             continue
         print(df["N"])
+      
         current_name = x
         current_df = df[x]
         current_df.dropna(inplace=True)
 
         #Format input df for better functionality with statistical libaries
         if x in dates:
+            print("in dates für" + x)
+            max()
             continue
 
         if x in booleans:
@@ -379,8 +406,12 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             result = current_df.describe()
             table = table_one_func(x, result)  # table is ne liste
             build_dict("Table", table)
+            max()
+            
+            
         #Generate A Graph from Table One
         if (grafik):
+               
             #Generate Graph as Cake Graph
             if x in booleans:
                 values = current_df.value_counts()
@@ -416,11 +447,19 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_balken.png")
                 fig.clf()
+            print("in grafik onefür" + x)
+            max() 
+           
+            
+            
 
 
 def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,scat_one,scat_two,scat_three):
+   
     # Test auf Normalverteilung und entsprechender T-Test
     if (scat == True and scat_one and scat_two and scat_three):
+        print("in scat")
+        max()  
         print(scat_one)
         print(scat_two)
         print(scat_three)
@@ -534,15 +573,18 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
                 fig.clf()
-
-                
-
-            print("hier ist noch nix")
         else:
-            table = ([x, " :Scatterplott"], ["Fehler", "Bitte wähle mehr als einen Wert"])
-            build_dict("Table", table)
+                table = ([x, " :Scatterplott"], ["Fehler", "Bitte wähle mehr als einen Wert"])
+                build_dict("Table", table)
+
+        
+    else:
+            if scat == True:
+                print("in kein scatter")
+                max()  
             
-            
+        
+        
 
     for x in points_of_interest:
         if x in decimals:
@@ -561,14 +603,21 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 pw = round(result[1],3)
                 table = ([x[0].replace("_", "-"), " :Saphiro-Wilkoson Test"], ["Teststatistik", tt], ["P-Wert", pw])
                 build_dict("Table", table)
+                print("in saphiro"+x) 
+                max()
+           
             if (kolmogorov == True):
                 result = scipy.stats.kstest(current_df, 'norm')
                 tt = round(result[0],3)
                 pw = round(result[1],3)
                 table = ([x[0].replace("_", "-"), " :Kolmogorov-Smirnov Test"], ["Teststatistik", tt], ["P-Wert",pw])
                 build_dict("Table", table)
+                print("in kolmogrov"+x) 
+                max()
+            
             if (qqplot == True):
-
+                
+               
                 with matplotlib.rc_context():
                     matplotlib.rc("figure", figsize=(6,6))
                     fig = sm.qqplot(current_df,scipy.stats.norm, fit= True, line='45', xlabel='Zu erwartende Werte', ylabel=x)
@@ -577,7 +626,12 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 fig.savefig(save_here)
                 build_dict("Image", x + "_qqplot.png")
                 fig.clf()
+                print("in qq"+x) 
+                max()
+            
             if (histo == True):
+                
+           
                 print("hier histo")
                 fig, ax = matplotlib.pyplot.subplots()
                 current_df.plot.kde(ax=ax, legend=False)
@@ -589,6 +643,18 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_histo.png")
                 fig.clf()
+                print("in histo" +x) 
+                max()
+            
+        else:
+                if saphiro:
+                     max()
+                if histo:
+                     max()
+                if qqplot:
+                    max()
+                if kolmogorov:
+                    max()
             
         
 
@@ -651,6 +717,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
                 labor_verlauf_liste.append(op_nm + labor_typ)
                 print(labor_verlauf_liste)
                 return False
+        
 
     def lin_reg(row):
         print("linreg")
@@ -682,6 +749,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
     if linear:
         for x in point_of_interest:
             if x not in labor_werte:
+                print("not in linear")
+                max()
                 continue
 
             if verlauf_check(x):
@@ -723,11 +792,12 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             fig.savefig(save_here)
             build_dict("Image", x + ".png")
             fig.clf()
-
+            print("in linear")
+            max()
             print(df2)
     if korrelation:
-        print("wir sind in korrelation")
 
+        print("wir sind in korrelation")
         print(korrelation)
         df = df[[reg_one, reg_two]]
         df.dropna(how="any", inplace=True)
@@ -745,6 +815,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         lista = ([x, " :Korrelation nach Pearson"], ["Korrelationskoeffizent", result[0]], ["P-Wert", result[1]])
         lista = lista.replace("_", "-")
         build_dict("Table", lista)
+        print("in korrelation")
+        max()
 
     if ttest_unv:
         group1 = df[reg_one]
@@ -771,8 +843,13 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung:",emp])
         lista = lista.replace("_", "-")
         build_dict("Table", lista)
+        print("in ttest unv")
+        max()
+
 
     if ttest_v:
+  
+ 
         group1 = df[reg_one]
         group1 = group1.dropna()
         print(group1)
@@ -806,8 +883,11 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         lista = ([x, "T-Test Verbunden"], ["Stat", stat], ["P-Value", p],["Seite",mode_v],["Wertepaare",paar],["Empfehlung: ",emp])
         lista = lista.replace("_", "-")
         build_dict("Table", lista)
+        print("in ttest v")
+        max()
 
     if utest:
+
         print("u_test")
         group1 = df[reg_one]
         group1 = group1.dropna()
@@ -833,8 +913,12 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         lista = ([x, "U Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_u],["Werte",paar],["Empfehlung: ",emp])
         lista = lista.replace("_", "-")
         build_dict("Table", lista)
+        print("in utest")
+        max()
     
     if will:
+ 
+
         print("will")
         group1 = df[reg_one]
         group1 = group1.dropna()
@@ -867,6 +951,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         lista = ([x, "Wilcoxon Rank Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_w],["Wertepaare",paar],["Empfehlung: ",emp])
         lista = lista.replace("_", "-")
         build_dict("Table", lista)
+        print("in will")
+        max()
 
     if 1 == 0:
         print("logistische Regression")
@@ -887,14 +973,21 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         except Exception as e:
             print("hier fehler von log")
             print(e)
-
     print("wuhu, explorativ")
 
     print("help")
 
-
+def reset_bar():
+    global current_task 
+    current_task = -1
+    global status
+    status = 0
+    global max_task
+    max_task = 1
+    max()
 ##Hier wir nach dem Start für alle werte einmal statistik betrieben
 def generate_pdf():
+    
     tuple_list = [tuple(flask.session["elements"][i:i + 2]) for i in range(0, len(flask.session["elements"]), 2)]
     # Dokument schreiben
     currentdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
@@ -914,5 +1007,5 @@ def generate_pdf():
        # if (x["type"] == "Image"):
         #    os.remove(PATH_OUT + x["data"])
    # os.remove(name + ".tex")
-
+    reset_bar()
     return (name + ".pdf")

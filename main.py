@@ -33,6 +33,8 @@ from Scripts import constants
 global sexbefore
 sexbefore = False
 
+status = 0
+
 load_dotenv()
 
 querySAPID = "SELECT pat_id FROM mcrc_tabelle"
@@ -592,8 +594,30 @@ def page_3():
         return flask.redirect(flask.url_for('login'))
 
 
+
+def progress_bar(current_task, max_task):
+    print("hier current")
+    print(current_task)
+    print("hier max")
+    global status
+    status = current_task/max_task
+    print("hier status")
+    print(status)
+    statistik.give_status(status)
+    
+
+@app.route('/status', methods=['GET'])
+def getStatus():
+  statusList = {'status':statistik.status}
+  print(statusList)
+  print("now returning statuslist")
+  return json.dumps(statusList)
+
+
+
 @app.route("/datenanalyse", methods=["POST", "GET"])
 def page_4():
+    global max_task
     if "username" in flask.session:
 
         LocalRenderParameters = RenderParameters.copy()
@@ -611,9 +635,12 @@ def page_4():
                 LocalRenderParameters["error-text"] = e
                 return flask.redirect(flask.url_for("page_4"))
         if flask.request.method == "POST" and flask.request.json:
+            
+            max_task = 0
             flask.session["elements"] = []
             grafik = False
             table_one = False
+            
             flask.session["pdf_completed"] = False
             tags = flask.request.json["server_tags"]
             reg_tags_one = flask.request.json["reg_tags_one"]
@@ -622,102 +649,90 @@ def page_4():
             #Collect variables for Deskriptive Statistik
             if "table_one" in flask.request.json:
                 table_one = flask.request.json["table_one"]
-                if table_one == True:
-                    table_one = True
-                if table_one == "0":
-                    table_one = False
+                print("hier table one")
+                print(table_one)
+                if table_one:
+                    max_task +=1
 
             if "grafik_deskriptiv" in flask.request.json:
                 grafik = flask.request.json["grafik_deskriptiv"]
-                if grafik == True:
-                    grafik = True
-                if grafik == "0":
-                    grafik = False
-            #If any variable is set, make the analysis
-            if grafik or table_one:
-                statistik.deskriptiv(localDF, tags, grafik, table_one)
+                if grafik:
+                    max_task +=1
+           
 
             # Collect variables for Normalverteilung
             if "saphiro" in flask.request.json:
                 saphiro = flask.request.json["saphiro"]
-                if saphiro == True:
-                    saphiro = True
-                if saphiro == "0":
-                    saphiro = False
+                if saphiro:
+                    max_task +=1
 
             if "kolmogorov" in flask.request.json:
                 kolmogorov = flask.request.json["kolmogorov"]
-                if kolmogorov == True:
-                    kolmogorov = True
-                if kolmogorov == "0":
-                    kolmogorov = False
+                if kolmogorov:
+                    max_task +=1
 
           
 
             if "qq" in flask.request.json:
                 qq = flask.request.json["qq"]
-                if qq == True:
-                    qq = True
-                if qq == "0":
-                    qq = False
+                if qq:
+                    max_task +=1
             if "histo" in flask.request.json:
                 histo = flask.request.json["histo"]
-                if histo == True:
-                    histo = True
-                if histo == "0":
-                    histo = False
+                if histo:
+                    max_task +=1
             if "scat" in flask.request.json:
                 scat = flask.request.json["scat"]
-                if scat == True:
-                    scat = True
-                if scat == "0":
-                    scat = False
+                if scat:
+                    max_task +=1
             #If any variable is set, make the analysis
+            
+
+            # Sammeln von Variablen für Explorativ
+            if "linear" in flask.request.json:
+                linear = flask.request.json["linear"]
+                if linear:
+                    max_task +=1
+            if "korrelation" in flask.request.json:
+                korrelation = flask.request.json["korrelation"]
+                if korrelation:
+                    max_task +=1
+
+            if "ttest_v" in flask.request.json:
+                ttest_v = flask.request.json["ttest_v"]
+                if ttest_v:
+                    max_task +=1
+            if "ttest_unv" in flask.request.json:
+                ttest_unv = flask.request.json["ttest_unv"]
+                if ttest_unv:
+                    max_task +=1
+            if "utest" in flask.request.json:
+                utest = flask.request.json["utest"]
+                if utest:
+                    max_task +=1
+            if "will" in flask.request.json:
+                will = flask.request.json["will"]
+                if will:
+                    max_task +=1
+            print("hier max task vor berechnung")
+            print(max_task)
+            
+            max_task = max_task * len(tags)
+            print("hier len tags")
+            print(len(tags))
+            print("hier die berechneten max task")
+            print(max_task)
+            statistik.update_max(max_task)
+             #If any variable is set, make the analysis
+            if grafik or table_one:
+                statistik.deskriptiv(localDF, tags, grafik, table_one)
+
             scat_one = flask.request.json["scat_one"]
             scat_two = flask.request.json["scat_two"]
             scat_three = flask.request.json["scat_three"]
 
             if saphiro or kolmogorov or qq or histo or scat:
                 statistik.explorativ(localDF, tags, saphiro, kolmogorov, qq, histo, scat, scat_one, scat_two, scat_three)
-
-            # Sammeln von Variablen für Explorativ
-            if "linear" in flask.request.json:
-                linear = flask.request.json["linear"]
-                if linear == True:
-                    linear = True
-                if linear == "0":
-                    linear = False
-            if "korrelation" in flask.request.json:
-                korrelation = flask.request.json["korrelation"]
-                if korrelation == True:
-                    korrelation = True
-                if korrelation == "0":
-                    korrelation = False
-
-            if "ttest_v" in flask.request.json:
-                ttest_v = flask.request.json["ttest_v"]
-                if ttest_v == True:
-                    ttest_v = True
-                if ttest_v == "0":
-                    ttest_v = False
-            if "ttest_unv" in flask.request.json:
-                ttest_unv = flask.request.json["ttest_unv"]
-                if ttest_unv == True:
-                    ttest_unv = True
-                if ttest_unv == "0":
-                    ttest_unv = False
-            if "utest" in flask.request.json:
-                utest = flask.request.json["utest"]
-                if utest == True:
-                    utest = True
-                if utest == "0":
-                    utest = False
-            if "will" in flask.request.json:
-                will = flask.request.json["will"]
-                if will == True:
-                    will = True
-                if will == "0":
-                    will = False
 
             #This is not a boolean, just a variable to choose from
             mode_v = flask.request.json["Mode_v"]
@@ -737,11 +752,17 @@ def page_4():
             qq = False
             linear = False
 
+            
+
             #Generate the PDF From the current results for the current user
             pdf = statistik.generate_pdf()
             flask.session["pdf_path"] = pdf
-            flask.session["pdf_completed"] = True
+            flask.session["pdf_completed"] = True 
+            max_task=0
             return flask.redirect(flask.url_for("export_statistik_as_pdf"))
+            
+
+
 
         return flask.render_template(constants.URL_DATENANALYSE,
                                      RenderParameters=LocalRenderParameters)

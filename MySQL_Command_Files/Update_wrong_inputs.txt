@@ -104,3 +104,8 @@ UPDATE mcrc_tabelle set second_surgery_minimal_invasive = "Offen" where second_s
 
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
 UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;
+
+
+
+
+https://www.reddit.com/r/flask/comments/afgks4/how_to_get_a_javascript_function_to_call_a_flask/
