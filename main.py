@@ -937,9 +937,9 @@ def verwaltung():
                 try:
                     print("email sent")
                     m.send_and_save()
-                    htmltext = htmltext()
+                    htmltext = usertext()
                     LocalRenderParameters["htmltext"] = htmltext
-                    return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                    return flask.redirect(flask.url_for("verwaltung"), RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     print("mail coulnd be send")
@@ -951,10 +951,10 @@ def verwaltung():
                 try:
                     cursor = mydb.cursor(buffered=True)
                     cursor.execute("DELETE FROM Users WHERE LoginID = %s", (flask.request.form["delete_username"],))
-                    LocalRenderParameters["success"] = "Patient wurde aus der Datenbank entfernt"
-                    deleted_ids = deleted_id_text()()
+                    LocalRenderParameters["success"] = "Nutzer wurde aus der Datenbank entfernt"
+                    deleted_ids = deleted_id_text()
                     LocalRenderParameters["deleted_ids"] = deleted_ids
-                    return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                    return flask.redirect(flask.url_for("verwaltung"), RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
@@ -974,12 +974,12 @@ def verwaltung():
                         mydb.commit()
                         deleted_id = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_id
-                        return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(flask.url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                     except Exception as e:
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
                         deleted_ids = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_ids
-                        return flask.redirect(url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(flask.url_for("verwaltung"),RenderParameters=LocalRenderParameters)
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
