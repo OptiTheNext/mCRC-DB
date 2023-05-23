@@ -12,9 +12,7 @@ import scipy
 import statsmodels.api as sm
 from flask_session import Session
 import os
-import main
-import threading
-import time
+
 
 app = flask.Flask(__name__,
                   template_folder="templates",
@@ -326,12 +324,21 @@ def update_max(max):
 def max():
     print("jetzt current update")
     global current_task
-    current_task += 1 
-    main.progress_bar(current_task, max_task)
+    current_task += 1
+    global status 
+    status = progress_bar(current_task, max_task)
 
-def give_status(stat):
+def progress_bar(current_task, max_task):
+    print("hier current")
+    print(current_task)
+    print("hier max")
     global status
-    status = stat
+    status = current_task/max_task
+    print("hier status")
+    print(status)
+    return status
+
+
 
 
 pandas.set_option('display.float_format', lambda x: '%.3f' % x)
@@ -812,8 +819,8 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         print(var2)
         result = scipy.stats.stats.pearsonr(var1, var2)
         x = reg_one + " und " + reg_two
+        x = x.replace("_", "-")
         lista = ([x, " :Korrelation nach Pearson"], ["Korrelationskoeffizent", result[0]], ["P-Wert", result[1]])
-        lista = lista.replace("_", "-")
         build_dict("Table", lista)
         print("in korrelation")
         max()
@@ -841,7 +848,6 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         p = str(result[1])
 
         lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung:",emp])
-        lista = lista.replace("_", "-")
         build_dict("Table", lista)
         print("in ttest unv")
         max()
@@ -1004,8 +1010,8 @@ def generate_pdf():
     tuple_list = []
     for x in flask.session["elements"]:
         print(x)
-       # if (x["type"] == "Image"):
-        #    os.remove(PATH_OUT + x["data"])
-   # os.remove(name + ".tex")
+        if (x["type"] == "Image"):
+             os.remove(PATH_OUT + x["data"])
+    os.remove(name + ".tex")
     reset_bar()
     return (name + ".pdf")

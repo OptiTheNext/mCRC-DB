@@ -595,15 +595,7 @@ def page_3():
 
 
 
-def progress_bar(current_task, max_task):
-    print("hier current")
-    print(current_task)
-    print("hier max")
-    global status
-    status = current_task/max_task
-    print("hier status")
-    print(status)
-    statistik.give_status(status)
+
     
 
 @app.route('/status', methods=['GET'])
@@ -635,7 +627,7 @@ def page_4():
                 LocalRenderParameters["error-text"] = e
                 return flask.redirect(flask.url_for("page_4"))
         if flask.request.method == "POST" and flask.request.json:
-            
+            koeff = 0
             max_task = 0
             flask.session["elements"] = []
             grafik = False
@@ -685,6 +677,7 @@ def page_4():
                 scat = flask.request.json["scat"]
                 if scat:
                     max_task +=1
+                    koeff +=1
             #If any variable is set, make the analysis
             
 
@@ -697,6 +690,7 @@ def page_4():
                 korrelation = flask.request.json["korrelation"]
                 if korrelation:
                     max_task +=1
+                    koeff += 1
 
             if "ttest_v" in flask.request.json:
                 ttest_v = flask.request.json["ttest_v"]
@@ -717,7 +711,7 @@ def page_4():
             print("hier max task vor berechnung")
             print(max_task)
             
-            max_task = max_task * len(tags)
+            max_task = max_task * (len(tags) + koeff)
             print("hier len tags")
             print(len(tags))
             print("hier die berechneten max task")
@@ -939,7 +933,7 @@ def verwaltung():
                     m.send_and_save()
                     htmltext = usertext()
                     LocalRenderParameters["htmltext"] = htmltext
-                    return flask.redirect(flask.url_for("verwaltung"), RenderParameters=LocalRenderParameters)
+                    return flask.redirect(flask.url_for("verwaltung"))
                 except Exception as e:
                     print(e)
                     print("mail coulnd be send")
@@ -954,7 +948,7 @@ def verwaltung():
                     LocalRenderParameters["success"] = "Nutzer wurde aus der Datenbank entfernt"
                     deleted_ids = deleted_id_text()
                     LocalRenderParameters["deleted_ids"] = deleted_ids
-                    return flask.redirect(flask.url_for("verwaltung"), RenderParameters=LocalRenderParameters)
+                    return flask.redirect(flask.url_for("verwaltung"))
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt delete user, Contact Administrator"
@@ -974,12 +968,12 @@ def verwaltung():
                         mydb.commit()
                         deleted_id = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_id
-                        return flask.redirect(flask.url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(flask.url_for("verwaltung"))
                     except Exception as e:
                         LocalRenderParameters["Success"] = "Inserted the ID back into the DB"
                         deleted_ids = deleted_id_text()
                         LocalRenderParameters["deleted_ids"] = deleted_ids
-                        return flask.redirect(flask.url_for("verwaltung"),RenderParameters=LocalRenderParameters)
+                        return flask.redirect(flask.url_for("verwaltung"))
                 except Exception as e:
                     print(e)
                     LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"

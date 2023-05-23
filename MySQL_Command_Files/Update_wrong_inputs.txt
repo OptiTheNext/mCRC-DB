@@ -108,4 +108,3 @@ UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;
 
 
 
-https://www.reddit.com/r/flask/comments/afgks4/how_to_get_a_javascript_function_to_call_a_flask/
