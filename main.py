@@ -1165,7 +1165,7 @@ def get_data_for_id():
 def versions():
     LocalRenderParameters = RenderParameters
     if "username" not in flask.session:
-         return flask.render_template(constants.URL_LOGIN, RenderParameters=LocalRenderParameters)
+         return flask.redirect(flask.url_for('login'))
     LocalRenderParameters = RenderParameters.copy()
     return flask.render_template(constants.URL_VERSIONSVERLAUF,RenderParameters=LocalRenderParameters)
 
