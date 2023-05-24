@@ -631,14 +631,6 @@ def page_4():
                 LocalRenderParameters["error-text"] = e
                 return flask.redirect(flask.url_for("page_4"))
 
-            #localDF = pandas.DataFrame(localDF)
-            #localDF.columns = Columns.d
-            #localDF.query("Kuerzel != ''", inplace=True)
-                #localDF = datenausgabe.data_output()
-            #print("hier local df aus DB gezogen")
-            #LocalRenderParameters["df"] = True
-            #print(localDF)
-
       #  print(localDF)
         if flask.request.method == "POST" and flask.request.json:
             koeff = 0
