@@ -47,6 +47,9 @@
         {% if RenderParameters["startseite"] == True %}
             <a href="/startseite" style="float:right">Startseite</a>
         {% endif %}
+        {% if RenderParameters["startseite"] == False and RenderParameters["Topnav"] %}
+            <a href="/" style="float:right">Abmelden</a>
+        {% endif %}
     </div>
 </header>
 <hr>

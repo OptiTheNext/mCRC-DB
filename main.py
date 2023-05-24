@@ -153,6 +153,7 @@ def favicon_webmanifest():
 # Login Page
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    session.clear()
     LocalRenderParameters = RenderParameters.copy()
     LocalRenderParameters["Topnav"] = False
     LocalRenderParameters["startseite"] = False
