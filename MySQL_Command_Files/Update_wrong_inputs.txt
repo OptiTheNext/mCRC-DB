@@ -102,6 +102,11 @@ UPDATE mcrc_tabelle set second_surgery_minimal_invasive = "Offen" where second_s
 UPDATE mcrc_tabelle set second_surgery_minimal_invasive = "Offen" where second_surgery_minimal_invasive = "offfen";
 UPDATE mcrc_tabelle set second_surgery_minimal_invasive = "Offen" where second_surgery_minimal_invasive = "offen ";
 
+UPDATE mcrc_tabelle set third_surgery_planned = "" where third_surgery_planned is NULL;
+UPDATE mcrc_tabelle set third_surgery_realized = "" where third_surgery_realized is NULL;
+
+UPDATE mcrc_tabelle set third_surgery_minimal_invasiv = "Offen" where third_surgery_minimal_invasiv = "offen";
+
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
 UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;
 

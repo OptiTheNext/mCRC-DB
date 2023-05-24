@@ -290,26 +290,26 @@ labor_werte = [
     "ss_INR_POD5",
     "ss_INR_Last",
     # Dritte OP
-    "th_Serum_Bili_POD1",
-    "th_Serum_Bili_POD3",
-    "th_Serum_Bili_POD5",
-    "th_Serum_Bili_Last",
-    "th_Drain_Bili_POD1",
-    "th_Drain_Bili_POD3",
-    "th_Drain_Bili_POD5",
-    "th_Drain_Bili_Last",
-    "th_AST_POD1",
-    "th_AST_POD3",
-    "th_AST_POD5",
-    "th_AST_Last",
-    "th_ALT_POD1",
-    "th_ALT_POD3",
-    "th_ALT_POD5",
-    "th_ALT_Last",
-    "th_INR_POD1",
-    "th_INR_POD3",
-    "th_INR_POD5",
-    "th_INR_Last"
+    "ts_Serum_Bili_POD1",
+    "ts_Serum_Bili_POD3",
+    "ts_Serum_Bili_POD5",
+    "ts_Serum_Bili_Last",
+    "ts_Drain_Bili_POD1",
+    "ts_Drain_Bili_POD3",
+    "ts_Drain_Bili_POD5",
+    "ts_Drain_Bili_Last",
+    "ts_AST_POD1",
+    "ts_AST_POD3",
+    "ts_AST_POD5",
+    "ts_AST_Last",
+    "ts_ALT_POD1",
+    "ts_ALT_POD3",
+    "ts_ALT_POD5",
+    "ts_ALT_Last",
+    "ts_INR_POD1",
+    "ts_INR_POD3",
+    "ts_INR_POD5",
+    "ts_INR_Last"
 ]
 
 global result
@@ -583,6 +583,7 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
         else:
                 table = ([x, " :Scatterplott"], ["Fehler", "Bitte wähle mehr als einen Wert"])
                 build_dict("Table", table)
+                max()
 
         
     else:
