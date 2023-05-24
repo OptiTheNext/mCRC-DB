@@ -381,7 +381,7 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             print("to_drop für" + x)
             max()
             continue
-        print(df["N"])
+        
       
         current_name = x
         current_df = df[x]

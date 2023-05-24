@@ -153,7 +153,7 @@ def favicon_webmanifest():
 # Login Page
 @app.route('/', methods=['POST', 'GET'])
 def login():
-    session.clear()
+    flask.session.clear()
     LocalRenderParameters = RenderParameters.copy()
     LocalRenderParameters["Topnav"] = False
     LocalRenderParameters["startseite"] = False
@@ -616,23 +616,40 @@ def page_4():
         LocalRenderParameters = RenderParameters.copy()
         if flask.session.get("df"):
             localDF = flask.session.get("df")
+            print("hier ist local df schon gesetzt")
             LocalRenderParameters["df"] = True
         else:
             try:
                 cursor = mydb.cursor(buffered= True)
-                cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel")
+                cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel is not NULL")
                 localDF = cursor.fetchall()
                 LocalRenderParameters["df"] = True
+                
             except Exception as e:
                 LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
                 LocalRenderParameters["error-text"] = e
                 return flask.redirect(flask.url_for("page_4"))
+
+            #localDF = pandas.DataFrame(localDF)
+            #localDF.columns = Columns.d
+            #localDF.query("Kuerzel != ''", inplace=True)
+                #localDF = datenausgabe.data_output()
+            #print("hier local df aus DB gezogen")
+            #LocalRenderParameters["df"] = True
+            #print(localDF)
+
+      #  print(localDF)
         if flask.request.method == "POST" and flask.request.json:
             koeff = 0
             max_task = 0
             flask.session["elements"] = []
             grafik = False
             table_one = False
+
+            if type(localDF) != pandas.DataFrame:
+                localDF = pandas.DataFrame(localDF)
+                localDF.columns = Columns.d
+                localDF.query("Kuerzel != ''", inplace=True)
             
             flask.session["pdf_completed"] = False
             tags = flask.request.json["server_tags"]
