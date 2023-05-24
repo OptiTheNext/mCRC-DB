@@ -761,6 +761,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
                 continue
 
             if verlauf_check(x):
+                max()
                 continue
             # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
             print(op_nm)

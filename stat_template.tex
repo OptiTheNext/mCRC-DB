@@ -19,6 +19,8 @@
 \usepackage{longtable}
 \usepackage{makecell}
 \usepackage{array}  
+\usepackage{tcolorbox}
+
 
 \newcommand{\VAR}[1]{#1}
 \newcommand{\BLOCK}[1]{#1}
@@ -77,16 +79,19 @@
             \BLOCK{if tup[0] and tup[0].type == "Image"}
                 \includegraphics[width=\linewidth]{\VAR{tup[0].data}} 
             \BLOCK{elif tup[0] and tup[0].type == "Table"}
-                
                 %\begin{tabu}{|[0pt]p{|p{5cm}}|[1pt]p{|p{5cm}}|[0pt]}
                  %   \tabucline[1pt]{-}
-                 \parbox{2cm}{
+                 \parbox{7cm}{
+                    \begin{tcolorbox}[sharp corners]
                     \BLOCK{for list_element in tup[0].data}
-                    
+                   
+                        
                         \VAR{list_element[0]} : \VAR{list_element[1]} \\
 
                         %\tabucline[1pt]{-}
+                    
                     \BLOCK{endfor}
+                \end{tcolorbox}
                  }
                 %\end{tabu}     
             \BLOCK{else}
@@ -98,11 +103,13 @@
                
                 %\begin{tabu}{|[1pt]p{|p{5cm}}|[1pt]p{|p{5cm}}|[1pt]}
                  %   \tabucline[1pt]{-}
-                 \parbox{2cm}{
+                 \parbox{7cm}{
+                    \begin{tcolorbox}[sharp corners]
                     \BLOCK{for list_element in tup[1].data}
                         \VAR{list_element[0]} : \VAR{list_element[1]} \\
                     %    \tabucline[1pt]{-}
                     \BLOCK{endfor}
+                \end{tcolorbox}
                  }\\
                % \end{tabu}
             \BLOCK{else}
