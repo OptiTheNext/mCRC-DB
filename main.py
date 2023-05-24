@@ -623,10 +623,8 @@ def page_4():
             LocalRenderParameters["df"] = True
         else:
             try:
-                cursor = mydb.cursor(buffered= True)
-                cursor.execute("SELECT * FROM mcrc_tabelle where Kuerzel is not NULL")
-                localDF = cursor.fetchall()
-                LocalRenderParameters["df"] = True
+                localDF = "not a dataframe"
+                LocalRenderParameters["df"] = False
                 
             except Exception as e:
                 LocalRenderParameters["Error"] = constants.ERRORTEXT_DATABASECONNECTION
@@ -650,9 +648,7 @@ def page_4():
             table_one = False
 
             if type(localDF) != pandas.DataFrame:
-                localDF = pandas.DataFrame(localDF)
-                localDF.columns = Columns.d
-                localDF.query("Kuerzel != ''", inplace=True)
+                localDF = datenausgabe.data_output(flask.request.form)
             
             flask.session["pdf_completed"] = False
             tags = flask.request.json["server_tags"]
@@ -710,29 +706,29 @@ def page_4():
             if "korrelation" in flask.request.json:
                 korrelation = flask.request.json["korrelation"]
                 if korrelation:
-                    max_task +=1
                     koeff += 1
 
             if "ttest_v" in flask.request.json:
                 ttest_v = flask.request.json["ttest_v"]
                 if ttest_v:
-                    max_task +=1
+                    koeff += 1
             if "ttest_unv" in flask.request.json:
                 ttest_unv = flask.request.json["ttest_unv"]
                 if ttest_unv:
-                    max_task +=1
+                    koeff += 1
             if "utest" in flask.request.json:
                 utest = flask.request.json["utest"]
                 if utest:
-                    max_task +=1
+                    koeff += 1
             if "will" in flask.request.json:
                 will = flask.request.json["will"]
                 if will:
-                    max_task +=1
+                    koeff += 1
+            
             print("hier max task vor berechnung")
             print(max_task)
             
-            max_task = max_task * (len(tags) + koeff)
+            max_task = (max_task * (len(tags))) + koeff
             print("hier len tags")
             print(len(tags))
             print("hier die berechneten max task")
@@ -909,11 +905,11 @@ def verwaltung():
                 name = flask.request.form['username']
                 mail = flask.request.form['mailadress']
                 #check if user has charite mail
-               # if "charite" not in mail:
-                #    print("keine charite mail")
-                 #   LocalRenderParameters["Error"] = "Email muss eine Charite-Email sein"
-                  #  return flask.render_template(constants.URL_VERWALTUNG,
-                   #                      RenderParameters=LocalRenderParameters)
+                if "charite" not in mail:
+                    print("keine charite mail")
+                    LocalRenderParameters["Error"] = "Email muss eine Charite-Email sein"
+                    return flask.render_template(constants.URL_VERWALTUNG,
+                                         RenderParameters=LocalRenderParameters)
 
                 admin = flask.request.form['admin_select']
                 if admin == "Admin":

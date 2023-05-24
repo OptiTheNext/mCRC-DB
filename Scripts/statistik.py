@@ -19,7 +19,7 @@ app = flask.Flask(__name__,
                   static_folder="static")
 
 api_key = os.environ.get("KRK_DB_API_KEY")
-print(api_key)
+
 
 api_secret = os.environ.get("KRK_DB_SECRET_KEY")
 
@@ -72,7 +72,9 @@ to_drop = ["Kuerzel",
            "fs_previous_antibody",
            "ss_previous_antibody",
            "th_previous_antibody",
-           
+           "pve_year",
+           "op1year"
+
 
            ]
 
@@ -322,20 +324,14 @@ def update_max(max):
     max_task = max
 
 def max():
-    print("jetzt current update")
     global current_task
     current_task += 1
     global status 
     status = progress_bar(current_task, max_task)
 
 def progress_bar(current_task, max_task):
-    print("hier current")
-    print(current_task)
-    print("hier max")
     global status
     status = current_task/max_task
-    print("hier status")
-    print(status)
     return status
 
 
@@ -352,7 +348,6 @@ def build_dict(datatype, data):
 
 def table_one_func(x, loesung):  #Formates result output into a list
     lista = [[x]]
-    print(loesung.values)
     for i, j in zip(loesung.axes[0].values.astype(str), loesung.values.astype(str)):
         i = i.replace("%", "\\%")
         j = j.replace("%", "\\%")
@@ -378,7 +373,6 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
     df = pandas.DataFrame(df)
     for x in points_of_interest:
         if x in to_drop:
-            print("to_drop für" + x)
             max()
             continue
         
@@ -389,7 +383,6 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
 
         #Format input df for better functionality with statistical libaries
         if x in dates:
-            print("in dates für" + x)
             max()
             continue
 
@@ -400,11 +393,9 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             current_df = pandas.to_numeric(current_df, errors='coerce')
 
         if x in categorials or x in ordinals:
-            print("in cat or ordinals: " + x)
             current_df = current_df.astype(str)
             current_df[1] = current_df.replace("", numpy.nan, inplace=True)
             current_df[1] = current_df.dropna(inplace=True)
-            print(current_df)
             
 
 
@@ -447,14 +438,12 @@ def deskriptiv(df, points_of_interest, grafik, table_one):
             #Generate A Balkendiagramm
             if x in categorials or x in ordinals:
                 current_df = current_df.value_counts()
-                print(current_df)
                 pie = current_df.plot.bar(figsize=(6, 6))
                 fig = pie.get_figure()
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_balken.png"
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_balken.png")
                 fig.clf()
-            print("in grafik onefür" + x)
             max() 
            
             
@@ -465,13 +454,8 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
    
     # Test auf Normalverteilung und entsprechender T-Test
     if (scat == True and scat_one and scat_two and scat_three):
-        print("in scat")
         max()  
-        print(scat_one)
-        print(scat_two)
-        print(scat_three)
         df = pandas.DataFrame(df)
-        print(df)
         current_df = df
         listb= [scat_one,scat_two]
         if scat_three:
@@ -499,56 +483,27 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
             listc.append(a1)
             
         if len(listc) == 2: #and array3: 
-                print("hier value1")
                 value1 = listc[0]
                 value1.dropna(inplace=True)
                 value1 = value1.reset_index()
                 value1 = value1[[scat_one]]
                 value1 = value1.squeeze()
-                print(value1)
                 value2 = listc[1]
                 value2.dropna(inplace=True)
                 value2 = value2.reset_index()
                 value2 = value2[[scat_two]]
                 value2 = value2.squeeze()
-                print(value2)
 
                 n = len(value1)
                 k = len(value2)
 
-                print("n - k:")
-                print (n - k)
-
-                print("k - n:")
-                print (k - n)
-
-                print(type(value1))
-                print(type(value2))
-
                 if ((n - k) > 0):
                     for i in range(0, n - k ):
-                        print("in pop v2")
-                        print("das ist i: ")
-                        print(i)
-                        print(value1[i])
                         value1.pop(i)
                 if((n - k)<0):
                     for i in range(0, k - n ):
-                        print("in pop v1")
-                        print("das ist i: ")
-                        print(i)
                         value2.pop(i)
 
-                print("len value1")
-                print(value1)
-                print(len(value1))
-                print("len value2")
-                print(value2)
-                print(len(value2))
-
-                print("in scatter plot")
-
-                print("moin")
                 scatter = matplotlib.pyplot.scatter(value1 ,value2)
                 fig = scatter.get_figure()
                 x = scat_one + " and " + scat_two
@@ -557,9 +512,7 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 build_dict("Image", flask.session["username"] + "_" + x + "_scat.png")
                 fig.clf()
         elif len(listc) == 3:
-            print("in 3 len")
             if scat_three in booleans or scat_three in categorials:
-                print("in scat_there")
                 df_temp = df[[scat_one,scat_two,scat_three]]
                 df_temp.dropna(inplace=True)
                 valuelist = []
@@ -588,7 +541,6 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
         
     else:
             if scat == True:
-                print("in kein scatter")
                 max()  
             
         
@@ -597,7 +549,6 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
     for x in points_of_interest:
         if x in decimals:
             df = pandas.DataFrame(df)
-            print(df)
             # Vorbereitungen: Spalte rausziehen, zu numbern, leere spalten loswerden
             current_df = df[x]
 
@@ -611,7 +562,6 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 pw = round(result[1],3)
                 table = ([x.replace("_", "-"), " Saphiro-Wilkoson Test"], ["Teststatistik", tt], ["P-Wert", pw])
                 build_dict("Table", table)
-                print("in saphiro"+x) 
                 max()
            
             if (kolmogorov == True):
@@ -620,7 +570,6 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 pw = round(result[1],3)
                 table = ([x.replace("_", "-"), " Kolmogorov-Smirnov Test"], ["Teststatistik", tt], ["P-Wert",pw])
                 build_dict("Table", table)
-                print("in kolmogrov"+x) 
                 max()
             
             if (qqplot == True):
@@ -634,13 +583,10 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 fig.savefig(save_here)
                 build_dict("Image", x + "_qqplot.png")
                 fig.clf()
-                print("in qq"+x) 
                 max()
             
             if (histo == True):
-                
-           
-                print("hier histo")
+            
                 fig, ax = matplotlib.pyplot.subplots()
                 current_df.plot.kde(ax=ax, legend=False)
                 current_df.plot.hist(density=True, ax=ax, figsize=(6, 6))
@@ -650,8 +596,7 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 save_here = PATH_OUT + flask.session["username"] + "_" + x + "_histo.png"
                 fig.savefig(save_here)
                 build_dict("Image", flask.session["username"] + "_" + x + "_histo.png")
-                fig.clf()
-                print("in histo" +x) 
+                fig.clf() 
                 max()
             
         else:
@@ -664,11 +609,6 @@ def explorativ(df, points_of_interest, saphiro, kolmogorov, qqplot, histo,scat,s
                 if kolmogorov:
                     max()
             
-        
-
-
-
-    print("Wuhu, normalverteilt")
 
 
 def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttest_v, ttest_unv, utest, will, mode_unv, mode_v, mode_u,mode_w):
@@ -676,9 +616,80 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
 
     H0_x = "H0 verwerfen"
     H0_y= "H0 annehmen"
+
+    def groups_for_analysis(df,reg_one,reg_two, same_length):
+        if same_length == False:
+            if reg_two in booleans:
+                    df = df[[reg_one,reg_two]]
+                    df.dropna(how="any")
+                   
+                    m = df[reg_two] == True
+                    group1 = df[m]
+                    group1 = group1[reg_one]
+                    group1 = pandas.to_numeric(group1, errors='coerce')
+                    group1 = group1.dropna()
+                 
+                    m = df[reg_two] == False
+                    group2 = df[m]
+                    group2 = group2[reg_one]
+                    group2 = pandas.to_numeric(group2, errors='coerce')
+                    group2=group2.dropna()
+                 
+                
+            else:
+                    group1 = df[reg_one]
+                    group1 = pandas.to_numeric(group1, errors='coerce')
+                    group1 = group1.dropna()
+                 
+                    group2 = df[reg_two]
+                    group2 = pandas.to_numeric(group2, errors='coerce')
+                    group2=group2.dropna()
+            return group1,group2
+        if same_length == True:
+            if reg_two in booleans:
+                group1 = df[reg_one]
+                group2 = df[reg_two]
+                group1 = pandas.to_numeric(group1, errors='coerce')
+                group2 = pandas.to_numeric(group2, errors='coerce')
+                df = pandas.concat([group1,group2],axis=1)
+                df = df.dropna(how="any")
+          
+                m = df[reg_two] == True  
+                group1 = df[m]
+                group1 = group1[reg_one]
+               
+                m = df[reg_two] == False
+                group2 = df[m]
+                group2 = group2[reg_one]
+                
+
+            else:
+                group1 = df[reg_one]
+                group2 = df[reg_two]
+                group1 = pandas.to_numeric(group1, errors='coerce')
+                group2 = pandas.to_numeric(group2, errors='coerce')
+                df = pandas.concat([group1,group2],axis=1)
+                df = df.dropna(how="any")
+               
+                group1 = df[reg_one]
+                group2 = df[reg_two]
+             
+
+            group1.reset_index(drop=True, inplace=True)
+           
+            group2.reset_index(drop=True,inplace=True)
+         
+            k = len(group1)
+        # using pop()
+        # to truncate list
+            n = len(group2)
+            for i in range(0, n - k ):
+                 group2.pop(i)
+            return group1, group2
+            
     
     def modus(mode):
-        if mode == "zweizeitig":
+        if mode == "zweiseitig":
             return "two-sided" 
         if mode == "links":
             return "less"
@@ -695,46 +706,34 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             constans = df[reg_one]
             constans = pandas.to_numeric(constans, errors='coerce')
             constans.dropna(inplace=True)
-
-    df = pandas.DataFrame(df)
+    if type(df) != pandas.DataFrame:
+        df = pandas.DataFrame(df)
     labor_verlauf_liste = []
     
 
     def verlauf_check(x):
         if x in labor_werte:
-            print("teste auf verlauf")
             global op_nm
             global labor_typ
             op_nm = x.split("_")[0]
-            print(op_nm)
             labor_typ = x.split("_")[1]
-            print(labor_typ)
             my_regex = regex.escape(op_nm) + regex.escape(labor_typ)
             for s in labor_verlauf_liste:
-                print("in verlaufs schleife")
                 if regex.search(my_regex, s):
-                    print("its true, verlauf bereits angelegt")
                     return True
                 else:
-                    print('verlauf noch nicht angelegt')
                     labor_verlauf_liste.append(op_nm + labor_typ)
-                    print(labor_verlauf_liste)
                     return False
             if not labor_verlauf_liste:
-                print('verlauf noch nicht angelegt')
                 labor_verlauf_liste.append(op_nm + labor_typ)
-                print(labor_verlauf_liste)
                 return False
         
 
     def lin_reg(row):
-        print("linreg")
         ywerte = []
         xwerte = []
-        print(row)
         row = pandas.to_numeric(row, errors='coerce')
 
-        print(type(row[0]))
         if not numpy.isnan(row[0]):
             ywerte.append(row[0])
             xwerte.append(1)
@@ -748,8 +747,6 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             ywerte.append(row[3])
             xwerte.append(row[4])
         
-        print(xwerte)
-        print(ywerte)
         if len(xwerte) != 0 or len(ywerte) != 0:
             slope, intercept, r, p, se = scipy.stats.linregress(x=xwerte, y=ywerte, alternative='two-sided')
             return slope
@@ -757,18 +754,15 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
     if linear:
         for x in point_of_interest:
             if x not in labor_werte:
-                print("not in linear")
                 max()
                 continue
 
             if verlauf_check(x):
-                print("verlauf check pos")
                 max()
                 continue
             # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
             global op_nm
             value = op_nm + "_"
-            print(value)
             if (labor_typ == "Serum" or labor_typ == "Drain"):
                 value = value + labor_typ + "_Bili"
             else:
@@ -787,7 +781,6 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
 
             # BEGINN DER REGRESSION!
             df2['Slope'] = df2.apply(lin_reg, axis=1)
-            print(df2)
 
             # Hier table One
             df3 = df2['Slope']
@@ -805,41 +798,34 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             fig.savefig(save_here)
             build_dict("Image", x + ".png")
             fig.clf()
-            print("in linear")
             max()
-            print(df2)
-    if korrelation and reg_one and reg_two:
 
-        print("wir sind in korrelation")
-        print(korrelation)
-        df = df[[reg_one, reg_two]]
-        df.dropna(how="any", inplace=True)
+    if korrelation and reg_one and reg_two :
+        if (reg_one in booleans or reg_one in decimals) and (reg_two not in booleans or reg_two not in decimals):
+            df = df[[reg_one, reg_two]]
+            df.dropna(how="any", inplace=True)
+        else:
+            return
 
         var1 = df[reg_one]
         if reg_one in decimals:
             var1 = pandas.to_numeric(var1, errors='coerce')
-        print(var1)
         var2 = df[reg_two]
         if reg_two in decimals:
             var2 = pandas.to_numeric(var2, errors='coerce')
-        print(var2)
         result = scipy.stats.stats.pearsonr(var1, var2)
         x = reg_one + " und " + reg_two
         x = x.replace("_", "-")
         lista = ([x, " :Korrelation nach Pearson"], ["Korrelationskoeffizent", result[0]], ["P-Wert", result[1]])
         build_dict("Table", lista)
-        print("in korrelation")
         max()
 
-    if ttest_unv  and reg_one and reg_two:
-        group1 = df[reg_one]
-        group1 = group1.dropna()
-        print(group1)
-        group2 = df[reg_two]
-        group2=group2.dropna()
+    if ttest_unv  and reg_one and reg_two and reg_one in decimals:
+        if reg_two not in decimals or reg_two not in booleans:
+            return
+        group1, group2 = groups_for_analysis(df,reg_one, reg_two, False)
 
         side = modus(mode_unv)
-        print(side)
 
         result = scipy.stats.ttest_ind(group1, group2, alternative=side)
       
@@ -855,32 +841,18 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
 
         lista = ([x, "TTest  unverbunden"], ["Stat", stat],["Seite",mode_unv], ["P-Value", p],["Empfehlung:",emp])
         build_dict("Table", lista)
-        print("in ttest unv")
         max()
 
 
-    if ttest_v  and reg_one and reg_two:
-  
- 
-        group1 = df[reg_one]
-        group1 = group1.dropna()
-        print(group1)
-        group2 = df[reg_two]
-        group2=group2.dropna()
+    if ttest_v  and reg_one and reg_two and reg_one in decimals:
+        if reg_two not in decimals or reg_two not in booleans:
+            return
+        group1, group2 = groups_for_analysis(df,reg_one, reg_two, True)
         
-
-        k = len(group1)
- 
-        # using pop()
-        # to truncate list
-        n = len(group2)
-        for i in range(0, n - k ):
-            group2.pop(i)
         side = modus(mode_v)
         # printing result
         result = scipy.stats.ttest_rel(group1, group2, alternative=side)
-        print(result)
-
+        
         if result[1] <= 0.05:
             emp = H0_x
         else:
@@ -893,24 +865,19 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "T-Test Verbunden"], ["Stat", stat], ["P-Value", p],["Seite",mode_v],["Wertepaare",paar],["Empfehlung: ",emp])
-        lista = lista.replace("_", "-")
         build_dict("Table", lista)
-        print("in ttest v")
+    
         max()
 
-    if utest  and reg_one and reg_two:
-
-        print("u_test")
-        group1 = df[reg_one]
-        group1 = group1.dropna()
-        print(group1)
-        group2 = df[reg_two]
-        group2=group2.dropna()
+    if utest  and reg_one and reg_two and reg_one in decimals:
+        if reg_two not in decimals or reg_two not in booleans:
+            return
+        group1, group2 = groups_for_analysis(df,reg_one, reg_two, True)
         
         side = modus(mode_u)
 
         result = scipy.stats.mannwhitneyu(group1,group2, alternative = side)
-        print(result)
+
         if result[1] <= 0.05:
             emp = H0_x
         else:
@@ -923,31 +890,18 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "U Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_u],["Werte",paar],["Empfehlung: ",emp])
-        lista = lista.replace("_", "-")
+       
         build_dict("Table", lista)
-        print("in utest")
+   
         max()
     
-    if will  and reg_one and reg_two:
- 
-
-        print("will")
-        group1 = df[reg_one]
-        group1 = group1.dropna()
-        print(group1)
-        group2 = df[reg_two]
-        group2=group2.dropna()
-        
-
-        k = len(group1)
- 
-        # using pop()
-        # to truncate list
-        
-        n = len(group2)
-        for i in range(0, n - k ):
-            group2.pop(i)
+    if will  and reg_one and reg_two and reg_one in decimals:
+        if reg_two not in decimals or reg_two not in booleans:
+            return
+        group1, group2 = groups_for_analysis(df,reg_one, reg_two, True)
+      
         side = modus(mode_w)
+       
         result = scipy.stats.wilcoxon(group1, group2, alternative = side)
         if result[1] <= 0.05:
             emp = H0_x
@@ -961,13 +915,10 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         paar = len(group1)
 
         lista = ([x, "Wilcoxon Rank Test"], ["Stat", stat], ["P-Value", p],["Seite",mode_w],["Wertepaare",paar],["Empfehlung: ",emp])
-        lista = lista.replace("_", "-")
         build_dict("Table", lista)
-        print("in will")
         max()
 
     if 1 == 0:
-        print("logistische Regression")
 
         # Now we check the first variable and then set it
         global constans
@@ -980,8 +931,6 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             x = sm.add_constant(constans)
             model = sm.Logit(bool_values, constans)
             result = model.fit(method='newton')
-            print("hier results:")
-            print(result)
         except Exception as e:
             print("hier fehler von log")
             print(e)
@@ -1008,14 +957,12 @@ def generate_pdf():
     with codecs.open(name + ".tex", "w", "utf-8") as outputTex:
         outputTex.write(dokument)
         outputTex.close()
-    print(tuple_list)
-
+  
     # PDF rendern mit tectonic (https://tectonic-typesetting.github.io/), muss installiert und im PATH sein
 
     os.system("./tectonic -X compile " + name + ".tex")
     tuple_list = []
     for x in flask.session["elements"]:
-        print(x)
         if (x["type"] == "Image"):
              os.remove(PATH_OUT + x["data"])
     os.remove(name + ".tex")

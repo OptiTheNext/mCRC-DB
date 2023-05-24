@@ -107,6 +107,8 @@ UPDATE mcrc_tabelle set third_surgery_realized = "" where third_surgery_realized
 
 UPDATE mcrc_tabelle set third_surgery_minimal_invasiv = "Offen" where third_surgery_minimal_invasiv = "offen";
 
+UPDATE mcrc_tabelle set ss_dindo = "No Comp" where ss_dindo = "No comp";
+
 UPDATE mcrc_tabelle set ss_previous_chemotherapy = "1" where ss_previous_chemotherapy_type;
 UPDATE mcrc_tabelle SET Kuerzel = '' WHERE Kuerzel IS NULL;
 

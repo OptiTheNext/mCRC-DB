@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block Unterschrift %}
-    <p>Charite zu Berlin, 2010-2021</p>
+    <p>Charite zu Berlin, 2010-2023</p>
 {% endblock %}
 {% block MainContent %}
     <title>KRK-Datenbank Login page</title>
+    
     <div class="container">
         <h1 style="text-align: center;">Bitte einloggen</h1>
         <br>
-        <form action="" method="post">
+        <form action="" method="post" id="contact-form">
             <div class="form-row align-items-center" style="width: 50%; margin: auto; position: relative;">
                 <div class="form-group">
                     <label for="username">Benutzername</label>
@@ -18,11 +19,11 @@
                 <div class="form-group">
                     <label for="password">Passwort</label>
                     <input id="password" class="form-control" type="password" placeholder="Password" name="password"
-                           value="{{ request.form.password }}">
+                           >
                     <br>
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Login">
+                    <input class="btn btn-primary" type="submit" value="Login"  id="login_button">
                 </div>
             </div>
         </form>
