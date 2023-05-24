@@ -802,7 +802,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             print("in linear")
             max()
             print(df2)
-    if korrelation:
+    if korrelation and reg_one and reg_two:
 
         print("wir sind in korrelation")
         print(korrelation)
@@ -825,7 +825,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         print("in korrelation")
         max()
 
-    if ttest_unv:
+    if ttest_unv  and reg_one and reg_two:
         group1 = df[reg_one]
         group1 = group1.dropna()
         print(group1)
@@ -853,7 +853,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         max()
 
 
-    if ttest_v:
+    if ttest_v  and reg_one and reg_two:
   
  
         group1 = df[reg_one]
@@ -892,7 +892,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         print("in ttest v")
         max()
 
-    if utest:
+    if utest  and reg_one and reg_two:
 
         print("u_test")
         group1 = df[reg_one]
@@ -922,7 +922,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         print("in utest")
         max()
     
-    if will:
+    if will  and reg_one and reg_two:
  
 
         print("will")
