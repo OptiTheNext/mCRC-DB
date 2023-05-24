@@ -762,10 +762,11 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
                 continue
 
             if verlauf_check(x):
+                print("verlauf check pos")
                 max()
                 continue
             # now we need to create a new dataframe with all of the Data in linearer regression zum vergleich
-            print(op_nm)
+            global op_nm
             value = op_nm + "_"
             print(value)
             if (labor_typ == "Serum" or labor_typ == "Drain"):
@@ -776,7 +777,10 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
             valuepoint2 = value + '_POD3'
             valuepoint3 = value + '_POD5'
             valuepoint4 = value + '_Last'
+            if op_nm == "ts":
+                op_nm = "th"
             valuepoint5 = op_nm + "_los"
+            
 
             df2 = df[[valuepoint1, valuepoint2, valuepoint3, valuepoint4, valuepoint5]]
             df2.dropna(axis=0, how="all", inplace=True)
