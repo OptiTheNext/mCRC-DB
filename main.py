@@ -601,7 +601,10 @@ def page_3():
 
 @app.route('/status', methods=['GET'])
 def getStatus():
-  statusList = {'status':statistik.status}
+  stat = round(statistik.status,4)
+  print("hier stat")
+  print(stat)
+  statusList = {'status':stat}
   print(statusList)
   print("now returning statuslist")
   return json.dumps(statusList)
