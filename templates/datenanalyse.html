@@ -25,19 +25,29 @@ Lol, hier steht was, was keiner lesen kann.
     <br>
     <script>
         
+        let anfrage;
         var timeout;
 
-        
+        function get_anfrage(){
+            console.log("in await anfrage");
+            return anfrage;
+        }
+
         async function getStatus() {
 
+            let anfrage = await get_anfrage();
+            console.log(anfrage)
+
+            if (!anfrage){
+                return;}
             let get;
-            
             try {
                 const res = await fetch("/status");
                 get = await res.json();
             } catch (e) {
                 console.error("Error: ", e);
             }
+            
             
             document.getElementById("boot_bar").style.width = get.status * 100 + "%";
             document.getElementById("boot_bar").innerHTML = get.status * 100 + "%";
@@ -48,11 +58,12 @@ Lol, hier steht was, was keiner lesen kann.
                 clearTimeout(timeout);
                 return false;
             }
-            
             timeout = setTimeout(getStatus, 300);
+            
             }
 
-        getStatus();
+
+        
 
         async function send_and_deactivate() {
             const start_thinking = $("#Start_Thinking");
@@ -66,6 +77,8 @@ Lol, hier steht was, was keiner lesen kann.
         }
 
         function submitTags() {
+            anfrage = true;
+            getStatus();
             // deaktiviere knopf
             let table_one = $("#table_one").is(':checked');
             let grafik_deskriptiv = $("#grafik_deskriptiv").is(':checked');
@@ -125,7 +138,7 @@ Lol, hier steht was, was keiner lesen kann.
             }));
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
-                console.log(xhr.readyState)
+                console.log(xhr.readyState);
                 if (xhr.status !== 200 && xhr.status !== 304) {
                     alert('HTTP error ' + req.status);
                 }
@@ -133,12 +146,13 @@ Lol, hier steht was, was keiner lesen kann.
                 // aktiviere knopf
                 start_thinking.attr("disabled", false);
                 // deaktiviere spinner
-                start_thinking.empty()
-                start_thinking.append("STATISTIK!")
+                start_thinking.empty();
+                start_thinking.append("STATISTIK!");
+                anfrage = false;
                 window.open('export_statistik');
-                console.log("ich öffne...")
-                document.getElementById("boot_bar").style.width = get.status * 0 + "%";
-                document.getElementById("boot_bar").innerHTML = get.status * 0 + "%";                
+                console.log("ich öffne...");
+                document.getElementById("boot_bar").style.width = 0 + "%";
+                document.getElementById("boot_bar").innerHTML =  0 + "%";                
 
             }
 
