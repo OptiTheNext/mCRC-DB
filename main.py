@@ -205,12 +205,9 @@ def page_1():
             cursor = mydb.cursor(buffered=True)
             cursor.execute("SELECT COUNT(*) FROM mcrc_tabelle where Kuerzel=''")
             pat_to_do_1 = cursor.fetchall()
-            print(pat_to_do_1[0][0])
             cursor.execute("select COUNT(*) from mcrc_tabelle where Kuerzel is Null")
             pat_to_do_2 = cursor.fetchall()
-            print(pat_to_do_2[0][0])
             pat_to_do = pat_to_do_1[0][0] + pat_to_do_2[0][0]
-            print(pat_to_do)
             pat_to_do = "Noch " + str(pat_to_do)
             LocalRenderParameters["Pat_To_Do"] = pat_to_do
         except Exception as e:
@@ -251,8 +248,6 @@ def dateneingabe():
     
     if "Grund" in flask.request.form:
         grund_to_delete = flask.request.form["Grund"]
-        print(grund_to_delete)
-
         if "pat_id" in flask.request.form and grund_to_delete:
             pat_to_delete = flask.request.form["pat_id"]
             if pat_to_delete == "":
@@ -469,7 +464,6 @@ def dateneingabe():
                 statement += ")"
                 cursor.execute(statement.format(",".join(p_columns)), p_values)
                 mydb.commit()
-                print("sucess")
                 LocalRenderParameters["success"] = "Eingabe erfolgreich"
 
                 # trying to delete from currently acitve
@@ -602,11 +596,7 @@ def page_3():
 @app.route('/status', methods=['GET'])
 def getStatus():
   stat = round(statistik.status,4)
-  print("hier stat")
-  print(stat)
   statusList = {'status':stat}
-  print(statusList)
-  print("now returning statuslist")
   return json.dumps(statusList)
 
 
@@ -619,7 +609,6 @@ def page_4():
         LocalRenderParameters = RenderParameters.copy()
         if flask.session.get("df"):
             localDF = flask.session.get("df")
-            print("hier ist local df schon gesetzt")
             LocalRenderParameters["df"] = True
         else:
             try:
@@ -650,8 +639,6 @@ def page_4():
             #Collect variables for Deskriptive Statistik
             if "table_one" in flask.request.json:
                 table_one = flask.request.json["table_one"]
-                print("hier table one")
-                print(table_one)
                 if table_one:
                     max_task +=1
 
@@ -716,15 +703,8 @@ def page_4():
                 will = flask.request.json["will"]
                 if will:
                     koeff += 1
-            
-            print("hier max task vor berechnung")
-            print(max_task)
-            
+        
             max_task = (max_task * (len(tags))) + koeff
-            print("hier len tags")
-            print(len(tags))
-            print("hier die berechneten max task")
-            print(max_task)
             statistik.update_max(max_task)
              #If any variable is set, make the analysis
             if grafik or table_one:
@@ -889,7 +869,6 @@ def verwaltung():
 
         if flask.request.method == 'POST':
             #Admin can create new users
-            print("in post")
             if "create_user" in flask.request.form \
                     and "username" in flask.request.form \
                     and "mailadress" in flask.request.form:
@@ -898,7 +877,6 @@ def verwaltung():
                 mail = flask.request.form['mailadress']
                 #check if user has charite mail
                 if "charite" not in mail:
-                    print("keine charite mail")
                     LocalRenderParameters["Error"] = "Email muss eine Charite-Email sein"
                     return flask.render_template(constants.URL_VERWALTUNG,
                                          RenderParameters=LocalRenderParameters)
@@ -938,7 +916,6 @@ def verwaltung():
                     to_recipients=[exchangelib.Mailbox(email_address=mail)]
                 )
                 try:
-                    print("email sent")
                     m.send_and_save()
                     htmltext = usertext()
                     LocalRenderParameters["htmltext"] = htmltext
@@ -1141,7 +1118,6 @@ def get_data_for_id():
                 LocalRenderParameters["error"] = 'Cannot connect to database, reach out to an Administrator'
                 return flask.render_template(constants.URL_DATENEINGABE,
                                              RenderParameters=LocalRenderParameters)
-            print(cursor.statement)
             return app.response_class(response=json.dumps(row, default=str), mimetype='application/json')
     else:
         LocalRenderParameters["error"] = 'Error occured'

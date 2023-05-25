@@ -110,10 +110,8 @@ def data_output(parameters) -> pandas.DataFrame:
     # Check für SAPID
 
     if parameters.get('pat_id_check', None) and parameters["pat_id"]:
-        print("in sap_id")
         global pat_id
         pat_id = int(parameters['pat_id'])
-        print(pat_id)
         sort_df("pat_id == @pat_id")
 
     # Check for Geburtsdatum

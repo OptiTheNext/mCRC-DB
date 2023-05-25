@@ -934,9 +934,7 @@ def stat_test(df, point_of_interest, reg_one, reg_two, linear, korrelation, ttes
         except Exception as e:
             print("hier fehler von log")
             print(e)
-    print("wuhu, explorativ")
 
-    print("help")
 
 def reset_bar():
     global current_task 
