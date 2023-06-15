@@ -962,7 +962,7 @@ def verwaltung():
                         return flask.redirect(flask.url_for("verwaltung"))
                 except Exception as e:
                     print(e)
-                    LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator"
+                    LocalRenderParameters["error"] = "Couldnt add id into database, Contact Administrator. ID might already exist"
                     LocalRenderParameters["error-text"] = e
                     return flask.render_template(constants.URL_VERWALTUNG,
                                                  RenderParameters=LocalRenderParameters)
