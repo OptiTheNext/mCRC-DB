@@ -1143,6 +1143,13 @@ def versions():
          return flask.redirect(flask.url_for('login'))
     LocalRenderParameters = RenderParameters.copy()
     return flask.render_template(constants.URL_VERSIONSVERLAUF,RenderParameters=LocalRenderParameters)
+@app.route("/datenschutz", methods=["GET"])
+def datenschutz():
+    LocalRenderParameters = RenderParameters
+    if "username" not in flask.session:
+         return flask.redirect(flask.url_for('login'))
+    LocalRenderParameters = RenderParameters.copy()
+    return flask.render_template(constants.URL_DATENSCHUTZ,RenderParameters=LocalRenderParameters)
 
 #Hier entwurf für Eine Funktion welche dynamisch neue Einträge generiert, am besten für eine Seite um Publikationen dazustellen
 #@app.route("/publications",methods=["GET","POST"])

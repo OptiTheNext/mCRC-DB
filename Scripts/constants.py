@@ -6,6 +6,7 @@ URL_RESET = "reset.html"
 URL_STARTSEITE = "startseite.html"
 URL_VERSIONSVERLAUF = "versionsverlauf.html"
 URL_VERWALTUNG = "verwaltung.html"
+URL_DATENSCHUTZ="datenschutz.html"
 
 ERRORTEXT_DATABASECONNECTION = "Cannot reach database, contact administrator."
 
