@@ -4,6 +4,7 @@ import os
 import jwt
 
 
+
 def generate_password_reset_token(username, password):
     key = os.environ.get("KRK_APP_SECRET_KEY")
     #Set time this token is valid
@@ -24,3 +25,17 @@ def generate_password_reset_token(username, password):
     )
 
     return encoded_jwt
+
+def generate_encrypted_password(password):
+    key = os.environ.get("KRK_APP_SECRET_KEY")
+    encoded_jwt = jwt.encode(
+        {
+            "pwd": password
+        },
+        key,
+        algorithm="HS256",
+    )
+
+    return encoded_jwt
+
+

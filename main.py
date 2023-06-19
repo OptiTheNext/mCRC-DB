@@ -76,7 +76,7 @@ app.config["JWT_SECRET_KEY"] = os.environ.get("KRK_APP_SECRET_KEY")
 Session(app)
 # Create globe Renderparameters to copy from in the individual Sites
 global RenderParameters
-RenderParameters = {"Topnav": True, "startseite": True, "Admin": False}
+RenderParameters = {"Topnav": True, "startseite": True, "Admin": False, "accepted": False}
 
 
 app.config['UPLOAD_FOLDER'] = constants.UPLOAD_FOLDER
@@ -169,8 +169,8 @@ def login():
         username = flask.request.form['username']
         pwd = flask.request.form['password']
         try:
-            select_query = "SELECT * FROM Users WHERE LoginID=%s AND Password=%s"
-            dbcursor.execute(select_query, (username, pwd))
+            select_query = "SELECT * FROM Users WHERE LoginID=%s"
+            dbcursor.execute(select_query, (username,))
             selected_rows = dbcursor.fetchall()
             if selected_rows:
                 x = numpy.array(selected_rows)
@@ -181,8 +181,15 @@ def login():
                 else:
                     flask.session["Admin"] = False
                     RenderParameters["Admin"] = False
-
-                return flask.redirect(flask.url_for('page_1'))
+                if x[0,1]:
+                    print(x[0,1])
+                    decoded_pwd = jwt.decode(x[0,1], os.environ.get("KRK_APP_SECRET_KEY"), algorithms=["HS256"])
+                    print(decoded_pwd["pwd"])
+                    if decoded_pwd["pwd"] == pwd:
+                        RenderParameters["accepted"] = True
+                        return flask.redirect(flask.url_for('page_1'))
+                    else:
+                        LocalRenderParameters["error"] = 'Invalid Credentials. Please try again.'
             else:
                 LocalRenderParameters["error"] = 'Invalid Credentials. Please try again.'
         except Exception as e:
@@ -1068,6 +1075,7 @@ def reset(token):
                 if passwort1 == passwort2:
                     try:
                         cursor = mydb.cursor(buffered=True)
+                        passwort1 = generate_token.generate_encrypted_password(passwort1)
                         val = (decoded["username"], passwort1)
                         cursor.execute('REPLACE INTO Users (LoginID, Password) VALUES (%s, %s)', val)
                         mydb.commit()

@@ -1,6 +1,54 @@
 {% extends "base.html" %}
 {% block MainContent %}
     <title>KRK-Datenbank Login page</title>
+
+    <style>
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+      }
+      
+      </style>
+
+    <script>
+        function on() {
+        document.getElementById("overlay").style.display = "block";
+                }
+
+        function off() {
+        document.getElementById("overlay").style.display = "none";
+        } 
+    </script>
+
+    {%if RenderParameters["accepted"] == False%}
+    <div id="overlay" style="display:block">
+        <div class = "center">
+        <div class="container py-3 mb-4 bg-light rounded-3 shadow-sm ">
+            <div class="row justify-content-center">
+                <div class="lc-block">
+                    <h2> Diese Website verwendet Cookies</h2>
+                    Diese Website verwendet Cookies zum Managment von Nutzern und zur temporären Speicherung von zu bearbeitenden Daten. Es werden keine persönlichen Daten über den Nutzernamen und das Passwort hinaus gespeichert. 
+                    Diese Cookies sind somit essentiell zur Nutzung der Website.
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="off()">Notwendige Cookies akzeptieren</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href = 'https://intranet.charite.de'">Cookies ablehnen</button>
+
+                </div>
+            </div>
+        </div>
+    {%endif%}
+
+    </div> 
+    </div>
     
     <div class="container">
         <h1 style="text-align: center;">Bitte einloggen</h1>

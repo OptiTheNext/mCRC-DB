@@ -9,6 +9,14 @@ body {
   padding-right: 150px !important;
 }
 
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ 
+}
+
 
 .header h1 {
   font-size: 50px;
