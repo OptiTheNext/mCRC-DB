@@ -1159,6 +1159,14 @@ def datenschutz():
     LocalRenderParameters = RenderParameters.copy()
     return flask.render_template(constants.URL_DATENSCHUTZ,RenderParameters=LocalRenderParameters)
 
+@app.route("/impressum", methods=["GET"])
+def impressum():
+    LocalRenderParameters = RenderParameters
+    if "username" not in flask.session:
+         return flask.redirect(flask.url_for('login'))
+    LocalRenderParameters = RenderParameters.copy()
+    return flask.render_template(constants.URL_IMPRESSUM,RenderParameters=LocalRenderParameters)
+
 #Hier entwurf für Eine Funktion welche dynamisch neue Einträge generiert, am besten für eine Seite um Publikationen dazustellen
 #@app.route("/publications",methods=["GET","POST"])
 #def publics():

@@ -62,8 +62,23 @@
     <div class="footer">
         <h6>©Hannes Freitag, ©Charité</h6>
         {% if RenderParameters["Topnav"] %}
-            <h6><a href="/versions">Versionen</a></h6>
-            <h6><a href="/datenschutz">Datenschutz</a></h6>
+        <div style="float: right;">
+        <div class="container">
+            <div class="row justify-content-md-left">
+              <div class="col-md-auto ">
+                <h6><a href="/versions">Versionen</a></h6>
+              </div>
+              <div class="col-md-auto">
+                <h6><a href="/datenschutz">Datenschutz</a></h6>
+              </div>
+              <div class="col-md-auto">
+                <h6><a href="/impressum">Impressum</a></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+            
         {% endif %}
         <h8>&#128994;Version 1.1</h8>
     </div>
