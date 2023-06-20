@@ -1021,7 +1021,13 @@ def verwaltung():
                 cursor = mydb.cursor(buffered=True)
                 cursor.execute("SELECT * FROM Users WHERE LoginID = %s", (flask.session["username"],))
                 pwd = cursor.fetchone()[1]
+                secret_key = os.environ.get("KRK_APP_SECRET_KEY")
+                print(secret_key)
+                decoded_pwd = jwt.decode(pwd,secret_key, algorithms=["HS256"])
+                print(decoded_pwd["pwd"])
+
                 if pwd == currentpw:
+                    newpwd = generate_token.generate_encrypted_password(newpwd)
                     cursor.execute("UPDATE Users SET Password = %s WHERE LoginID = %s",
                                    (newpwd, flask.session["username"]))
                     mydb.commit()
