@@ -183,7 +183,9 @@ def login():
                     RenderParameters["Admin"] = False
                 if x[0,1]:
                     print(x[0,1])
-                    decoded_pwd = jwt.decode(x[0,1], os.environ.get("KRK_APP_SECRET_KEY"), algorithms=["HS256"])
+                    secret_key = os.environ.get("KRK_APP_SECRET_KEY")
+                    print(secret_key)
+                    decoded_pwd = jwt.decode(x[0,1],secret_key, algorithms=["HS256"])
                     print(decoded_pwd["pwd"])
                     if decoded_pwd["pwd"] == pwd:
                         RenderParameters["accepted"] = True
