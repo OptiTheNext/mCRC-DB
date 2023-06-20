@@ -618,7 +618,11 @@ def page_4():
         LocalRenderParameters = RenderParameters.copy()
         if flask.session.get("df"):
             localDF = flask.session.get("df")
+            localDF = pandas.DataFrame(localDF)
+            print(type(localDF))
             LocalRenderParameters["df"] = True
+            print(localDF)
+            print("in flask.session.get")
         else:
             try:
                 localDF = "not a dataframe"
@@ -639,6 +643,7 @@ def page_4():
 
             if type(localDF) != pandas.DataFrame:
                 localDF = datenausgabe.data_output(flask.request.form)
+                print("pulled new dataframe")
             
             flask.session["pdf_completed"] = False
             tags = flask.request.json["server_tags"]
