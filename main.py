@@ -1026,7 +1026,7 @@ def verwaltung():
                 decoded_pwd = jwt.decode(pwd,secret_key, algorithms=["HS256"])
                 print(decoded_pwd["pwd"])
 
-                if pwd == currentpw:
+                if decoded_pwd == currentpw:
                     newpwd = generate_token.generate_encrypted_password(newpwd)
                     cursor.execute("UPDATE Users SET Password = %s WHERE LoginID = %s",
                                    (newpwd, flask.session["username"]))
