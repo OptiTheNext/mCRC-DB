@@ -56,7 +56,7 @@ def data_output(parameters) -> pandas.DataFrame:
     df['two_staged'] = df['two_staged'].fillna(False).astype('bool')
     df['status_fu'] = df['status_fu'].fillna(False).astype('bool')
     df['recurrence_status'] = df['recurrence_status'].fillna(False).astype('bool')
-    df['Pn'] = df['Pn'].fillna(False).astype('string')
+    df['Pn'] = df['Pn'].astype('string')
     df['alcohol'] = df['alcohol'].fillna(False).astype('bool')
     df['smoking'] = df['smoking'].fillna(False).astype('bool')
     df['diabetes'] = df['diabetes'].fillna(False).astype('bool')
