@@ -10,7 +10,7 @@ exchangelib~=4.9.0
 jinja2~=3.1.2
 statsmodels~=0.13.5
 regex~=2022.10.31
-Werkzeug~=2.2.3
+Werkzeug~=3.0.1
 setuptools==67.4.0
 requests==2.31.0
 click~=8.1.3
